@@ -1,0 +1,5 @@
+
+AuthUserFile "/home/xs989423/cape-kaihatsu.site/htpasswd/.htpasswd"
+AuthName "Member Site"
+AuthType BASIC
+require valid-user

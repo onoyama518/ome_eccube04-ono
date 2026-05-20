@@ -1,0 +1,3 @@
+1774486867
+DC2_REGION_eccube_entity_master_productlistorderby_5b19a76196438bb39b48d7cfd7053106db5c1ed3
+O:34:"Doctrine\ORM\Cache\QueryCacheEntry":2:{s:6:"result";a:3:{i:0;a:2:{s:10:"identifier";a:1:{s:2:"id";i:1;}s:12:"associations";a:0:{}}i:1;a:2:{s:10:"identifier";a:1:{s:2:"id";i:3;}s:12:"associations";a:0:{}}i:2;a:2:{s:10:"identifier";a:1:{s:2:"id";i:2;}s:12:"associations";a:0:{}}}s:4:"time";d:1774483267.836473941802978515625;}

@@ -1,0 +1,3 @@
+1778485648
+DC2_REGION_eccube_entity_master_devicetype_eccube.entity.master.devicetype_10
+O:35:"Doctrine\ORM\Cache\EntityCacheEntry":2:{s:4:"data";a:3:{s:2:"id";i:10;s:4:"name";s:2:"PC";s:7:"sort_no";i:1;}s:5:"class";s:31:"Eccube\Entity\Master\DeviceType";}

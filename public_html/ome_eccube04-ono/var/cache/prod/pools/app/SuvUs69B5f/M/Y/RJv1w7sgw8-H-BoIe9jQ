@@ -1,0 +1,3 @@
+1778485684
+DC2_REGION_eccube_entity_master_devicetype_eccube.entity.master.devicetype_2
+O:35:"Doctrine\ORM\Cache\EntityCacheEntry":2:{s:4:"data";a:3:{s:2:"id";i:2;s:4:"name";s:12:"モバイル";s:7:"sort_no";i:0;}s:5:"class";s:31:"Eccube\Entity\Master\DeviceType";}

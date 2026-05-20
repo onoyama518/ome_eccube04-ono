@@ -1,0 +1,3 @@
+1774486867
+DC2_REGION_eccube_entity_master_productlistorderby_eccube.entity.master.productlistorderby_2
+O:35:"Doctrine\ORM\Cache\EntityCacheEntry":2:{s:4:"data";a:3:{s:2:"id";i:2;s:4:"name";s:9:"新着順";s:7:"sort_no";i:2;}s:5:"class";s:39:"Eccube\Entity\Master\ProductListOrderBy";}

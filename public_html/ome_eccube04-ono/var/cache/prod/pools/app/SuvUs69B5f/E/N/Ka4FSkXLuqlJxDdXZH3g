@@ -1,0 +1,3 @@
+1774486867
+DC2_REGION_eccube_entity_master_productlistmax_eccube.entity.master.productlistmax_20
+O:35:"Doctrine\ORM\Cache\EntityCacheEntry":2:{s:4:"data";a:3:{s:2:"id";i:20;s:4:"name";s:5:"20件";s:7:"sort_no";i:0;}s:5:"class";s:35:"Eccube\Entity\Master\ProductListMax";}
