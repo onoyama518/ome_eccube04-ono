@@ -58,25 +58,53 @@ class EntryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', NameType::class, [
-                'required' => true,
-            ])
-            ->add('kana', KanaType::class, [])
             ->add('company_name', TextType::class, [
-                'required' => false,
+                'required' => true,
                 'constraints' => [
-                    new Assert\Length([
-                        'max' => $this->eccubeConfig['eccube_stext_len'],
+                    new Assert\NotBlank([
+                        'message' => '会社名またはサロン名が入力されていません。',
+                    ]),
+                    // 不正文字・禁止語・URL・スクリプトタグの入力制限
+                    new Assert\Regex([
+                        'pattern' => '/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/',
+                        'message' => '不正な文字が含まれています。',
+                        'match' => false,
+                    ]),
+                    new Assert\Regex([
+                        'pattern' => '/\s*<iframe|iframe|\s*<object|object|\s*<embed|embed|<script|script|javascript:|vbscript:|onload=|onclick=|eval\(|document\.|window\./i',
+                        'message' => '不正なHTMLタグまたはスクリプトが含まれています。',
+                        'match' => false,
                     ]),
                 ],
             ])
-            ->add('postal_code', PostalType::class)
-            ->add('address', AddressType::class)
+            ->add('name', NameType::class, [
+                'required' => true,
+            ])
+            ->add('kana', KanaType::class, [
+                'required' => true,
+
+            ])
+
+            ->add('postal_code', PostalType::class, [
+                'required' => true,
+            ])
+            ->add('address', AddressType::class, [
+                'required' => true,
+                'constraints' => [
+                    new Assert\NotBlank(),
+                ],
+            ])
             ->add('phone_number', PhoneNumberType::class, [
                 'required' => true,
             ])
-            ->add('email', RepeatedEmailType::class)
-            ->add('plain_password', RepeatedPasswordType::class)
+            ->add('email', RepeatedEmailType::class, [
+                'required' => true,
+
+            ])
+            ->add('plain_password', RepeatedPasswordType::class, [
+                'required' => true,
+
+            ])
             ->add('birth', BirthdayType::class, [
                 'required' => false,
                 'input' => 'datetime',
@@ -97,21 +125,21 @@ class EntryType extends AbstractType
                 'required' => false,
             ]);
 
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-            $Customer = $event->getData();
-            if ($Customer instanceof Customer && !$Customer->getId()) {
-                $form = $event->getForm();
+        $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            function (FormEvent $event) {
+                $Customer = $event->getData();
+                if ($Customer instanceof Customer && !$Customer->getId()) {
+                    $form = $event->getForm();
 
-                $form->add('user_policy_check', CheckboxType::class, [
-                        'required' => true,
+                    $form->add('user_policy_check', CheckboxType::class, [
+                        'required' => false,
                         'label' => null,
                         'mapped' => false,
-                        'constraints' => [
-                            new Assert\NotBlank(),
-                        ],
+                        'constraints' => [],
                     ]);
+                }
             }
-        }
         );
 
         $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) {

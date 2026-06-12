@@ -1,0 +1,192 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% extends 'default_frame.twig' %}
+
+{% form_theme form 'Form/form_div_layout.twig' %}
+
+{% set body_class = 'cart_page' %}
+{# ログイン状態によって、表示内容を切替 #}
+{% if is_granted('ROLE_USER') is empty %}
+	{% set title = '商品購入/お届け先の変更'|trans %}
+{% endif %}
+
+{% block javascript %}
+	<script src="//yubinbango.github.io/yubinbango/yubinbango.js" charset="UTF-8"></script>
+	<script src="{{ asset('assets/js/validation.js', 'user_data') }}"></script>
+{% endblock javascript %}
+
+{% block main %}
+
+	<div id="undercolumn">
+
+		<div class="ec-layoutRole__main" id="mypagecolumn">
+			<div class="ec-mypageRole">
+				<div class="ec-pageHeader">
+					{% if app.request.query.has('customer_address_id') %}
+						<h2 class="title">お届け先変更</h2>
+					{% else %}
+						<h2 class="title">お届け先追加</h2>
+					{% endif %}
+				</div>
+			</div>
+			<div class="ec-mypageRole" id="mycontents_area">
+				<form method="post" action="{{ url('shopping_shipping_edit', {'id': shippingId,'customer_address_id': app.request.query.get('customer_address_id')  }) }}" novalidate class="h-adr">
+					{{ form_widget(form._token) }}
+
+					<span class="p-country-name" style="display:none;">Japan</span>
+					<table summary="お届け先変更" class="hyou">
+
+						<colgroup width="30%"></colgroup>
+						<colgroup width="70%"></colgroup>
+
+						<tr>
+							<th>会社名・サロン名<span class="attention">※</span>
+							</th>
+							<td class="ec-halfInput{{ has_errors(form.company_name) ? ' error' }}">
+							{{ form_widget(form.company_name, { 'attr': { 'class': 'box300', 'style': has_errors(form.company_name) ? 'border-color:red;' : '', 'data-validation': 'required', 'data-label': '会社名・サロン名' } }) }}
+              <span class="attention mini">{{ form_errors(form.company_name) }}</span>
+							</td>
+						</tr>
+
+						<tr class="hyou_name">
+							<th>お名前<span class="attention">※</span>
+							</th>
+							<td class="td_form_seimei"> 姓 {{ form_widget(form.name.name01, { 'attr': { 'placeholder': '姓', 'class': 'box120', 'style': has_errors(form.name.name01) ? 'border-color:red;' : '', 'data-validation': 'required', 'data-label': '姓' } }) }} 名 {{ form_widget(form.name.name02, { 'attr': { 'placeholder': '名', 'class': 'box120', 'style': has_errors(form.name.name02) ? 'border-color:red;' : '', 'data-validation': 'required', 'data-label': '名' } }) }}
+
+							<span class="attention mini">{{ form_errors(form.name.name01) }}</span>
+							<span class="attention mini">{{ form_errors(form.name.name02) }}</span>
+						</td>
+						</tr>
+						<tr class="hyou_name">
+							<th>お名前(フリガナ)<span class="attention">※</span>
+							</th>
+							<td class="td_form_seimei"> セイ {{ form_widget(form.kana.kana01, { 'attr': { 'placeholder': 'セイ', 'class': 'box120', 'style': has_errors(form.kana.kana01) ? 'border-color:red;' : '', 'data-validation': 'required kana', 'data-label': 'セイ' }}) }} メイ {{ form_widget(form.kana.kana02, { 'attr': { 'placeholder': 'メイ','class': 'box120' , 'style': has_errors(form.kana.kana02) ? 'border-color:red;' : '', 'data-validation': 'required kana', 'data-label': 'メイ'}}) }}
+
+							<span class="attention mini">{{ form_errors(form.kana.kana01) }}</span>
+							<span class="attention mini">{{ form_errors(form.kana.kana02) }}</span>
+						</td>
+						</tr>
+						<tr>
+							<th>郵便番号<span class="attention">※</span>
+							</th>
+							<td class="ec-zipInput td_form_seimei">
+								〒 {{ form_widget(form.postal_code, {'attr': {'class': 'p-postal-code box120', 'style': has_errors(form.postal_code) ? 'border-color:red;' : '', 'placeholder': '', 'data-validation': 'required postalCode', 'data-label': '郵便番号' }}) }}
+							  <span class="attention mini">{{ form_errors(form.postal_code) }}</span>
+						  </td>
+						</tr>
+
+						<tr>
+							<th>住所<span class="attention">※</span>
+							</th>
+							<td class="td_address">
+							<div class="ec-select">
+							{{ form_widget(form.address.pref, {'attr': {'class': 'p-region-id','style': has_errors(form.address.pref) ? 'border-color:red;' : '', 'data-validation': 'required', 'data-label': '都道府県' }}) }}
+							<span class="attention mini">{{ form_errors(form.address.pref) }}</span>
+							</div>
+							<p class="ec-input top">
+								{{ form_widget(form.address.addr01, { 'attr': {'class': 'box300 p-locality p-street-address', 'style': has_errors(form.address.addr01) ? 'border-color:red;' : '', 'data-validation': 'required', 'data-label': '市区町村・町名'  }}) }}<br/>
+								市区町村・町名<br/>
+							</p>
+							<span class="attention mini">{{ form_errors(form.address.addr01) }}</span>
+							<p class="ec-input top{{ has_errors(form.address.addr01) ? ' error' }}">
+								{{ form_widget(form.address.addr02, { 'attr': {'class': 'box300' , 'style': has_errors(form.address.addr02) ? 'border-color:red;' : '', 'data-validation': 'required', 'data-label': '番地・建物名・号室'  }}) }}
+								<br/>
+								番地・建物名・号室
+							</p>
+							<span class="attention mini">{{ form_errors(form.address.addr02) }}</span>
+							<p class="mini">
+								<span class="attention">住所は2つに分けてご記入ください。建物名・号室は必ず記入してください。</span>
+							</p>
+						</td>
+						</tr>
+						<tr>
+							<th>電話番号<span class="attention">※</span>
+							</th>
+							<td class="ec-telInput{{ has_errors(form.phone_number) ? ' error' }}">
+							  {{ form_widget(form.phone_number, { 'attr': { 'style': has_errors(form.phone_number) ? 'border-color:red;' : '', 'data-validation': 'required phone', 'data-label': '電話番号' } }) }}
+							  <span class="attention mini">{{ form_errors(form.phone_number) }}</span>
+						  </td>
+						</tr>
+
+
+					</table>
+			    {% include "Block/recaptcha-link.twig" %}
+					<div class="btn_area">
+						<ul>
+							<li>
+
+								<button type="submit" class="ec-blockBtn--cancelbtn_confirm btn_revise btn_new_address_regist" >
+									登録する
+								</button>
+								<style>
+									.btn_confirm {
+										transition: opacity 0.3s ease; /* マウスオーバー時の滑らかな変化を追加 */
+									}
+
+									.btn_confirm:hover {
+										opacity: 0.7; /* マウスオーバー時に不透明度を下げる */
+									}
+								</style>
+							</li>
+						</ul>
+					</div>
+				</form>
+				{# Block/recaptcha.twig を読み込まず、このテンプレート側で reCAPTCHA スクリプトを読み込む #}
+				<script src="https://www.google.com/recaptcha/api.js?render={{ constant('Customize\\Util\\RecaptchaUtil::SITE_KEY') }}"></script>
+				<script>
+				$(document).ready(function() {
+					// お届け先変更・追加用のreCAPTCHA処理
+					// namespaced イベントとフラグで二重submitを防止
+					var recaptchaInProgress = false;
+					$('.h-adr').off('submit.recaptcha').on('submit.recaptcha', function(e) {
+						e.preventDefault();
+
+						var form = $(this);
+						var recaptchaInput = form.find('input[name="{{ constant('Customize\\Util\\RecaptchaUtil::INPUT_NAME') }}"]');
+
+						// 既にトークンがある場合はそのまま送信
+						if (recaptchaInput.length && recaptchaInput.val()) {
+							form.off('submit.recaptcha');
+							return form.submit();
+						}
+
+						// 進行中なら二回目の処理は無視
+						if (recaptchaInProgress) {
+							return false;
+						}
+						recaptchaInProgress = true;
+						form.find('button[type="submit"]').prop('disabled', true);
+
+						// reCAPTCHAトークンを取得
+						grecaptcha.execute('{{ constant('Customize\\Util\\RecaptchaUtil::SITE_KEY') }}', {action: 'shipping_edit'}).then(function(token) {
+							// hiddenフィールドが存在しない場合は作成
+							if (!recaptchaInput.length) {
+								recaptchaInput = $('<input>').attr({
+									type: 'hidden', 
+									name: '{{ constant('Customize\\Util\\RecaptchaUtil::INPUT_NAME') }}'
+								});
+								form.append(recaptchaInput);
+							}
+							recaptchaInput.val(token);
+							form.off('submit.recaptcha');
+							form.submit();
+						}).catch(function() {
+							recaptchaInProgress = false;
+							form.find('button[type="submit"]').prop('disabled', false);
+							alert('reCAPTCHAの実行に失敗しました。ページを更新してから再度お試しください。');
+						});
+					});
+				});
+				</script>
+			</div>
+		</div>
+	</div>
+{% endblock %}

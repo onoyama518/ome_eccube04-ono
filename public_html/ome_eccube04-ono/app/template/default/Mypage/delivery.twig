@@ -1,0 +1,92 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% extends 'default_frame.twig' %}
+
+{% set mypageno = 'delivery' %}
+
+{% set body_class = 'mypage' %}
+
+{% block main %}
+	<div id="undercolumn">
+
+		<div class="ec-layoutRole__main" id="mypagecolumn">
+			<div class="ec-mypageRole">
+				<div class="ec-pageHeader">
+					<h2 class="title">{{ 'マイページ'|trans }}</h2>
+				</div>
+				{{ include('Mypage/navi.twig') }}
+			</div>
+			<div class="ec-mypageRole" id="mycontents_area">
+				<h3>{{ 'お届け先追加・変更'|trans }}</h3>
+				<p class="inforamtion">登録住所以外への住所へ送付される場合等にご利用いただくことができます。<br/>
+					※最大<span class="attention">{{ 'お届け先登録の上限の%count%'|trans({ '%count%': eccube_config.eccube_deliv_addr_max }) }}件</span>まで登録できます。
+				</p>
+				<p class="add_address">
+					<a href="{{ url('mypage_delivery_new') }}" class="btn_revise btn_not_orange" style="display:inline-block;">
+						新しいお届け先を追加
+					</a>
+					<style>
+						.newadress {
+							transition: opacity 0.3s ease; /* マウスオーバー時の滑らかな変化を追加 */
+						}
+
+						.newadress:hover {
+							opacity: 0.7; /* マウスオーバー時に不透明度を下げる */
+						}
+					</style>
+				</p>
+				<form name="form1" method="post" action="?">
+					<input type="hidden" name=""/>
+					<input type="hidden" name="mode" value=""/>
+					<input type="hidden" name="other_deliv_id" value=""/>
+					<input type="hidden" name="pageno" value="<!--{$tpl_pageno}-->"/>
+
+					<table summary="お届け先" class="hyou">
+						<colgroup width="5%"></colgroup>
+						<colgroup width="25%"></colgroup>
+						<colgroup width="50%"></colgroup>
+						<colgroup width="10%"></colgroup>
+						<colgroup width="10%"></colgroup>
+						<tr>
+							<th colspan="5">お届け先</th>
+						</tr>
+						{% for CustomerAddress in Customer.CustomerAddresses %}
+							<tr>
+								<td class="alignC">{{ loop.index }}</td>
+								<td>
+									<label for="add{{ loop.index }}">お届け先住所</label>
+								</td>
+
+								<td>
+									{{ '〒'|trans }}{{ CustomerAddress.postal_code }}<br/>{{ CustomerAddress.Pref }}{{ CustomerAddress.addr01 }}{{ CustomerAddress.addr02 }}<br/>
+									{{ CustomerAddress.company_name }}
+									<br/>
+									{{ CustomerAddress.name01 }}&nbsp;
+									{{ CustomerAddress.name02 }}
+								</td>
+								<td class="alignC">
+									<a class="ec-inlineBtn" href="{{ url('mypage_delivery_edit', { id : CustomerAddress.id }) }}">{{ '変更'|trans }}</a>
+								</td>
+								<td class="alignC">
+									<a href="{{ url('mypage_delivery_delete', {id: CustomerAddress.id}) }}" {{ csrf_token_for_anchor() }} data-method="delete">削除</a>
+								</td>
+							</tr>
+						{% endfor %}
+
+					</table>
+				</form>
+
+
+			</div>
+
+		</div>
+	</div>
+{% endblock %}

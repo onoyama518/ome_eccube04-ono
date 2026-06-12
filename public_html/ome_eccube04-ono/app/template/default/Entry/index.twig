@@ -1,0 +1,243 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% extends 'default_frame.twig' %}
+
+{% set body_class = 'registration_page' %}
+
+{% form_theme form 'Form/form_div_layout.twig' %}
+
+{% block javascript %}
+	<script src="//yubinbango.github.io/yubinbango/yubinbango.js" charset="UTF-8"></script>
+	<script src="{{ asset('assets/js/validation.js', 'user_data') }}"></script>
+{% endblock javascript %}
+
+{% block main %}
+	<div id="undercolumn">
+
+		<div class="ec-registerRole" id="undercolumn_entry">
+			<div class="ec-pageHeader">
+				<h2 class="title">会員登録(入力ページ)</h2>
+				{% set hasError = app.session.flashbag.peek('eccube.front.error')|length > 0 %}
+				{% if not hasError %}
+					<p>ご登録されますと、まずは仮会員となります。<br/>
+						入力されたメールアドレスに、ご連絡が届きますので、本会員になった上でお買い物をお楽しみください。</p>
+				{% endif %}
+			</div>
+      <form id="entryForm"  method="post" action="{{ url('entry') }}" novalidate class="h-adr">
+				{{ form_widget(form._token) }}
+				<input type="hidden" name="mode" value="confirm" />
+
+				<span class="p-country-name" style="display:none;">Japan</span>
+				<table summary="会員登録内容変更 " class="hyou">
+
+					<colgroup width="30%"></colgroup>
+					<colgroup width="70%"></colgroup>
+
+					<tr>
+						<th>会社名・サロン名<span class="attention">※</span>
+						</th>
+						<td class="ec-halfInput{{ has_errors(form.company_name) ? ' error' }}">
+						{{ form_widget(form.company_name, { 'attr': { 'class': 'box300', 'style': has_errors(form.company_name) ? 'border-color:red;' : '', 'data-validation': 'required', 'data-label': '会社名・サロン名' } }) }}
+							<span class="attention mini">{{ form_errors(form.company_name) }}
+						</td>
+					</tr>
+
+					<tr>
+						<th>お名前<span class="attention">※</span>
+						</th>
+						<td class="td_form_seimei"> 姓 {{ form_widget(form.name.name01, { 'attr': { 'placeholder': '姓', 'class': 'box120', 'style': has_errors(form.name.name01) ? 'border-color:red;' : '', 'data-validation': 'required', 'data-label': '姓' } }) }} 名 {{ form_widget(form.name.name02, { 'attr': { 'placeholder': '名', 'class': 'box120', 'style': has_errors(form.name.name02) ? 'border-color:red;' : '', 'data-validation': 'required', 'data-label': '名' } }) }}
+
+							<span class="attention mini">{{ form_errors(form.name.name01) }}</span>
+							<span class="attention mini">{{ form_errors(form.name.name02) }}</span>
+						</td>
+					</tr>
+					<tr>
+						<th>お名前(フリガナ)<span class="attention">※</span>
+						</th>
+						<td class="td_form_seimei"> セイ {{ form_widget(form.kana.kana01, { 'attr': { 'placeholder': 'セイ', 'class': 'box120', 'style': has_errors(form.kana.kana01) ? 'border-color:red;' : '', 'data-validation': 'required kana', 'data-label': 'セイ' }}) }} メイ {{ form_widget(form.kana.kana02, { 'attr': { 'placeholder': 'メイ','class': 'box120' , 'style': has_errors(form.kana.kana02) ? 'border-color:red;' : '', 'data-validation': 'required kana', 'data-label': 'メイ'}}) }}
+							<span class="attention mini">{{ form_errors(form.kana.kana01) }}</span>
+							<span class="attention mini">{{ form_errors(form.kana.kana02) }}</span>
+						</td>
+					</tr>
+					<tr>
+						<th>郵便番号<span class="attention">※</span>
+						</th>
+						<td class="ec-zipInput td_form_seimei">
+								〒 {{ form_widget(form.postal_code, {'attr': {'class': 'p-postal-code box120', 'style': has_errors(form.postal_code) ? 'border-color:red;' : '', 'placeholder': '', 'data-validation': 'required postalCode', 'data-label': '郵便番号' }}) }}
+							<span class="attention mini">{{ form_errors(form.postal_code) }}</span>
+						</td>
+					</tr>
+
+					<tr >
+						<th>住所<span class="attention">※</span>
+						</th>
+						<td class="td_address">
+							<div class="ec-select">
+							{{ form_widget(form.address.pref, {'attr': {'class': 'p-region-id','style': has_errors(form.address.pref) ? 'border-color:red;' : '', 'data-validation': 'required', 'data-label': '都道府県' }}) }}
+							<span class="attention mini">{{ form_errors(form.address.pref) }}</span>
+							</div>
+							<p class="ec-input top">
+								{{ form_widget(form.address.addr01, { 'attr': {'class': 'box300 p-locality p-street-address', 'style': has_errors(form.address.addr01) ? 'border-color:red;' : '', 'data-validation': 'required', 'data-label': '市区町村・町名'  }}) }}<br/>
+								市区町村・町名<br/>
+							</p>
+							<span class="attention mini">{{ form_errors(form.address.addr01) }}</span>
+							<p class="ec-input top{{ has_errors(form.address.addr01) ? ' error' }}">
+								{{ form_widget(form.address.addr02, { 'attr': {'class': 'box300' , 'style': has_errors(form.address.addr02) ? 'border-color:red;' : '', 'data-validation': 'required', 'data-label': '番地・建物名・号室'  }}) }}
+								<br/>
+								番地・建物名・号室
+							</p>
+							<span class="attention mini">{{ form_errors(form.address.addr02) }}</span>
+							<p class="mini">
+								<span class="attention">住所は2つに分けてご記入ください。建物名・号室は必ず記入してください。</span>
+							</p>
+						</td>
+					</tr>
+					<tr>
+						<th>電話番号<span class="attention">※</span>
+						</th>
+						<td class="ec-telInput{{ has_errors(form.phone_number) ? ' error' }}">
+							{{ form_widget(form.phone_number, { 'attr': { 'style': has_errors(form.phone_number) ? 'border-color:red;' : '', 'data-validation': 'required phone', 'data-label': '電話番号' } }) }}
+
+							<span class="attention mini">{{ form_errors(form.phone_number) }}</span>
+						</td>
+					</tr>
+					<tr>
+						<th>FAX番号</th>
+						<td>
+							<div class="{{ form.fax.vars.eccube_form_options.style_class }}{{ has_errors(form.fax) ? ' error' }}">
+								{{ form_widget(form.fax) }}
+							<span class="attention mini">{{ form_errors(form.fax) }}</span>
+
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<th>メールアドレス<span class="attention">※</span>
+						</th>
+						<td>
+							<span class="ec-input{{ has_errors(form.email.first) ? ' error' }}">
+								{{ form_widget(form.email.first, { 'attr': { 'placeholder': '例：ec-cube@example.com', 'class': 'box300 top', 'style': has_errors(form.email.first) ? 'border-color:red;' : '', 'data-validation': 'required email', 'data-label': 'メールアドレス' } }) }}
+
+								<span class="attention mini">{{ form_errors(form.email.first) }}</span>
+							</span><br/>
+							<span class="ec-input{{ has_errors(form.email.second) ? ' error' }}">
+								{{ form_widget(form.email.second, { 'attr': { 'class': 'box300', 'style': has_errors(form.email.second) ? 'border-color:red;' : '', 'data-validation': 'required email', 'data-label': 'メールアドレス(確認)' } }) }}
+
+								<span class="attention mini">{{ form_errors(form.email.second) }}</span>
+							</span><br/>
+							<span class="attention mini">確認のため2度入力してください。</span>
+						</td>
+					</tr>
+
+					<tr>
+						<th>性別</th>
+						<td>
+							<span class="ec-radio{{ has_errors(form.sex) ? ' error' }}">
+								{{ form_widget(form.sex) }}
+								{{ form_errors(form.sex) }}
+							</span>
+						</td>
+					</tr>
+					<tr>
+						<th>生年月日</th>
+						<td>
+							<div class="ec-birth td_form_birth{{ has_errors(form.birth) ? ' error'}}">
+								{{ form_widget(form.birth.year) }}年
+								{{ form_widget(form.birth.month) }}月
+								{{ form_widget(form.birth.day) }}日
+								{{ form_errors(form.birth) }}
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<th>希望するパスワード<span class="attention">※</span><br/>
+						</th>
+						<td class="td_address">
+							<!-- パスワード入力1 -->
+							<div class="ec-input{{ has_errors(form.plain_password.first) ? ' error' : '' }}">
+								<input type="password" id="{{ form.plain_password.first.vars.id }}" name="{{ form.plain_password.first.vars.full_name }}" class="box300" style="{{ has_errors(form.plain_password.first) ? 'border-color:red;' : '' }}" data-validation="required passwordLength" data-label="パスワード" />
+								{% if form_errors(form.plain_password.first) %}
+									<span class="attention mini">{{ form_errors(form.plain_password.first) }}</span>
+								{% endif %}
+							</div>
+							<span class="attention mini">
+								半角英数字{{ eccube_config.eccube_password_min_len }}～{{ eccube_config.eccube_password_max_len }}文字でお願いします。（記号不可）
+							</span>
+
+							<!-- パスワード確認入力 -->
+							<div class="ec-input{{ has_errors(form.plain_password.second) ? ' error' : '' }}" style="margin-top: 10px;">
+								<input type="password" id="{{ form.plain_password.second.vars.id }}" name="{{ form.plain_password.second.vars.full_name }}" class="box300" style="{{ has_errors(form.plain_password.first) ? 'border-color:red;' : '' }}" data-validation="required passwordLength" data-label="パスワード(確認)" />
+								{% if form_errors(form.plain_password.second) %}
+									<span class="attention mini">{{ form_errors(form.plain_password.second) }}</span>
+								{% endif %}
+							</div>
+							<p>
+								<span class="attention mini">確認のために2度入力してください。</span>
+							</p>
+						</td>
+
+
+					</tr>
+									{# 残りの項目はそのままループで表示 #}
+					{% for f in form|filter(f => f.vars.eccube_form_options.auto_render and f.vars.name != 'fax') %}
+						{% if f.vars.eccube_form_options.form_theme %}
+							{% form_theme f f.vars.eccube_form_options.form_theme %}
+							{{ form_row(f) }}
+						{% else %}
+							<tr>
+								<th>
+									{% set label_class = f.vars.label_attr.class is defined ? f.vars.label_attr.class : '' %}
+									{{ form_label(f, f.vars.label, { 'label_attr': {'class': label_class ~ ' ec-label' }}) }}
+								</th>
+								<dd>
+									<div class="{{ f.vars.eccube_form_options.style_class }}{{ has_errors(f) ? ' error' }}">
+										{{ form_widget(f) }}
+										{{ form_errors(f) }}
+									</div>
+								</dd>
+							</tr>
+						{% endif %}
+					{% endfor %}
+				</table>
+			  {% include "Block/recaptcha-link.twig" %}
+				<div class="btn_area">
+					<ul>
+						<li>
+
+							<button class="ec-blockBtn--action btn_revise btn_sign_up_confirm" type="submit" name="mode" value="confirm" id="confirm">
+								確認ページへ
+							</button>
+							<style>
+								.btn_confirm {
+									transition: opacity 0.3s ease; /* マウスオーバー時の滑らかな変化を追加 */
+								}
+
+								.btn_confirm:hover {
+									opacity: 0.7; /* マウスオーバー時に不透明度を下げる */
+								}
+							</style>
+						</li>
+					</ul>
+				</div>
+			</form>
+			<hr>
+			<font color="red" size="+1">
+				<b>★重要★</b>
+			</font><br/>
+			ご登録いただいたメールアドレスは、商品ご注文の際の連絡に使用させていただきます。<br/>
+			受信ドメイン指定や迷惑メールフィルタなどの設定により、<br/>
+			弊社ドメイン「ome-shouzai.com」からのメールが受信できるよう、ご設定をお願いいたします。
+
+		</div>
+	</div>
+	{% include "Block/recaptcha.twig" with {'form': '#entryForm'} %}
+
+{% endblock %}

@@ -1,0 +1,42 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% extends 'default_frame.twig' %}
+
+{% set body_class = 'registration_page' %}
+
+{% block main %}
+	<div id="undercolumn">
+		<div id="undercolumn_entry">
+			<h2 class="title">会員登録(完了ページ)</h2>
+			<div id="complete_area">
+				<p class="message">会員登録の受付が完了いたしました。</p>
+				<p>現在<span class="attention">仮会員</span>の状態です。<br/>
+					ご入力いただいたメールアドレス宛てに、ご連絡が届いておりますので、本会員登録になった上でお買い物をお楽しみください。<br/>
+					今後ともご愛顧賜りますようよろしくお願い申し上げます。
+				</p>
+
+				<div class="shop_information">
+					<p class="name">株式会社kichi</p>
+					<p>TEL：0120-965-583<br/>E-mall：<a href="mailto:info@ome-shouzai.com">info@ome-shouzai.com
+
+						</a>
+					</p>
+				</div>
+
+				<div class="btn_area">
+					<ul>
+						<li><a href="{{url('homepage')}}" class="btn_revise btn_return_top">トップページへ</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

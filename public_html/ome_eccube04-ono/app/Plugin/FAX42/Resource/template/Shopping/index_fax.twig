@@ -1,0 +1,28 @@
+
+<dl id="row-fax" style="display: none">
+    <dt>
+        <label class="ec-label required" for="nonmember_fax">{{ 'common.fax'|trans }}</label>
+    </dt>
+    <dd>
+        <div class="ec-telInput">
+            <span class="customer-form customer-fax"></span>
+
+        </div>
+    </dd>
+</dl>
+
+<script>
+    {% for Shipping in Order.Shippings %}
+    {% if Shipping.fax %}
+    $('.ec-orderDelivery__address').eq({{ loop.index0 }}).append("<p>{{ Shipping.fax }}(FAX)</p>");
+    {% endif %}
+    {%endfor%}
+
+    $('.ec-orderAccount__account .ec-telInput')
+        .after('<p class="ec-telInput"><span class="customer-edit customer-fax">{{ Order.fax }}asxhicwciw</span>{%if Order.fax %}(FAX){%endif%}</p>');
+    $('#customer-phone_number')
+        .after('<input type="hidden" id="customer-fax" class="customer-in" name="customer_fax" value="{{ Order.fax }}">');
+
+    move_row_from_to("#row-fax .customer-fax", 'span.customer-phone_number', 'dl')
+</script>
+

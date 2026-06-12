@@ -1,0 +1,92 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% extends 'default_frame.twig' %}
+
+{% form_theme form 'Form/form_div_layout.twig' %}
+
+{% block javascript %}
+	<script src="{{ asset('assets/js/validation.js', 'user_data') }}"></script>
+{% endblock javascript %}
+
+{% block main %}
+	<div id="undercolumn">
+
+		<div class="ec-registerRole" id="mypagecolumn">
+			<div class="ec-pageHeader">
+				<h2 class="title">{{ 'パスワード再発行(再設定)'|trans }}</h2>
+			</div>
+			<div class="ec-off1Grid__cell" id="mycontents_area">
+				<form id="forgotResetForm" method="post" novalidate>
+					{{ form_widget(form._token) }}
+					<table summary="会員登録内容変更 " class="hyou">
+
+						<colgroup width="30%"></colgroup>
+						<colgroup width="70%"></colgroup>
+						<tr>
+							<th>{{ form_label(form.login_email, 'メールアドレス', { 'label_attr': { 'class': 'ec-label' }}) }}
+							</th>
+							<td class="ec-halfInput{{ has_errors(form.login_email) ? ' error' }}">
+								{{ form_widget(form.login_email, {'attr': {'data-validation': 'required email', 'data-label': 'メールアドレス'}}) }}
+								<span class="attention mini">{{ form_errors(form.login_email) }}</span>
+								{% if error %}
+									<p class="ec-errorMessage">{{ error }}</p>
+								{% endif %}
+							</td>
+						</tr>
+						<tr>
+							<th>{{ form_label(form.password, 'パスワード', { 'label_attr': {'class': 'ec-label' }}) }}
+							</th>
+							<td>
+								<div class="ec-input{{ has_errors(form.password.first) ? ' error' }}">
+									{{ form_widget(form.password.first, {
+										'attr': { 'placeholder': '半角英数記号%min%〜%max%文字'|trans({ '%min%': eccube_config.eccube_password_min_len, '%max%': eccube_config.eccube_password_max_len }), 'data-validation': 'required passwordLength', 'data-label': 'パスワード' },
+										'type': 'password'
+									}) }}
+								<span class="attention mini">{{ form_errors(form.password.first) }}
+								</span>
+								</div>
+								<div class="ec-input{{ has_errors(form.password.second) ? ' error' }}">
+									{{ form_widget(form.password.second, {
+										'attr': { 'placeholder': '確認のためもう一度入力してください'|trans, 'data-validation': 'required passwordLength', 'data-label': 'パスワード（確認）' },
+										'type': 'password'
+									}) }}
+								<span class="attention mini">{{ form_errors(form.password.second) }}</span>
+								</div>
+							</td>
+						</tr>
+					</table>
+			    {% include "Block/recaptcha-link.twig" %}
+					<div class="btn_area">
+						<ul>
+							<li>
+
+								<button type="submit" class="ec-blockBtn--cancel btn_confirm btn_password_reset btn_revise">
+								登録する
+								</button>
+								<style>
+									.btn_confirm {
+										transition: opacity 0.3s ease; /* マウスオーバー時の滑らかな変化を追加 */
+									}
+
+									.btn_confirm:hover {
+										opacity: 0.7; /* マウスオーバー時に不透明度を下げる */
+									}
+								</style>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			{% include "Block/recaptcha.twig" with {'form': '#forgotResetForm'} %}
+		</div>
+	</div>
+
+{% endblock %}

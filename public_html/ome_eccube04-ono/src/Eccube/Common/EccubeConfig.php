@@ -13,16 +13,16 @@
 
 namespace Eccube\Common;
 
-use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class EccubeConfig implements \ArrayAccess
 {
     /**
-     * @var ContainerBagInterface
+     * @var ContainerInterface
      */
     protected $container;
 
-    public function __construct(ContainerBagInterface $container)
+    public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
     }
@@ -34,7 +34,7 @@ class EccubeConfig implements \ArrayAccess
      */
     public function get($key)
     {
-        return $this->container->get($key);
+        return $this->container->getParameter($key);
     }
 
     /**
@@ -44,7 +44,16 @@ class EccubeConfig implements \ArrayAccess
      */
     public function has($key)
     {
-        return $this->container->has($key);
+        return $this->container->hasParameter($key);
+    }
+
+    /**
+     * @param $key
+     * @param $value
+     */
+    public function set($key, $value)
+    {
+        $this->container->setParameter($key, $value);
     }
 
     /**
@@ -76,17 +85,17 @@ class EccubeConfig implements \ArrayAccess
     #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
-        throw new \LogicException();
+        $this->set($offset, $value);
     }
 
     /**
      * @param mixed $offset
      *
-     * @throws \LogicException
+     * @throws \Exception
      */
     #[\ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
-        throw new \LogicException();
+        throw new \Exception();
     }
 }

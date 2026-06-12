@@ -1,0 +1,445 @@
+.btn_area {
+  margin-top: 30px;
+}
+.border_none {
+  border-right: 0 !important;
+}
+#page_product_detail #detailarea h2 {
+  color: #997545 !important;
+}
+#page_product_detail #customervoice_area h2 {
+  border-top: solid 1px #997545;
+}
+#login_mypage {
+  .login_area {
+    h3 {
+      color: #997545 !important;
+    }
+  }
+}
+#page_mypage {
+  .ec-pager {
+    gap: 0 !important;
+    li a {
+    }
+  }
+}
+#login_email {
+  height: 30px;
+  padding: 2px;
+}
+.pagenation_product {
+  .ec-pager {
+    gap: 0 !important;
+    li a {
+      padding: 0 10px !important;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  // 全体
+  .ec-layoutRole__contents {
+    margin: 30px 0;
+    display: block !important;
+    .other_page {
+      margin: 0;
+    }
+  }
+
+  #undercolumn,
+  #under02column,
+  #undercolumn_pages {
+    padding-bottom: 0 !important;
+    width: 100% !important;
+  }
+
+  #page_homepage {
+    .ec-layoutRole__contents {
+      margin-top: 0;
+    }
+  }
+  //   フッター
+  #foot {
+    .foot-inner {
+      width: 100% !important;
+    }
+    .accordion02,
+    .accordion03,
+    .accordion04 {
+      display: flex;
+      li {
+        width: 100%;
+      }
+    }
+    .head-snsico {
+      width: 100%;
+    }
+  }
+  //   トップ
+  .sp-top-area {
+    padding-bottom: 0 !important;
+  }
+  .main-slide-dots li button:before {
+    content: "";
+    font-size: 18px !important;
+    text-indent: 0px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    /* color: #997545; */
+    transform: translate(-50%, -50%);
+    width: 14px;
+    height: 14px;
+    border: 1px solid #997545;
+    border-radius: 50%;
+  }
+  .main-slide-dots li.slick-active button:before {
+    content: "";
+    font-size: 18px !important;
+    /* color: #997545; */
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #997545;
+  }
+  #topcat {
+    width: 90% !important;
+  }
+  //   商品一覧、商品詳細
+  #page_product_detail {
+    .ec-layoutRole__contents {
+      margin-top: 0;
+      padding-top: 0;
+    }
+    div#undercolumn_pages {
+      padding-top: 0 !important;
+    }
+    .product_class {
+      margin-bottom: 0 !important;
+      .pc_only_dis {
+        display: none;
+      }
+    }
+    .info_area {
+      text-align: left !important;
+    }
+    div.normal_price {
+      margin-top: 10px !important;
+    }
+    .hyou {
+      th {
+        text-align: center;
+      }
+      td {
+        text-align: left;
+      }
+    }
+    .sp {
+      display: block !important;
+    }
+  }
+  #page_product_list {
+    .ec-layoutRole__contents {
+      padding-top: 0;
+      margin-top: 0;
+    }
+    div#undercolumn_pages {
+      padding-top: 0 !important;
+    }
+  }
+
+  #customervoice_area,
+  .whobought_area_h2 {
+    width: 100% !important;
+  }
+  .whobought_area_h2 {
+    margin: 30px auto 20px !important;
+  }
+  .oem-bana img,
+  .pop-bana img {
+    width: 100% !important;
+  }
+  #pr-uresuji-ranking {
+    h2 {
+      width: 100% !important;
+      margin-bottom: 20px !important;
+    }
+  }
+  #detailrightbloc {
+    .item_ttl {
+      text-align: left !important;
+    }
+    .dot_add {
+      .mb-3 {
+        gap: 10px;
+        label {
+          position: relative;
+          &::after {
+            position: absolute;
+            content: ":";
+            right: -5px;
+          }
+        }
+      }
+    }
+  }
+  #page_product_detail .ec-productRole__actions .mb-3 select {
+    width: calc(100% - 150px);
+  }
+  .detailrightbloc-right {
+    padding: 0 10px;
+  }
+
+  .ec-searchnavRole {
+    width: 100%;
+    margin: 0 auto;
+    .pagenumberarea {
+      padding: 0 !important;
+    }
+  }
+
+  #itemList-inner {
+    justify-content: space-between;
+    width: 100%;
+  }
+  //      お問い合わせ
+  .text_on_form {
+    font-size: 16px;
+    line-height: 25px;
+    margin: 0 auto 20px;
+    width: 90%;
+  }
+  #page_contact_complete {
+    #undercolumn_contact {
+      width: 90% !important;
+      #complete_area {
+        margin-top: 30px;
+        .message {
+          text-align: center;
+          border: none;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+  input[type="tel"] {
+    width: 97%;
+  }
+  .td_address {
+    input {
+      width: 97%;
+    }
+    .ec-input {
+      width: 100% !important;
+    }
+  }
+  //会員登録
+  .td_form_seimei {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    row-gap: 7px;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .td_form_birth {
+    display: grid;
+    grid-template-columns: 6fr 1fr;
+    align-items: center;
+    row-gap: 7px;
+  }
+  #entry_address_pref {
+    margin-bottom: 10px;
+  }
+  #page_entry_complete {
+    #complete_area {
+      margin-top: 30px;
+      .message {
+        text-align: center;
+        border: none;
+        font-size: 14px;
+      }
+    }
+  }
+  #page_help_agreement {
+    #undercolumn_entry .message {
+      border: 0 !important;
+    }
+  }
+  .br_pc_only {
+    display: none;
+  }
+
+  #page_entry {
+    .btn_area {
+      li {
+        margin-left: 0 !important;
+      }
+    }
+  }
+  //   マイページ関連
+  .mypage {
+    #mynavarea {
+      margin-bottom: 30px;
+    }
+    #customer_address_address_pref {
+      margin-bottom: 10px;
+    }
+  }
+  #page_mypage_login {
+    .login_area {
+      p {
+        text-align: left !important;
+        font-size: 12px;
+      }
+      .formlist {
+        dt {
+          font-weight: 500;
+        }
+        dd {
+          width: 250px !important;
+          margin: 0 auto;
+        }
+      }
+      .inputbox dl.formlist dt {
+        padding-left: 0 !important;
+      }
+      .btn_area {
+        margin-top: 5px;
+      }
+    }
+  }
+  //購入手続き
+  #page_cart,
+  #page_shopping,
+  #page_shopping_confirm {
+    .ec-pageHeader h1 {
+      border-bottom: 1px solid #ccc !important;
+    }
+    .ec-cartRole .add-user-info-area {
+      border-bottom: 1px solid #ccc !important;
+    }
+  }
+  #page_cart .ec-alert-warning {
+    justify-content: center;
+  }
+  #page_shopping_complete {
+    .ec-reportHeading {
+      h2 {
+        font-size: 20px;
+        margin-top: 20px;
+      }
+    }
+    .ec-reportDescription {
+      text-align: left;
+    }
+    .ec-off4Grid {
+      justify-content: center;
+    }
+  }
+}
+#page_user_data {
+  .ec-layoutRole__contents {
+    margin: 0;
+  }
+}
+.add-shipping-caption {
+  margin: 10px 0;
+}
+.info_area_order {
+  padding: 10px 0;
+}
+@media screen and (min-width: 769px) {
+  #page_shopping_complete .ec-off4Grid .add-checkout-btn {
+    margin-bottom: 10px;
+    background-color: #ff8b3b;
+    color: #fff;
+    width: 250px;
+    margin: 0 auto;
+  }
+  .pagenation_product {
+    position: relative;
+    justify-content: space-between;
+    height: 40px;
+    // .left {
+    //   position: absolute;
+    //   left: 10px;
+    // }
+    .right {
+      right: 10px;
+      position: absolute;
+    }
+  }
+  .ec-layoutRole__contents {
+    margin: 60px 0;
+    display: block !important;
+  }
+  #page_help_agreement {
+    .ec-layoutRole__contents {
+      margin: 60px 0;
+      display: block !important;
+    }
+  }
+  #page_product_detail {
+    .ec-layoutRole__contents {
+      margin-top: 0;
+    }
+    #undercolumn_pages {
+      padding-bottom: 0 !important;
+    }
+    #detailarea {
+      margin: 0;
+      #pr-uresuji-ranking {
+        margin-bottom: 0;
+        .uresuji-inner {
+          margin-top: 20px;
+        }
+      }
+    }
+  }
+  #page_homepage {
+    .ec-layoutRole__contents {
+      margin: 0;
+    }
+  }
+  .text_on_form {
+    font-size: 16px;
+    line-height: 25px;
+    margin: 0 auto 20px;
+    width: 90%;
+    text-align: center;
+  }
+  .br_sp_only {
+    display: none;
+  }
+  #page_product_detail {
+    .pc {
+      display: block !important;
+    }
+  }
+  #detailrightbloc {
+    .dot_add {
+      .mb-3 {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        label {
+          position: relative;
+          font-weight: 900 !important;
+
+          &::after {
+            position: absolute;
+            content: ":";
+            right: -13px;
+            font-weight: 900 !important;
+          }
+        }
+      }
+    }
+    .quantity {
+      span {
+        font-weight: 900 !important;
+      }
+    }
+  }
+}

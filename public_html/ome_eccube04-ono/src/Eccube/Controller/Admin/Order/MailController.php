@@ -100,7 +100,7 @@ class MailController extends AbstractController
             switch ($mode) {
                 case 'change':
                     if ($form->get('template')->isValid()) {
-                        /** @var \Eccube\Entity\MailTemplate $data */
+                        /** @var $data \Eccube\Entity\MailTemplate */
                         $MailTemplate = $form->get('template')->getData();
 
                         if ($MailTemplate) {
@@ -194,15 +194,8 @@ class MailController extends AbstractController
 
     private function createBody($Order, $twig = 'Mail/order.twig')
     {
-        $body = '';
-        try {
-            $body = $this->renderView($twig, [
-                'Order' => $Order,
-            ]);
-        } catch (\Exception $e) {
-            log_warning($e->getMessage());
-        }
-
-        return $body;
+        return $this->renderView($twig, [
+            'Order' => $Order,
+        ]);
     }
 }

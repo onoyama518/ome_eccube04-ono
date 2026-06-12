@@ -1,0 +1,189 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) LOCKON CO.,LTD. All Rights Reserved.
+
+http://www.lockon.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% extends 'default_frame.twig' %}
+
+{% set body_class = 'product_review' %}
+
+{% form_theme form 'Form/form_div_layout.twig' %}
+
+{% block stylesheet %}
+	
+{% endblock %}
+{% block javascript %}
+	<script src="{{ asset('assets/js/validation.js', 'user_data') }}"></script>
+{% endblock javascript %}
+
+{% block main %}
+	<div id="window_area">
+
+		<div class="ec-registerRole" id="undercolumn_contact">
+			<div class="ec-pageHeader">
+				<h2 class="title">レビュー書き込み</h2>
+				<p class="windowtext">以下の商品について、お客様のご意見、ご感想をどしどしお寄せください。<br/>
+					「<span class="attention">※</span>」印は入力必須項目です。<br/>
+					ご入力後、一番下の「確認ページへ」ボタンをクリックしてください。</p>
+			</div>
+			<div class="ec-off1Grid">
+				<div class="ec-off1Grid__cell">
+					<form id="productReviewForm" method="post" action="{{ url('product_review_index', { id: Product.id }) }}">
+						{{ form_widget(form._token) }}
+						<table summary="お客様の声書き込み" class="hyou">
+							<colgroup width="30%"></colgroup>
+							<colgroup width="70%"></colgroup>
+							<tr>
+								<th>商品名</th>
+								<td>{{ Product.name }}</td>
+							</tr>
+							<tr>
+								<th>投稿者名<span class="attention">※</span>
+								</th>
+								<td>
+									<div class="ec-input{{ has_errors(form.reviewer_name) ? ' error' }}">
+									{{ form_widget(form.reviewer_name, {'attr': {'data-validation': 'required', 'data-label': '投稿者名'}}) }}
+									<div class="attention">{{ form_errors(form.reviewer_name) }}</div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th>投稿者URL</th>
+								<td>
+									<div class="ec-input{{ has_errors(form.reviewer_url) ? ' error' }}">
+									{{ form_widget(form.reviewer_url, {'attr': {'data-validation': '', 'data-label': '投稿者URL'}}) }}
+									<div class="attention">{{ form_errors(form.reviewer_url) }}</div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th>性別</th>
+								<td>
+									<div class="ec-radio{{ has_errors(form.sex) ? ' error' }}">
+									{{ form_widget(form.sex, {'attr': {'data-validation': '', 'data-label': '性別'}}) }}
+									<div class="attention">{{ form_errors(form.sex) }}</div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th>おすすめレベル<span class="attention">※</span>
+								</th>
+								<td>
+									<div class="ec-radio{{ has_errors(form.recommend_level) ? ' error' }}">
+									{{ form_widget(form.recommend_level) }}
+									<div class="attention">{{ form_errors(form.recommend_level) }}</div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th>タイトル<span class="attention">※</span>
+								</th>
+								<td>
+									<div class="ec-input{{ has_errors(form.title) ? ' error' }}">
+									{{ form_widget(form.title, {'attr': {'data-validation': 'required', 'data-label': 'タイトル'}}) }}
+									<div class="attention">{{ form_errors(form.title) }}</div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th>コメント<span class="attention">※</span>
+								</th>
+								<td>
+									<div class="ec-input{{ has_errors(form.comment) ? ' error' }}">
+									{{ form_widget(form.comment, {'attr': {'data-validation': 'required', 'data-label': 'コメント'}}) }}
+									<div class="attention">{{ form_errors(form.comment) }}</div>
+									</div>
+								</td>
+							</tr>
+						</table>
+			      {% include "Block/recaptcha-link.twig" %}
+						<div class="btn_area review-button">
+							<ul>
+								<li>
+									<button class="ec-blockBtn--action btn_revise btn_rebiew_input" type="submit" name="mode" value="confirm" data-mode="confirm">確認する</button>
+								</li>
+							</ul>
+						</div>
+					</form>
+					{% include "Block/recaptcha.twig" with {'form': '#productReviewForm'} %}
+					<script>
+					// レビューフォーム専用のreCAPTCHA処理（Safari対応版）
+					// grecaptcha.ready()内で実行してreCAPTCHAの初期化完了を待つ
+					if (typeof grecaptcha !== 'undefined') {
+						grecaptcha.ready(function() {
+							// jQueryの準備も待つ
+							$(document).ready(function() {
+								var savedMode = null;
+								var formSubmitting = false;
+								
+								// すべてのsubmitボタンにクリックイベントリスナーを追加（Safari対応）
+								$('#productReviewForm button[type="submit"]').on('click', function(e) {
+									// クリックされたボタンのmode値を保存
+									savedMode = $(this).val() || $(this).data('mode');
+								});
+								
+								// オリジナルのreCAPTCHA処理を無効化
+								$('#productReviewForm').off('submit');
+								
+								// 新しいreCAPTCHA処理（Safari対応版）
+								$('#productReviewForm').on('submit', function(e) {
+									e.preventDefault();
+									
+									// 二重送信防止
+									if (formSubmitting) {
+										return false;
+									}
+									
+									var form = $(this);
+									
+									// 保存されたmode値を使用（Safari対応）
+									var mode = savedMode || 'confirm';
+									
+									// modeの値をhiddenフィールドとして追加/更新
+									var modeInput = form.find('input[name="mode"]');
+									if (modeInput.length === 0) {
+										modeInput = $('<input type="hidden" name="mode">');
+										form.append(modeInput);
+									}
+									modeInput.val(mode);
+									
+									formSubmitting = true;
+									
+									// reCAPTCHA実行
+									grecaptcha.execute('{{ constant('Customize\\Util\\RecaptchaUtil::SITE_KEY') }}', {action: 'homepage'}).then(function(token) {
+										form.find('input[name="{{ constant('Customize\\Util\\RecaptchaUtil::INPUT_NAME') }}"]').val(token);
+										// ネイティブのsubmitを実行
+										form[0].submit();
+									}).catch(function(error) {
+										console.error('reCAPTCHA execution failed:', error);
+										formSubmitting = false;
+										alert('セキュリティ確認に失敗しました。ページを再読み込みして再度お試しください。');
+									});
+									
+									return false;
+								});
+							});
+						});
+					}
+					</script>
+					<script>
+					// sp.jsの.menu-naviエラーを防ぐパッチ（Safari対応）
+					// sp.jsが.menu-naviのoffset()を取得しようとするが、要素がない場合にエラーになる
+					$(document).ready(function() {
+						// .menu-naviが存在しない場合、ダミー要素を一時的に追加
+						if ($('.menu-navi').length === 0) {
+							// ページ外に非表示のダミー要素を追加
+							$('<div class="menu-navi" style="position:absolute;top:-9999px;left:-9999px;"></div>').appendTo('body');
+						}
+					});
+					</script>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

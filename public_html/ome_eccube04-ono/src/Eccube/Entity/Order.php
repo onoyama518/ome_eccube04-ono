@@ -141,9 +141,6 @@ if (!class_exists('\Eccube\Entity\Order')) {
             $roundingTypes = $this->getRoundingTypeByTaxRate();
             $tax = [];
             foreach ($this->getTaxableTotalByTaxRate() as $rate => $totalPrice) {
-                if (is_null($roundingTypes[$rate])) {
-                    continue;
-                }
                 $tax[$rate] = TaxRuleService::roundByRoundingType(
                     $this->getTaxableTotal() ?
                         ($totalPrice - abs($this->getTaxFreeDiscount()) * $totalPrice / $this->getTaxableTotal()) * ($rate / (100 + $rate)) : 0,
@@ -271,7 +268,7 @@ if (!class_exists('\Eccube\Entity\Order')) {
         {
             $saleTypes = [];
             foreach ($this->getOrderItems() as $OrderItem) {
-                /** @var \Eccube\Entity\ProductClass $ProductClass */
+                /* @var $ProductClass \Eccube\Entity\ProductClass */
                 $ProductClass = $OrderItem->getProductClass();
                 if ($ProductClass) {
                     $saleTypes[] = $ProductClass->getSaleType();

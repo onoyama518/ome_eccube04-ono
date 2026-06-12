@@ -1,0 +1,126 @@
+@charset "UTF-8";
+
+/*
+================================================================================
+1.基本レイアウト設定
+================================================================================
+*/
+
+/*--基本設定---------------------------------------------------------*/
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,p,blockquote,th,td{margin:0;padding:0; font-weight:normal;}
+table{border-collapse:collapse;border-spacing:0;}
+fieldset,img{border:0;}
+address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}
+ol,ul {list-style:none;}
+caption,th {text-align:left;}
+1,h2,h3,h4,h5,h6{font-size:100%;}
+q:before,q:after{content:'';}
+
+body{
+	font-family:Arial, Helvetica, sans-serif;
+	color:#333333;
+	font-size:12px;
+	line-height:140%;
+}
+
+table,table tb,table tr{
+	text-align:center;
+	vertical-align:bottom;
+}
+
+a{
+	color:#330F00;
+	text-decoration:underline;
+}
+
+a:link,a:visited{
+	text-decoration:underline;
+}
+
+a:hover{
+	text-decoration:underline;
+	color:#7A2401;
+}
+
+
+/*
+================================================================================
+1.全ページ共通部分
+	・ヘッダー
+	・グローバルナビ
+	・ページトップ
+	・フッター
+================================================================================
+*/
+
+body{
+background:url(img/bg.gif) center top;
+}
+/* LP用 ---> */
+div#contens{
+    background:#FFFFFF;
+    width:800px;
+    border-left: solid 1px #CCCCCC;
+    border-right: solid 1px #CCCCCC;
+    padding: 0;
+    overflow:hidden;
+}
+div#contens div#main{
+    float:right;
+    width:800px;
+    margin: 0;
+    display:inline;
+}
+div#warp{
+    width: 800px;
+    margin: 0px auto;
+}
+/* <--- LP用 */
+div#lpWarp{
+	width: 800px;
+	margin: 0px auto 20px auto;
+}
+
+div#lpWarp p.img{
+	margin: 20px 0 0 0;
+}
+
+div#lpWarp p.buy{
+	background:url(img/01_button_bg2.jpg) no-repeat left top;
+	width:800px;
+	height:327px;
+	margin: 20px 0 0 0;
+}
+
+div#lpWarp p.buy img{
+	position:relative;
+	left:280px;
+	/*top:165px;*/
+	top:185px;
+}
+
+div#lpWarp p.buy a:hover img,div#lpWarp p.buy2 a:hover img{
+	filter: alpha(opacity=50); /* internet explorer */
+    -khtml-opacity: 0.5;      /* khtml, old safari */
+    -moz-opacity: 0.5;       /* mozilla, netscape */
+    opacity: 0.5;           /* fx, safari, opera */
+}
+
+
+
+
+
+div#lpWarp p.buy2{
+	background:url(img/01_button_bg3.jpg) no-repeat left top;
+	width:800px;
+	height:127px;
+	margin: 0px 0 0 0;
+}
+
+div#lpWarp p.buy2 img{
+	position:relative;
+	left:290px;
+	top:0px;
+}
+
+

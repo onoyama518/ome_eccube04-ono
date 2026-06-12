@@ -1,0 +1,20 @@
+{% if form.Shipping is defined %}
+<div class="row mb-3" style="display: none">
+    <label class="col-3 col-form-label">{{ form.Shipping.fax.vars.label|trans }}</label>
+    <div class="col">
+        {{ form_widget(form.Shipping.fax) }}
+        {{ form_errors(form.Shipping.fax) }}
+    </div>
+</div>
+
+<script>
+    move_row_from_to("#{{form.Shipping.fax.vars.id}}", "#{{form.Shipping.phone_number.vars.id}}");
+
+    $(function () {
+        // 注文者情報をコピー
+        $('.copy-customer').on('click', function() {
+            $('#{{form.Shipping.fax.vars.id}}').val($('#{{form.fax.vars.id}}').val());
+        });
+    })
+</script>
+{%endif%}

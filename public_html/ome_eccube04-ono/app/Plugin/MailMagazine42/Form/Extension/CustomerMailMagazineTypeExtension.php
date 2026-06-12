@@ -42,6 +42,8 @@ class CustomerMailMagazineTypeExtension extends AbstractTypeExtension
             'expanded' => true,
             'multiple' => false,
             'required' => true,
+            'data' => true,
+
             'constraints' => [
                 new Assert\NotBlank(),
             ],

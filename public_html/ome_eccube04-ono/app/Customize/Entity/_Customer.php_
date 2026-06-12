@@ -1,0 +1,68 @@
+<?php
+
+namespace Customize\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Eccube\Entity\Customer as BaseCustomer;
+
+/**
+ * @ORM\Entity(repositoryClass="Eccube\Repository\CustomerRepository")
+ * @ORM\Table(name="dtb_customer")
+ * @ORM\HasLifecycleCallbacks()
+ */
+class Customer extends BaseCustomer
+{
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="salon_name", type="string", length=255, nullable=true)
+     */
+    private $salon_name;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="section_name", type="string", length=255, nullable=true)
+     */
+    private $section_name;
+
+    /**
+     * @return string|null
+     */
+    public function getSalonName()
+    {
+        return $this->salon_name;
+    }
+
+    /**
+     * @param string|null $salon_name
+     *
+     * @return $this
+     */
+    public function setSalonName($salon_name)
+    {
+        $this->salon_name = $salon_name;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSectionName()
+    {
+        return $this->section_name;
+    }
+
+    /**
+     * @param string|null $section_name
+     *
+     * @return $this
+     */
+    public function setSectionName($section_name)
+    {
+        $this->section_name = $section_name;
+
+        return $this;
+    }
+}

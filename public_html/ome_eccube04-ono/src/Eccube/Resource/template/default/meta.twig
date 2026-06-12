@@ -8,9 +8,9 @@
     <meta property="product:price:currency" content="{{ eccube_config.currency }}"/>
     <meta property="product:product_link" content="{{ url('product_detail', {'id': Product.id}) }}"/>
     <meta property="product:retailer_title" content="{{ BaseInfo.shop_name }}"/>
-    {% if not Product.stock_find %}
+    {# {% if not Product.stock_find %}
         <meta name="robots" content="noindex">
-    {% endif %}
+    {% endif %} #}
 {% elseif app.request.get('_route') == 'product_list' %}
     {% set meta_canonical = url('product_list', {'category_id': Category.id|default(null)}) %}
     {% if pagination|length == 0 %}

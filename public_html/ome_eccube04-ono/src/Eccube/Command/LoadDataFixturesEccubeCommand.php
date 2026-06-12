@@ -16,32 +16,24 @@ namespace Eccube\Command;
 use Doctrine\Bundle\DoctrineBundle\Command\DoctrineCommand;
 use Doctrine\Persistence\ManagerRegistry;
 use Eccube\Common\EccubeConfig;
-use Eccube\Entity\Member;
-use Eccube\Security\PasswordHasher\PasswordHasher;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class LoadDataFixturesEccubeCommand extends DoctrineCommand
 {
     protected static $defaultName = 'eccube:fixtures:load';
 
     /**
-     * @var EccubeConfig
+     * @var ContainerInterface
      */
-    protected $eccubeConfig;
+    protected $container;
 
-    /**
-     * @var UserPasswordHasherInterface
-     */
-    protected $passwordHasher;
-
-    public function __construct(ManagerRegistry $registry, EccubeConfig $eccubeConfig, UserPasswordHasherInterface $passwordHasher)
+    public function __construct(ManagerRegistry $registry, ContainerInterface $container)
     {
         parent::__construct($registry);
-        $this->eccubeConfig = $eccubeConfig;
-        $this->passwordHasher = $passwordHasher;
+        $this->container = $container;
     }
 
     protected function configure()
@@ -75,7 +67,11 @@ EOF
         $login_id = env('ECCUBE_ADMIN_USER', 'admin');
         $login_password = env('ECCUBE_ADMIN_PASS', 'password');
 
-        $password = $this->passwordHasher->hashPassword(new Member(), $login_password);
+        $eccubeConfig = $this->container->get(EccubeConfig::class);
+        $encoder = new \Eccube\Security\Core\Encoder\PasswordEncoder($eccubeConfig);
+
+        $salt = \Eccube\Util\StringUtil::random(32);
+        $password = $encoder->encodePassword($login_password, $salt);
 
         $conn = $em->getConnection();
         $member_id = ('postgresql' === $conn->getDatabasePlatform()->getName())
@@ -86,7 +82,7 @@ EOF
             'id' => $member_id,
             'login_id' => $login_id,
             'password' => $password,
-            //'salt' => 'n/a',
+            'salt' => $salt,
             'work_id' => 1,
             'authority_id' => 0,
             'creator_id' => 1,
@@ -123,20 +119,20 @@ EOF
         ]);
 
         $faviconPath = '/assets/img/common/favicon.ico';
-        if (!file_exists($this->eccubeConfig->get('eccube_html_dir').'/user_data'.$faviconPath)) {
+        if (!file_exists($this->container->getParameter('eccube_html_dir').'/user_data'.$faviconPath)) {
             $file = new Filesystem();
             $file->copy(
-                $this->eccubeConfig->get('eccube_html_front_dir').$faviconPath,
-                $this->eccubeConfig->get('eccube_html_dir').'/user_data'.$faviconPath
+                $this->container->getParameter('eccube_html_front_dir').$faviconPath,
+                $this->container->getParameter('eccube_html_dir').'/user_data'.$faviconPath
             );
         }
 
         $logoPath = '/assets/pdf/logo.png';
-        if (!file_exists($this->eccubeConfig->get('eccube_html_dir').'/user_data'.$logoPath)) {
+        if (!file_exists($this->container->getParameter('eccube_html_dir').'/user_data'.$logoPath)) {
             $file = new Filesystem();
             $file->copy(
-                $this->eccubeConfig->get('eccube_html_admin_dir').$logoPath,
-                $this->eccubeConfig->get('eccube_html_dir').'/user_data'.$logoPath
+                $this->container->getParameter('eccube_html_admin_dir').$logoPath,
+                $this->container->getParameter('eccube_html_dir').'/user_data'.$logoPath
             );
         }
 

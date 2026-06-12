@@ -1,0 +1,73 @@
+{% set NewsList = repository('Eccube\\Entity\\News').getList() %}
+
+<div class="renewal_news">
+  <h2 class="sec-title">NEWS<span class="sub-title">新着情報</span></h2>
+
+  <div class="area_gallery_news_wrapper">
+    <div class="area_gallery_news" id="newsScrollContainer">
+      {% for News in NewsList %}
+      <div class="news_item">
+        {% if News.url %}
+        <a href="{{ News.url }}">
+          <div class="left">{{ News.publish_date|date('Y/m/d') }}</div>
+          <div class="right">
+            <p class="title ">{{ News.title }}</p>
+          </div>
+          <img src="{{ asset('assets/img/renewal_top/news/arrow.svg') }}" alt="矢印" class="arrow"/>
+        </a>
+        {% else %}
+        <a href="{{ url('news_detail',  {'id': News.id}) }}">
+          <div class="left">{{ News.publish_date|date('Y/m/d') }}</div>
+          <div class="right">
+            <p class="title ">{{ News.title }}</p>
+          </div>
+          <img src="{{ asset('assets/img/renewal_top/news/arrow.svg') }}" alt="矢印" class="arrow" />
+        </a>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+    <div class="area_gallery_news__scrollbar" id="newsScrollbar"></div>
+  </div>
+</div>
+<script>
+  (function() {
+    const container = document.getElementById('newsScrollContainer');
+    const scrollbar = document.getElementById('newsScrollbar');
+    
+    if (!container || !scrollbar) return;
+    
+    function updateScrollbar() {
+      const scrollableHeight = container.scrollHeight - container.clientHeight;
+      
+      // スクロール可能な高さがない場合は非表示
+      if (scrollableHeight <= 0) {
+        scrollbar.style.display = 'none';
+        return;
+      }
+      
+      scrollbar.style.display = 'block';
+      
+      // スクロール位置の比率（0～1）
+      const scrollPercent = container.scrollTop / scrollableHeight;
+      
+      // スクロールバーが移動可能な範囲
+      const scrollbarHeight = 80;
+      const maxScroll = container.clientHeight - scrollbarHeight;
+      
+      // スマホの場合は初期値から48px追加
+      const isMobile = window.innerWidth <= 768;
+      const mobileOffset = isMobile ? 48 : 0;
+      
+      // スクロールバーの位置（0～maxScroll の範囲内に固定）
+      const top = Math.max(0, Math.min(scrollPercent * maxScroll + mobileOffset, maxScroll));
+      scrollbar.style.top = top + 'px';
+    }
+    
+    container.addEventListener('scroll', updateScrollbar);
+    window.addEventListener('resize', updateScrollbar);
+    
+    // 初期化（少し遅延させてレンダリング完了後に実行）
+    setTimeout(updateScrollbar, 100);
+  })();
+</script>

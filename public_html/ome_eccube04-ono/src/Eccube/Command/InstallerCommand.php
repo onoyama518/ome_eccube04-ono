@@ -15,13 +15,13 @@ namespace Eccube\Command;
 
 use Doctrine\DBAL\DriverManager;
 use Dotenv\Dotenv;
-use Eccube\Common\EccubeConfig;
 use Eccube\Util\StringUtil;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
@@ -30,9 +30,9 @@ class InstallerCommand extends Command
     protected static $defaultName = 'eccube:install';
 
     /**
-     * @var EccubeConfig
+     * @var ContainerInterface
      */
-    protected $eccubeConfig;
+    protected $container;
 
     /**
      * @var SymfonyStyle
@@ -46,11 +46,11 @@ class InstallerCommand extends Command
 
     private $envFileUpdater;
 
-    public function __construct(EccubeConfig $eccubeConfig)
+    public function __construct(ContainerInterface $container)
     {
         parent::__construct();
 
-        $this->eccubeConfig = $eccubeConfig;
+        $this->container = $container;
 
         /* env更新処理無名クラス */
         $this->envFileUpdater = new class() {
@@ -90,7 +90,7 @@ class InstallerCommand extends Command
              */
             public function updateEnvFile()
             {
-                // $envDir = $this->eccubeConfig->get('kernel.project_dir');
+                // $envDir = $this->container->getParameter('kernel.project_dir');
                 $envFile = $this->envDir.'/.env';
                 $envDistFile = $this->envDir.'/.env.dist';
 
@@ -133,7 +133,7 @@ class InstallerCommand extends Command
         $this->envFileUpdater->trustedHosts = $this->io->ask('Trusted hosts. ex) www.example.com, localhost ...etc', $trustedHosts);
 
         // DATABASE_URL
-        $databaseUrl = $this->eccubeConfig->get('eccube_database_url');
+        $databaseUrl = $this->container->getParameter('eccube_database_url');
         if (empty($databaseUrl)) {
             $databaseUrl = 'sqlite:///var/eccube.db';
         }
@@ -147,14 +147,14 @@ class InstallerCommand extends Command
         $this->envFileUpdater->databaseCharset = \str_starts_with($databaseUrl, 'mysql') ? 'utf8mb4' : 'utf8';
 
         // MAILER_DSN
-        $mailerDsn = $this->eccubeConfig->get('eccube_mailer_dsn');
+        $mailerDsn = $this->container->getParameter('eccube_mailer_dsn');
         if (empty($mailerDsn)) {
             $mailerDsn = 'null://null';
         }
         $this->envFileUpdater->mailerDsn = $this->io->ask('Mailer Dsn', $mailerDsn);
 
         // ECCUBE_AUTH_MAGIC
-        $authMagic = $this->eccubeConfig->get('eccube_auth_magic');
+        $authMagic = $this->container->getParameter('eccube_auth_magic');
         if (empty($authMagic) || $authMagic === '<change.me>') {
             $authMagic = StringUtil::random();
         }
@@ -173,21 +173,21 @@ class InstallerCommand extends Command
         $this->envFileUpdater->appDebug = env('APP_DEBUG', '0');
 
         // ECCUBE_ADMIN_ROUTE
-        $adminRoute = $this->eccubeConfig->get('eccube_admin_route');
+        $adminRoute = $this->container->getParameter('eccube_admin_route');
         if (empty($adminRoute)) {
             $adminRoute = 'admin';
         }
         $this->envFileUpdater->adminRoute = $adminRoute;
 
         // ECCUBE_TEMPLATE_CODE
-        $templateCode = $this->eccubeConfig->get('eccube_theme_code');
+        $templateCode = $this->container->getParameter('eccube_theme_code');
         if (empty($templateCode)) {
             $templateCode = 'default';
         }
         $this->envFileUpdater->templateCode = $templateCode;
 
         // ECCUBE_LOCALE
-        $locale = $this->eccubeConfig->get('locale');
+        $locale = $this->container->getParameter('locale');
         if (empty($locale)) {
             $locale = 'ja';
         }
@@ -205,7 +205,7 @@ class InstallerCommand extends Command
         }
 
         // envファイルへの更新反映処理
-        $this->envFileUpdater->envDir = $this->eccubeConfig->get('kernel.project_dir');
+        $this->envFileUpdater->envDir = $this->container->getParameter('kernel.project_dir');
         $this->envFileUpdater->updateEnvFile();
     }
 
@@ -219,13 +219,13 @@ class InstallerCommand extends Command
         // Process実行時に, APP_ENV/APP_DEBUGが子プロセスに引き継がれてしまうため,
         // 生成された.envをロードして上書きする.
         if ($input->isInteractive()) {
-            $envDir = $this->eccubeConfig->get('kernel.project_dir');
+            $envDir = $this->container->getParameter('kernel.project_dir');
             if (file_exists($envDir.'/.env')) {
                 (Dotenv::createUnsafeMutable($envDir))->load();
             }
         }
 
-        // 対話モード実行時, eccubeConfig->get('eccube_database_url')では
+        // 対話モード実行時, container->getParameter('eccube_database_url')では
         // 更新後の値が取得できないため, getenv()を使用する.
         $databaseUrl = getenv('DATABASE_URL');
         $databaseName = $this->getDatabaseName($databaseUrl);

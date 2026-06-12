@@ -1,0 +1,12 @@
+<script>
+    function move_row_from_to(tagetId, previosId, container)
+    {
+        if (typeof container === 'undefined') {
+            container = '.row';
+        }
+        var $target = $(tagetId).closest(container);
+        var $previous = $(previosId).closest(container);
+        $previous.after($target);
+        $target.show();
+    }
+</script>

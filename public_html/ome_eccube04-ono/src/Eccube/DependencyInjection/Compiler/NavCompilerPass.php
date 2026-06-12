@@ -33,7 +33,7 @@ class NavCompilerPass implements CompilerPassInterface
                 throw new \InvalidArgumentException(sprintf('Service "%s" must implement interface "%s".', $id, EccubeNav::class));
             }
 
-            /** @var EccubeNav $class */
+            /** @var $class EccubeNav */
             $addNav = $class::getNav();
             $nav = array_replace_recursive($nav, $addNav);
         }

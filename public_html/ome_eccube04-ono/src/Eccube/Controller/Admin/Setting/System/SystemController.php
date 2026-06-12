@@ -13,7 +13,6 @@
 
 namespace Eccube\Controller\Admin\Setting\System;
 
-use Eccube\Common\EccubeConfig;
 use Eccube\Common\Constant;
 use Eccube\Service\SystemService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -24,11 +23,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class SystemController
 {
     /**
-     * @var EccubeConfig
-     */
-    protected $eccubeConfig;
-    
-    /**
      * @var SystemService
      */
     protected $systemService;
@@ -36,14 +30,10 @@ class SystemController
     /**
      * SystemController constructor.
      *
-     * @param EccubeConfig $eccubeConfig
      * @param SystemService $systemService
      */
-    public function __construct(
-        EccubeConfig $eccubeConfig,
-        SystemService $systemService
-    ){
-        $this->eccubeConfig = $eccubeConfig;
+    public function __construct(SystemService $systemService)
+    {
         $this->systemService = $systemService;
     }
 
@@ -65,7 +55,6 @@ class SystemController
 
         return [
             'info' => $info,
-            'phpinfo_enabled' => $this->eccubeConfig->get('eccube_phpinfo_enabled'),
         ];
     }
 

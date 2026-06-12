@@ -15,11 +15,11 @@ namespace Eccube\Service;
 
 use Eccube\Common\EccubeConfig;
 use RobThree\Auth\TwoFactorAuth;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 class TwoFactorAuthService
 {
@@ -34,14 +34,19 @@ class TwoFactorAuthService
     public const DEFAULT_COOKIE_NAME = 'eccube_2fa';
 
     /**
+     * @var ContainerInterface
+     */
+    protected $container;
+
+    /**
      * @var EccubeConfig
      */
     protected $eccubeConfig;
 
     /**
-     * @var PasswordHasherFactoryInterface
+     * @var EncoderFactoryInterface
      */
-    protected $passwordHasherFactory;
+    protected $encoderFactory;
 
     /**
      * @var RequestStack
@@ -52,6 +57,11 @@ class TwoFactorAuthService
      * @var Request
      */
     protected $request;
+
+    /**
+     * @var Encoder
+     */
+    protected $encoder;
 
     /**
      * @var string
@@ -71,18 +81,22 @@ class TwoFactorAuthService
     /**
      * constructor.
      *
+     * @param ContainerInterface $container
      * @param EccubeConfig $eccubeConfig
-     * @param UserPasswordHasherInterface $passwordHasher
+     * @param EncoderFactoryInterface $encoderFactory
      */
     public function __construct(
+        ContainerInterface $container,
         EccubeConfig $eccubeConfig,
-        PasswordHasherFactoryInterface $passwordHasherFactory,
+        EncoderFactoryInterface $encoderFactory,
         RequestStack $requestStack
     ) {
+        $this->container = $container;
         $this->eccubeConfig = $eccubeConfig;
-        $this->passwordHasherFactory = $passwordHasherFactory;
+        $this->encoderFactory = $encoderFactory;
         $this->requestStack = $requestStack;
         $this->request = $requestStack->getCurrentRequest();
+        $this->encoder = $this->encoderFactory->getEncoder('Eccube\\Entity\\Member');
         $this->tfa = new TwoFactorAuth();
 
         if ($this->eccubeConfig->get('eccube_2fa_cookie_name')) {
@@ -104,14 +118,13 @@ class TwoFactorAuthService
     {
         if (($json = $this->request->cookies->get($this->cookieName))) {
             $configs = json_decode($json);
-            $hasher = $this->passwordHasherFactory->getPasswordHasher($Member);
-
+            $encodedString = $this->encoder->encodePassword($Member->getId().$Member->getTwoFactorAuthKey(), $Member->getSalt());
             if (
                 $configs
                 && isset($configs->{$Member->getId()})
                 && ($config = $configs->{$Member->getId()})
                 && property_exists($config, 'key')
-                && $hasher->verify($config->key, $Member->getId().$Member->getTwoFactorAuthKey())
+                && $config->key === $encodedString
                 && (
                     $this->expire == 0
                     || (property_exists($config, 'date') && ($config->date && $config->date > date('U', strtotime('-'.$this->expire.' day'))))
@@ -131,8 +144,7 @@ class TwoFactorAuthService
      */
     public function createAuthedCookie($Member)
     {
-        $hasher = $this->passwordHasherFactory->getPasswordHasher($Member);
-        $encodedString = $hasher->hash($Member->getId().$Member->getTwoFactorAuthKey());
+        $encodedString = $this->encoder->encodePassword($Member->getId().$Member->getTwoFactorAuthKey(), $Member->getSalt());
 
         $configs = json_decode('{}');
         if (($json = $this->request->cookies->get($this->cookieName))) {

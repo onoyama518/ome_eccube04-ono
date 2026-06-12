@@ -44,6 +44,12 @@ if (!class_exists(OrderStatus::class, false)) {
         public const PROCESSING = 8;
         /** 返品 */
         public const RETURNED = 9;
+        // /** 発送待ち */
+        public const AWAITING = 10;
+        // /** 入金待ち */
+        public const PAID_AWAITING = 11;
+        // /** 決済処理中から注文 */
+        public const CANCEL_PENDING = 12;
 
         /**
          * 受注一覧画面で, ステータスごとの受注件数を表示するかどうか

@@ -27,6 +27,7 @@ use Eccube\Event\EventArgs;
 use Eccube\Repository\BaseInfoRepository;
 use Eccube\Repository\MailHistoryRepository;
 use Eccube\Repository\MailTemplateRepository;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
@@ -74,6 +75,9 @@ class MailService
      */
     protected $twig;
 
+    /** @var ContainerInterface */
+    protected $container;
+
     /**
      * MailService constructor.
      *
@@ -84,6 +88,7 @@ class MailService
      * @param EventDispatcherInterface $eventDispatcher
      * @param \Twig\Environment $twig
      * @param EccubeConfig $eccubeConfig
+     * @param ContainerInterface $container
      */
     public function __construct(
         MailerInterface $mailer,
@@ -93,6 +98,7 @@ class MailService
         EventDispatcherInterface $eventDispatcher,
         \Twig\Environment $twig,
         EccubeConfig $eccubeConfig,
+        ContainerInterface $container
     ) {
         $this->mailer = $mailer;
         $this->mailTemplateRepository = $mailTemplateRepository;
@@ -101,6 +107,7 @@ class MailService
         $this->eventDispatcher = $eventDispatcher;
         $this->eccubeConfig = $eccubeConfig;
         $this->twig = $twig;
+        $this->container = $container;
     }
 
     /**
@@ -122,7 +129,7 @@ class MailService
         ]);
 
         $message = (new Email())
-            ->subject('['.$this->BaseInfo->getShopName().'] '.$MailTemplate->getMailSubject())
+            ->subject($MailTemplate->getMailSubject().$this->BaseInfo->getShopName())
             ->from(new Address($this->BaseInfo->getEmail01(), $this->BaseInfo->getShopName()))
             ->to($this->convertRFCViolatingEmail($Customer->getEmail()))
             ->bcc($this->BaseInfo->getEmail01())
@@ -181,7 +188,8 @@ class MailService
         ]);
 
         $message = (new Email())
-            ->subject('['.$this->BaseInfo->getShopName().'] '.$MailTemplate->getMailSubject())
+        
+            ->subject($MailTemplate->getMailSubject().$this->BaseInfo->getShopName())
             ->from(new Address($this->BaseInfo->getEmail01(), $this->BaseInfo->getShopName()))
             ->to($this->convertRFCViolatingEmail($Customer->getEmail()))
             ->bcc($this->BaseInfo->getEmail01())
@@ -239,7 +247,7 @@ class MailService
         ]);
 
         $message = (new Email())
-            ->subject('['.$this->BaseInfo->getShopName().'] '.$MailTemplate->getMailSubject())
+            ->subject($MailTemplate->getMailSubject().$this->BaseInfo->getShopName())
             ->from(new Address($this->BaseInfo->getEmail01(), $this->BaseInfo->getShopName()))
             ->to($this->convertRFCViolatingEmail($email))
             ->bcc($this->BaseInfo->getEmail01())
@@ -298,7 +306,7 @@ class MailService
 
         // 問い合わせ者にメール送信
         $message = (new Email())
-            ->subject('['.$this->BaseInfo->getShopName().'] '.$MailTemplate->getMailSubject())
+            ->subject($MailTemplate->getMailSubject().$this->BaseInfo->getShopName())
             ->from(new Address($this->BaseInfo->getEmail02(), $this->BaseInfo->getShopName()))
             ->to($this->convertRFCViolatingEmail($formData['email']))
             ->bcc($this->BaseInfo->getEmail02())
@@ -356,7 +364,7 @@ class MailService
         ]);
 
         $message = (new Email())
-            ->subject('['.$this->BaseInfo->getShopName().'] '.$MailTemplate->getMailSubject())
+            ->subject($MailTemplate->getMailSubject().$this->BaseInfo->getShopName())
             ->from(new Address($this->BaseInfo->getEmail01(), $this->BaseInfo->getShopName()))
             ->to($this->convertRFCViolatingEmail($Order->getEmail()))
             ->bcc($this->BaseInfo->getEmail01())
@@ -423,7 +431,7 @@ class MailService
     {
         log_info('仮会員登録再送メール送信開始');
 
-        /** @var \Eccube\Entity\MailTemplate $MailTemplate */
+        /* @var $MailTemplate \Eccube\Entity\MailTemplate */
         $MailTemplate = $this->mailTemplateRepository->find($this->eccubeConfig['eccube_entry_confirm_mail_template_id']);
 
         $body = $this->twig->render($MailTemplate->getFileName(), [
@@ -433,7 +441,7 @@ class MailService
         ]);
 
         $message = (new Email())
-            ->subject('['.$this->BaseInfo->getShopName().'] '.$MailTemplate->getMailSubject())
+            ->subject($MailTemplate->getMailSubject().$this->BaseInfo->getShopName())
             ->from(new Address($this->BaseInfo->getEmail01(), $this->BaseInfo->getShopName()))
             ->to($this->convertRFCViolatingEmail($Customer->getEmail()))
             ->bcc($this->BaseInfo->getEmail01())
@@ -493,7 +501,7 @@ class MailService
         log_info('受注管理通知メール送信開始');
 
         $message = (new Email())
-            ->subject('['.$this->BaseInfo->getShopName().'] '.$formData['mail_subject'])
+            ->subject($formData['mail_subject'].$this->BaseInfo->getShopName())
             ->from(new Address($this->BaseInfo->getEmail01(), $this->BaseInfo->getShopName()))
             ->to($this->convertRFCViolatingEmail($Order->getEmail()))
             ->bcc($this->BaseInfo->getEmail01())
@@ -541,7 +549,7 @@ class MailService
         ]);
 
         $message = (new Email())
-            ->subject('['.$this->BaseInfo->getShopName().'] '.$MailTemplate->getMailSubject())
+            ->subject($MailTemplate->getMailSubject().$this->BaseInfo->getShopName())
             ->from(new Address($this->BaseInfo->getEmail01(), $this->BaseInfo->getShopName()))
             ->to($this->convertRFCViolatingEmail($Customer->getEmail()))
             ->bcc($this->BaseInfo->getEmail01())
@@ -603,7 +611,7 @@ class MailService
         ]);
 
         $message = (new Email())
-            ->subject('['.$this->BaseInfo->getShopName().'] '.$MailTemplate->getMailSubject())
+            ->subject($MailTemplate->getMailSubject().$this->BaseInfo->getShopName())
             ->from(new Address($this->BaseInfo->getEmail01(), $this->BaseInfo->getShopName()))
             ->to($this->convertRFCViolatingEmail($Customer->getEmail()))
             ->bcc($this->BaseInfo->getEmail01())
@@ -664,7 +672,7 @@ class MailService
         $body = $this->getShippingNotifyMailBody($Shipping, $Order, $MailTemplate->getFileName());
 
         $message = (new Email())
-            ->subject('['.$this->BaseInfo->getShopName().'] '.$MailTemplate->getMailSubject())
+            ->subject($MailTemplate->getMailSubject().$this->BaseInfo->getShopName())
             ->from(new Address($this->BaseInfo->getEmail01(), $this->BaseInfo->getShopName()))
             ->to($this->convertRFCViolatingEmail($Order->getEmail()))
             ->bcc($this->BaseInfo->getEmail01())
@@ -781,7 +789,7 @@ class MailService
         ]);
 
         $message = (new Email())
-            ->subject('['.$this->BaseInfo->getShopName().'] '.$MailTemplate->getMailSubject())
+            ->subject($MailTemplate->getMailSubject().$this->BaseInfo->getShopName())
             ->from(new Address($this->BaseInfo->getEmail01(), $this->BaseInfo->getShopName()))
             ->to($this->convertRFCViolatingEmail($Customer->getEmail()))
             ->bcc($this->BaseInfo->getEmail01())
@@ -860,7 +868,7 @@ class MailService
      */
     public function convertRFCViolatingEmail(string $email): Address
     {
-        if ($this->eccubeConfig->get('eccube_rfc_email_check')) {
+        if ($this->container->getParameter('eccube_rfc_email_check')) {
             return new Address($email);
         }
 

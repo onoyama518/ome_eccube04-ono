@@ -1,0 +1,843 @@
+{% extends 'default_frame.twig' %}
+
+{% block main %}
+<script>
+// 切り替えタブ
+	$(function() {
+  /*初期表示*/
+  // 全ての.ChangeElem_Btnからis-activeクラスを削除
+  $('.ChangeElem_Panel').eq(0).show(); // .ChangeElem_Panelの一つ目を表示
+  $('.ChangeElem_Btn').eq(0).addClass('is-active'); // .ChangeElem_Btnの一つ目にis-activeクラスを追加
+
+  /*クリックイベント*/
+  $('.ChangeElem_Btn').each(function() {
+    $(this).on('click', function() {
+      var index = $('.ChangeElem_Btn').index(this);
+      $('.ChangeElem_Btn').removeClass('is-active');
+      $(this).addClass('is-active');
+      $('.ChangeElem_Panel').hide();
+      $('.ChangeElem_Panel').eq(index).show();
+    });
+  });
+
+});
+//オプションエリア切り替え
+$(function() {
+  $('.ChangeElem_Btn02-01').click(function() {
+    // 非表示に設定
+	$('.ChangeElem01_Panel-inner').css("display","block");
+	$('.ChangeElem_Btn02-01').css("border","5px solid #de6775");
+    $('.ChangeElem_Btn02-02').css("border","none");
+    $('.ChangeElem02_Panel-inner').css("display", "none");
+  });
+ });	
+$(function() {
+  $('.ChangeElem_Btn02-02').click(function() {
+    // 非表示に設定
+	$('.ChangeElem02_Panel-inner').css("display","block");
+	$('.ChangeElem_Btn02-02').css("border","5px solid #de6775");
+    $('.ChangeElem_Btn02-01').css("border","none");
+    $('.ChangeElem01_Panel-inner').css("display", "none");
+  });
+ });
+	
+//スクロールで左からスライドイン	
+//ウィンドウの高さを取得する
+var window_h = $(window).height();
+//スクロールイベント
+$(window).on("scroll", function() {
+  //スクロールの位置を取得する
+  var scroll_top = $(window).scrollTop();
+  $(".leftslide-box").each(function() {
+    //各box要素のtopの位置を取得する
+    var elem_pos = $(this).offset().top; 
+    //どのタイミングでフェードインさせるか
+    if (scroll_top >= elem_pos - window_h + 200) {
+      $(this).addClass("fadein");　//特定の位置を超えたらクラスを追加
+    } else {
+      $(this).removeClass("fadein"); //そうでない場合はクラスを削除
+    }
+  });
+});
+</script>
+	
+		<div class="oem-page oem_pc" >
+			
+			<img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/oem-top.jpg' }} alt="omeのOEM製作">
+			
+			<div class="oem-page-inner01">
+				<p class="topcatch text-center">OEM とは、<span class="pink-text">Original Equipment Manufacturing </span>の略で<br class="br_pc_art">お客様の自社ブランドで企画販売されるオリジナル製品を、<br class="br_pc_art">依頼を受けてお客様に代わって製造する事業です。</p>
+				
+				<section>
+					<h1>オリジナルブランド商材の開発・製作</h1>
+					<p>ome エンタープライズは2005年創業！<br/>サロン様が自信をもって｢明るいエクステンションライフ｣を発信できるよう少しでも安心･安全な商材をご提供したい…<br>そんな想い一心で商材開発に励み、商材の進化とともにつちかったノウハウを惜しみなく貴社のオリジナル製作( 企画･製造･デザイン) に尽力致します!!</p>
+					<p class="text-center" style="font-size:15px;"><span class="pink-text">“あればいいな”</span>を実現するお手伝いをさせてください！</p>
+				</section>
+				<section>
+					<h2>ome のOEM 商材製作のメリット</h2>
+					<ul class="merit">
+					  <li class="leftslide-box">小ロット～OEM 製作可能</li>
+					  <li class="leftslide-box">スピード納品を実現</li>
+					  <li class="leftslide-box">確かな品質・開発力</li>
+					</ul>
+				</section>
+				<section class="example">
+					<h2>まつげ商材や美容商品にも対応</h2>
+					<p class="p_ex">＜ご提案商材の一例＞</p>
+					<table>
+						<tr><td>まつげエクステ商材</td><td>グルー / エクステンション / ツイーザー / 前処理剤 / リムーバー / グループレート / マスカラブラシ</td></tr>
+						<tr><td>まつげパーマ商材</td><td>トリートメント / パーマグルー /パーマ液 / ゴムロット / パーマスティック</td></tr>
+						<tr><td>化粧品</td><td>アイパック / マスカラ / コーティング/ まつげ美容液 / クレンジング / ファンデーション / つけまつげ</td></tr>
+						<tr><td>ome商品</td><td>ome 定番商品に、販売企業様、サロン様のロゴマークを入れたオリジナル商品なども対応可能！</td></tr>
+					</table>
+				</section>
+</div><!--oem-page-inner01-->
+
+<div class="oem-page-inner02">
+	
+<div class="tabs">	
+	
+<div class="ChangeElem_Btn_Content">
+	<div class="ChangeElem_Btn is-active"><h2 class="tab-title">Glue</h2></div>
+  <div class="ChangeElem_Btn"><h2 class="tab-title">Extension</h2></div>
+  <div class="ChangeElem_Btn"><h2 class="tab-title">Tweezers</h2></div>
+  <div class="ChangeElem_Btn"><h2 class="tab-title">Cosmetics</h2></div>
+</div>
+
+
+<!-- グルー -->	
+<div class="ChangeElem_Panel">
+    <div class="ChangeElem_Panel-inner">
+	<div class="plan-section1 glue-detail">
+	<h2 class="plan-title"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/glue.png' }} alt="グルー"></h2>
+		<h3 class="cat-catch"><span class="pink-text">安全性・安定性・使いやすさを追求した、総販売総数22万本のこだわり抜いた日本製グルー</sapn></h3>
+		<section class="sec01">
+		 <img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/glue-sc.jpg' }} alt="グルーについて">
+		 <p>まつげエクステに関する材料の中で、最も重要と言っても過言ではないグルー。使用するグルーによってお客様からの信頼を得ることが出来る反面、クレームにも繋がります。使いやすさ･速乾性･安全性･高持続など、お客様の希望されるグルーをご提案させて頂きます。</p>
+		</section>
+		<section>
+		<div class="underline-text"><p>種類</p></div>
+		<p style="text-align:center">粘性・色味･操作性など使いやすさに関しても様々なタイプがございます。</p>
+		<section class="sec02">
+		 <img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/echiru.png' }} alt="エチルグルー">
+		 <ul>
+			<li class="col-red">一番人気・付け放題施術には必須のグルー</li>
+			<li class="col-red">エチルシアノアクリレート</li>
+			<li>多少刺激性がありますが、硬化速度の速さから付け放題メニューやボリュームラッシュなどでは必要不可欠です。</li>
+		 </ul>
+		</section>
+		<section class="sec02">
+		<img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/buchiru.png' }} alt="ブチルグルー">
+		 <ul>
+			<li class="col-ora">安全性を考慮して用意しておきたいグルー</li>
+			<li class="col-ora">ブチルシアノアクリレート</li>
+			<li>硬化速度はやや落ちますが、低刺激で揮発性が低く医療用の瞬間接着剤などに用いられています。</li>
+		 </ul>
+		</section>
+		<section class="sec02">
+		<img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/ekishi.png' }} alt="エキシトエチルグルー">
+		 <ul>
+			<li class="col-pur">安全性・使いやすさを求めたグルー</li>
+			<li class="col-pur">エトキシエチルシアノアクリレート</li>
+			<li>極低刺激で揮発性が非常に低く硬化速度も早い万能タイプですが、持続性がやや落ちるグルーです。</li>
+		 </ul>
+		</section>
+		<div class="underline-text"><p>仕様</p></div>
+		<p style="text-align:center">内容量やボトル容器･キャップの形状に関してお選びいただけます。</p>
+		<table class="siyou">
+			<tr>
+				<td><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/glue01.jpg' }} alt="グルー 容器"><p>容器</p></td>
+				<td><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/glue02.jpg' }} alt="グルー キャップ"><p>キャップ</p></td>
+				<td><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/glue03.jpg' }} alt="ラベル 容器"><p>ラベル</p></td>
+			</tr>
+			<tr>
+				<td>＜内容量＞1ml / 2ml / 5ml / 10ml<br>＜タイプ＞ボトル / チューブ</td>
+				<td>ノーマル / カラー / アルミ</td>
+				<td>紙シール / 容器印刷</td>
+			</tr>
+		</table>
+			<h3 class="cat-catch"><span class="pink-text">最小ロット50個から対応可能！<br>デザイン完成から約14日で商品化！</sapn></h3>
+		<div class="jirei-area">
+			<table class="jirei">
+				<tr><th colspan="2">事例1</th></tr>
+				<tr><td>種類</td><td>エチル系グルー</td></tr>
+				<tr><td>仕様</td><td>内容量：5ml<br>容器：ボトルタイプ･アルミキャップ<br>外装：アルミパック</td></tr>
+				<tr><td>発注数</td><td>100個</td></tr>
+				<tr><td>総額</td><td>¥198,000～</td></tr>
+			</table>
+			<table class="jirei">
+				<tr><th colspan="2">事例2</th></tr>
+				<tr><td>種類</td><td>ブチル系グルー</td></tr>
+				<tr><td>仕様</td><td>内容量：10ml<br>容器：ボトルタイプ<br>外装：アルミパック</td></tr>
+				<tr><td>発注数</td><td>50個</td></tr>
+				<tr><td>総額</td><td>¥178,000～</td></tr>
+			</table>
+		</div>		
+		</section>
+		
+	</div><!-- plan-section1 -->
+			
+  </div><!-- ChangeElem_Panel-inner -->
+</div><!-- ChangeElem_Panel -->
+
+	
+	
+<!-- エクステンション -->
+<div class="ChangeElem_Panel" id="test">
+    <div class="ChangeElem_Panel-inner">
+	<div class="plan-section1">
+	<h2 class="plan-title"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/exte.png' }} alt="エクステンション"></h2>
+		<h3 class="cat-catch"><span class="pink-text">弊社でしかつくれない日本国内生産の最高品質エクステンション<br>海外の大量生産品にはできない特殊作業工程で、カールキープの安定性と圧倒的な柔らかさを実現</sapn></h3>
+		<section>
+		<div class="underline-text"><p>種類</p></div>
+		<p style="text-align:center">シングル・ボリューム・フラットなどエクステンション全般対応。</p>
+		<section class="sec04">
+		  <div class="sec04-inner">
+		       <div class="sec04-inner-left">
+				 <div class="ex-item">
+				    <div class="ex-img"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/ex-single.jpg' }} alt="エクステ シングルラッシュ"></div>
+				    <div class="ex-text"><span class="ex-name">シングルラッシュ</span>定番のシングルラッシュ。柔らかさも様々ありマットタイプや光沢タイプなど選択可能。</div>
+			     </div>
+				 <div class="ex-item">
+				  <div class="ex-text"><span class="ex-name">ボリュームラッシュ</span>太さ0.03mm･0.05mm･0.06mm･0.07mmから選択可能。エクステ付着の粘着テープにもこだわり厳選。</div>
+				  <div class="ex-img"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/ex-volume.jpg' }} alt="エクステ ボリュームラッシュ"></div>
+				</div>
+				 <div class="ex-item">
+				  <div class="ex-img"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/ex-flat.jpg' }} alt="エクステ フラットラッシュ"></div>
+				  <div class="ex-text"><span class="ex-name">フラットラッシュ</span>厚みを抑えた特殊形状により軽さ･柔らかさ･高持続を兼ね揃えたエクステンション。</div>
+				</div>
+		       </div>
+		       <div class="sec04-inner-right">
+				 <div class="ex-item">
+				  <div class="ex-text"><span class="ex-name">フレアラッシュ</span>はじめからファンが作られており、整って見える長さ均一や自然な印象の長さ不均一タイプがあり、束数も3～10本とデザインやボリューム感に合わせて選ぶ事が可能。</div>
+				  <div class="ex-img"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/ex-flare.jpg' }} alt="エクステ フレアラッシュ"></div>
+				 </div>
+				 <div class="ex-item">
+				  <div class="ex-img"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/ex-s-volume.jpg' }} alt="エクステ 瞬間ボリュームラッシュ"></div>
+				  <div class="ex-text"><span class="ex-name">瞬間ボリュームラッシュ</span>毛をとるだけで瞬時にファンを作れるので容易にボリュームラッシュ施術が可能となり施術時間も短縮。</div>
+				 </div>
+				 <div class="ex-item">
+				  <div class="ex-text"><span class="ex-name">カラーラッシュ</span>全体付けでもポイント付けでも印象を大きく変えれるカラーラッシュは、自然なブラウン系から派手な原色系まで約20色前後のカラーを用意。</div>
+				  <div class="ex-img"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/ex-color.jpg' }} alt="エクステ カラーラッシュ"></div>
+                </div>
+			</div>
+		  </div>
+		  <div class="ex-curl"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/ex-curl.png' }} alt="エクステ カールの種類"></div>
+		  <p>カールの種類は10種類以上あり、ケース内で太さや長さMIXも可能です。</p>
+		</section>
+		<div class="underline-text"><p>仕様</p></div>
+		<p style="text-align:center">台紙の紙質もお選びでき、ケースもプラスチックケースから<br>高級紙箱ケースまで選べ、オリジナルの一品をつくる事ができます。</p>
+		<table class="siyou02">
+			<tr>
+				<td><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/ex01.jpg' }} alt="エクステ 台紙"><p>台紙</p></td>
+				<td><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/ex02.jpg' }} alt="エクステ 外装"><p>外装</p></td>
+				<td><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/ex03.jpg' }} alt="エクステ 内容量"><p>内容量</p></td>
+				<td><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/ex04.jpg' }} alt="エクステ サイズシール"><p>サイズシール</p></td>
+			</tr>
+			<tr>
+				<td>紙 / アルミ</td>
+				<td>プラスチック / アルミ / 高級紙箱</td>
+				<td>4列 / 9列 / 12列 / 16列</td>
+				<td>ノーマル / オリジナル</td>
+			</tr>
+		</table>
+			<h3 class="cat-catch"><span class="pink-text">最低ロット400ケースから製造可能！<br>納期約1ヶ月～1.5ヶ月！</sapn></h3>
+		<div class="jirei-area">
+			<table class="jirei">
+				<tr><th colspan="2">事例1</th></tr>
+				<tr><td>種類</td><td>日本製フラットラッシュ</td></tr>
+				<tr><td>仕様</td><td>内容量：12列<br>台紙：紙<br>台紙ケース：高級紙箱</td></tr>
+				<tr><td>発注数</td><td>400個</td></tr>
+				<tr><td>総額</td><td>¥440,000～</td></tr>
+			</table>
+			<table class="jirei">
+				<tr><th colspan="2">事例2</th></tr>
+				<tr><td>種類</td><td>シングルラッシュ・カラーラッシュ</td></tr>
+				<tr><td>仕様</td><td>内容量：シングル12列、カラー4列<br>台紙：アルミ台紙<br>ケース：プラスチックケース</td></tr>
+				<tr><td>発注数</td><td>400個（シングル200個、カラー200個）</td></tr>
+				<tr><td>総額</td><td>¥280,000～</td></tr>
+			</table>
+		</div>		
+		</section>
+		
+	</div><!-- plan-section1 -->
+			
+　  </div><!-- ChangeElem_Panel-inner -->
+	
+</div><!-- ChangeElem_Panel -->
+
+<!-- ツイーザー -->
+<div class="ChangeElem_Panel">
+    <div class="ChangeElem_Panel-inner">
+	<div class="plan-section1">
+	<h2 class="plan-title"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/tweezer.png' }} alt="ツイーザー"></h2>
+		<h3 class="cat-catch"><span class="pink-text">世界に誇る日本製ツイーザー
+<br>職人による匠の技術で１本１本丁寧に仕上げており、軽量でへたりにくいプロ仕様</sapn></h3>
+		<section class="sec01">
+		 <img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/tweezer-all.jpg' }} alt="ツイーザー について">
+		 <p>施術による仕上がりのデザイン・スピード・疲れは、使用するツイーザーによって左右されます。世界トップレベルのツイーザーを使用する事で施術効率が確実に上がります。形状もストレートやカーブ・先曲がり・L字などあり、その中でも手にフィットする長さや厚みにまでこだわる事が可能です。</p>
+		</section>
+		<section>
+		<div class="underline-text"><p>種類</p></div>
+		<p style="text-align:center">完全オリジナル形状の金型製作や、高級ステンレス･チタンなどの材質選択も可能です。</p>
+		<section class="sec03">
+		  <table>
+			  <tr>
+				  <td><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/twee_st.png' }} alt="ツイーザー ストレートタイプ"></td>
+				  <td><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/twee_sakimagari_sita.png' }} alt="ツイーザー 先曲がりタイプ上"></td>
+			  </tr>
+			  <tr>
+				  <td><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/twee_cur.png' }} alt="ツイーザー カールタイプ">
+				  </td>
+				  <td><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/twee_sakimagari_ue.png' }} alt="ツイーザー 先曲がりタイプ下"></td>
+			  </tr>
+		  </table>
+		</section>
+		<div class="underline-text"><p>仕様</p></div>
+		<p style="text-align:center">ロゴ入れも刻印打刻･レーザー刻印などお選びいただけます。</p>
+		<table class="siyou">
+			<tr>
+				<td><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/tweezer01.jpg' }} alt="ツイーザー 刻印"><p>刻印</p></td>
+				<td><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/tweezer02.jpg' }} alt="ツイーザー 外装"><p>外装</p></td>
+				<td><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/tweezer03.jpg' }} alt="ツイーザー 塗装"><p>塗装</p></td>
+			</tr>
+			<tr>
+				<td>刻印なし / あり</td>
+				<td>OPP袋 / 筒ケース / 高級ケース</td>
+				<td>ノーマル（ステンレス） / カラー（色付け）</td>
+			</tr>
+		</table>
+			<h3 class="cat-catch"><span class="pink-text">最小ロット50本から製造可能！<br>納期約1.5ヶ月～2ヶ月！</sapn></h3>
+		<div class="jirei-area">
+			<table class="jirei">
+				<tr><th colspan="2">事例1</th></tr>
+				<tr><td>種類</td><td>日本製ストレートツイーザー</td></tr>
+				<tr><td>仕様</td><td>刻印ロゴ入り　外装：OPP袋</td></tr>
+				<tr><td>発注数</td><td>80個</td></tr>
+				<tr><td>総額</td><td>¥90,000～</td></tr>
+			</table>
+			<table class="jirei">
+				<tr><th colspan="2">事例2</th></tr>
+				<tr><td>種類</td><td>日本製ボリュームラッシュツイーザー</td></tr>
+				<tr><td>仕様</td><td>刻印ロゴ入り･カラー塗装<br>外装：筒ケース</td></tr>
+				<tr><td>発注数</td><td>100個</td></tr>
+				<tr><td>総額</td><td>¥130,000～</td></tr>
+			</table>
+		</div>		
+		</section>
+	</div><!-- plan-section1 -->
+		
+  </div><!-- ChangeElem_Panel-inner -->
+				
+</div><!-- ChangeElem_Panel -->
+
+
+					
+<!-- コスメ -->
+<div class="ChangeElem_Panel">
+    <div class="ChangeElem_Panel-inner">
+	<div class="plan-section1">
+	<h2 class="plan-title"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/cosme.png' }} alt="コスメ"></h2>
+		<h3 class="cat-catch"><span class="pink-text">マスカラや美容液など化粧品全般まで、国内生産にこだわりご用意しております</sapn></h3>
+		<section class="sec01">
+		 <img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/cosme.jpg' }} alt="コスメ について">
+		 <p>まつげエクステやパーマといった施術は自まつげが健康毛でないと長期間楽しんで頂けなかったり、施術を定期的に行うことで更に自まつげに負担がかかってしまいます。その中でまつげ美容液やトリートメントなどのケアアイテムは非常に今ニーズが高くなっております。完全オリジナルの美容液から店販に最適なホームケア化粧品まで幅広くご提案させて頂きます。</p>
+		</section>
+		<section>
+		<div class="underline-text"><p>種類</p></div>
+		<p style="text-align:center">販売実績のある美容液から完全オリジナルの化粧品全般まで製造可能です。</p>
+		  <section class="sec03">
+		   <div class="cosme-img"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/cosme01.jpg' }} alt="コーティング"></div>
+			  <div class="cosme-text"><span class="ex-name">コーティング（クリア・ブラック）</span>シングル・ボリュームなどの全エクステに対応し、持続力アップ・バラつき絡みを軽減、美容成分配合とトリプル効果のコーティングです。</div>
+			  <div class="cosme-img"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/cosme02.jpg' }} alt="トリートメント"></div>
+			  <div class="cosme-text"><span class="ex-name">トリートメント</span>サロン用プロテクトタイプの美容液。施術時間5分で単価アップできるプラスワンメニューとしてすぐに導入できます。まつげカールとの併用も可能です。</div>
+		</section>
+		<div class="cosme-nouki"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/cosme03.jpg' }} alt="コスメ　納期"></div>
+		<div class="jirei-area">
+			<table class="jirei">
+				<tr><th colspan="2">事例1</th></tr>
+				<tr><td>種類</td><td>まつ毛トリートメント（サロン用）</td></tr>
+				<tr><td>仕様</td><td>内容量：10ml<br>本体容器：スポイト容器<br>外装：PETケース</td></tr>
+				<tr><td>発注数</td><td>500個</td></tr>
+				<tr><td>総額</td><td>¥890,000～</td></tr>
+			</table>
+			<table class="jirei">
+				<tr><th colspan="2">事例2</th></tr>
+				<tr><td>種類</td><td>まつ毛美容液</td></tr>
+				<tr><td>仕様</td><td>内容量：4ml　本体：ハケタイプ<br>外装：化粧箱<br>印刷：容器印刷･化粧箱印刷</td></tr>
+				<tr><td>発注数</td><td>2000個</td></tr>
+				<tr><td>総額</td><td>¥1,600,000～</td></tr>
+			</table>
+		</div>		
+		</section>
+	</div><!-- plan-section1 -->
+			
+  </div><!-- ChangeElem_Panel-inner -->
+	
+</div><!-- ChangeElem_Panel -->
+	
+</div><!-- tabs -->
+				
+</div><!--oem-page-inner02-->
+
+<div class="oem-page-inner03">
+	<section>
+		<h2>OEMのよくある質問</h2>
+		<dl>
+			<dt>何個から製造可能ですか？</dt>
+			<dd>各商材にもよりますが、グルーであれば50個〜、エクステンションであれ
+				ば総数で400ケース(2回目以降のご注文からは100 ケース)〜となっております。</dd>
+		</dl>
+		<dl>
+			<dt>サンプル依頼はできますか？</dt>
+			<dd>詳細をお伺い致しました中で、ご希望に近い商品サンプルをお送りさせて頂きます。また既存商品であればすぐにお送りする事も可能ですが、サンプルの取り寄せに少しお時間がかかる商材もございます。</dd>
+		</dl>
+		<dl>
+			<dt>まつげ商材以外にも美容商材や化粧品のOEM 製造、また完全オリジナル製造は可能ですか？</dt>
+			<dd>もちろん可能でございます。ご希望商品製造のサポートをさせて頂きます。</dd>
+		</dl>
+	</section>
+</div><!--oem-page-inner03-->				
+<div class="oem-page-inner04">
+	<section>
+		<h2>OEM受注製造の流れ</h2>
+		<dl>
+			<dt><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/oem-tel-icon.jpg' }} alt="依頼・お問い合わせ"></dt>
+			<dd><h3>1. ご依頼・お問い合わせ</h3>OEM 検討商材をご指定の上、メールまたはお電話でご連絡ください。商材の特徴・詳細説明をさせていただきます。</dd>
+		</dl>
+		<dl>
+			<dt><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/oem-talk-icon.jpg' }} alt="ヒアリング"></dt>
+			<dd><h3>2. ヒアリング</h3>商材のコンセプトやターゲット、販路などについてのご予定を確認させていただきます。</dd>
+		</dl>
+		<dl>
+			<dt><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/oem-idea-icon.jpg' }} alt="ご提案"></dt>
+			<dd><h3>3. ご提案</h3>ヒアリング内容に基づき適切なコンサルティングを企画します。弊社商材の中に同類商材品のラインアップがある場合は他商材も合わせてご提案させていただきます。</dd>
+		</dl>
+		<dl>
+			<dt><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/oem-dentaku-icon.jpg' }} alt="仮お見積もり"></dt>
+			<dd><h3>4. 仮お見積もり</h3>アイテム数・封入物種類・数量など詳細を絞り込み、商材化に向けての概算のお見積りを提出させていただきます。</dd>
+		</dl>
+		<dl>
+			<dt><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/oem-kikaku-icon.jpg' }} alt="企画"></dt>
+			<dd><h3>5. 企画</h3>パッケージ・封入物デザインの制作をおこない、企画をすすめてまいります。</dd>
+		</dl>
+		<dl>
+			<dt><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/oem-shakehands-icon.jpg' }} alt="ご契約・ご発注"></dt>
+			<dd><h3>6. ご契約・ご発注</h3>パッケージ・封入物デザインなど商材の仕様が決定いたしましたら、最終のお見積りを提出させていただきます。</dd>
+		</dl>
+		<dl>
+			<dt><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/oem-factory-icon.jpg' }} alt="製作"></dt>
+			<dd><h3>7. 製作</h3>最新鋭の設備と万全の管理体制で、高品質な商材製作。少ロット製作にも、優れたコストパフォーマンスで対応します。</dd>
+		</dl>
+		<dl>
+			<dt><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/oem-truck-icon.jpg' }} alt="納品"></dt>
+			<dd><h3>8. ご提案</h3>工場検品・弊社での検品の2 度の検品を通過した商材をお客様の納品指定場所にお送りいたします。</dd>
+		</dl>
+	</section>
+</div><!--oem-page-inner03-->				
+	<section>
+	<ul class="oem-closing">
+	  <li>OEMに関するご質問などお気軽にお問い合わせください</li>
+	  <li class="oem-tel"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/tel-icon.png' }} alt="OEMの問い合わせ 電話する"><a href="tel:06-6252-3773">06-6252-3773</a> <sapn style="font-size:13px;">（営業時間／平日 10:00 〜 18:00）</span></li>
+	  <li class="oem-contact-button">
+        <li class="oem-contact-button"><a href="{{ url('contact', {'contact_type': 'OEMについて'}) }}"><span class="oem-mail-icon"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/mail-icon.png' }} alt="OEMに関するお問い合わせはコチラ"></span>お問い合わせやお申込みはこちら</a></li>
+</ul>	
+	</section>			
+			</div>
+		
+	
+<div id="lp-wrap" class="oem_sp">
+	
+		<div class="oem-page">
+			
+			<img src="/html/user_data/packages/sphone/img_2018/lp/oem-top.jpg" alt="omeのOEM製作">
+			
+			<div class="oem-page-inner01">
+				<p class="topcatch text-center">OEM とは、<span class="pink-text">Original Equipment Manufacturing </span>の略でお客様の自社ブランドで企画販売されるオリジナル製品を、依頼を受けてお客様に代わって製造する事業です。</p>
+				
+				<section>
+					<h1>オリジナルブランド商材の開発・製作</h1>
+					<p>ome エンタープライズは2005年創業！<br>サロン様が自信をもって｢明るいエクステンションライフ｣を発信できるよう少しでも安心･安全な商材をご提供したい…<br>そんな想い一心で商材開発に励み、商材の進化とともにつちかったノウハウを惜しみなく貴社のオリジナル製作( 企画･製造･デザイン) に尽力致します!!</p>
+					<p class="text-center" style="font-size:15px;"><span class="pink-text">“あればいいな”</span>を実現するお手伝いをさせてください！</p>
+				</section>
+				<section>
+					<h2>ome のOEM 商材製作のメリット</h2>
+					<ul class="merit">
+					  <li class="leftslide-box">小ロット～OEM 製作可能</li>
+					  <li class="leftslide-box">スピード納品を実現</li>
+					  <li class="leftslide-box">確かな品質・開発力</li>
+					</ul>
+				</section>
+				<section class="example">
+					<h2>まつげ商材や美容商品にも対応</h2>
+					<p style="text-align:center;">＜ご提案商材の一例＞</p>
+					<table>
+						<tr><td>まつげエクステ商材</td><td>グルー / エクステンション / ツイーザー / 前処理剤 / リムーバー / グループレート / マスカラブラシ</td></tr>
+						<tr><td>まつげパーマ商材</td><td>トリートメント / パーマグルー /パーマ液 / ゴムロット / パーマスティック</td></tr>
+						<tr><td>化粧品</td><td>アイパック / マスカラ/ コーティング/ まつげ美容液 / クレンジング / ファンデーション / つけまつげ</td></tr>
+						<tr><td>ome商品</td><td>ome 定番商品に、販売企業様、サロン様のロゴマークを入れたオリジナル商品なども対応可能！</td></tr>
+					</table>
+				</section>
+</div><!--oem-page-inner01-->
+
+<div class="oem-page-inner02">
+	
+<div class="tabs">	
+	
+<div class="ChangeElem_Btn_Content">
+	<div class="ChangeElem_Btn is-active"><h2 class="tab-title">Glue</h2></div>
+  <div class="ChangeElem_Btn"><h2 class="tab-title">Extension</h2></div>
+  <div class="ChangeElem_Btn"><h2 class="tab-title">Tweezers</h2></div>
+  <div class="ChangeElem_Btn"><h2 class="tab-title">Cosmetics</h2></div>
+</div>
+
+
+<!-- グルー -->	
+<div class="ChangeElem_Panel" style="display:block;">
+    <div class="ChangeElem_Panel-inner">
+	<div class="plan-section1 glue-detail">
+	<h2 class="plan-title"><img src="/html/user_data/packages/sphone/img_2018/lp/glue.png" alt="グルー"></h2>
+		<h3 class="cat-catch"><span class="pink-text">安全性・安定性・使いやすさを追求した、総販売総数22万本のこだわり抜いた日本製グルー</sapn></h3>
+		<section class="sec01">
+		 <img src="/html/user_data/packages/sphone/img_2018/lp/glue-sc.jpg" alt="グルーについて">
+		 <p>まつげエクステに関する材料の中で、最も重要と言っても過言ではないグルー。使用するグルーによってお客様からの信頼を得ることが出来る反面、クレームにも繋がります。使いやすさ･速乾性･安全性･高持続など、お客様の希望されるグルーをご提案させて頂きます。</p>
+		</section>
+		<section>
+		<div class="underline-text"><p>種類</p></div>
+		<p style="text-align:center">粘性・色味･操作性など使いやすさに関しても様々なタイプがございます。</p>
+		<section class="sec02">
+		 <img src="/html/user_data/packages/sphone/img_2018/lp/echiru.png" alt="エチルグルー">
+		 <ul style="text-align:center;">
+			<li class="col-red">一番人気・付け放題施術には必須のグルー</li>
+			<li class="col-red">エチルシアノアクリレート</li>
+			<li>多少刺激性がありますが、硬化速度の速さから付け放題メニューやボリュームラッシュなどでは必要不可欠です。</li>
+		 </ul>
+		</section>
+		<section class="sec02">
+		<img src="/html/user_data/packages/sphone/img_2018/lp/buchiru.png" alt="ブチルグルー">
+		 <ul style="text-align:center;">
+			<li class="col-ora">安全性を考慮して用意しておきたいグルー</li>
+			<li class="col-ora">ブチルシアノアクリレート</li>
+			<li>硬化速度はやや落ちますが、低刺激で揮発性が低く医療用の瞬間接着剤などに用いられています。</li>
+		 </ul>
+		</section>
+		<section class="sec02">
+		<img src="/html/user_data/packages/sphone/img_2018/lp/ekishi.png" alt="エキシトエチルグルー">
+		 <ul style="text-align:center;">
+			<li class="col-pur">安全性・使いやすさを求めたグルー</li>
+			<li class="col-pur">エトキシエチルシアノアクリレート</li>
+			<li>極低刺激で揮発性が非常に低く硬化速度も早い万能タイプですが、持続性がやや落ちるグルーです。</li>
+		 </ul>
+		</section>
+		<div class="underline-text"><p>仕様</p></div>
+		<p style="text-align:center">内容量やボトル容器･キャップの形状に関してお選びいただけます。</p>
+		<table class="siyou">
+			<tr>
+				<td><img src="/html/user_data/packages/sphone/img_2018/lp/glue01.jpg" alt="グルー 容器"><p>容器</p></td><td>＜内容量＞1ml / 2ml / 5ml / 10ml<br>＜タイプ＞ボトル / チューブ</td>
+			</tr>
+			<tr>
+				<td><img src="/html/user_data/packages/sphone/img_2018/lp/glue02.jpg" alt="グルー キャップ"><p>キャップ</p></td><td>ノーマル / カラー / アルミ</td>
+			</tr>
+                        <tr>
+                                 <td><img src="/html/user_data/packages/sphone/img_2018/lp/glue03.jpg" alt="ラベル 容器"><p>ラベル</p></td><td>紙シール / 容器印刷</td>
+			</tr>
+		</table>
+			<h3 class="cat-catch"><span class="pink-text">最小ロット50個から対応可能！<br>デザイン完成から約14日で商品化！</sapn></h3>
+		<div class="jirei-area">
+			<table class="jirei">
+				<tr><th colspan="2">事例1</th></tr>
+				<tr><td>種類</td><td>エチル系グルー</td></tr>
+				<tr><td>仕様</td><td>内容量：5ml<br>容器：ボトルタイプ･アルミキャップ<br>外装：アルミパック</td></tr>
+				<tr><td>発注数</td><td>100個</td></tr>
+				<tr><td>総額</td><td>¥198,000～</td></tr>
+			</table>
+			<table class="jirei">
+				<tr><th colspan="2">事例2</th></tr>
+				<tr><td>種類</td><td>ブチル系グルー</td></tr>
+				<tr><td>仕様</td><td>内容量：10ml<br>容器：ボトルタイプ<br>外装：アルミパック</td></tr>
+				<tr><td>発注数</td><td>50個</td></tr>
+				<tr><td>総額</td><td>¥178,000～</td></tr>
+			</table>
+		</div>		
+		</section>
+		
+	</div><!-- plan-section1 -->
+			
+  </div><!-- ChangeElem_Panel-inner -->
+</div><!-- ChangeElem_Panel -->
+
+
+	
+<!-- エクステンション -->
+<div class="ChangeElem_Panel">
+    <div class="ChangeElem_Panel-inner">
+	<div class="plan-section1">
+	<h2 class="plan-title"><img src="/html/user_data/packages/sphone/img_2018/lp/exte.png" alt="エクステンション"></h2>
+		<h3 class="cat-catch"><span class="pink-text">弊社でしかつくれない日本国内生産の最高品質エクステンション<br>海外の大量生産品にはできない特殊作業工程で、カールキープの安定性と圧倒的な柔らかさを実現</sapn></h3>
+		<section>
+		<div class="underline-text"><p>種類</p></div>
+		<p style="text-align:center">シングル・ボリューム・フラットなどエクステンション全般対応。</p>
+		<section class="sec04">
+		  <div class="sec04-inner">
+		       <div class="sec04-inner-left">
+				 <div class="ex-item">
+				    <div class="ex-img"><img src="/html/user_data/packages/sphone/img_2018/lp/ex-single.jpg" alt="エクステ シングルラッシュ"></div>
+				    <div class="ex-text"><span class="ex-name">シングルラッシュ</span>定番のシングルラッシュ。柔らかさも様々ありマットタイプや光沢タイプなど選択可能。</div>
+			     </div>
+				 <div class="ex-item">
+				  <div class="ex-img"><img src="/html/user_data/packages/sphone/img_2018/lp/ex-volume.jpg" alt="エクステ ボリュームラッシュ"></div>
+				  <div class="ex-text"><span class="ex-name">ボリュームラッシュ</span>太さ0.03mm･0.05mm･0.06mm･0.07mmから選択可能。エクステ付着の粘着テープにもこだわり厳選。</div>
+				</div>
+				 <div class="ex-item">
+				  <div class="ex-img"><img src="/html/user_data/packages/sphone/img_2018/lp/ex-flat.jpg" alt="エクステ フラットラッシュ"></div>
+				  <div class="ex-text"><span class="ex-name">フラットラッシュ</span>厚みを抑えた特殊形状により軽さ･柔らかさ･高持続を兼ね揃えたエクステンション。</div>
+				</div>
+		       </div>
+		       <div class="sec04-inner-right">
+				 <div class="ex-item">
+				  <div class="ex-img"><img src="/html/user_data/packages/sphone/img_2018/lp/ex-flare.jpg" alt="エクステ フレアラッシュ"></div>
+				  <div class="ex-text"><span class="ex-name">フレアラッシュ</span>はじめからファンが作られており、整って見える長さ均一や自然な印象の長さ不均一タイプがあり、束数も3～10本とデザインやボリューム感に合わせて選ぶ事が可能。</div>
+				 </div>
+				 <div class="ex-item">
+				  <div class="ex-img"><img src="/html/user_data/packages/sphone/img_2018/lp/ex-s-volume.jpg" alt="エクステ 瞬間ボリュームラッシュ"></div>
+				  <div class="ex-text"><span class="ex-name">瞬間ボリュームラッシュ</span>毛をとるだけで瞬時にファンを作れるので容易にボリュームラッシュ施術が可能となり施術時間も短縮。</div>
+				 </div>
+				 <div class="ex-item">
+				  <div class="ex-img"><img src="/html/user_data/packages/sphone/img_2018/lp/ex-color.jpg" alt="エクステ カラーラッシュ"></div>
+				  <div class="ex-text"><span class="ex-name">カラーラッシュ</span>全体付けでもポイント付けでも印象を大きく変えれるカラーラッシュは、自然なブラウン系から派手な原色系まで約20色前後のカラーを用意。</div>
+                </div>
+			</div>
+		  </div>
+		  <div class="ex-curl"><img src="/html/user_data/packages/sphone/img_2018/lp/ex-curl_sp.png" alt="エクステ カールの種類"></div>
+		  <p>カールの種類は10種類以上あり、ケース内で太さや長さMIXも可能です。</p>
+		</section>
+		<div class="underline-text"><p>仕様</p></div>
+		<p style="text-align:center">台紙の紙質もお選びでき、ケースもプラスチックケースから高級紙箱ケースまで選べ、オリジナルの一品をつくる事ができます。</p>
+		<table class="siyou02">
+			<tr>
+				<td><img src="/html/user_data/packages/sphone/img_2018/lp/ex01.jpg" alt="エクステ 台紙"><p>台紙</p></td><td>紙 / アルミ</td>
+			</tr>
+			<tr>
+				<td><img src="/html/user_data/packages/sphone/img_2018/lp/ex02.jpg" alt="エクステ 外装"><p>外装</p></td><td>プラスチック / アルミ / 高級紙箱</td>
+			</tr>
+			<tr>
+                                <td><img src="/html/user_data/packages/sphone/img_2018/lp/ex03.jpg" alt="エクステ 内容量"><p>内容量</p></td><td>4列 / 9列 / 12列 / 16列</td>
+			</tr>
+			<tr>
+				<td><img src="/html/user_data/packages/sphone/img_2018/lp/ex04.jpg" alt="エクステ サイズシール"><p>サイズシール</p></td><td>ノーマル / オリジナル</td>
+			</tr>
+			<tr>
+
+			</tr>
+		</table>
+			<h3 class="cat-catch"><span class="pink-text">最低ロット400ケースから製造可能！<br>納期約1ヶ月～1.5ヶ月！</sapn></h3>
+		<div class="jirei-area">
+			<table class="jirei">
+				<tr><th colspan="2">事例1</th></tr>
+				<tr><td>種類</td><td>日本製フラットラッシュ</td></tr>
+				<tr><td>仕様</td><td>内容量：12列<br>台紙：紙<br>台紙ケース：高級紙箱</td></tr>
+				<tr><td>発注数</td><td>400個</td></tr>
+				<tr><td>総額</td><td>¥440,000～</td></tr>
+			</table>
+			<table class="jirei">
+				<tr><th colspan="2">事例2</th></tr>
+				<tr><td>種類</td><td>シングルラッシュ・カラーラッシュ</td></tr>
+				<tr><td>仕様</td><td>内容量：シングル12列、カラー4列<br>台紙：アルミ台紙<br>ケース：プラスチックケース</td></tr>
+				<tr><td>発注数</td><td>400個<br>（シングル200個、カラー200個）</td></tr>
+				<tr><td>総額</td><td>¥280,000～</td></tr>
+			</table>
+		</div>		
+		</section>
+		
+	</div><!-- plan-section1 -->
+			
+ </div><!-- ChangeElem_Panel-inner -->
+	
+</div><!-- ChangeElem_Panel -->
+	
+
+
+<!-- ツイーザー -->
+<div class="ChangeElem_Panel">
+    <div class="ChangeElem_Panel-inner">
+	<div class="plan-section1">
+	<h2 class="plan-title"><img src="/html/user_data/packages/sphone/img_2018/lp/tweezer.png" alt="ツイーザー"></h2>
+		<h3 class="cat-catch"><span class="pink-text">世界に誇る日本製ツイーザー<br>職人による匠の技術で１本１本丁寧に仕上げており、軽量でへたりにくいプロ仕様</span></h3>
+		<section class="sec01">
+		 <img src="/html/user_data/packages/sphone/img_2018/lp/tweezer-all.jpg" alt="ツイーザー について">
+		 <p>施術による仕上がりのデザイン・スピード・疲れは、使用するツイーザーによって左右されます。世界トップレベルのツイーザーを使用する事で施術効率が確実に上がります。形状もストレートやカーブ・先曲がり・L字などあり、その中でも手にフィットする長さや厚みにまでこだわる事が可能です。</p>
+		</section>
+		<section>
+		<div class="underline-text"><p>種類</p></div>
+		<p style="text-align:center">完全オリジナル形状の金型製作や、高級ステンレス･チタンなどの材質選択も可能です。</p>
+		<section class="sec03">
+		  <table>
+			  <tr>
+				  <td><img src="/html/user_data/packages/sphone/img_2018/lp/twee_st.png" alt="ツイーザー ストレートタイプ"></td>
+				  <td><img src="/html/user_data/packages/sphone/img_2018/lp/twee_sakimagari_sita.png" alt="ツイーザー 先曲がりタイプ上"></td>
+			  </tr>
+			  <tr>
+				  <td><img src="/html/user_data/packages/sphone/img_2018/lp/twee_cur.png" alt="ツイーザー カールタイプ">
+				  </td>
+				  <td><img src="/html/user_data/packages/sphone/img_2018/lp/twee_sakimagari_ue.png" alt="ツイーザー 先曲がりタイプ下"></td>
+			  </tr>
+		  </table>
+		</section>
+		<div class="underline-text"><p>仕様</p></div>
+		<p style="text-align:center">ロゴ入れも刻印打刻･レーザー刻印などお選びいただけます。</p>
+		<table class="siyou">
+			<tr>
+				<td><img src="/html/user_data/packages/sphone/img_2018/lp/tweezer01.jpg" alt="ツイーザー 刻印"><p>刻印</p></td><td>刻印なし / あり</td>
+			</tr>
+			<tr>
+				<td><img src="/html/user_data/packages/sphone/img_2018/lp/tweezer02.jpg" alt="ツイーザー 外装"><p>外装</p></td><td>OPP袋 / 筒ケース / 高級ケース</td>
+			</tr>
+			<tr>
+				<td><img src="/html/user_data/packages/sphone/img_2018/lp/tweezer03.jpg" alt="ツイーザー 塗装"><p>塗装</p></td><td>ノーマル（ステンレス） / カラー（色付け）</td>
+			</tr>
+		</table>
+			<h3 class="cat-catch"><span class="pink-text">最小ロット50本から製造可能！<br>納期約1.5ヶ月～2ヶ月！</sapn></h3>
+		<div class="jirei-area">
+			<table class="jirei">
+				<tr><th colspan="2">事例1</th></tr>
+				<tr><td>種類</td><td>日本製ストレートツイーザー</td></tr>
+				<tr><td>仕様</td><td>刻印ロゴ入り　外装：OPP袋</td></tr>
+				<tr><td>発注数</td><td>80個</td></tr>
+				<tr><td>総額</td><td>¥90,000～</td></tr>
+			</table>
+			<table class="jirei">
+				<tr><th colspan="2">事例2</th></tr>
+				<tr><td>種類</td><td>日本製ボリュームラッシュツイーザー</td></tr>
+				<tr><td>仕様</td><td>刻印ロゴ入り･カラー塗装<br>外装：筒ケース</td></tr>
+				<tr><td>発注数</td><td>100個</td></tr>
+				<tr><td>総額</td><td>¥130,000～</td></tr>
+			</table>
+		</div>		
+		</section>
+	</div><!-- plan-section1 -->
+		
+ </div><!-- ChangeElem_Panel-inner -->
+				
+</div><!-- ChangeElem_Panel -->
+	
+
+
+
+			
+<!-- コスメ -->
+<div class="ChangeElem_Panel">
+    <div class="ChangeElem_Panel-inner">
+	<div class="plan-section1">
+	<h2 class="plan-title"><img src="/html/user_data/packages/sphone/img_2018/lp/cosme.png" alt="コスメ"></h2>
+		<h3 class="cat-catch"><span class="pink-text">マスカラや美容液など化粧品全般まで、国内生産にこだわりご用意しております</sapn></h3>
+		<section class="sec01">
+		 <img src="/html/user_data/packages/sphone/img_2018/lp/cosme.jpg" alt="コスメ について">
+		 <p>まつげエクステやパーマといった施術は自まつげが健康毛でないと長期間楽しんで頂けなかったり、施術を定期的に行うことで更に自まつげに負担がかかってしまいます。その中でまつげ美容液やトリートメントなどのケアアイテムは非常に今ニーズが高くなっております。完全オリジナルの美容液から店販に最適なホームケア化粧品まで幅広くご提案させて頂きます。</p>
+		</section>
+		<section>
+		<div class="underline-text"><p>種類</p></div>
+		<p style="text-align:center">販売実績のある美容液から完全オリジナルの化粧品全般まで製造可能です。</p>
+		  <section class="sec04 sec04-02">
+		   <div class="cosme-img"><img src="/html/user_data/packages/sphone/img_2018/lp/cosme01.jpg" alt="コーティング"></div>
+			  <div class="cosme-text"><span class="ex-name">コーティング（クリア・ブラック）</span>シングル・ボリュームなどの全エクステに対応し、持続力アップ・バラつき絡みを軽減、美容成分配合とトリプル効果のコーティングです。</div>
+			  <div class="cosme-img"><img src="/html/user_data/packages/sphone/img_2018/lp/cosme02.jpg" alt="トリートメント"></div>
+			  <div class="cosme-text"><span class="ex-name">トリートメント</span>サロン用プロテクトタイプの美容液。施術時間5分で単価アップできるプラスワンメニューとしてすぐに導入できます。まつげカールとの併用も可能です。</div>
+		</section>
+		<div class="cosme-nouki"><img src="/html/user_data/packages/sphone/img_2018/lp/cosme03.jpg" alt="コスメ　納期"></div>
+		<div class="jirei-area">
+			<table class="jirei">
+				<tr><th colspan="2">事例1</th></tr>
+				<tr><td>種類</td><td>まつ毛トリートメント（サロン用）</td></tr>
+				<tr><td>仕様</td><td>内容量：10ml<br>本体容器：スポイト容器<br>外装：PETケース</td></tr>
+				<tr><td>発注数</td><td>500個</td></tr>
+				<tr><td>総額</td><td>¥890,000～</td></tr>
+			</table>
+			<table class="jirei">
+				<tr><th colspan="2">事例2</th></tr>
+				<tr><td>種類</td><td>まつ毛美容液</td></tr>
+				<tr><td>仕様</td><td>内容量：4ml　本体：ハケタイプ<br>外装：化粧箱<br>印刷：容器印刷･化粧箱印刷</td></tr>
+				<tr><td>発注数</td><td>2000個</td></tr>
+				<tr><td>総額</td><td>¥1,600,000～</td></tr>
+			</table>
+		</div>		
+		</section>
+	</div><!-- plan-section1 -->
+			
+　  </div><!-- ChangeElem_Panel-inner -->
+	
+</div><!-- ChangeElem_Panel -->
+	
+</div><!-- tabs -->
+				
+</div><!--oem-page-inner02-->
+
+<div class="oem-page-inner03">
+	<section>
+		<h2>OEMのよくある質問</h2>
+		<dl>
+			<dt>何個から製造可能ですか？</dt>
+			<dd>各商材にもよりますが、グルーであれば50個〜、エクステンションであれ
+				ば総数で400ケース(2回目以降のご注文からは100 ケース)〜となっております。</dd>
+		</dl>
+		<dl>
+			<dt>サンプル依頼はできますか？</dt>
+			<dd>詳細をお伺い致しました中で、ご希望に近い商品サンプルをお送りさせて頂きます。また既存商品であればすぐにお送りする事も可能ですが、サンプルの取り寄せに少しお時間がかかる商材もございます。</dd>
+		</dl>
+		<dl>
+			<dt>まつげ商材以外にも美容商材や化粧品のOEM 製造、また完全オリジナル製造は可能ですか？</dt>
+			<dd>もちろん可能でございます。ご希望商品製造のサポートをさせて頂きます。</dd>
+		</dl>
+	</section>
+</div><!--oem-page-inner03-->				
+<div class="oem-page-inner04">
+	<section>
+		<h2>OEM受注製造の流れ</h2>
+		<dl>
+			<dt><img src="/html/user_data/packages/sphone/img_2018/lp/oem-tel-icon.jpg" alt="依頼・お問い合わせ"></dt>
+			<dd><h3>1. ご依頼・お問い合わせ</h3>OEM 検討商材をご指定の上、メールまたはお電話でご連絡ください。商材の特徴・詳細説明をさせていただきます。</dd>
+		</dl>
+		<dl>
+			<dt><img src="/html/user_data/packages/sphone/img_2018/lp/oem-talk-icon.jpg" alt="ヒアリング"></dt>
+			<dd><h3>2. ヒアリング</h3>商材のコンセプトやターゲット、販路などについてのご予定を確認させていただきます。</dd>
+		</dl>
+		<dl>
+			<dt><img src="/html/user_data/packages/sphone/img_2018/lp/oem-idea-icon.jpg" alt="ご提案"></dt>
+			<dd><h3>3. ご提案</h3>ヒアリング内容に基づき適切なコンサルティングを企画します。弊社商材の中に同類商材品のラインアップがある場合は他商材も合わせてご提案させていただきます。</dd>
+		</dl>
+		<dl>
+			<dt><img src="/html/user_data/packages/sphone/img_2018/lp/oem-dentaku-icon.jpg" alt="仮お見積もり"></dt>
+			<dd><h3>4. 仮お見積もり</h3>アイテム数・封入物種類・数量など詳細を絞り込み、商材化に向けての概算のお見積りを提出させていただきます。</dd>
+		</dl>
+		<dl>
+			<dt><img src="/html/user_data/packages/sphone/img_2018/lp/oem-kikaku-icon.jpg" alt="企画"></dt>
+			<dd><h3>5. 企画</h3>パッケージ・封入物デザインの制作をおこない、企画をすすめてまいります。</dd>
+		</dl>
+		<dl>
+			<dt><img src="/html/user_data/packages/sphone/img_2018/lp/oem-shakehands-icon.jpg" alt="ご契約・ご発注"></dt>
+			<dd><h3>6. ご契約・ご発注</h3>パッケージ・封入物デザインなど商材の仕様が決定いたしましたら、最終のお見積りを提出させていただきます。</dd>
+		</dl>
+		<dl>
+			<dt><img src="/html/user_data/packages/sphone/img_2018/lp/oem-factory-icon.jpg" alt="製作"></dt>
+			<dd><h3>7. 製作</h3>最新鋭の設備と万全の管理体制で、高品質な商材製作。少ロット製作にも、優れたコストパフォーマンスで対応します。</dd>
+		</dl>
+		<dl>
+			<dt><img src="/html/user_data/packages/sphone/img_2018/lp/oem-truck-icon.jpg" alt="納品"></dt>
+			<dd><h3>8. ご提案</h3>工場検品・弊社での検品の2 度の検品を通過した商材をお客様の納品指定場所にお送りいたします。</dd>
+		</dl>
+	</section>
+</div><!--oem-page-inner03-->				
+	<section>
+	<ul class="oem-closing">
+	  <li>OEMに関するご質問など<br>お気軽にお問い合わせください。</li>
+	  <li class="oem-tel"><img src="/html/user_data/packages/sphone/img_2018/lp/tel-icon.png" alt="OEMの問い合わせ 電話する"><a href="tel:06-6252-3773">06-6252-3773</a></li>
+	  <li class="oem-contact-button">
+	      <a href="{{ url('contact', {'contact_type': 'OEMについて'}) }}">
+	      <span class="oem-mail-icon"><img src="/html/user_data/packages/sphone/img_2018/lp/mail-icon.png" alt="OEMに関するお問い合わせはコチラ"></span>お問い合わせやお申込みはこちら</a></li>
+	  <li>（営業時間／平日 10:00 〜 18:00）</li>
+    </ul>	
+	</section>			
+			</div>
+		
+		</div>
+</div>
+{% endblock %}

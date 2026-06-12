@@ -1,0 +1,141 @@
+@media screen and (max-width: 768px) {
+    .error_text_shopping {
+        text-align: center;
+        width: 100%;
+        margin: 30px auto;
+        line-height: 2.5em;
+        text-align: center;
+        .error_to_contact {
+            color: red;
+            &:hover {
+                opacity: 0.8s;
+            }
+        }
+    }
+    .sp-link-list {
+        display: flex !important;
+    }
+    .a_review_pc {
+        display: none;
+    }
+    .menu-navi {
+        .down-arrow {
+            transform: translateX(-9px);
+        }
+    }
+    .oem_pc {
+        display: none;
+    }
+    .tweezer_lp_pc {
+        display: none;
+    }
+    .keratin_amino_contents_pc {
+        display: none;
+    }
+    .ledex-subsc_lp_pc {
+        display: none;
+    }
+    #head {
+        #menu-navi {
+            display: none;
+        }
+        .head-one {
+            #logo {
+                display: none;
+            }
+            .head-rightarea {
+                display: none;
+            }
+        }
+    }
+    .pc_footer {
+        display: none;
+    }
+    .top_category_pc {
+        display: none;
+    }
+    #topcat {
+        padding: 0 !important;
+    }
+    #instagram {
+        padding: 0 !important;
+    }
+    .ec-sliderRole {
+        display: none !important;
+    }
+    .sp-top-area {
+        .main-slide-dots {
+            li {
+                button {
+                    padding: 0 6px;
+                }
+            }
+        }
+    }
+    .br_pc_art {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 769px) {
+    .error_text_shopping {
+        text-align: center;
+        width: 100%;
+        margin: 0 auto 48px;
+        font-size: 20px;
+        line-height: 2.5em;
+        font-size: 16px;
+        .error_to_contact {
+            color: red;
+            &:hover {
+                opacity: 0.8s;
+            }
+        }
+    }
+    .main-slide-dots {
+        li {
+            margin: 0 15px;
+        }
+    }
+    .a_review_sp {
+        display: none;
+    }
+    .oem_sp {
+        display: none;
+    }
+    .tweezer_lp_sp {
+        display: none;
+    }
+    .ledex-subsc_lp_sp {
+        display: none;
+    }
+    .keratin_amino_contents_sp {
+        display: none;
+    }
+    .menu-navi {
+        display: none;
+    }
+    .sp_footer {
+        display: none;
+    }
+    .top_category_sp {
+        display: none;
+    }
+    .sp-top-area {
+        display: none !important;
+    }
+}
+@media screen and (max-width: 1275px) {
+    .cat-thumb-area {
+        display: none;
+    }
+}
+@media screen and (max-width: 1000px) {
+    .cat-open {
+        padding: 30px;
+        .cat-area {
+            padding: 0 0 0 30px;
+            text-align: left;
+        }
+    }
+}

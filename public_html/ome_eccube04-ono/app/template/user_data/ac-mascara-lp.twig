@@ -1,0 +1,376 @@
+{% extends 'no_frame.twig' %}
+
+{% block main %}
+<style>
+/*==================
+#loading
+==================*/
+
+#loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999999999;
+  background: #000;
+  text-align: center;
+}
+#loading_box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+#loading .kvArea {
+  width: 30%;
+}
+#loading .kvArea .img_box {
+  text-align: center;
+}
+#loading .kvArea .img_box img {
+  max-width: 100%;
+  height: auto;
+}
+.fadeUp {
+  animation-name: fadeUpAnime;
+  animation-duration: 5s;
+  animation-delay: 5s;
+  animation-fill-mode: forwards;
+  opacity: 1;
+}
+@keyframes fadeUpAnime {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.eachTextAnime span{opacity: 0;}
+.eachTextAnime.appeartext span{ animation:text_anime_on 3s ease-out forwards; }
+@keyframes text_anime_on {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+</style>
+
+<script>
+$(function() {
+    $('#toggle').on('click', function() {
+      $('body').toggleClass('is-open');
+
+$('#nav-content a[href]').on('click', function(event) {
+        $('body').removeClass('is-open');
+    });
+    
+    });
+});
+// フェードイン
+$(function () {
+    $(window).scroll(function () {
+        const wHeight = $(window).height();
+        const scrollAmount = $(window).scrollTop();
+        $('.scrollanime').each(function () {
+            const targetPosition = $(this).offset().top;
+            if(scrollAmount > targetPosition - wHeight + 60) {
+                $(this).addClass("fadeInDown");
+            }
+        });
+    });
+});
+
+//ウィンドウの高さを取得する
+var window_h = $(window).height();
+
+//スクロールイベント
+$(window).on("scroll", function() {
+  
+  //スクロールの位置を取得する
+  var scroll_top = $(window).scrollTop();
+ 
+  $(".left-fedeIn-box").each(function() {
+    //各box要素のtopの位置を取得する
+    var elem_pos = $(this).offset().top;
+    
+    //どのタイミングでフェードインさせるか
+    if (scroll_top >= elem_pos - window_h + 300) {
+      $(this).addClass("left-fadeIn");　//特定の位置を超えたらクラスを追加
+    } else {
+      $(this).removeClass("left-fadeIn"); //そうでない場合はクラスを削除
+    }
+  });
+});
+
+//ローディング画面の表示
+$(window).on('load',function(){
+  $("#loading").delay(2000).fadeOut('slow');//ローディング画面フェードアウトまで
+  $("#loading_box").delay(1800).fadeOut('slow');//ローディング画像フェードアウトまで
+  $("#topimage").hide().delay(2200).fadeIn('slow');//トップページのフェードイン時間
+});
+
+// eachTextAnimeにappeartextというクラス名を付ける定義
+function EachTextAnimeControl() {
+  $('.eachTextAnime').each(function () {
+    var elemPos = $(this).offset().top - 50;
+    var scroll = $(window).scrollTop();
+    var windowHeight = $(window).height();
+    if (scroll >= elemPos - windowHeight) {
+      $(this).addClass("appeartext");
+
+    } else {
+      $(this).removeClass("appeartext");
+    }
+  });
+}
+// 画面が読み込まれたらすぐに動かしたい場合の記述
+$(window).on('load', function () {
+  //spanタグを追加する
+ //発火を遅らせる
+$('.eachTextAnime').delay(2000).queue(function(){ 
+  var element = $(".eachTextAnime");
+  element.each(function () {
+    var text = $(this).text();
+    var textbox = "";
+    text.split('').forEach(function (t, i) {
+      if (t !== " ") {
+        if (i < 10) {
+          textbox += '<span style="animation-delay:.' + i + 's;">' + t + '</span>';
+        } else {
+          var n = i / 10;
+          textbox += '<span style="animation-delay:' + n + 's;">' + t + '</span>';
+        }
+
+      } else {
+        textbox += t;
+      }
+    });
+    $(this).html(textbox);
+  });
+ });
+  EachTextAnimeControl();/* アニメーション用の関数を呼ぶ*/
+});// ここまで画面が読み込まれたらすぐに動かしたい場合の記述
+</script>
+
+
+
+
+<div id="loading">
+  <div class="kvArea" id="loading_box">
+    <div class="img_box"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/ac-mascara-textlogo-wh.png' }} alt="ACマスカラ" class="fadeUp"></div>
+  </div>
+</div>
+
+	<div id="acmascara_lp">
+		  
+		  <div class="ac-navi">
+                   <div class="ac-ome-logo"><a href="/"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/top/ome_enter_logo_wh.png' }} alt="omeエンタープライズ"></a></div>
+			  <ul class="tr_pc">
+				  <li><a href="#concept">CONCEPT</a></li>
+				  <li><a href="#story">STORY</a></li>
+				  <li><a href="#point">POINT</a></li>
+				  <li><a href="#review">REVIEW</a></li>
+				  <li><a href="#closing">PRODUCTS</a></li>
+			  </ul>
+			 
+		  </div>
+		  <header class="ac-header">
+    <div class="ac-ome-logo"><a href="/"><img src="/html/user_data/packages/sphone/img_2018/top/ome_enter_logo_wh.png" alt="omeエンタープライズ"></a></div>
+	 
+<div id="toggle">
+    <div id="toggle-box">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+</div>
+
+<div id="nav-content">
+    <nav>
+        <ul>
+            <li><a href="#concept">CONCEPT</a></li>
+            <li><a href="#story">STORY</a></li>
+            <li><a href="#point">POINT</a></li>
+            <li><a href="#review">REVIEW</a></li>
+            <li><a href="#closing">PRODUCTS</a></li>
+        </ul>
+    </nav>
+</div>
+
+  </header>
+		  <div class="acmascara_inner">
+			  
+		  <div id="topimage">
+			  <div class="topimage-inner-left"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/ac-mascara-keyvisual.png' }} alt="ACマスカラ"></div>
+			  <!--<div class="topimage-inner-left"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/ac-mascara-keyvisual02.jpg' }} alt="ACマスカラ"></div>-->
+			  <div class="topimage-inner-right"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/ac-mascara-textlogo-wh.png' }} alt="ac mascara"></div>
+		  </div>
+			  
+		  <section id="concept">
+			  <h2 class="ac-big-title eachTextAnime tr_pc">泣いても、笑ってもずっと綺麗</h2>
+			  <h2 class="ac-big-title tr_sp">泣いても、笑っても<br>ずっと綺麗</span></h2>
+			  <p class="scrollanime downup"><span class="inline-text">強力なスーパーウォータープルーフマスカラで、1 日中滲み・くずれが気になりません。</span><span class="inline-text">重ね塗りでもダマにならずお好みのボリューム・カール感・濃さに調整することができます。</span></p>
+		  </section>
+		  
+		  <section id="story" class="scrollanime downup">
+			       <h2 class="ac-big-title">STORY</h2>
+                      <div class="story-inner">  
+			  <div class="story-inner-left">
+			       <p>ome エンタープライズの大人気ロングセラー商品｢アフターケアマスカラ｣は、2018 年4 月に原材料の一部が調達不可能となり、生産を続けることができず販売を終了とさせて頂いておりましたが、約3年半の歳月が経過し、ようやく原材料の調達が可能となり、パッケージを一新させ新たな｢ACマスカラ（アフターケアマスカラ）｣を販売する事となりました。</p>
+			  </div>
+			  <div class="tr_pc story-inner-right scrollanime downup anime-late"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/old-new_acmascara-pc.png' }} alt="ac mascara"></div>
+			  <div class="tr_sp story-inner-right scrollanime downup anime-late"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/old-new_acmascara.png' }} alt="ac mascara"></div>
+                     </div>
+		  </section>
+			  
+		  <section id="point">
+			  
+			  <div class="point-inner-left scrollanime downup">
+				  <p class="ac-point-number-left">01</p>
+				  <h2 class="ac-big-title">保護・補修・保湿<span class="ac-sub-text">3種の美容液成分配合</span></h2>
+				  <div class="point-detail">
+					  <img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/point01.png' }} alt="3種の美容液成分配合">
+					  <p>ケラチンが保護、ポリグルタミン酸がまつげを補修、パンテノールがまつげを保湿するプロテクトタイプのブラックマスカラ。一般のマスカラよりまつげに負担なくご使用いただけ、塗った後も柔らかな質感。日中は、メイクをしながら紫外線や乾燥などのダメージからまつげを守ってくれます。</p>
+				  </div>
+			  </div>
+			  
+			  <div class="point-inner-right scrollanime downup">
+				  <p class="ac-point-number-right">02</p>
+				  <h2 class="ac-big-title"><!--<span class="ac-sub-text">お好みの</span>-->ボリューム・カール・<br>濃さを演出</h2>
+				  <div class="point-detail sayuu-hanten">
+                                           <p>重ね塗りしてもダマにならず、まつ毛一本一本にフィットし自由自在に濃さを演出できます。適量でボリューム感とカールを美しくキープ。なりたい自分を叶えてくれる魔法のマスカラ。</p>
+					  <picture>
+  <source media="(min-width: 768px)" 
+          srcset="{{ app.config.user_data_url ~ 'packages/default/img_2018/lp/point02-image.jpg' }}">
+  <img src="/html/user_data/packages/sphone/img_2018/lp/point02-image.jpg" 
+       alt="ボリューム・長さを演出">
+</picture>
+				  </div>
+
+				  <!--▼非表示
+				<table class="point-detail-hyou">
+					  <tr><th colspan="3">LASH LIFT</th></tr>
+					  <tr>
+						  <td><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/sample.jpg' }} alt="ac mascara"></td><td><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/sample.jpg' }} alt="ac mascara"></td><td><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/sample.jpg' }} alt="ac mascara"></td>
+					  </tr>
+				  </table>
+				  <table class="point-detail-hyou">
+					  <tr><th colspan="3">EXTENSION</th></tr>
+					  <tr>
+						  <td><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/sample.jpg' }} alt="ac mascara"></td><td><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/sample.jpg' }} alt="ac mascara"></td><td><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/sample.jpg' }} alt="ac mascara"></td>
+					  </tr>
+				  </table>
+				　▲非表示-->
+			  </div>
+			  
+			  <div class="point-inner-left scrollanime downup">
+				  <p class="ac-point-number-left">03</p>
+				  <h2 class="ac-big-title">下まつげの使用にも最適</h2>
+				  <div class="point-detail">
+					  <div class="point-detail-left">
+						  <img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/ac-brush.png' }} alt="acマスカラのブラシ">
+						  <img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/other-brush.png' }} alt="他社製のブラシ">
+					  </div>
+					  <p>通常のブラシの形状に比べ細めのストレートブラシを採用。細かい毛もしっかりキャッチし、１本１本を際立たせます。下まつげに使用する際も下瞼にマスカラがつきにくく、マスカラを塗りたい部分にピンポイントに狙えます。<br>※「ブラウン」のブラシはカーブタイプとなります。</p>
+				  </div>
+			  </div>
+			  
+			  <div class="point-inner-right scrollanime downup">
+				  <p class="ac-point-number-right">04</p>
+				  <h2 class="ac-big-title">心躍らせる<br>フローラルの香り</h2>
+				  <div class="point-detail">
+					  <p>フローラルの香りで、メイク中も幸せな気持ちが広がり華やかな空間をお届けします。やさしい香りに包まれ、見えない部分でも香りに癒される時間は女子力UPへの近道。</p>
+					  <img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/floral.png' }} alt="フローラルの香り">
+				  </div>
+			  </div>
+			  
+			  <div class="point-inner-left scrollanime downup">
+				  <p class="ac-point-number-left">05</p>
+				  <h2 class="ac-big-title">FEATURES</h2>
+				  <div class="point-detail">
+					  <ul>
+						  <li>■お好みのボリューム・カール感・濃さを演出</li>
+						  <li>■滲みや崩れ知らずのスーパーウォータープルーフ</li>
+						  <li>■エクステ・パーマ・自まつげなど用途にあわせた使用が可能</li>
+						  <li>■ダマにならず自然なつけ心地</li>
+						  <li>■保湿・補修効果の高い美容成分配合</li>
+						  <li>■心踊らせるフローラルの香り</li>
+					  </ul>
+				  </div>
+				  <div class="point-inner">
+				    <img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/for_ex.png' }} alt="エクステンションでの効果">
+			        <img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/for_lash.png' }} alt="まつげパーマでの効果">
+			      </div>
+			  </div>
+			 
+			  
+		  </section>
+			
+		  <section id="review" class="scrollanime downup">
+			  <h2 class="ac-big-title">REVIEW</h2>
+			  <ul class="review-inner">
+				  <li><span class="star5_rating" data-rate="5"></span><span class="revie-title">「ボリュームがでて◎」</span><span class="revie-name">ca様</span></li>
+				  <li>エクステを付けた仕上げにお客様に使用しています。気に入って頂いたお客様は二ヶ月に1回は購入していただいています。ボリュームとツヤがでるのでお気に入りです。</li>
+			  </ul>
+			  <ul class="review-inner">
+				  <li><span class="star5_rating" data-rate="5"></span><span class="revie-title">「自信を持ってお勧めできます!!」</span><span class="revie-name">アユミ様</span></li>
+				  <li>試しで1本購入しました。付け心地がよく、本当ににじまないです。匂いもお気に入りなので店頭商品としてのセット購入をきめました。</li>
+			  </ul>
+			  <p class="review-morelink"><a href="https://www.ome-shop.jp/products/detail.php?product_id=52#how2review">もっと見る</a></p>
+		  </section>
+			  
+
+	       <!--<div id="closing" class="scrollanime downup">
+			     <div class="closing-inner">
+					 <div class="closing-item-thumb">
+						  <img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/acmascara_imege_sc.jpg' }} alt="ACマスカラ">
+					 </div>
+					 <div class="closing-item-link">
+						 <span class="lp-buy-btn"><a href="https://www.ome-shop.jp/products/detail.php?product_id=52">お試し1本</a></span>
+					         <span class="lp-buy-btn"><a href="https://www.ome-shop.jp/products/detail.php?product_id=76">6本セット</a></span>
+                                                 <span class="lp-buy-btn"><a href="https://www.ome-shop.jp/products/detail.php?product_id=27">12本セット</a></span>
+                                                 <span class="lp-buy-btn"><a href="https://www.ome-shop.jp/products/detail.php?product_id=265">36本セット</a></span>
+					 </div>
+				</div>
+		  </div>-->
+			  
+
+                  <div id="closing" class="ac-yoyakucam-closing scrollanime downup">
+			     <div class="closing-inner">
+					 <div class="closing-item-thumb">
+						  <img src={{ app.config.user_data_url ~ 'packages/default/img_2018/top_newpr/ac_mascara.jpg' }} alt="ACマスカラ ブラック">
+					 </div>
+					 <div class="closing-item-link">
+						 <h2>ACマスカラ ブラック</h2>
+						 <div class="lp-buy-btn"><a href="https://www.ome-shop.jp/products/detail.php?product_id=52">お試し1本</a></div>
+					      <div class="lp-buy-btn"><a href="https://www.ome-shop.jp/products/detail.php?product_id=76">6本セット</a></div>
+                          <div class="lp-buy-btn"><a href="https://www.ome-shop.jp/products/detail.php?product_id=27">12本セット</a></div>
+                          <div class="lp-buy-btn"><a href="https://www.ome-shop.jp/products/detail.php?product_id=265">36本セット</a></div>
+					 </div>
+				</div>
+			   <div class="closing-inner">
+					 <div class="closing-item-thumb">
+						  <img src={{ app.config.user_data_url ~ 'packages/default/img_2018/top_newpr/ac_mascara_brown.jpg' }} alt="ACマスカラ">
+					 </div>
+					 <div class="closing-item-link">
+						 <h2>ACマスカラ ブラウン</h2>
+						 <div class="lp-buy-btn"><a href="https://www.ome-shop.jp/products/detail.php?product_id=267">お試し1本</a></div>
+					      <div class="lp-buy-btn"><a href="https://www.ome-shop.jp/products/detail.php?product_id=268">6本セット</a></div>
+                          <div class="lp-buy-btn"><a href="https://www.ome-shop.jp/products/detail.php?product_id=269">12本セット</a></div>
+                          <div class="lp-buy-btn"><a href="https://www.ome-shop.jp/products/detail.php?product_id=270">36本セット</a></div>
+					 </div>
+				</div>
+		  </div>
+			  
+		  </div><!--○○lp-inner-->  
+		  
+<div id="ac-foot">
+<div id="copy">Copyright©kichi CO.,LTD. All Rights Reserved.</div>
+</div>
+
+	  </div><!--○○lp-->
+<!--ここまで-->	
+{% endblock %}

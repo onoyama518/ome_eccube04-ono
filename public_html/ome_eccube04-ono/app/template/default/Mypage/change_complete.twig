@@ -1,0 +1,35 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% extends 'default_frame.twig' %}
+
+{% set mypageno = 'change' %}
+
+{% set body_class = 'mypage' %}
+
+{% block main %}
+	<div id="undercolumn">
+		<div id="mypagecolumn">
+			<h2 class="title">{{ 'マイページ'|trans }}</h2>
+			{% include 'Mypage/navi.twig' %}
+
+			<div id="mycontents_area">
+				<h3>{{ '会員登録内容変更(完了ページ)'|trans }}</h3>
+
+				<div id="complete_area">
+					<div class="message">
+						会員登録内容の変更が完了いたしました。<br/>
+					</div>
+					<p>今後ともご愛顧賜りますようよろしくお願い申し上げます。</p>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

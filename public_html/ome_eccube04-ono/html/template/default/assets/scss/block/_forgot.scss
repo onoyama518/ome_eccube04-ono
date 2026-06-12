@@ -1,0 +1,46 @@
+@media screen and (max-width: 768px) {
+  #page_forgot {
+    #undercolumn {
+      padding-bottom: 0;
+    }
+    #form1 {
+      max-width: 1000px;
+      margin: 0 auto;
+      td {
+        .ec-input {
+          padding: 0 20px;
+          input {
+            display: block;
+            width: 100%;
+            padding: 0 3px;
+          }
+        }
+      }
+    }
+  }
+  #page_forgot_complete {
+    #b_toppage {
+      width: 250px;
+      margin: 0 auto;
+    }
+  }
+}
+
+@media screen and (min-width: 769px) {
+  #page_forgot {
+    #form1 {
+      max-width: 1000px;
+      margin: 0 auto;
+      td {
+        .ec-input {
+          padding: 0 20px;
+          input {
+            display: block;
+            width: 100%;
+            padding: 0 3px;
+          }
+        }
+      }
+    }
+  }
+}

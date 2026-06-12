@@ -27,8 +27,8 @@ use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 class CustomerEditController extends AbstractController
 {
@@ -38,9 +38,9 @@ class CustomerEditController extends AbstractController
     protected $customerRepository;
 
     /**
-     * @var UserPasswordHasherInterface
+     * @var EncoderFactoryInterface
      */
-    protected $passwordHasher;
+    protected $encoderFactory;
 
     /**
      * @var OrderRepository
@@ -54,13 +54,13 @@ class CustomerEditController extends AbstractController
 
     public function __construct(
         CustomerRepository $customerRepository,
-        UserPasswordHasherInterface $passwordHasher,
+        EncoderFactoryInterface $encoderFactory,
         OrderRepository $orderRepository,
         PageMaxRepository $pageMaxRepository
     ) {
         $this->customerRepository = $customerRepository;
         $this->orderRepository = $orderRepository;
-        $this->passwordHasher = $passwordHasher;
+        $this->encoderFactory = $encoderFactory;
         $this->pageMaxRepository = $pageMaxRepository;
     }
 
@@ -136,9 +136,14 @@ class CustomerEditController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             log_info('会員登録開始', [$Customer->getId()]);
 
+            $encoder = $this->encoderFactory->getEncoder($Customer);
+
             if ($Customer->getPlainPassword() !== $this->eccubeConfig['eccube_default_password']) {
-                $password = $this->passwordHasher->hashPassword($Customer, $Customer->getPlainPassword());
-                $Customer->setPassword($password);
+                if ($Customer->getSalt() === null) {
+                    $Customer->setSalt($encoder->createSalt());
+                    $Customer->setSecretKey($this->customerRepository->getUniqueSecretKey());
+                }
+                $Customer->setPassword($encoder->encodePassword($Customer->getPlainPassword(), $Customer->getSalt()));
             }
 
             // 退会ステータスに更新の場合、ダミーのアドレスに更新

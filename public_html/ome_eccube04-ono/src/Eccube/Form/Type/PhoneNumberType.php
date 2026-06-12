@@ -55,21 +55,39 @@ class PhoneNumberType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setNormalizer('constraints', function($options, $value) {
+        $resolver->setNormalizer('constraints', function ($options, $value) {
             $constraints = [];
             // requiredがtrueに指定されている場合, NotBlankを追加
             if (isset($options['required']) && true === $options['required']) {
-                $constraints[] = new Assert\NotBlank();
+                $constraints[] = new Assert\NotBlank([
+                    'message' => '電話番号が入力されていません。',
+                ]);
             }
 
-            $constraints[] = new Assert\Length([
-                'max' => $this->eccubeConfig['eccube_tel_len_max'],
+            // 電話番号形式チェック（数字とハイフンのみ）
+            $constraints[] = new Assert\Regex([
+                'pattern' => '/^[0-9\-]+$/',
+                'message' => '電話番号は数字とハイフンのみで入力してください。',
             ]);
 
-            $constraints[] = new Assert\Type([
-                'type' => 'digit',
-                'message' => 'form_error.numeric_only',
+             $constraints[] = new Assert\Length([
+                'max' => $this->eccubeConfig['eccube_tel_len_max'],
+                'maxMessage' => '電話番号は{{ limit }}文字以内で入力してください。',
             ]);
+
+            // 不正文字・禁止語・URL・スクリプトタグの入力制限
+            $constraints[] = new Assert\Regex([
+                'pattern' => '/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/',
+                'message' => '不正な文字が含まれています。',
+                'match' => false,
+            ]);
+
+            $constraints[] = new Assert\Regex([
+                'pattern' => '/\s*<iframe|iframe|\s*<object|object|\s*<embed|embed|<script|script|javascript:|vbscript:|onload=|onclick=|eval\(|document\.|window\./i',
+                'message' => '不正なHTMLタグまたはスクリプトが含まれています。',
+                'match' => false,
+            ]);
+
 
             return array_merge($constraints, $value);
         });

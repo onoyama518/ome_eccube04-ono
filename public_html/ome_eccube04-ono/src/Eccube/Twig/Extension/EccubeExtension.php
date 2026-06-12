@@ -91,7 +91,9 @@ class EccubeExtension extends AbstractExtension
     public function getTests()
     {
         return [
-            new TwigTest('integer', function ($value) { return  is_integer($value); }),
+            new TwigTest('integer', function ($value) {
+                return  is_integer($value);
+            }),
         ];
     }
 
@@ -129,7 +131,7 @@ class EccubeExtension extends AbstractExtension
      */
     public function getNoImageProduct($image)
     {
-        return empty($image) ? 'no_image_product.png' : $image;
+        return empty($image) ? 'ome-share-icon.jpg' : $image;
     }
 
     /**
@@ -250,7 +252,7 @@ class EccubeExtension extends AbstractExtension
             if (!$ProductClass->isVisible()) {
                 continue;
             }
-            /** @var \Eccube\Entity\ProductClass $ProductClass */
+            /* @var $ProductClass \Eccube\Entity\ProductClass */
             $ClassCategory1 = $ProductClass->getClassCategory1();
             $ClassCategory2 = $ProductClass->getClassCategory2();
             if ($ClassCategory2 && !$ClassCategory2->isVisible()) {
@@ -258,14 +260,14 @@ class EccubeExtension extends AbstractExtension
             }
             $class_category_id1 = $ClassCategory1 ? (string) $ClassCategory1->getId() : '__unselected2';
             $class_category_id2 = $ClassCategory2 ? (string) $ClassCategory2->getId() : '';
-            $class_category_name2 = $ClassCategory2 ? $ClassCategory2->getName().($ProductClass->getStockFind() ? '' : trans('front.product.out_of_stock_label')) : '';
+            $class_category_name2 = $ClassCategory2 ? $ClassCategory2->getName() . ($ProductClass->getStockFind() ? '' : trans('front.product.out_of_stock_label')) : '';
 
             $class_categories[$class_category_id1]['#'] = [
                 'classcategory_id2' => '',
                 'name' => trans('common.select'),
                 'product_class_id' => '',
             ];
-            $class_categories[$class_category_id1]['#'.$class_category_id2] = [
+            $class_categories[$class_category_id1]['#' . $class_category_id2] = [
                 'classcategory_id2' => $class_category_id2,
                 'name' => $class_category_name2,
                 'stock_find' => $ProductClass->getStockFind(),
@@ -335,7 +337,7 @@ class EccubeExtension extends AbstractExtension
         }
 
         $attr['class'] = isset($attr['class'])
-            ? $attr['class']." fa {$class}"
+            ? $attr['class'] . " fa {$class}"
             : "fa {$class}";
 
         $html = '<i ';

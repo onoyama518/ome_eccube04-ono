@@ -52,6 +52,8 @@ class OrderMailType extends AbstractType
                 'mapped' => false,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('mt')
+                        ->andWhere('mt.id IN (:ids)')
+                        ->setParameter('ids', [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21])
                         ->orderBy('mt.id', 'ASC');
                 },
             ])

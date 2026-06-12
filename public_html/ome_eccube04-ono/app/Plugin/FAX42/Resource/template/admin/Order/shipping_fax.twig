@@ -1,0 +1,12 @@
+
+{% for shippingForm in form.shippings %}
+    <div class="row mb-3" style="display: none">
+        <label class="col-3 col-form-label">{{ shippingForm.fax.vars.label|trans }}</label>
+        <div class="col">
+            {{ form_widget(shippingForm.fax) }}
+            {{ form_errors(shippingForm.fax) }}
+        </div>
+    </div>
+
+    <script>move_row_from_to("#{{shippingForm.fax.vars.id}}", "#{{shippingForm.phone_number.vars.id}}")</script>
+{%endfor%}

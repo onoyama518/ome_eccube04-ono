@@ -14,22 +14,22 @@
 namespace Eccube\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Eccube\Common\EccubeConfig;
 use Eccube\Repository\CartRepository;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class DeleteCartsCommand extends Command
 {
     protected static $defaultName = 'eccube:delete-carts';
 
     /**
-     * @var EccubeConfig
+     * @var ContainerInterface
      */
-    protected $eccubeConfig;
+    protected $container;
 
     /**
      * @var SymfonyStyle
@@ -60,11 +60,11 @@ class DeleteCartsCommand extends Command
      */
     private $cartRepository;
 
-    public function __construct(EccubeConfig $eccubeConfig, EntityManagerInterface $entityManager, CartRepository $cartRepository)
+    public function __construct(ContainerInterface $container, EntityManagerInterface $entityManager, CartRepository $cartRepository)
     {
         parent::__construct();
 
-        $this->eccubeConfig = $eccubeConfig;
+        $this->container = $container;
         $this->entityManager = $entityManager;
         $this->cartRepository = $cartRepository;
     }
@@ -105,8 +105,8 @@ class DeleteCartsCommand extends Command
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
         $this->io = new SymfonyStyle($input, $output);
-        $this->locale = $this->eccubeConfig->get('locale');
-        $this->timezone = new \DateTimeZone($this->eccubeConfig->get('timezone'));
+        $this->locale = $this->container->getParameter('locale');
+        $this->timezone = new \DateTimeZone($this->container->getParameter('timezone'));
         $this->formatter = $this->createIntlFormatter();
     }
 

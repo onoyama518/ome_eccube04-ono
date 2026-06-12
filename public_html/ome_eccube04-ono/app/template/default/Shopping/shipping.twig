@@ -1,0 +1,119 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% extends 'default_frame.twig' %}
+
+{% block main %}
+	<div id="undercolumn" class="shopping_shipping">
+
+		<div class="ec-layoutRole__main" id="mypagecolumn">
+			<div class="ec-mypageRole">
+				<div class="ec-pageHeader">
+					<h2 class="title">{{ 'お届け先の指定'|trans }}</h2>
+				</div>
+			</div>
+			<div class="ec-mypageRole" id="mycontents_area">
+				<p class="information">下記一覧よりお届け先住所を選択して、「選択したお届け先に送る」ボタンをクリックしてください。<br/>
+					一覧にご希望の住所が無い場合は、「新しいお届け先を追加する」より追加登録してください。<br/>
+					※最大<span class="attention">{{ 'お届け先登録の上限の%count%'|trans({ '%count%': eccube_config.eccube_deliv_addr_max }) }}件</span>まで登録できます。
+				</p>
+				{% if Customer.CustomerAddresses|length < eccube_config.eccube_deliv_addr_max %}
+					<p class="add_address">
+						<a href="{{ url('shopping_shipping_edit', {'id': shippingId}) }}" class="btn_revise btn_new_address">
+						新しいお届け先を追加する
+						</a>
+						<style>
+							.newadress {
+								transition: opacity 0.3s ease; /* マウスオーバー時の滑らかな変化を追加 */
+							}
+							.newadress:hover {
+								opacity: 0.7; /* マウスオーバー時に不透明度を下げる */
+							}
+						</style>
+					</p>
+				{% else %}
+					<div class="ec-alert-warning">
+						<div class="ec-alert-warning__text">
+							<div class="ec-alert-warning__icon"><img src="{{ asset('assets/icon/exclamation-white.svg') }}"/></div>
+							{{ 'お届け先登録の上限の%count%件に達しています。お届け先を入力したい場合は、削除か変更を行ってください。'|trans({ '%count%': eccube_config.eccube_deliv_addr_max }) }}
+						</div>
+					</div>
+				{% endif %}
+
+				{% if has_errors(form.addresses) %}
+					<div class="ec-alert-warning">
+						<div class="ec-alert-warning__text">
+							<div class="ec-alert-warning__icon"><img src="{{ asset('assets/icon/exclamation-white.svg') }}"/></div>
+							{{ 'お届け先を指定してください'|trans }}
+						</div>
+					</div>
+				{% endif %}
+
+				<form method="post" action="{{ url('shopping_shipping', {'id': shippingId}) }}">
+					{{ form_widget(form._token) }}
+
+					<table summary="お届け先" class="hyou">
+						<colgroup width="5%"></colgroup>
+						<colgroup width="5%"></colgroup>
+						<colgroup width="25%"></colgroup>
+						<colgroup width="50%"></colgroup>
+						<colgroup width="10%"></colgroup>
+						<tr>
+							<th colspan="5">{{ 'お届け先'|trans }}</th>
+						</tr>
+						{% for choice in form.addresses.vars.choices %}
+							{% set Address = choice.data %}
+							{% set checked = choice is selectedchoice(form.addresses.vars.value) ? 'checked="checked"' : '' %}
+							<tr>
+								<td class="alignC add-td-s">
+									<input type="radio" id="address{{ choice.value }}" name="{{ form.addresses.vars.full_name }}" value="{{ choice.value }}" {{ checked }}/>
+								</td>
+								<td class="alignC add-td-m">
+									<label for="address{{ choice.value }}">
+										{% if loop.first %}
+											{{ '会員登録住所'|trans }}
+										{% else %}
+											{{ 'お届け先住所'|trans }}
+										{% endif %}
+									</label>
+								</td>
+								<td class="alignC add-td-l">
+									{{ '〒'|trans }}{{ Address.postal_code }}<br/>{{ Address.Pref }}{{ Address.addr01 }}{{ Address.addr02 }}<br/>
+									{{ Address.company_name }}<br/>
+									{{ Address.name01 }}&nbsp;{{ Address.name02 }}<br/>
+									{{ Address.phone_number }}
+								</td>
+								<td class="alignC add-td-s">
+									{% if not loop.first %}
+										<a class="ec-inlineBtn" href="{{ url('shopping_shipping_edit', { id : shippingId, 'customer_address_id' : Address.id }) }}">{{ '変更'|trans }}</a>
+									{% else %}
+										-
+									{% endif %}
+								</td>
+							</tr>
+						{% endfor %}
+					</table>
+
+					<div class="ec-registerRole__actions">
+						<div class="ec-off4Grid">
+							<div class="ec-off4Grid__cell shopping_shipping_btns">
+								<button type="submit" class="btn_confirm btn_revise btn_orange">{{ '選択したお届け先に送る'|trans }}</button>
+								<a class="btn_revise btn_not_orange" href="{{ url('shopping') }}">{{ '戻る'|trans }}</a>
+							</div>
+						</div>
+					</div>
+
+				</form>
+
+			</div>
+
+		</div>
+	</div>
+{% endblock %}

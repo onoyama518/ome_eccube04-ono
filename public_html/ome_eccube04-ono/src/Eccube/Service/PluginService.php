@@ -26,7 +26,7 @@ use Eccube\Repository\PluginRepository;
 use Eccube\Service\Composer\ComposerServiceInterface;
 use Eccube\Util\CacheUtil;
 use Eccube\Util\StringUtil;
-use Psr\Container\ContainerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
@@ -155,14 +155,13 @@ class PluginService
      *
      * @param string $path   path to tar.gz/zip plugin file
      * @param int    $source
-     * @param bool   $notExists
      *
      * @return boolean
      *
      * @throws PluginException
      * @throws \Exception
      */
-    public function install($path, $source = 0, $notExists = false)
+    public function install($path, $source = 0)
     {
         $pluginBaseDir = null;
         $tmp = null;
@@ -195,11 +194,6 @@ class PluginService
             $this->postInstall($config, $source);
         } catch (PluginException $e) {
             $this->deleteDirs([$tmp, $pluginBaseDir]);
-            if ($e->getMessage() === 'plugin already installed.' && $notExists) {
-
-                return true;
-            }
-
             throw $e;
         } catch (\Exception $e) {
             // インストーラがどんなExceptionを上げるかわからないので
@@ -212,11 +206,10 @@ class PluginService
 
     /**
      * @param $code string sプラグインコード
-     * @param bool $notExists
      *
      * @throws PluginException
      */
-    public function installWithCode($code, $notExists = false)
+    public function installWithCode($code)
     {
         $this->pluginContext->setCode($code);
         $this->pluginContext->setInstall();
@@ -242,18 +235,9 @@ class PluginService
             }
         }
 
-        try {
-            $this->checkSamePlugin($config['code']);
-            $this->copyAssets($config['code']);
-            $this->postInstall($config, $config['source']);
-        } catch (PluginException $e) {
-            if ($e->getMessage() === 'plugin already installed.' && $notExists) {
-
-                return true;
-            }
-
-            throw $e;
-        }
+        $this->checkSamePlugin($config['code']);
+        $this->copyAssets($config['code']);
+        $this->postInstall($config, $config['source']);
     }
 
     // インストール事前処理
@@ -316,6 +300,9 @@ class PluginService
      */
     public function generateProxyAndUpdateSchema(Plugin $plugin, $config, $uninstall = false, $saveMode = true)
     {
+        // キャッシュしたメタデータを利用しないようにキャッシュドライバを外しておく
+        $this->entityManager->getMetadataFactory()->setCacheDriver(null);
+
         $this->generateProxyAndCallback(function ($generatedFiles, $proxiesDirectory) use ($saveMode) {
             $this->schemaService->updateSchema($generatedFiles, $proxiesDirectory, $saveMode);
         }, $plugin, $config, $uninstall);
@@ -359,6 +346,7 @@ class PluginService
                         $driver = $ormConfig->newDefaultAnnotationDriver([$entityDir], false);
                         $namespace = 'Plugin\\'.$config['code'].'\\Entity';
                         $chain->addDriver($driver, $namespace);
+                        $ormConfig->addEntityNamespace($plugin->getCode(), $namespace);
                     }
                 }
 

@@ -1,0 +1,138 @@
+<!-- ＊新規作成　おすすめ商品一覧(管：ブロック)ここから＊ -->
+<div class="ec-modal" style="display: none;">
+	<div class="ec-modal-overlay"></div>
+	<div class="ec-modal-wrap">
+		<div class="ec-modal-content">
+			<h2 id="ec-modal-header" style="text-align:center;">最近見た商品</h2>
+			<div class="modal-buttons">
+				<button id="continue-shopping" class="modal-btn">買い物を<br class="br_recent_sp">続ける</button>
+				<button id="go-to-cart" class="modal-btn">カートに<br class="br_recent_sp">移動する</button>
+			</div>
+			{% set recent_products = app.session.get('recent_products', []) %}
+			{% if recent_products|length > 1 %}
+				<div class="recently-viewed">
+					<h3>最近見た商品</h3>
+					<ul class="recommend-carousel">
+						{% for product in recent_products %}
+							<li style="width:100%; max-width:150px; {% if loop.first %}display:none;{% endif %}">
+								<a href="{{ url('product_detail', {'id': product.id}) }}">
+									{% if product.image %}
+										<img src="{{ '/html/upload/save_image/' ~ (product.image | replace({'default/upload/save_image/': ''})) }}" alt="{{ product.name }}" class="recent_item_thumb" style="width:100%;">
+									{% else %}
+										<img src="{{ asset('assets/img/no_image.png') }}" alt="No Image">
+									{% endif %}
+									<p class="recommend-item-text">{{ product.name }}</p>
+								</a>
+							</li>
+						{% endfor %}
+					</ul>
+				</div>
+			{% endif %}
+			<button class="ec-modal-close">閉じる</button>
+
+		</div>
+	</div>
+</div>
+
+{{ render_cart_success_js()|raw }}
+
+<style>
+	.ec-modal .modal-btn:hover {
+		opacity: 0.8;
+		transition: opacity 0.3s;
+		cursor: pointer;
+	}
+
+	.ec-modal-overlay {
+		cursor: pointer;
+	}
+
+	.ec-modal-close {
+		cursor: pointer;
+		transition: opacity 0.3s;
+	}
+
+	.ec-modal-close:hover {
+		opacity: 0.7;
+	}
+
+	.ec-modal {
+		animation: fadeIn 0.3s ease-in-out;
+	}
+
+	@keyframes fadeIn {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
+</style>
+
+{% set recommend_items = [
+  { id: 300, tag_id: 'press-pr01', caption: '施術時間の短縮におすすめ' },
+  { id: 319, tag_id: 'press-pr02', caption: 'バームの浮きに悩んでいる方へ' },
+  { id: 13, tag_id: 'press-pr03', caption: '施術ダメージを0にしたい方へ' },
+  { id: 318, tag_id: 'press-pr04', caption: 'ワンランク上のツイーザーを求める方へ' },
+  { id: 299, tag_id: 'press-pr05', caption: '洗顔と潤いどちらも妥協しない方へ' }
+] %}
+
+<div id="press-list" class="section_recommend">
+	<h2 class="sec-title">
+		<picture>
+			<source media="(max-width: 768px)" srcset="{{ asset('assets/img/renewal_top/recommend/title_sp.svg') }}">
+			<img src="{{ asset('assets/img/renewal_top/recommend/recommend_item_title.svg') }}" alt="RECOMMEND ITEM"/>
+		</picture>
+		<span class="sub-title">おすすめ商品</span>
+	</h2>
+
+	<div class="recommend-container recommend-slider">
+		{% set fallback_products = {
+			'319': { name: 'BUリフトバーム', price: 1540, image: 'assets/img_2018/top/bu-lift.png' },
+			'318': { name: '国産ツイーザーI+', price: 3520, image: 'assets/img_2018/top/tweezar-318.png' }
+		} %}
+		{% for item in recommend_items %}
+			{% set Product = repository('Eccube\\Entity\\Product').find(item.id) %}
+			{% set fallback = fallback_products[item.id ~ '']|default(null) %}
+			<div class="recommend-item">
+				<a href="{{ url('product_detail', {'id': item.id}) }}" id="{{ item.tag_id }}">
+					<div class="area_img">
+						<p>{{ item.caption }}</p>
+						{% if Product or fallback %}
+							<img src="{% if Product %}{{ asset(Product.main_list_image|no_image_product, 'save_image') }}{% else %}{{ asset(fallback.image) }}{% endif %}" alt="{% if Product %}{{ Product.name }}{% else %}{{ fallback.name }}{% endif %}">
+						{% endif %}
+					</div>
+				</a>
+				<div class="area_info_item">
+					<a href="{{ url('product_detail', {'id': item.id}) }}" id="{{ item.tag_id }}">
+						<h3 class="item_name">{{ Product.name|default(fallback ? fallback.name : '') }}</h3>
+						<span class="price">{% if Product %}{{ Product.getPrice02IncTaxMin|number_format }}円<span class="tax">（税込）</span>{% elseif fallback %}{{ fallback.price|number_format }}円<span class="tax">（税込）</span>{% endif %}</span>
+					</a>
+					<div class="area_review">
+						{{ render_review_block(item.id, RankingReviewAvgList, RankingReviewCountList)|raw }}
+					</div>
+				</div>
+				<div class="cart-form-area">
+					{% if Product and Product.stock_find %}
+						<button type="button" class="btn btn_cart purchase-btn" data-product-id="{{ item.id }}" onclick="openCartModal({{ item.id }})">
+							カートに入れる
+						</button>
+					{% else %}
+						<button type="button" class="btn btn_cart purchase-btn" disabled aria-disabled="true">
+							在庫切れ
+						</button>
+					{% endif %}
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+
+	<div class="recommend-modals-container">
+		{% for item in recommend_items %}
+			{{ render_cart_modal(item.id)|raw }}
+		{% endfor %}
+	</div>
+</div>
+
+<!-- ＊新規作成　おすすめ商品一覧(管：ブロック)ここまで＊ -->

@@ -1,0 +1,1186 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% extends 'default_frame.twig' %}
+
+{% set body_class = 'product_page' %}
+
+
+{% block stylesheet %}
+	<style>
+
+		.slick-slider {
+			margin-bottom: 30px;
+		}
+
+		.slick-dots {
+			position: absolute;
+			bottom: -45px;
+			display: block;
+			width: 100%;
+			padding: 0;
+			list-style: none;
+			text-align: center;
+		}
+
+		.slick-dots li {
+			position: relative;
+			display: inline-block;
+			width: 20px;
+			height: 20px;
+			margin: 0 5px;
+			padding: 0;
+
+			cursor: pointer;
+		}
+
+		.slick-dots li button {
+			font-size: 0;
+			line-height: 0;
+			display: block;
+			width: 20px;
+			height: 20px;
+			padding: 5px;
+			cursor: pointer;
+			color: transparent;
+			border: 0;
+			outline: none;
+			background: transparent;
+		}
+
+		.slick-dots li button:hover,
+		.slick-dots li button:focus {
+			outline: none;
+		}
+
+		.slick-dots li button:hover:before,
+		.slick-dots li button:focus:before {
+			opacity: 1;
+		}
+
+		.slick-dots li button:before {
+			content: " ";
+			line-height: 20px;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 12px;
+			height: 12px;
+			text-align: center;
+			opacity: .25;
+			background-color: black;
+			border-radius: 50%;
+
+		}
+
+		.slick-dots li.slick-active button:before {
+			opacity: .75;
+			background-color: black;
+		}
+
+		.slick-dots li button.thumbnail img {
+			width: 0;
+			height: 0;
+		}
+		/* モーダル全体 */
+		.ec-modal {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			z-index: 1000;
+			display: none;
+			background: rgba(0, 0, 0, 0.5); /* 背景を半透明 */
+		}
+
+		/* モーダルの中央部分 */
+		.ec-modal-wrap {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			background: #fff;
+			padding: 40px; /* パディングを広げて空白を確保 */
+			box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+			border-radius: 8px;
+			width: 90%;
+			max-width: 550px; /* 最大幅を調整 */
+			text-align: center;
+		}
+
+
+		/* モーダル内のコンテンツ */
+		.ec-modal-content {
+			position: relative;
+			font-size: 18px; /* 文字を少し大きめに */
+			line-height: 1.6; /* 行間を調整して読みやすく */
+			color: #333; /* 濃い文字色で視認性を向上 */
+		}
+		#ec-modal-header {
+			font-size: 26px; /* タイトルを大きめに */
+			margin-bottom: 20px;
+			font-weight: bold;
+			color: #333;
+		}
+
+		/* ボタンの配置 */
+		.modal-buttons {
+			display: flex;
+			justify-content: center;
+			gap: 20px; /* ボタン間の空白を広げる */
+			margin-top: 20px; /* ボタン上部の余白を調整 */
+		}
+
+		/* ボタンの基本スタイル */
+		.modal-btn {
+			width: 210px;
+			padding: 12px 30px; /* ボタンを大きめに */
+			border: none;
+			border-radius: 4px;
+			font-size: 18px; /* ボタン内の文字を大きめに */
+			cursor: pointer;
+			font-weight: bold;
+		}
+
+		/* 「買い物を続ける」ボタン */
+		#continue-shopping {
+			background-color: #525263;
+			color: #fff;
+			cursor: pointer;
+
+		}
+
+		#continue-shopping:hover {
+			opacity: 0.8;
+		}
+
+		/* 「カートに移動する」ボタン */
+		#go-to-cart {
+			background-color: #ff8b3b;
+			color: #fff;
+			cursor: pointer;
+		}
+
+		#go-to-cart:hover {
+			opacity: 0.8;
+		}
+
+		/* 「最近見た商品」のセクション */
+		.recently-viewed {
+			margin-top: 30px; /* 上部余白を調整 */
+			text-align: center;
+		}
+
+		/* 「最近見た商品」のタイトル */
+		.recently-viewed h3 {
+			font-size: 20px; /* タイトルを大きめに */
+			margin-bottom: 20px;
+			font-weight: bold;
+			color: #333; /* タイトルの文字色を濃く */
+		}
+
+		/* 商品リスト全体 */
+		.recommend-carousel {
+			display: flex;
+			justify-content: center; /* 商品を中央揃え */
+			gap: 30px; /* 商品間の間隔を広げる */
+			padding: 20px 0; /* 上下の余白を追加 */
+			margin: 0 auto;
+			width: 100%;
+		}
+
+		/* 商品1つ分のスタイル */
+		.recommend-carousel ul li {
+			flex: 1;
+			max-width: 150px; /* 商品の幅を調整 */
+			text-align: center;
+			font-weight: bold;
+		}
+
+		/* 商品画像のスタイル */
+		.recommend-carousel ul li img {
+			width: 100%; /* 画像を親要素の幅に合わせる */
+			height: auto;
+			display: block;
+			margin: 0 auto 10px; /* 下部に余白を追加 */
+			border: 1px solid #ddd;
+			border-radius: 4px;
+			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+		}
+
+		/* 商品名のスタイル */
+		.recommend-item-text {
+			font-size: 13px; /* 商品名を大きめに */
+			color: #333;
+			margin-top: 10px;
+			line-height: 1.4;
+			white-space: normal; /* 商品名を折り返し可能に */
+			overflow: hidden; /* テキストオーバーフローを隠す */
+			text-align: center;
+			font-weight: bold;
+
+		}
+
+		/* 閉じるボタン */
+		.ec-modal-close {
+
+			margin-top: 30px; /* 上部に余白を追加 */
+			padding: 12px 30px; /* 閉じるボタンを大きめに */
+			background: #6c757d;
+			color: white;
+			border: none;
+			border-radius: 4px;
+			font-size: 18px; /* ボタンの文字サイズを拡大 */
+			cursor: pointer;
+
+		}
+
+		.ec-modal-close:hover {
+			background: #5a6268;
+		}
+		.br_recent_sp {
+			display: none;
+		}
+
+		@media screen and(max-width:768px) {
+			.modal-btn {
+				padding: 12px 30px; /* ボタンを大きめに */
+				border: none;
+				border-radius: 4px;
+				font-size: 14px; /* ボタン内の文字を大きめに */
+				cursor: pointer;
+				font-weight: bold;
+			}
+			#ec-modal-header {
+				font-size: 20px; /* タイトルを大きめに */
+				margin-bottom: 20px;
+				font-weight: bold;
+				color: #333;
+			}
+			.recommend-carousel {
+				padding: 0 !important;
+				gap: 15px;
+			}
+			.recommend-carousel li {
+				max-width: 150px !important;
+				width: 33%;
+			}
+			.recent_item_thumb {
+				max-width: 150px !important;
+
+			}
+			.recommend-item-text {
+				font-size: 12px;
+			}
+			.all_delete {
+				display: none;
+			}
+			.br_recent_sp {
+				display: block;
+			}
+			.ec-modal-wrap {
+				width: 80%;
+				padding: 20px;
+			}
+		}
+	</style>
+{% endblock %}
+
+{% block javascript %}
+	<script>
+		// 規格2に選択肢を割り当てる関数
+eccube.classCategories = {{ class_categories_as_json(Product)|raw }};
+function fnSetClassCategories(form, classcat_id2_selected) {
+var $form = $(form);
+var product_id = $form.find('input[name=product_id]').val();
+var $sele1 = $form.find('select[name=classcategory_id1]');
+var $sele2 = $form.find('select[name=classcategory_id2]');
+eccube.setClassCategories($form, product_id, $sele1, $sele2, classcat_id2_selected);
+}
+
+{% if form.classcategory_id2 is defined %}fnSetClassCategories($('#form1'), {{ form.classcategory_id2.vars.value|json_encode|raw }});
+{% elseif form.classcategory_id1 is defined %}
+eccube.checkStock($('#form1'), {{ Product.id }}, {{ form.classcategory_id1.vars.value|json_encode|raw }}, null);{% endif %}
+	</script>
+
+	<script>
+		$(function () { // ページキャッシュ無効化対策
+$(window).bind('pageshow', function (event) {
+if (event.originalEvent.persisted) {
+location.reload(true);
+}
+});
+
+// 画像の枚数を取得
+var imageCount = $('.item_visual .slide-item').length;
+
+// メインビジュアルのスライダー設定
+if (imageCount >= 5) { // 5枚以上の場合は通常のスライダー（無限ループあり）
+$('.item_visual').slick({
+dots: false,
+arrows: false,
+slidesToShow: 1,
+infinite: true,
+asNavFor: ".mini-slider",
+fade: true,
+cssEase: 'linear',
+swipe: true,
+draggable: true,
+touchMove: true
+});
+
+// サムネイルスライダーの設定（5枚以上の場合）
+$('.mini-slider').slick({
+dots: false,
+arrows: false,
+slidesToShow: 4,
+infinite: true,
+asNavFor: ".item_visual",
+focusOnSelect: true
+});
+} else { // 4枚以下の場合のメインビジュアル設定
+$('.item_visual').slick({
+dots: false,
+arrows: false,
+slidesToShow: 1,
+infinite: false,
+fade: true,
+cssEase: 'linear',
+swipe: true,
+draggable: true,
+touchMove: true
+});
+
+// 4枚以下の場合のサムネイル設定
+$('.mini-slider').slick({
+dots: false,
+arrows: false,
+slidesToShow: 4,
+infinite: false,
+focusOnSelect: true,
+swipe: false,
+draggable: false,
+touchMove: false
+});
+
+// メインビジュアルのスライド時にサムネイルのアクティブ状態を手動で更新
+$('.item_visual').on('beforeChange', function (event, slick, currentSlide, nextSlide) {
+$('.mini-slider .slick-slide').removeClass('slick-current');
+$('.mini-slider .slick-slide[data-slick-index="' + nextSlide + '"]').addClass('slick-current');
+});
+
+// サムネイルクリック時のメインビジュアル切り替え
+$('.mini-slider .slide-items').on('click', function () {
+var index = $(this).data('slick-index');
+$('.item_visual').slick('slickGoTo', index);
+});
+}
+});
+	</script>
+
+	<script>
+		$(function () {
+function checkCategorySelection() {
+var $sele1 = $('#classcategory_id1'); // 規格1の要素
+var $sele2 = $('#classcategory_id2'); // 規格2の要素
+var label1 = $('label[for="classcategory_id1"]').text().trim() || '規格1';
+var label2 = $('label[for="classcategory_id2"]').text().trim() || '規格2';
+
+// カスタムエラーメッセージをリセット
+$sele1[0].setCustomValidity('');
+if ($sele2.length > 0) { // 規格2が存在する場合にリセット
+$sele2[0].setCustomValidity('');
+}
+
+// 規格1が未選択かつ規格2が存在しない場合
+if ($sele1.val() === "__unselected" && ($sele2.length === 0 || $sele2.val() == null)) {
+$sele1[0].setCustomValidity (`「${label1}」が選択されていません`);
+}
+// 規格1が未選択で、規格2が未選択の場合
+else if ($sele1.val() === "__unselected" && ! $sele2.val()) {
+$sele1[0].setCustomValidity (`「${label1}」が選択されていません`);
+$sele2[0].setCustomValidity (`「${label2}」が選択されていません`);
+}
+// 規格1が選択されていて、規格2が未選択の場合
+else if ($sele1.val() !== "__unselected" && ! $sele2.val()) {
+$sele2[0].setCustomValidity (`「${label2}」が選択されていません`);
+}
+
+// フォーム全体のバリデーションを確認
+var form = $sele1.closest('form')[0];
+if (form && ! form.checkValidity()) {
+form.reportValidity(); // 標準のエラーメッセージを表示
+}
+}
+
+
+// カートに追加する処理
+
+$('.add-cart').on('click', function (event) { // フォーム送信のAjax化
+var $form = $('#form1');
+$.ajax({
+url: $form.attr('action'),
+type: $form.attr('method'),
+data: $form.serialize(),
+dataType: 'json',
+beforeSend: function () {
+$('.add-cart').prop('disabled', true); // ボタンを無効化
+$('#validate_class_1').text(''); // エラーメッセージをクリア
+}
+}).done(function (data) { // モーダルでメッセージ表示
+$('#ec-modal-header').text('カートに商品が入りました'); // メッセージを設定
+$('.ec-modal').fadeIn();
+// モーダルを表示
+
+// カートブロック更新
+$.ajax({url: "{{ url('block_cart') }}", type: 'GET', dataType: 'html'}).done(function (html) {
+$('.ec-headerRole__cart').html(html); // カートブロックを更新
+});
+}).fail(function () {
+
+checkCategorySelection();
+}).always(function () {
+$('.add-cart').prop('disabled', false); // ボタンを有効化
+});
+});
+
+// 「買い物を続ける」ボタンの動作
+$('#continue-shopping').on('click', function () {
+$('.ec-modal').fadeOut(); // モーダルを閉じる
+});
+
+// 「カートへ進む」ボタンの動作
+$('#go-to-cart').on('click', function () {
+window.location.href = "{{ url('cart') }}"; // カートページへ遷移
+});
+
+// モーダル外クリックで閉じる
+$('.ec-modal-overlay, .ec-modal-close').on('click', function () {
+$('.ec-modal').fadeOut(); // モーダルを閉じる
+});
+});
+
+
+document.addEventListener('DOMContentLoaded', function () { // <br> を削除し、\n を <br> に変換する関数
+function processDescription(element) {
+if (! element) 
+return;
+
+
+
+const tableElements = Array.from(element.querySelectorAll('table'));
+const placeholders = [];
+
+// プレースホルダで table を DOMごと一時置換
+tableElements.forEach((table, index) => {
+const placeholder = document.createComment (`TABLE-${index}`);
+placeholders.push({placeholder, table});
+table.replaceWith(placeholder);
+});
+
+// <br> を削除し、\n を <br> に変換
+let updatedContent = element.innerHTML.replace(/<br\s*\/?>/gi, '').replace(/\n/g, '<br>');
+
+// 更新後の HTML を適用
+element.innerHTML = updatedContent;
+
+// プレースホルダを元の table に戻す
+placeholders.forEach(({placeholder, table}) => {
+const commentNodes = Array.from(element.childNodes).filter(n => n.nodeType === Node.COMMENT_NODE && n.data === placeholder.data);
+commentNodes.forEach(comment => comment.replaceWith(table));
+});
+}
+
+
+// 最初の <br> を削除する関数
+function removeFirstBr(element) {
+if (! element) 
+return;
+
+
+
+const firstBr = element.querySelector('br');
+if (firstBr) 
+firstBr.remove();
+
+
+
+}
+
+// 特定の要素の直後や直前の <br> を削除
+function removeBr(container) {
+if (! container) 
+return;
+
+
+
+// 特定の要素の直後の <br> を削除
+function removeBrAfterElement(elements) {
+elements.forEach(element => {
+const nextSibling = element.nextSibling;
+if (nextSibling && nextSibling.nodeType === Node.ELEMENT_NODE && nextSibling.tagName === 'BR') {
+nextSibling.remove();
+}
+});
+}
+
+// h4 の直後の <br> を削除
+removeBrAfterElement(container.querySelectorAll('h4'));
+
+// h3 の直後の <br> を削除
+removeBrAfterElement(container.querySelectorAll('h3'));
+
+// ul 内の <br> を削除
+const ulElements = container.querySelectorAll('ul');
+ulElements.forEach(ul => {
+ul.querySelectorAll('br').forEach(br => br.remove());
+});
+
+// 最初の h4 の直前の <br> を削除
+const firstH4 = container.querySelector('h4');
+if (firstH4) {
+const previousSibling = firstH4.previousSibling;
+if (previousSibling && previousSibling.nodeType === Node.ELEMENT_NODE && previousSibling.tagName === 'BR') {
+previousSibling.remove();
+}
+}
+}
+
+// 処理対象の要素
+const descriptionMain = document.querySelector('.ec-productRole__description');
+
+if (descriptionMain) { // 全体的な不要な改行の処理
+processDescription(descriptionMain);
+
+// 最初の <br> を削除
+removeFirstBr(descriptionMain);
+
+// 特定の <br> を削除
+removeBr(descriptionMain);
+}
+});
+	</script>
+
+
+	<script type="application/ld+json">
+		{
+																									"@context": "https://schema.org/",
+																									"@type": "Product",
+																									"name": "{{ Product.name }}",
+																									"image": [
+		{% for img in Product.ProductImage %}
+			"{{ app.request.schemeAndHttpHost }}{{ asset(img, 'save_image') }}"
+			{% if not loop.last %},
+			{% endif %}
+		{% else %}
+			"{{ app.request.schemeAndHttpHost }}{{ asset(''|no_image_product, 'save_image') }}"
+		{% endfor %}
+		],
+																									"description": "{{ Product.description_list | default(Product.description_detail) | replace({'\n': '', '\r': ''}) | slice(0,300) }}",
+		{% if Product.code_min %}
+			"sku": "{{ Product.code_min }}",
+		{% endif %}
+		"offers": {
+																										"@type": "Offer",
+																										"url": "{{ url('product_detail', {'id': Product.id}) }}",
+																										"priceCurrency": "{{ eccube_config.currency }}",
+																										"price":
+		{{ Product.getPrice02IncTaxMin ? Product.getPrice02IncTaxMin : 0 }},
+																										"availability": "{{ Product.stock_find ? "InStock" : "OutOfStock" }}"
+																									}
+																								}
+	</script>
+{% endblock %}
+
+{% block main %}
+	<div class="ec-modal" style="display: none;">
+		<div class="ec-modal-overlay"></div>
+		<div class="ec-modal-wrap">
+			<div class="ec-modal-content">
+				<h2 id="ec-modal-header" style="text-align:center;">最近見た商品</h2>
+				<div class="modal-buttons">
+					<button id="continue-shopping" class="modal-btn">買い物を<br class="br_recent_sp">続ける</button>
+					<button id="go-to-cart" class="modal-btn">カートに<br class="br_recent_sp">移動する</button>
+				</div>
+				{% set recent_products = app.session.get('recent_products', []) %}
+				{% if recent_products|length > 1 %}
+					<div class="recently-viewed">
+						<h3>最近見た商品</h3>
+						<ul class="recommend-carousel">
+							{% for product in recent_products %}
+								<li style="width:100%; max-width:150px; {% if loop.first %}display:none;{% endif %}">
+									<a href="{{ url('product_detail', {'id': product.id}) }}">
+										{% if product.image %}
+											<img src="{{ '/html/upload/save_image/' ~ (product.image | replace({'default/upload/save_image/': ''})) }}" alt="{{ product.name }}" class="recent_item_thumb" style="width:100%;">
+										{% else %}
+											<img src="{{ asset('assets/img/no_image.png') }}" alt="No Image">
+										{% endif %}
+										<p class="recommend-item-text">{{ product.name }}</p>
+									</a>
+								</li>
+							{% endfor %}
+						</ul>
+					</div>
+				{% endif %}
+				<button class="ec-modal-close">閉じる</button>
+
+			</div>
+		</div>
+	</div>
+
+	<div class="ec-productRole" id="undercolumn_pages">
+		<div class="ec-grid2 clearfix" id="detailarea">
+			<div class="relative_cat">関連カテゴリ：
+				{% for ProductCategory in Product.ProductCategories %}
+
+					{% for Category in ProductCategory.Category.path %}
+						<a href="{{ url('product_list') }}?category_id={{ Category.id }}">{{ Category.name }}</a>
+						{%- if loop.last == false %}
+							<span>＞</span>
+						{% endif -%}
+					{% endfor %}
+
+				{% endfor %}
+
+			</div>
+			<div class="ec-grid2__cell" id="detailphotobloc">
+				<div class="ec-sliderItemRole photo">
+
+					<div class="item_visual expansion" id="openModal">
+						{% for ProductImage in Product.ProductImage %}
+							<div class="slide-item" style="cursor:pointer;"><img class="picture " src="{{ asset(ProductImage, 'save_image') }}" alt="{{ loop.first ? Product.name : '' }}" {% if loop.index > 1 %} loading="lazy" {% endif %}></div>
+						{% else %}
+							<div class="slide-item"><img class="picture pinch-zoom" src="{{ asset(''|no_image_product, 'save_image') }}" alt="{{ loop.first ? Product.name : '' }}"></div>
+						{% endfor %}
+					</div>
+
+					{% if Product.ProductImage|length > 1 %}
+						<div class="mini-slider">
+							{% for ProductImage in Product.ProductImage %}
+								<div class="slide-items" style="cursor:pointer;"><img class="picture" src="{{ asset(ProductImage, 'save_image') }}" alt="{{ loop.first ? Product.name : '' }}" {% if loop.index > 1 %} loading="lazy" {% endif %}></div>
+							{% else %}
+								<div class="slide-items"><img class="picture" src="{{ asset(''|no_image_product, 'save_image') }}" alt="{{ loop.first ? Product.name : '' }}"></div>
+							{% endfor %}
+						</div>
+					{% endif %}
+
+				</div>
+				<p align="left">
+					<span
+						class="mini">
+						<!--★拡大する★-->
+						<button class="expansion" id="button_open_modal">
+							画像を拡大する</button>
+					</span>
+				</p>
+				<!-- モーダル -->
+				<div id="modal" class="modal">
+					<div class="modal-content">
+						<span id="closeModal" class="close">&times;</span>
+						<div class="modal_expand">
+							{% for ProductImage in Product.ProductImage %}
+								<div class="slide-item">
+									<img class="picture pinch-zoom" src="{{ asset(ProductImage, 'save_image') }}" alt="{{ loop.first ? Product.name : '' }}" {% if loop.index > 1 %} loading="lazy" {% endif %}>
+								</div>
+							{% else %}
+								<div class="slide-item">
+									<img class="picture pinch-zoom" src="{{ asset(''|no_image_product, 'save_image') }}" alt="{{ loop.first ? Product.name : '' }}">
+								</div>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+
+				<script>
+					// Slickスライダーの初期化
+// ボタンとモーダルの要素を取得
+const openModalButton = document.getElementById('openModal');
+const openModalButton2 = document.getElementById('button_open_modal');
+const modal = document.getElementById('modal');
+const closeModalButton = document.getElementById('closeModal');
+
+// モーダルを開く関数
+const openModal = () => {
+modal.style.display = 'block';
+
+// メインスライダーの現在スライドを取得
+const currentIndex = $('.item_visual').slick('slickCurrentSlide');
+
+// 既存のモーダルスライダーを破棄して再初期化
+if ($('.modal_expand').hasClass('slick-initialized')) {
+$('.modal_expand').slick('unslick');
+}
+
+// 再初期化（initialSlide で開始位置を指定）
+$('.modal_expand').slick({
+dots: false,
+arrows: true, // 矢印を有効化
+slidesToShow: 1,
+infinite: true,
+fade: true, // フェード効果を有効化
+cssEase: 'linear', // フェードアニメーションのスタイル
+initialSlide: currentIndex, // ←ここで開始スライドを指定
+prevArrow: '<button type="button" class="slick-prev">←</button>', // 左矢印
+nextArrow: '<button type="button" class="slick-next">→</button>' // 右矢印
+});
+};
+
+// ボタンイベントリスナーの追加
+if (openModalButton) {
+openModalButton.addEventListener('click', openModal);
+}
+if (openModalButton2) {
+openModalButton2.addEventListener('click', openModal);
+}
+
+// モーダルを閉じる
+if (closeModalButton) {
+closeModalButton.addEventListener('click', () => {
+modal.style.display = 'none';
+});
+}
+
+// モーダルの外側をクリックしたときに閉じる
+window.addEventListener('click', (event) => {
+if (event.target === modal) {
+modal.style.display = 'none';
+}
+});
+
+// スマホ対応: 矢印タップの効きを改善
+$(document).on('touchstart', '.slick-prev, .slick-next', function (e) {
+e.stopPropagation(); // イベントの伝播を防止
+e.preventDefault(); // デフォルトの動作を無効化
+$(this).trigger('click'); // 明示的にクリックイベントを発火
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+const quantityInput = document.getElementById('quantity');
+const minusButton = document.querySelector('.cart_minus');
+const plusButton = document.querySelector('.cart_plus');
+
+// 数量の更新
+function updateQuantity() {
+let currentValue = parseInt(quantityInput.value, 10);
+
+// 「-」ボタンの制御（数量が1のとき無効化）
+if (currentValue <= 1) {
+minusButton.classList.add('not_zero');
+} else {
+minusButton.classList.remove('not_zero');
+}
+
+
+}
+
+// 数量を減らす
+minusButton.addEventListener('click', function () {
+let currentValue = parseInt(quantityInput.value, 10);
+if (currentValue > 1) {
+quantityInput.value = currentValue - 1;
+updateQuantity();
+}
+});
+
+// 数量を増やす
+plusButton.addEventListener('click', function () {
+let currentValue = parseInt(quantityInput.value, 10);
+
+quantityInput.value = currentValue + 1;
+updateQuantity();
+});
+
+// 初期状態を確認
+updateQuantity();
+});
+				</script>
+
+
+			</div>
+			<div class="ec-grid2__cell" id="detailrightbloc">
+				<h1 class="item_ttl">{{ Product.name }}</h1>
+				<div class="product_class">
+					<span id="product_code_default">
+						{% if Product.code_min is not empty %}
+							<div class="ec-productRole__code">
+								<span class="pc_only_dis">{{ '商品コード'|trans }}：</span>
+								<span class="product-code-default">{{ Product.code_min }}
+									{% if Product.code_min != Product.code_max %}
+										～
+										{{ Product.code_max }}
+									{% endif %}
+								</span>
+							</div>
+						{% endif %}
+					</span>
+					<span id="product_code_dynamic"></span>
+				</div>
+				<div class="detailrightbloc-left">
+					<div class="area_review">
+						{{ render_review_block(Product.id, ProductReviewAvgList, ProductReviewCountList)|raw }}
+					</div>
+
+
+					{% if Product.hasProductClass %}
+						<div class="ec-productRole__priceRegular normal_price mini">
+							{% if Product.getPrice01Min is not null and Product.getPrice01IncTaxMin == Product.getPrice01IncTaxMax %}
+								<span class="ec-productRole__priceRegularPrice price">{{ '通常価格（税込）'|trans }}:<span class="price01-default">{{ Product.getPrice01IncTaxMin|price }}</span>
+								</span>
+
+							{% elseif Product.getPrice01Min is not null and Product.getPrice01Max is not null %}
+								<span class="ec-productRole__priceRegularPrice price">{{ '通常価格（税込）'|trans }}:<span class="price01-default">{{ Product.getPrice01IncTaxMin|price }}～
+										{{ Product.getPrice01IncTaxMax|price }}</span>
+								</span>
+
+							{% endif %}
+						</div>
+					{% else %}
+						{% if Product.getPrice01Max is not null %}
+							<span class="ec-productRole__priceRegularPrice">{{ '通常価格（税込）'|trans }}:{{ Product.getPrice01IncTaxMin|price }}</span>
+
+						{% endif %}
+					{% endif %}
+
+					<div class="ec-productRole__price">
+						{% if Product.hasProductClass %}
+							{% if Product.getPrice02IncTaxMin == Product.getPrice02IncTaxMax %}
+								<div class="ec-price sale_price">
+									<span class="ec-price__tax">販売価格{{ '(税込)'|trans }}</span>
+									<span class="ec-price__price price02-default">:{{ Product.getPrice02IncTaxMin|price }}</span>
+								</div>
+							{% else %}
+								<div class="ec-price sale_price">
+									<span class="ec-price__tax">販売価格{{ '(税込)'|trans }}</span>
+									<span class="ec-price__price price02-default">:{{ Product.getPrice02IncTaxMin|price }}
+										～
+										{{ Product.getPrice02IncTaxMax|price }}</span>
+								</div>
+							{% endif %}
+						{% else %}
+							<div class="ec-price sale_price">
+								<span class="ec-price__tax">販売価格{{ '(税込)'|trans }}</span>
+								<span class="ec-price__price">:{{ Product.getPrice02IncTaxMin|price }}</span>
+
+							</div>
+						{% endif %}
+					</div>
+
+
+					<div class="point">ポイント：
+						<span id="point_default">
+							{% if BaseInfo.option_point %}
+								{% set pointRate = BaseInfo.basic_point_rate / 100 %}
+								{% set addPoint = (Product.getPrice02Min * pointRate) %}
+								 {{ addPoint|round }}
+							{% endif %}
+						</span>
+						<span id="point_dynamic"></span>
+						Pt
+					</div>
+
+				</div>
+				<div class="ec-productRole__profile detailrightbloc-right">
+					<form action="{{ url('product_add_cart', {id:Product.id}) }}" method="post" id="form1" name="form1" class="cart_area">
+						{% if Product.stock_find %}
+							<div class="ec-productRole__actions classlist" style="position:relative;">
+								<div id="validate_class_1" style="position:absolute; top:-30px; font-weight:500;"></div>
+								{% if form.classcategory_id1 is defined %}
+									<ul class="ec-select clearfix dot_add">
+										{{ form_row(form.classcategory_id1) }}
+										{{ form_errors(form.classcategory_id1) }}
+									</ul>
+									{% if form.classcategory_id2 is defined %}
+										<ul class="ec-select clearfix dot_add">
+											{{ form_row(form.classcategory_id2) }}
+											{{ form_errors(form.classcategory_id2) }}
+										</ul>
+									{% endif %}
+								{% endif %}
+								<p class="review-detail">
+									<a href="/user_data/reviewpoint" target="_blank">レビュー特典に関する注意事項はこちら</a>
+								</p>
+
+
+							</div>
+							<div class="ec-numberInput quantity" id="cart_quantity">
+								<ul>
+									<button type="button" class="cart_minus">-</button>
+									{{ form_widget(form.quantity, {'attr': {'id': 'quantity', 'class': 'quantity-input'}}) }}
+									<button type="button" class="cart_plus">+</button>
+									{{ form_errors(form.quantity) }}
+								</ul>
+							</div>
+							<div class="ec-productRole__btn"></div>
+							<div class="cartin">
+								<div class="cartin_btn">
+									<div id="cartbtn_default">
+										<button type="submit" class="ec-blockBtn--action add-cart" id="cart" style="cursor: pointer;">
+											カートに入れる
+										</button>
+									</div>
+								</div>
+							</div>
+						{% else %}
+							<div class="attention">申し訳ございませんが、只今品切れ中です。</div>
+
+						{% endif %}
+
+						{{ form_rest(form) }}
+					</form>
+
+				</div>
+			</div>
+			{% if Product.free_area %}
+				<div class="info_area">
+					{{ Product.free_area|raw }}
+				</div>
+			{% endif %}
+			<div class="ec-productRole__description">
+				{{ Product.description_detail|raw}}
+			</div>
+
+
+			<!--▼レビューエリア-->
+			<div id="customervoice_area">
+				<h2>
+					<span class="pd_review_icon"><img src="{{ asset('assets/img_2018/icon/product_page_review.png') }}" alt="レビュー"></span>レビュー</h2>
+				<div class="area_review">
+					{{ render_review_block(Product.id, ProductReviewAvgList, ProductReviewCountList)|raw }}
+				</div>
+				<div class="review_bloc clearfix">
+					<p>この商品に対するご感想をぜひお寄せください。</p>
+					<div
+						class="review_btn">
+						{#  #}
+						<a href="{{ url('product_review_index', { id: Product.id }) }}">
+							<span class="new-comm">レビューを書く</span>
+						</a>
+
+					</div>
+				</div>
+				{% import _self as stars %}
+
+				{# 星テキスト生成用マクロ #}
+				{% macro stars(positive, negative) %}
+					{% set positive_stars = ["", "★", "★★", "★★★", "★★★★", "★★★★★"] %}
+					{% set negative_stars = ["", "☆", "☆☆", "☆☆☆", "☆☆☆☆", "☆☆☆☆☆"] %}
+					{{ positive_stars[positive] }}{{ negative_stars[negative] }}
+				{% endmacro %}
+
+
+				{% set positive_avg_star = ProductReviewAvg %}
+				{% set negative_avg_star = 5 - positive_avg_star %}
+
+
+				{% if ProductReviews %}
+					<ul class="review_list">
+						{% for ProductReview in ProductReviews %}
+							<li style="width:100%;">
+								<p class="voicetitle"><img src="{{ asset('assets/img_2018/icon/product_page_user.png') }}" alt="お客様の声">{{ ProductReview.title }}</p>
+								<p class="voicedate">投稿者：
+									{% if ProductReview.reviewer_url %}
+										<a href="{{ ProductReview.reviewer_url }}" rel="ugc nofollow" target="_blank">{{ 'product_review.front.product_detail.name'|trans({ '%name%': ProductReview.reviewer_name }) }}</a>
+									{% else %}
+										{{ 'product_review.front.product_detail.name'|trans({ '%name%': ProductReview.reviewer_name }) }}
+									{% endif %}おすすめレベル：{% set positive_star = ProductReview.recommend_level %}
+									{% set negative_star = 5 - positive_star %}
+									<span class="recommend_level">
+										{{ stars.stars(positive_star, negative_star) }}
+									</span>
+
+								</p>
+								<p class="voicecomment">{{ ProductReview.comment|nl2br }}</p>
+
+							</li>
+						{% endfor %}
+					</ul>
+					{% else %}
+					{# <p class="no_review">{{ 'product_review.front.product_detail.no_review'|trans }}</p> #}
+				{% endif %}
+
+			</div>
+			<!-- ▲レビューエリア -->
+			<!--▼おすすめ商品（関連商品）-->
+			<h2 class="whobought_area_h2">おすすめ商品</h2>
+			<div id="RelatedProduct-product_area" class="ec-shelfRole">
+				<div class="uresuji-inner" style="width:100%">
+					<table>
+						<tr>
+							{% for RelatedProduct in Product.RelatedProducts %}
+								{% set ChildProduct = RelatedProduct.ChildProduct %}
+								{% if ChildProduct.Status.id == constant("Eccube\\Entity\\Master\\ProductStatus::DISPLAY_SHOW") %}
+									<td>
+										<ul>
+											<li class="prod">
+												<a href="{{ url('product_detail', {id : ChildProduct.id}) }}"><img src="{{ asset(RelatedProduct.ChildProduct.main_list_image|no_image_product, 'save_image') }}"></a>
+											</li>
+											<li>
+												<a href="{{ url('product_detail', {id : ChildProduct.id}) }}">
+													<h3 class="shouhinmei">{{ RelatedProduct.ChildProduct.name }}</h3>
+													<span class="kakaku">
+														{% if RelatedProduct.ChildProduct.hasProductClass %}
+															{% if RelatedProduct.ChildProduct.getPrice02Min == RelatedProduct.ChildProduct.getPrice02Max %}
+																{{ RelatedProduct.ChildProduct.getPrice02IncTaxMin|number_format(0, '', ',') }}円<span class="zei">（税込）</span>
+															{% else %}
+																{{ RelatedProduct.ChildProduct.getPrice02IncTaxMin|number_format(0, '', ',') }}
+																～
+																{{ RelatedProduct.ChildProduct.getPrice02IncTaxMax|number_format(0, '', ',') }}円<span class="zei">（税込）</span>
+															{% endif %}
+														{% else %}
+															{{ RelatedProduct.ChildProduct.getPrice02IncTaxMin|number_format(0, '', ',') }}円<span class="zei">（税込）</span>
+														{% endif %}
+
+													</span>
+												</a>
+												<p class="shohin-setumei">{{ RelatedProduct.content|raw|purify }}</p>
+											</li>
+											<li>
+												<div class="area_review">
+													{{ render_related_review_block(
+                            ChildProduct.id,
+                            RelatedProductReviewAvgList,
+                            RelatedProductReviewCountList,
+                            url('product_detail', {id: ChildProduct.id}) ~ '#customervoice_area'
+                        )|raw }}
+												</div>
+											</li>
+										</ul>
+									</td>
+								{% endif %}
+							{% endfor %}
+						</tr>
+					</table>
+				</div>
+			</div>
+			<!--▼人気ランキング-->
+
+			<div id="pr-uresuji-ranking">
+				<h2>人気商品ランキング</h2>
+				<div class="uresuji-inner" style="width:100%">
+					<table>
+
+						<tr>
+
+							<!--※ Gooogleタグマネージャーのタグがあるためそのままコピペ禁止（id="ranking01" ※2箇所） ※-->
+							<td>
+								<ul>
+									<li class="crown"><img src="{{ asset('assets/img_2018/top/ranking_crown1.webp') }}" alt="No.1"></li>
+									<!-- ※以下を編集 ！タグ変更しない！※ -->
+									<li class="prod">
+										<a href="{{ url('product_detail', {'id': 300}) }}"><img src="{{ asset('assets/img_2018/top_newpr/bu-styling-set.webp') }}" alt="BUスタイリングクリーム1&2"></a>
+									</li>
+									<li>
+										<a href="{{ url('product_detail', {'id': 300}) }}">
+											<h3 class="shouhinmei">BUスタイリングクリーム1&2</h3>
+											<span class="kakaku">4,950円<span class="zei">（税込）</span>
+											</span>
+										</a>
+										<div class="area_review">
+											{{ render_review_block(300, RankingReviewAvgList, RankingReviewCountList)|raw }}
+										</div>
+										<p class="shohin-setumei">LASH LIFTブランド“Bring Up!!”誕生。システアミン塩酸塩(HCL)不使用!カールキープ力最強のまつ毛スタイリング料!11種のアミノ酸・植物由来エキスを配合しまつ毛にも優しく低ダメージで、しっかりと続くカール力が魅力!</p>
+									</li>
+								</ul>
+							</td>
+
+							<td>
+								<ul>
+									<li class="crown"><img src="{{ asset('assets/img_2018/top/ranking_crown2.webp') }}" alt="No.2"></li>
+									<!-- ※以下を編集 ！タグ変更しない！※ -->
+									<li class="prod">
+										<a href="{{ url('product_detail', {'id': 27}) }}"><img src="{{ asset('assets/img_2018/top_newpr/ac-mascara_1da.webp') }}" alt="ACマスカラ（アフターケアマスカラ）ブラック  12本セット"></a>
+									</li>
+									<li>
+										<a id="ranking02" href="{{ url('product_detail', {'id': 27}) }}">
+											<h3 class="shouhinmei">ACマスカラ（アフターケアマスカラ）ブラック  12本セット</h3>
+											<span class="kakaku">33,000円<span class="zei">（税込）</span>
+											</span>
+										</a>
+										<div class="area_review">
+											{{ render_review_block(27, RankingReviewAvgList, RankingReviewCountList)|raw }}
+										</div>
+										<p class="shohin-setumei">ファン待望!3年半ぶりに復刻!強力なスーパーウォータープルーフマスカラで、1日中滲み・くずれが気になりません。重ね塗りでもダマにならずお好みのボリューム・カール感・濃さに調整することかができます。</p>
+									</li>
+								</ul>
+							</td>
+
+							<td>
+								<ul>
+									<li class="crown-no1"><img src="{{ asset('assets/img_2018/top/ranking_crown3.webp') }}" alt="No.3">
+									</li>
+									<!-- ※以下を編集 ！タグ変更しない！※ -->
+									<li class="prod">
+										<a href="{{ url('product_detail', {'id': 14}) }}"><img src="{{ asset('assets/img_2018/top_newpr/keratin.webp') }}" alt="ケラチンPro"></a>
+									</li>
+									<li>
+										<a href="{{ url('product_detail', {'id': 14}) }}">
+											<h3 class="shouhinmei">ケラチンPro</h3>
+											<span class="kakaku">3,630円<span class="zei">（税込）</span>
+											</span>
+										</a>
+										<div class="area_review">
+											{{ render_review_block(14, RankingReviewAvgList, RankingReviewCountList)|raw }}
+										</div>
+										<p class="shohin-setumei">まつげパーマ・エクステンション施術時塗布用トリートメント。まつげを守るプロテクトタイプ美容液成分。傷んでいる部分に浸透・吸着し内側から傷みを修復します。
+										</p>
+									</li>
+								</ul>
+							</td>
+
+							<td>
+								<ul>
+									<li class="crown"><img src="{{ asset('assets/img_2018/top/ranking_crown4.webp') }}" alt="No.4"></li>
+									<!-- ※以下を編集 ！タグ変更しない！※ -->
+									<li class="prod">
+										<a href="{{ url('product_detail', {'id': 269}) }}"><img src="{{ asset('assets/img_2018/top_newpr/ac-mascara_brown_1da.webp') }}" alt="ACマスカラ（アフターケアマスカラ）ブラウン  12本セット"></a>
+									</li>
+									<li>
+										<a id="ranking04" href="{{ url('product_detail', {'id': 269}) }}">
+											<h3 class="shouhinmei">ACマスカラ（アフターケアマスカラ）ブラウン  12本セット</h3>
+											<span class="kakaku">33,000円<span class="zei">（税込）</span>
+											</span>
+										</a>
+										<div class="area_review">
+											{{ render_review_block(269, RankingReviewAvgList, RankingReviewCountList)|raw }}
+										</div>
+										<p class="shohin-setumei">大人気のACマスカラから待望のブラウンカラー発売！ブラックよりもナチュラルな色味で優しい印象を与えます！重ね塗りでもダマにならずお好みのボリューム・カール感・濃さに調整することができます。</p>
+									</li>
+								</ul>
+							</td>
+
+							<td>
+								<ul>
+									<li class="crown"><img src="{{ asset('assets/img_2018/top/ranking_crown5.webp') }}" alt="No.5"></li>
+									<!-- ※以下を編集 ！タグ変更しない！※ -->
+									<li class="prod">
+										<a href="{{ url('product_detail', {'id': 301}) }}"><img src="{{ asset('assets/img_2018/top_newpr/bu-setting-set.webp') }}" alt="BUセッティングクリーム1&2"></a>
+									</li>
+									<li>
+										<a id="ranking05" href="{{ url('product_detail', {'id': 301}) }}">
+											<h3 class="shouhinmei">BUセッティングクリーム1&2</h3>
+											<span class="kakaku">4,950円<span class="zei">（税込）</span>
+											</span>
+										</a>
+										<div class="area_review">
+											{{ render_review_block(301, RankingReviewAvgList, RankingReviewCountList)|raw }}
+										</div>
+										<p class="shohin-setumei">LASH LIFTブランド“Bring Up!!”誕生。システアミン塩酸塩(HCL)不使用！セットタイム最速のまつ毛用セッティング剤！CMCや補修・美容成分を豊富に配合し繰り返しのラッシュリフトによるダメージも最小限に抑えパリッとハリのある仕上がりに！</p>
+									</li>
+								</ul>
+							</td>
+
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div></div>{% endblock %}

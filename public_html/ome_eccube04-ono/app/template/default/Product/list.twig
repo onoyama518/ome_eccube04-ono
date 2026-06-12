@@ -1,0 +1,224 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% extends 'default_frame.twig' %}
+
+{% set body_class = 'product_page' %}
+
+{% block javascript %}
+	<script>
+		eccube.productsClassCategories = {
+{% for Product in pagination %}
+"{{ Product.id|escape('js') }}" : {{ class_categories_as_json(Product)|raw }}
+{% if loop.last == false %},{% endif %}{% endfor %}
+};
+
+$(function () { // 表示件数を変更
+$('.disp-number').change(function () {
+var dispNumber = $(this).val();
+$('#disp_number').val(dispNumber);
+$('#pageno').val(1);
+$("#form1").submit();
+});
+
+// 並び順を変更
+$('.order-by').change(function () {
+var orderBy = $(this).val();
+$('#orderby').val(orderBy);
+$('#pageno').val(1);
+$("#form1").submit();
+});
+
+$('.add-cart').on('click', function (e) {
+var $form = $(this).parents('li').find('form');
+
+// 個数フォームのチェック
+var $quantity = $form.parent().find('.quantity');
+if ($quantity.val() < 1) {
+$quantity[0].setCustomValidity('{{ '1以上で入力してください。'|trans }}');
+setTimeout(function () {
+loadingOverlay('hide');
+}, 100);
+return true;
+} else {
+$quantity[0].setCustomValidity('');
+} e.preventDefault();
+$.ajax({
+url: $form.attr('action'),
+type: $form.attr('method'),
+data: $form.serialize(),
+dataType: 'json',
+beforeSend: function (xhr, settings) { // Buttonを無効にする
+$('.add-cart').prop('disabled', true);
+}
+}).done(function (data) { // レスポンス内のメッセージをalertで表示
+$.each(data.messages, function () {
+$('#ec-modal-header').text(this);
+});
+
+$('.ec-modal').show()
+
+// カートブロックを更新する
+$.ajax({url: '{{ url('block_cart') }}', type: 'GET', dataType: 'html'}).done(function (html) {
+$('.ec-headerRole__cart').html(html);
+});
+}).fail(function (data) {
+alert('{{ 'カートへの追加に失敗しました。'|trans }}');
+}).always(function (data) { // Buttonを有効にする
+$('.add-cart').prop('disabled', false);
+});
+});
+});
+
+$('.ec-modal-wrap').on('click', function (e) { // モーダル内の処理は外側にバブリングさせない
+e.stopPropagation();
+});
+$('.ec-modal-overlay, .ec-modal, .ec-modal-close, .ec-inlineBtn--cancel').on('click', function () {
+$('.ec-modal').hide()
+});
+	</script>
+{% endblock %}
+
+{% block main %}
+	<div id="undercolumn_pages">
+		{% if search_form.category_id.vars.errors|length > 0 %}
+			<div class="ec-searchnavRole">
+				<p class="errormsg text-danger">{{ 'ご指定のカテゴリは存在しません'|trans }}</p>
+			</div>
+		{% else %}
+			<div class="ec-searchnavRole__topicpath">
+				<ol class="ec-topicpath">
+
+					{% if Category is not null %}
+						{% for Path in Category.path %}
+							{% if loop.last %}
+								<li class="ec-topicpath__item">
+									<h1 class="itemList-h1">{{ Path.name }}</h1>
+								</li>
+							{% endif %}
+						{% endfor %}
+					{% endif %}
+					{% if search_form.vars.value and search_form.vars.value.name %}
+						<li class="ec-topicpath__item">
+							<h1 class="itemList-h1">{{ '%name%'|trans({ '%name%': search_form.vars.value.name }) }}</h1>
+						</li>
+					{% endif %}
+				</ol>
+			</div>
+			<div class="ec-searchnavRole">
+				<form name="form1" id="form1" method="get" action="?">
+					{% for item in search_form %}
+						<input type="hidden" id="{{ item.vars.id }}" name="{{ item.vars.full_name }}" {% if item.vars.value is not empty %} value="{{ item.vars.value }}" {% endif %}/>
+					{% endfor %}
+				</form>
+
+				<div class="ec-searchnavRole__infos" id="page_navi_top">
+					{% if pagination.totalItemCount > 0 %}
+						<div class="area_item_display_order">
+							{% set currentPage = pagination.currentPageNumber %}
+							{% set pageMax = pagination.numItemsPerPage %}
+							{% set totalItems = pagination.totalItemCount %}
+							{% set pageMax = pagination.numItemsPerPage is empty ? 20 : pagination.numItemsPerPage %}
+							{% set start = ((currentPage - 1) * pageMax) + 1 %}
+							{% set end = (start + pageMax - 1) > totalItems ? totalItems : (start + pageMax - 1) %}
+							<div class="display_number">
+								{{ '%count%件中 %start%〜%end%件を表示'|trans({
+                    '%count%': totalItems,
+                    '%start%': start,
+                    '%end%': end
+                  }) }}
+							</div>
+							<form method="get" id="orderby_form">
+								<select name="orderby" onchange="document.getElementById('orderby_form').submit()">
+									{% for choice in search_form.orderby.vars.choices %}
+										<option value="{{ choice.value }}" {% if search_form.orderby.vars.value == choice.value %} selected {% endif %}>
+											{{ choice.label }}
+										</option>
+									{% endfor %}
+								</select>
+
+								{# 他のGETパラメータを保持 #}
+								{% for key, value in app.request.query.all %}
+									{% if key != 'orderby' %}
+										<input type="hidden" name="{{ key }}" value="{{ value }}">
+									{% endif %}
+								{% endfor %}
+							</form>
+						</div>
+					{% else %}
+						<span>{{ 'お探しの商品は見つかりませんでした'|trans }}</span>
+					{% endif %}
+				</div>
+			</div>
+			{% if pagination.totalItemCount > 0 %}
+				<div class="ec-shelfRole" id="itemList">
+					<ul class="ec-shelfGrid" id="itemList-inner">
+						{% for Product in pagination %}
+							<form class="ec-shelfGrid__item ">
+								<div class="item">
+									<a href="{{ url('product_detail', {'id': Product.id}) }}">
+										<div class="ec-shelfGrid__item-image img">
+											<img src="{{ asset(Product.main_list_image|no_image_product, 'save_image') }}" alt="{{ Product.name }}" {% if loop.index > 5 %} loading="lazy" {% endif %}>
+										</div>
+									</a>
+
+									<div class="text">
+										<a href="{{ url('product_detail', {'id': Product.id}) }}">
+											<div class="nameprice">
+												<h2>{{ Product.name }}</h2>
+												<p class="price02-default price">
+													{% if Product.hasProductClass %}
+														{% if Product.getPrice02Min == Product.getPrice02Max %}
+															{{ Product.getPrice02IncTaxMin|price }}（税込）
+														{% else %}
+															{{ Product.getPrice02IncTaxMin|price }}（税込）
+																																													                                ～
+															{{ Product.getPrice02IncTaxMax|price }}（税込）
+														{% endif %}
+													{% else %}
+														{{ Product.getPrice02IncTaxMin|price }}（税込）
+													{% endif %}
+												</p>
+											</div>
+										</a>
+										<div class="area_review">
+											{{ render_review_block(Product.id, ProductReviewAvgList, ProductReviewCountList)|raw }}
+										</div>
+
+										<a href="{{ url('product_detail', {'id': Product.id}) }}">
+											<div class="detailtext">
+												{% if Product.description_list %}
+													<h3>{{ Product.description_list|raw|nl2br }}</h3>
+												{% endif %}
+											</div>
+										</a>
+									</div>
+								</div>
+							</form>
+						{% endfor %}
+					</ul>
+				</div>
+			{% endif %}
+			{% if pagination.pageCount > 1 %}
+				<div class="ec-searchnavRole">
+					<div class="ec-searchnavRole__infos">
+						<div class="pagenation_product pagenumberarea" style="justify-content:center; background:initial;">
+							<div class="ec-pagerRole center">
+								{% include "pager.twig" with {'pages': pagination.paginationData} %}
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endif %}
+
+
+		{% endif %}
+	</div>
+{% endblock %}

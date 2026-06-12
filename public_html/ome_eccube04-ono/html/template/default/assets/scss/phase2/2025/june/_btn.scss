@@ -1,0 +1,204 @@
+@media (max-width: 768px) {
+  .flex_sp {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    li {
+      margin: 0;
+    }
+  }
+}
+@media (min-width: 768px) {
+}
+
+.btn_revise {
+  font-weight: bold;
+  font-size: 16px;
+  letter-spacing: 0.15em;
+  text-align: center;
+
+  width: 250px;
+  padding: 11px 0;
+  border-radius: 5px;
+  color: #fff;
+  // ログイン
+  &.btn_mypage_login {
+    background-color: #997545;
+  }
+  &.btn_mypage_login_sign_up {
+    background-color: #e88b8b;
+    margin: 0 auto;
+  }
+  //利用規約
+  &.btn_not_agreement {
+    display: inline-block;
+
+    width: 210px;
+    background-color: #525263;
+    @media (max-width: 768px) {
+      display: block;
+      width: 250px;
+      margin: 0 auto;
+    }
+  }
+  &.btn_not_orange {
+    background-color: #525263;
+  }
+  &.btn_orange {
+    background-color: #ff8b3b;
+  }
+  &.btn_history_return {
+    display: block;
+    margin: 0 auto;
+    background-color: #997545 !important;
+  }
+
+  &.btn_agreement {
+    display: inline-block;
+
+    width: 210px;
+    background-color: #ff8b3b;
+    @media (max-width: 768px) {
+      display: block;
+      width: 250px;
+      margin: 0 auto;
+    }
+  }
+  //会員登録入力
+  &.btn_sign_up_confirm {
+    background-color: #ff8b3b;
+  }
+  //会員登録確認
+  &.btn_sign_up_return {
+    display: inline-block;
+
+    width: 210px;
+    background-color: #525263;
+    margin: 0 5px;
+    @media (max-width: 768px) {
+      display: block;
+      width: 250px;
+      margin: 0 auto;
+    }
+  }
+  &.btn_sign_up {
+    display: inline-block;
+
+    width: 210px;
+    background-color: #ff8b3b;
+    margin: 0 5px;
+
+    @media (max-width: 768px) {
+      display: block;
+      width: 250px;
+      margin: 20px auto 0;
+    }
+  }
+  //会員登録仮受付、本登録
+  &.btn_return_top {
+    background-color: #ff8b3b;
+    display: block;
+    margin: 0 auto;
+  }
+
+  //お問い合わせ入力
+  &.btn_contact_input {
+    background-color: #997545;
+  }
+  //お問い合わせ確認
+  &.btn_contact_return {
+    display: inline-block;
+
+    width: 210px;
+    background-color: #997545;
+    @media (max-width: 768px) {
+      display: block;
+      width: 250px;
+      margin: 0 auto;
+    }
+  }
+  &.btn_contact_submit {
+    display: inline-block;
+
+    width: 210px;
+    background-color: #e88b8b;
+    @media (max-width: 768px) {
+      display: block;
+      width: 250px;
+      margin: 0 auto;
+    }
+  }
+  //お問い合わせ完了
+  &.btn_contact_return_top {
+    background-color: #997545;
+    display: block;
+    margin: 0 auto;
+  }
+  // レビュー書き込み
+  &.btn_rebiew_input {
+    background-color: #997545;
+  }
+  // レビュー確認
+  &.btn_review_return {
+    background-color: #997545;
+    display: block;
+    margin: 0 auto;
+  }
+  &.btn_review_submit {
+    background-color: #e88b8b;
+    display: block;
+    margin: 0 auto;
+  }
+
+  //お届け先の指定ページ
+  &.btn_new_address {
+    background-color: #525263;
+    font-size: 12px;
+    display: block;
+    width: 200px;
+  }
+  // お届け先の追加
+  &.btn_new_address_regist {
+    background-color: #ff8b3b;
+  }
+  &.btn_forgot_next {
+    background-color: #ff8b3b;
+  }
+  &.btn_password_return_top {
+    background-color: #997545;
+    display: block;
+    margin: 0 auto;
+  }
+  &.btn_password_reset {
+    background-color: #ff8b3b;
+  }
+  &:hover {
+    opacity: 0.7;
+    transition: all 0.3s;
+  }
+}
+
+//購入履歴詳細ページレイアウト変更
+.mycondition_area {
+  width: 100% !important;
+  display: flex;
+  gap: 30px;
+  flex-direction: column;
+  align-items: center;
+  @media (min-width: 768px) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .mycondition_title {
+    float: initial !important;
+    width: 100%;
+  }
+  form {
+    .btn_revise {
+      display: block;
+      width: 250px !important;
+      margin-top: 0 !important;
+      float: initial !important;
+    }
+  }
+}

@@ -1,0 +1,60 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% extends 'default_frame.twig' %}
+
+{% form_theme form 'Form/form_div_layout.twig' %}
+
+{% block javascript %}
+	<script src="{{ asset('assets/js/validation.js', 'user_data') }}"></script>
+{% endblock javascript %}
+
+{% block main %}
+	<div id="undercolumn">
+
+		<div class="ec-registerRole" id="mypagecolumn">
+			<div class="ec-pageHeader">
+				<h2 class="title">{{ 'パスワードの再発行'|trans }}</h2>
+			</div>
+			<div class="ec-off1Grid__cell" id="mycontents_area">
+
+				<form name="form1" id="forgotForm" method="post" action="{{ url('forgot') }}">
+					{{ form_widget(form._token) }}
+					<table summary="会員登録内容変更 " class="hyou hyou_forgot">
+
+						<colgroup width="30%"></colgroup>
+						<colgroup width="70%"></colgroup>
+
+						<tr>
+							<th>メールアドレス<span class="attention">※</span>
+							</th>
+							<td>
+								<div class="ec-input{{ has_errors(form.login_email) ? ' error' }}">
+									{{ form_widget(form.login_email, {'attr': {'data-validation': 'required email', 'data-label': 'メールアドレス'}}) }}
+									<span class="attention mini">{{ form_errors(form.login_email) }}</span>
+								</div>
+							</td>
+						</tr>
+					</table>
+			    {% include "Block/recaptcha-link.twig" %}
+					<div class="btn_area">
+						<ul>
+							<li>
+								<button type="submit" class="ec-blockBtn--action btn_revise btn_forgot_next">次へ</li>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			{% include "Block/recaptcha.twig" with {'form': '#forgotForm'} %}
+		</div>
+	</div>
+
+{% endblock %}

@@ -16,14 +16,14 @@ namespace Eccube\Controller;
 use Doctrine\ORM\EntityManagerInterface;
 use Eccube\Common\Constant;
 use Eccube\Common\EccubeConfig;
-use Eccube\Session\Session;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as Controller;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
-use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class AbstractController extends Controller
@@ -59,11 +59,6 @@ class AbstractController extends Controller
     protected $session;
 
     /**
-     * @var RouterInterface
-     */
-    protected $router;
-
-    /**
      * @param EccubeConfig $eccubeConfig
      * @required
      */
@@ -91,10 +86,10 @@ class AbstractController extends Controller
     }
 
     /**
-     * @param Session $session
+     * @param SessionInterface $session
      * @required
      */
-    public function setSession(Session $session)
+    public function setSession(SessionInterface $session)
     {
         $this->session = $session;
     }
@@ -115,16 +110,6 @@ class AbstractController extends Controller
     public function setEventDispatcher(EventDispatcherInterface $eventDispatcher)
     {
         $this->eventDispatcher = $eventDispatcher;
-    }
-
-    /**
-     * @param RouterInterface $router
-     * @return void
-     * @required
-     */
-    public function setRouter(RouterInterface $router)
-    {
-        $this->router = $router;
     }
 
     public function addSuccess($message, $namespace = 'front')
@@ -246,7 +231,7 @@ class AbstractController extends Controller
      */
     public function forwardToRoute($route, array $path = [], array $query = [])
     {
-        $Route = $this->router->getRouteCollection()->get($route);
+        $Route = $this->get('router')->getRouteCollection()->get($route);
         if (!$Route) {
             throw new RouteNotFoundException(sprintf('The named route "%s" as such route does not exist.', $route));
         }

@@ -14,12 +14,12 @@
 namespace Eccube\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Eccube\Common\EccubeConfig;
 use Eccube\Util\StringUtil;
 use function explode;
 use function file_exists;
 use function file_get_contents;
 use function file_put_contents;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\DataCollector\MemoryDataCollector;
 use Symfony\Component\HttpKernel\Event\TerminateEvent;
@@ -52,20 +52,19 @@ class SystemService implements EventSubscriberInterface
     protected $entityManager;
 
     /**
-     * @var EccubeConfig
+     * @var ContainerInterface
      */
-    protected $eccubeConfig;
-
+    protected $container;
 
     /**
      * SystemService constructor.
      */
     public function __construct(
         EntityManagerInterface $entityManager,
-        EccubeConfig $eccubeConfig,
+        ContainerInterface $container
     ) {
         $this->entityManager = $entityManager;
-        $this->eccubeConfig = $eccubeConfig;
+        $this->container = $container;
     }
 
     /**
@@ -157,7 +156,7 @@ class SystemService implements EventSubscriberInterface
 
     public function getMaintenanceToken(): ?string
     {
-        $path = $this->eccubeConfig->get('eccube_content_maintenance_file_path');
+        $path = $this->container->getParameter('eccube_content_maintenance_file_path');
         if (!file_exists($path)) {
             return null;
         }
@@ -180,7 +179,7 @@ class SystemService implements EventSubscriberInterface
     public function enableMaintenance($mode = self::AUTO_MAINTENANCE, bool $force = false): void
     {
         if ($force || !$this->isMaintenanceMode()) {
-            $path = $this->eccubeConfig->get('eccube_content_maintenance_file_path');
+            $path = $this->container->getParameter('eccube_content_maintenance_file_path');
             $token = StringUtil::random(32);
             file_put_contents($path, "{$mode}:{$token}");
         }
@@ -205,7 +204,7 @@ class SystemService implements EventSubscriberInterface
             return;
         }
 
-        $path = $this->eccubeConfig->get('eccube_content_maintenance_file_path');
+        $path = $this->container->getParameter('eccube_content_maintenance_file_path');
         $contents = file_get_contents($path);
         $currentMode = explode(':', $contents)[0] ?? null;
 
@@ -222,7 +221,7 @@ class SystemService implements EventSubscriberInterface
     public function isMaintenanceMode()
     {
         // .maintenanceが存在しているかチェック
-        return file_exists($this->eccubeConfig->get('eccube_content_maintenance_file_path'));
+        return file_exists($this->container->getParameter('eccube_content_maintenance_file_path'));
     }
 
     /**

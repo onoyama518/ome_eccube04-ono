@@ -1,0 +1,67 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% extends 'default_frame.twig' %}
+
+{% set mypageno = 'withdraw' %}
+
+{% set body_class = 'mypage' %}
+
+{% block main %}
+	<div class="ec-layoutRole__main" id="mypagecolumn">
+		<div class="ec-mypageRole">
+			<div class="ec-pageHeader">
+        <h2 class="title">{{ 'マイページ'|trans }}</h2>
+			</div>
+			{{ include('Mypage/navi.twig') }}
+		</div>
+		<form method="post" action="{{ url('mypage_withdraw') }}">
+			{{ form_widget(form._token) }}
+
+			<div id="mycontents_area">
+				<h3>退会手続き(確認ページ)</h3>
+				<div id="complete_area">
+					<div class="message">退会手続きを実行してもよろしいでしょうか？</div>
+					<div class="message_area">
+						<div class="btn_area">
+							<p>退会手続きが完了した時点で、現在保存されている購入履歴や、<br/>
+								お届け先等の情報はすべてなくなりますのでご注意ください。</p>
+							<ul class="flex_sp">
+								<li>
+									<a class="ec-withdrawConfirmRole__cancel ec-blockBtn--cancel btn_revise btn_orange btn_sp_mb" href="{{ url('mypage') }}" style="display:inline-block;">
+										いいえ、退会しません
+									</a>
+									<style>
+										.btn_confirm {
+											transition: opacity 0.3s ease; /* マウスオーバー時の滑らかな変化を追加 */
+										}
+
+										.btn_confirm:hover {
+											opacity: 0.7; /* マウスオーバー時に不透明度を下げる */
+										}
+									</style>
+								</li>
+								<li>
+									<button type="submit" class="ec-blockBtn btn_confirm btn_revise btn_not_orange" name="mode" value="complete">
+										はい、退会します
+
+									</button>
+
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+
+	</div>
+
+{% endblock %}

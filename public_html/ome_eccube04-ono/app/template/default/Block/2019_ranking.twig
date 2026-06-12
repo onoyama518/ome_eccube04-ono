@@ -1,0 +1,54 @@
+{% set ranking_items = [
+  { rank: 1, id: 300, tag_id: 'ranking01', badge_class: 'No1' },
+  { rank: 2, id: 14, tag_id: 'ranking02', badge_class: 'No2' },
+  { rank: 3, id: 76, tag_id: 'ranking03', badge_class: 'No3' },
+  { rank: 4, id: 301, tag_id: 'ranking04', badge_class: 'No4' },
+  { rank: 5, id: 299, tag_id: 'ranking05', badge_class: 'No5' }
+] %}
+
+<div class="renewal_ranking">
+  <h2 class="sec-title">RANKING<span class="sub-title">ランキング</span></h2>
+  <div class="ranking-container">
+    {% for item in ranking_items %}
+      {% set Product = repository('Eccube\\Entity\\Product').find(item.id) %}
+      {% if Product %}
+        <div class="ranking-item">
+          <a href="{{ url('product_detail', {'id': item.id}) }}" id="{{ item.tag_id }}">
+            <div class="area_img">
+              <p class="{{ item.badge_class }}"><span>{{ item.rank }}</span></p>
+              <img src="{{ asset(Product.main_list_image|no_image_product, 'save_image') }}" alt="{{ Product.name }}" />
+            </div>
+          </a>
+          <div class="area_info_item">
+            <a href="{{ url('product_detail', {'id': item.id}) }}" id="{{ item.tag_id }}">
+              <div class="main_info">
+                <h3 class="item_name">{{ Product.name }}</h3>
+                <span class="price">{{ Product.getPrice02IncTaxMin|number_format }}円<span class="tax">（税込）</span></span>
+              </div>
+            </a>
+            <div class="area_review">
+              {{ render_review_block(item.id, RankingReviewAvgList, RankingReviewCountList)|raw }}
+            </div>
+          </div>
+          <div class="cart-form-area">
+            {% if Product.stock_find %}
+              <button type="button" class="btn btn_cart purchase-btn" data-product-id="{{ item.id }}" onclick="openCartModal({{ item.id }})">
+                カートに入れる
+              </button>
+            {% else %}
+              <button type="button" class="btn btn_cart purchase-btn" disabled aria-disabled="true">
+                在庫切れ
+              </button>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <div class="ranking-modals-container">
+    {% for item in ranking_items %}
+      {{ render_cart_modal(item.id)|raw }}
+    {% endfor %}
+  </div>
+</div>

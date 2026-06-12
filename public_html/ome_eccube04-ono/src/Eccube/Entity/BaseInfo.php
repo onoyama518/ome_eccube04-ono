@@ -293,13 +293,6 @@ if (!class_exists('\Eccube\Entity\BaseInfo')) {
         private $Pref;
 
         /**
-         * @var string|null
-         *
-         * @ORM\Column(name="ga_id", type="string", length=255, nullable=true)
-         */
-        private $gaId;
-
-        /**
          * Get id.
          *
          * @return int
@@ -1148,30 +1141,6 @@ if (!class_exists('\Eccube\Entity\BaseInfo')) {
             $this->php_path = $php_path;
 
             return $this;
-        }
-
-        /**
-         * Set gaId.
-         *
-         * @param string|null $gaId
-         *
-         * @return BaseInfo
-         */
-        public function setGaId($gaId = null)
-        {
-            $this->gaId = $gaId;
-
-            return $this;
-        }
-
-        /**
-         * Get gaId.
-         *
-         * @return string|null
-         */
-        public function getGaId()
-        {
-            return $this->gaId;
         }
     }
 }

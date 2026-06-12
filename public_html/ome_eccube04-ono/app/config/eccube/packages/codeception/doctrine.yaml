@@ -18,8 +18,7 @@ doctrine:
 
 services:
     doctrine.app_cache_provider:
-        class: Doctrine\Common\Cache\Psr6\DoctrineProvider
-        factory: ['Doctrine\Common\Cache\Psr6\DoctrineProvider', wrap]
+        class: Symfony\Component\Cache\DoctrineProvider
         public: false
         arguments:
             - '@doctrine.app_cache_pool'

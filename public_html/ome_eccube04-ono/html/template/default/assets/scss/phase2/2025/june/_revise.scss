@@ -1,0 +1,63 @@
+@media (max-width: 768px) {
+  #undercolumn_pages {
+    padding: 20px 0 10px !important;
+  }
+  /* 画面サイズが768px以下の場合 */
+  .ledex-subsc_lp_pc {
+    display: none !important;
+  }
+  .display-pc {
+    display: none !important;
+  }
+  .area_sp_pagenation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 5% !important;
+    #orderby_form {
+      select {
+        padding: 0 5px;
+      }
+    }
+  }
+  #undercolumn_entry h2.title {
+    font-size: 16px !important;
+  }
+  #undercolumn_order h2.title {
+    font-size: 16px !important;
+  }
+  #undercolumn_company h2.title {
+    font-size: 16px !important;
+  }
+  #undercolumn .contact_title {
+    font-size: 16px !important;
+  }
+}
+@media (min-width: 769px) {
+  .ledex-subsc_lp_sp {
+    display: none !important;
+  }
+  .ledex-subsc_lp_pc {
+    header {
+      border-bottom: none !important;
+    }
+  }
+
+  .display-sp {
+    display: none !important;
+  }
+  .whobought_area_h2 {
+    margin-top: 50px !important;
+  }
+}
+
+@media screen and (max-width: 769px) {
+  div.sub_area h3.detailtext_ex,
+  div#detailarea h3.detailtext_ex {
+    width: 95% !important ;
+  }
+}
+
+.cat-open {
+  top: 80px !important;
+}

@@ -68,7 +68,7 @@ class AddCartType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        /** @var \Eccube\Entity\Product $Product */
+        /* @var $Product \Eccube\Entity\Product */
         $Product = $options['product'];
         $this->Product = $Product;
         $ProductClasses = $Product->getProductClasses();
@@ -163,6 +163,7 @@ class AddCartType extends AbstractType
         $resolver->setDefaults([
             'data_class' => CartItem::class,
             'id_add_product_id' => true,
+            'csrf_token_id' => 'add_cart',
             'constraints' => [
                 // FIXME new Assert\Callback(array($this, 'validate')),
             ],

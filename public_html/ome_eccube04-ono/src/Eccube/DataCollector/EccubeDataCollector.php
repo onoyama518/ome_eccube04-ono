@@ -14,9 +14,9 @@
 namespace Eccube\DataCollector;
 
 use Eccube\Common\Constant;
-use Eccube\Common\EccubeConfig;
 use Eccube\Entity\Plugin;
 use Eccube\Repository\PluginRepository;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;
@@ -29,9 +29,9 @@ use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 class EccubeDataCollector extends DataCollector
 {
     /**
-     * @var EccubeConfig
+     * @var ContainerInterface
      */
-    protected $eccubeConfig;
+    protected $container;
 
     /**
      * @var PluginRepository
@@ -39,9 +39,9 @@ class EccubeDataCollector extends DataCollector
     protected $pluginRepository;
 
     /**
-     * @param EccubeConfig $eccubeConfig
+     * @param ContainerInterface $container
      */
-    public function __construct(EccubeConfig $eccubeConfig, PluginRepository $pluginRepository)
+    public function __construct(ContainerInterface $container, PluginRepository $pluginRepository)
     {
         $this->data = [
             'version' => Constant::VERSION,
@@ -51,7 +51,7 @@ class EccubeDataCollector extends DataCollector
             'locale_code' => null,
             'plugins' => [],
         ];
-        $this->eccubeConfig = $eccubeConfig;
+        $this->container = $container;
         $this->pluginRepository = $pluginRepository;
     }
 
@@ -108,17 +108,17 @@ class EccubeDataCollector extends DataCollector
      */
     public function collect(Request $request, Response $response, \Throwable $exception = null)
     {
-        $this->data['base_currency_code'] = $this->eccubeConfig->get('currency');
-        $this->data['currency_code'] = $this->eccubeConfig->get('currency');
+        $this->data['base_currency_code'] = $this->container->getParameter('currency');
+        $this->data['currency_code'] = $this->container->getParameter('currency');
 
         try {
-            $this->data['locale_code'] = $this->eccubeConfig->get('locale');
+            $this->data['locale_code'] = $this->container->getParameter('locale');
         } catch (\Exception $exception) {
         }
 
         try {
-            $enabled = $this->eccubeConfig->get('eccube.plugins.enabled');
-            $disabled = $this->eccubeConfig->get('eccube.plugins.disabled');
+            $enabled = $this->container->getParameter('eccube.plugins.enabled');
+            $disabled = $this->container->getParameter('eccube.plugins.disabled');
 
             $Plugins = $this->pluginRepository->findAll();
             foreach (array_merge($enabled, $disabled) as $code) {

@@ -1,0 +1,34 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% extends 'default_frame.twig' %}
+
+{% block main %}
+	<div id="window_area" style="padding:0 10px;">
+
+		<div class="ec-pageHeader">
+			<h2 class="title">{{ 'パスワードの再発行(メール送信)'|trans }}</h2>
+		</div>
+
+		<div class="ec-reportHeading">
+			<h2>{{ 'パスワード再発行メールの送信が完了しました。'|trans }}</h2>
+		</div>
+		<p class="ec-reportDescription information">{{ 'ご登録メールアドレスにパスワードを再発行するためのメールを送信いたしました。
+メールの内容をご確認いただきますよう、お願いいたします。
+※メールが届かない場合はメールアドレスをご確認の上、再度お試しください。
+※メールに記載されているURLの有効期限は10分以内です。有効期限を過ぎますとURLは無効となりますので、その場合、もう一度最初から手続きを行ってください。
+'|trans }}</p>
+		<div class="btn_area">
+			<ul>
+				<li><a href="{{url('homepage')}}" class="ec-blockBtn btn_revise btn_password_return_top">トップページへ</a></li>
+			</ul>
+		</div>
+	</div>
+{% endblock %}

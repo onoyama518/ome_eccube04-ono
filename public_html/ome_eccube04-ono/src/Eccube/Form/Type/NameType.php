@@ -51,11 +51,11 @@ class NameType extends AbstractType
         // required の場合は NotBlank も追加する
         if ($options['required']) {
             $options['lastname_options']['constraints'] = array_merge([
-                new Assert\NotBlank(),
+                // new Assert\NotBlank(),
             ], $options['lastname_options']['constraints']);
 
             $options['firstname_options']['constraints'] = array_merge([
-                new Assert\NotBlank(),
+                // new Assert\NotBlank(),
             ], $options['firstname_options']['constraints']);
         }
 
@@ -64,10 +64,10 @@ class NameType extends AbstractType
         }
 
         if (empty($options['lastname_name'])) {
-            $options['lastname_name'] = $builder->getName().'01';
+            $options['lastname_name'] = $builder->getName() . '01';
         }
         if (empty($options['firstname_name'])) {
-            $options['firstname_name'] = $builder->getName().'02';
+            $options['firstname_name'] = $builder->getName() . '02';
         }
 
         $builder
@@ -101,12 +101,25 @@ class NameType extends AbstractType
                     'placeholder' => 'common.last_name',
                 ],
                 'constraints' => [
-                    new Assert\Length([
-                        'max' => $this->eccubeConfig['eccube_name_len'],
+                    // 2. 文字種・形式の厳格チェック: 名前（漢字）ひらがな・カタカナ・漢字・英字のみ
+                    new Assert\Length(['min' => 1, 'max' => 50]),
+                    new Assert\Regex([
+                        'pattern' => '/^[ぁ-ゖァ-ヶ一-龯A-Za-zＡ-Ｚａ-ｚ々〇〻゙゚゛゜ーヽヾ]+$/u',
+                        'message' => 'ひらがな、カタカナ、漢字、英字のみ入力可能です。'
+                    ]),
+                    // 不正文字・禁止語・URL・スクリプトタグの入力制限
+                    new Assert\Regex([
+                        'pattern' => '/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/',
+                        'message' => '不正な文字が含まれています。',
+                        'match' => false,
                     ]),
                     new Assert\Regex([
-                        'pattern' => '/^[^\s ]+$/u',
-                        'message' => 'form_error.not_contain_spaces',
+                        'pattern' => '/\s*<iframe|iframe|\s*<object|object|\s*<embed|embed|<script|script|javascript:|vbscript:|onload=|onclick=|eval\(|document\.|window\./i',
+                        'message' => '不正なHTMLタグまたはスクリプトが含まれています。',
+                        'match' => false,
+                    ]),
+                    new Assert\NotBlank([
+                        'message' => 'お名前（姓）が入力されていません。',
                     ]),
                 ],
             ],
@@ -115,12 +128,25 @@ class NameType extends AbstractType
                     'placeholder' => 'common.first_name',
                 ],
                 'constraints' => [
-                    new Assert\Length([
-                        'max' => $this->eccubeConfig['eccube_name_len'],
+                    // 2. 文字種・形式の厳格チェック: 名前（漢字）ひらがな・カタカナ・漢字・英字のみ
+                    new Assert\Length(['min' => 1, 'max' => 50]),
+                    new Assert\Regex([
+                        'pattern' => '/^[ぁ-ゖァ-ヶ一-龯A-Za-zＡ-Ｚａ-ｚ々〇〻゙゚゛゜ーヽヾ]+$/u',
+                        'message' => 'ひらがな、カタカナ、漢字、英字のみ入力可能です。'
+                    ]),
+                    // 不正文字・禁止語・URL・スクリプトタグの入力制限
+                    new Assert\Regex([
+                        'pattern' => '/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/',
+                        'message' => '不正な文字が含まれています。',
+                        'match' => false,
                     ]),
                     new Assert\Regex([
-                        'pattern' => '/^[^\s ]+$/u',
-                        'message' => 'form_error.not_contain_spaces',
+                        'pattern' => '/\s*<iframe|iframe|\s*<object|object|\s*<embed|embed|<script|script|javascript:|vbscript:|onload=|onclick=|eval\(|document\.|window\./i',
+                        'message' => '不正なHTMLタグまたはスクリプトが含まれています。',
+                        'match' => false,
+                    ]),
+                    new Assert\NotBlank([
+                        'message' => 'お名前（名）が入力されていません。',
                     ]),
                 ],
             ],

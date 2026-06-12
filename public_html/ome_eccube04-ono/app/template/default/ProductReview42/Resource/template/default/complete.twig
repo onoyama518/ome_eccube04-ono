@@ -1,0 +1,39 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) LOCKON CO.,LTD. All Rights Reserved.
+
+http://www.lockon.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% extends 'default_frame.twig' %}
+
+{% set body_class = 'product_review_complete' %}
+
+{% block main %}
+	<div id="window_area">
+		<div id="undercolumn_contact">
+
+			<div class="ec-role">
+				<div class="ec-pageHeader">
+					<h2 class="title">レビュー書き込み</h2>
+				</div>
+				<div id="completebox">
+					<p class="message">登録が完了しました。ご利用ありがとうございました。</p>
+					<p>弊社にて登録内容を確認後、ホームページに反映させていただきます。<br/>
+						今しばらくお待ちくださいませ。</p>
+				</div>
+				<div class="btn_area">
+					<ul>
+						<li><a href="{{url('homepage')}}"class="btn_revise btn_password_return_top">閉じる</a></li>
+
+					</ul>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+{% endblock %}

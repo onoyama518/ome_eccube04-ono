@@ -100,7 +100,7 @@ class OrderType extends AbstractType
         $builder->add('message', TextareaType::class, [
             'required' => false,
             'constraints' => [
-                new Length(['min' => 0, 'max' => 3000]),
+                new Length(['min' => 0, 'max' => 255]),
             ],
         ])->add('Shippings', CollectionType::class, [
             'entry_type' => ShippingType::class,

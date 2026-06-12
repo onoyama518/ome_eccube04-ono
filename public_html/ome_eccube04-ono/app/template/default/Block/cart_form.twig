@@ -1,0 +1,78 @@
+{#
+  カート投入フォームテンプレート
+  TOPページで使用する共通のカートフォーム
+#}
+
+<div class="cart-form-wrapper" data-product-id="{{ product.id }}">
+    <div class="product-info">
+        <h3 class="product-name">{{ product.name }}</h3>
+        {% if product_class.price02IncTax %}
+            <span class="product-price">
+                {{ product_class.price02IncTax|number_format }}円<span class="tax-label">（税込）</span>
+            </span>
+        {% endif %}
+    </div>
+
+    <form method="post" action="{{ url('product_add_cart', {'id': product.id}) }}" class="cart-form">
+        {# CSRF Token #}
+        {{ form_widget(form._token) }}
+        
+        {# Product ID #}
+        <input type="hidden" name="product_id" value="{{ product.id }}">
+        
+        {# Product Class ID #}
+        <input type="hidden" name="ProductClass" id="product_class_{{ product.id }}" value="{{ product_class ? product_class.id : '' }}">
+
+        {% if class_categories_1 is defined and class_categories_1|length > 0 %}
+            <div class="form-group class-category-1">
+                <label for="classcategory_id1_{{ product.id }}">{{ class_name_1 ?? '規格1' }}</label>
+                <select name="classcategory_id1" id="classcategory_id1_{{ product.id }}" class="form-control" required>
+                    <option value="__unselected">選択してください</option>
+                    {% for class_category in class_categories_1 %}
+                        <option value="{{ class_category.id }}">{{ class_category.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        {% endif %}
+
+        {% if class_categories_2 is defined and class_categories_2|length > 0 %}
+            <div class="form-group class-category-2">
+                <label for="classcategory_id2_{{ product.id }}">{{ class_name_2 ?? '規格2' }}</label>
+                <select name="classcategory_id2" id="classcategory_id2_{{ product.id }}" class="form-control" required disabled>
+                    <option value="">選択してください</option>
+                </select>
+            </div>
+        {% endif %}
+
+        <div class="form-group quantity-group">
+            <label for="quantity_{{ product.id }}">数量</label>
+            <div class="quantity-controls">
+                <input type="number" 
+                       name="quantity" 
+                       id="quantity_{{ product.id }}" 
+                       value="1" 
+                       min="1" 
+                       class="form-control quantity-input">
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-cart">
+            カートに入れる
+        </button>
+    </form>
+</div>
+
+{% if class_data is defined %}
+<script>
+// 商品規格データを JavaScript で処理
+(function() {
+    var productId = {{ product.id }};
+    var classData = {{ class_data|json_encode|raw }};
+    
+    // グローバル関数があれば初期化
+    if (typeof CartFormExtension !== 'undefined') {
+        CartFormExtension.initProductForm(productId, classData);
+    }
+})();
+</script>
+{% endif %}

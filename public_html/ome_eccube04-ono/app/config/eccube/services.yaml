@@ -3,7 +3,6 @@
 parameters:
     # container parameters
     container.dumper.inline_class_loader: true
-
     # ec-cube parameters
     env(ECCUBE_LOCALE): 'ja'
     env(ECCUBE_TIMEZONE): 'Asia/Tokyo'
@@ -13,7 +12,7 @@ parameters:
     currency: '%env(ECCUBE_CURRENCY)%'
 
 services:
-    # default configuration for services in *this* file
+   # default configuration for services in *this* file
     _defaults:
         # automatically injects dependencies in your services
         autowire: true
@@ -59,9 +58,6 @@ services:
 
     Eccube\Service\Composer\ComposerServiceInterface:
         factory: ['Eccube\Service\Composer\ComposerServiceFactory', createService]
-        arguments:
-            $container: !service_locator
-                Eccube\Service\Composer\ComposerApiService: '@Eccube\Service\Composer\ComposerApiService'
 
     Eccube\Service\Composer\ComposerApiService:
         lazy: true
@@ -72,15 +68,6 @@ services:
         public: true
 
     Eccube\Service\PluginService:
-        arguments:
-            $container: !service_locator
-                doctrine: '@doctrine'
-                Doctrine\Common\Persistence\ManagerRegistry: '@doctrine'
-                Doctrine\Persistence\ManagerRegistry: '@doctrine'
-                doctrine.orm.default_entity_manager: '@doctrine.orm.default_entity_manager'
-                doctrine.orm.entity_manager: '@doctrine.orm.default_entity_manager'
-                Doctrine\ORM\EntityManagerInterface: '@doctrine.orm.default_entity_manager'
-                Eccube\Common\EccubeConfig: '@Eccube\Common\EccubeConfig'
         lazy: true
         public: true
 
@@ -125,7 +112,9 @@ services:
     eccube.security.logout.success_handler:
         class: Eccube\Security\Http\Authentication\EccubeLogoutSuccessHandler
         arguments:
+          - '@security.http_utils'
           - '@Eccube\Request\Context'
+          - 'admin_login'
 
     # Autowiring can't guess the constructor arguments that are not type-hinted with
     # classes (e.g. container parameters) so you must define those arguments explicitly
@@ -226,18 +215,13 @@ services:
 
     Eccube\EventListener\RateLimiterListener:
         arguments: [ !tagged_locator { tag: 'eccube_rate_limiter' } ]
-
-    Eccube\Security\PasswordHasher\PasswordHasher:
+    Eccube\Twig\Extension\StarExtension:
+        tags: ['twig.extension']
+    
+    # reCAPTCHA login listener
+    Customize\EventListener\RecaptchaLoginListener:
         arguments:
-            - '%eccube_auth_magic%'
-            - '%eccube_auth_type%'
-            - '%eccube_password_hash_algos%'
-
-    Eccube\Controller\ShoppingController:
-        arguments:
-            $serviceContainer: !tagged_locator { tag: 'eccube_payment_method' }
-        tags: [ 'controller.service_arguments' ]
-
-    Eccube\Util\CacheUtil:
-        arguments:
-            $container: !tagged_locator { tag: 'cache.pool.clearer' }
+            - '@request_stack'
+            - '@router'
+        tags:
+            - { name: kernel.event_subscriber }

@@ -1,0 +1,21 @@
+{% set site_key = constant('Customize\\Util\\RecaptchaUtil::SITE_KEY') %}
+{% set inputName = constant('Customize\\Util\\RecaptchaUtil::INPUT_NAME') %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://www.google.com/recaptcha/api.js?render={{ site_key }}"></script>
+<script>
+grecaptcha.ready(function() {
+    var form = $('{{ form }}');
+    var recaptchaInput = $("<input>").attr({type: 'hidden', name: '{{ inputName }}'});
+
+    form.append(recaptchaInput);
+
+    form.on('submit', function(e){
+        grecaptcha.execute('{{ site_key }}', {action: 'homepage'}).then(function(token) {
+            recaptchaInput.val(token);
+            form[0].submit();
+        });
+        return false;
+    })
+});
+</script>

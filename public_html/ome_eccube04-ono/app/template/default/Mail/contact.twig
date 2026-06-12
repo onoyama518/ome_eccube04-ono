@@ -1,0 +1,64 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% autoescape 'safe_textmail' %}
+{% if Order.company_name %}
+{{ Order.company_name }}
+{% endif %}
+{{ Order.name01 }} {{ Order.name02 }} 様
+
+━━━━━━━━━━━━━━━━━━━━━━━
+【お問い合わせ内容のご確認　　omeエンタープライズ online shop】
+
+この度は、omeエンタープライズへお問い合わせいただき、
+誠にありがとうございます。
+
+本メールはお問い合わせいただいたお客様に自動で配信しております。
+
+内容確認次第、ご連絡させていただきますのでしばらくお待ち下さい。
+お急ぎの場合は、お電話にてお問い合わせをお願い致します。
+
+会社名またはサロン名：{{ data.company_name }}
+お名前：{{ data.name01 }} {{ data.name02 }}{% if data.kana01 or data.kana02 %} ({{ data.kana01 }} {{ data.kana02 }}){% endif %} 様
+郵便番号：{% if data.postal_code %}〒{{ data.postal_code }}{% endif %}
+
+住所：{% if data.pref.name is defined %} {{ data.pref.name }}{% endif %}{{ data.addr01 }}{{ data.addr02 }}
+電話番号：{{ data.phone_number }}
+メールアドレス：{{ data.email }}
+お問い合わせ種別：{{ data.contact_type }}
+お問い合わせ内容：
+
+{{ data.contents }}
+
+━━━━━━━━━━━━━━━━━━━━━━━
+本メールは自動配信専用です。
+本メールにご返信いただいても確認ができないため、ご対応致しかねます。
+
+万一、お問い合わせに覚えがない場合や、記載内容に間違いがある場合には、
+大変お手数をお掛け致しますが、「info@ome-shouzai.com」までご連絡をお願い致します。
+
+
+□■□――――――――――――――――――――――――
+omeエンタープライズ
+まつげエクステンション商材の企画・開発・卸
+
+TEL　                0120-965-583        06-6252-3773
+FAX　                06-6252-3774
+E-mail                info@ome-shouzai.com
+営業時間                10:00〜18:00　(定休日:土・日・祝)
+
+online shop         https://www.ome-shop.jp
+Instagram        https://www.instagram.com/ome_enterprises
+LINE@                https://lin.ee/ifbQdqX
+
+〒550-0013
+大阪市西区新町1-4-26 四ツ橋グランドビル8F
+――――――――――――――――――――――――□■□
+{% endautoescape  %}

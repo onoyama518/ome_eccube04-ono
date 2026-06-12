@@ -1,0 +1,188 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% extends 'default_frame.twig' %}
+
+
+{% block main %}
+<div class="page_receipt">
+
+    <div class="receipt-container" id="receipt">
+        <div class="receipt-header">
+            <img src="{{ asset('assets/img/ome_receipt_logo.png') }}" alt="領収書ロゴ" class="logo_receipt">
+            <p>発行日：{{ Order.Shippings[0].shipping_date|date("Y年m月d日") }}</p>
+        </div>
+        <div class="receipt-title">領収書</div>
+        <div class="receipt-info-section area_flex_receipt">
+           <div class="receipt_info">
+                <p>{{ Order.company_name }} </p>
+                <p>{{ Order.Customer.name01 }} {{ Order.Customer.name02 }} 様</p>
+                <p>ご注文日：<br/>{{ Order.order_date|date("Y年m月d日") }}</p>
+                <p>ご注文番号：{{ Order.order_no }}</p>
+                <p>ご注文状況：{{ Order.OrderStatus }}</p>
+                <p>下記の通り領収致しました。</p>
+           </div>
+            <div class="shop_information">
+                       <img src="{{ asset('assets/img/company_kakuin.png') }}" alt="角印" class="receipt_kakuin">
+
+					<p class="name">株式会社kichi</p>
+					<p>
+                    〒550-0013<br/>
+                    大阪市西区新町1-4-26<br/>
+                    四ツ橋グランドビル8F<br/>
+                    TEL：0120-965-583<br/>
+                    E-mall：info@ome-shouzai.com<br/>
+                    登録番号：T7120001117915
+					</p>
+				</div>
+        </div>
+        <div class="receipt-info-section">
+            <div class="receipt-section-title">ご購入商品情報</div>
+            <table class="receipt-table">
+                <tr>
+                    <th>商品名</th>
+                    <th>価格</th>
+                    <th>小計</th>
+                </tr>
+                {% for Shipping in Order.Shippings %}
+                    {% for orderItem in Shipping.productOrderItems %}
+                        <tr>
+                            <td>{{ orderItem.productName }}</td>
+                            <td>¥{{ orderItem.price_inc_tax|number_format }} × {{ orderItem.quantity }}</td>
+                            <td>¥{{ (orderItem.price_inc_tax * orderItem.quantity)|number_format }}</td>
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+            </table>
+            
+        </div>
+         <div class="receipt-info-section">
+        <div class="receipt-summary">
+                <p>小計：¥{{ Order.subtotal|number_format }}</p>
+                            {% for item in Order.taxable_discount_items %}
+                    <p>{{ item.product_name }}: ¥{{ item.total_price|number_format }}</p>
+                {% endfor %}
+
+                {% for item in Order.tax_free_discount_items %}
+                    <p>{{ item.product_name }}: ¥{{ item.total_price|number_format }}</p>
+                {% endfor %}
+                <p>送料：¥{{ Order.delivery_fee_total|number_format }}</p>
+                <p>手数料：¥{{ Order.charge|number_format }}</p>
+
+                <p><strong>合計：{{ Order.payment_total|price }} 税込</strong></p>
+                <p>税率10%対象 {{ Order.payment_total|price }} (内消費税 ¥{{ (Order.payment_total / 1.1 * 0.1)|number_format }})</p>
+
+            </div>
+        </div>
+        
+        <div class="receipt-info-section">
+            <div class="receipt-section-title">配送情報</div>
+            {% for Shipping in Order.Shippings %}
+                <p>{{ Shipping.company_name }}</p>
+                <p>{{ Shipping.name01 }} {{ Shipping.name02 }} ({{ Shipping.kana01 }} {{ Shipping.kana02 }})</p>
+                <p>〒{{ Shipping.postal_code }}</p>
+                <p>{{ Shipping.Pref }}{{ Shipping.addr01 }}{{ Shipping.addr02 }}</p>
+                <p>TEL {{ Shipping.phone_number }}</p>
+                {% if Shipping.shipping_delivery_name is not empty %}
+                    <p>配送方法：{{ Shipping.shipping_delivery_name }}</p>
+                {% endif %}
+
+                {% if Shipping.shipping_delivery_date is not empty %}
+                    <p>お届け日：{{ Shipping.shipping_delivery_date|date("Y年m月d日") }}</p>
+                {% endif %}
+
+                {% if Shipping.shipping_delivery_time is not empty %}
+                    <p>お届け時間：{{ Shipping.shipping_delivery_time }}</p>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="receipt-info-section">
+            <div class="receipt-section-title">お支払い情報</div>
+            <p>{{ Order.PaymentMethod }}</p>
+        </div>
+    </div>
+    <div class="button-container">
+        <button id="print-button" onclick="printPdf()">PDF印刷</button>
+
+        <button id="download-pdf" onclick="downloadPdf()">PDFダウンロード</button>
+
+
+    <script>
+        async function printPdf() {
+            const orderId = {{ Order.id }}; // TwigテンプレートからOrder.idを取得
+            const fileName = `receipt-${orderId}.pdf`; // ファイル名を指定
+            const url = `/mypage/receipt-pdf/${orderId}`; // PDF生成用のエンドポイントを指定
+
+            try {
+                const response = await fetch(url, { method: 'GET' });
+
+                if (!response.ok) {
+                    throw new Error('PDFの取得に失敗しました。');
+                }
+
+                const blob = await response.blob(); // PDFデータをBlob形式で取得
+                const pdfUrl = window.URL.createObjectURL(blob); // BlobをURLに変換
+
+                // 新しいウィンドウを開き、PDFをロードして印刷
+                const printWindow = window.open(pdfUrl, '_blank');
+                if (printWindow) {
+                    printWindow.onload = () => {
+                        printWindow.print(); // 印刷を開始
+                    };
+                } else {
+                    alert('ポップアップを許可してください。');
+                }
+
+                // ダウンロード用リンクを生成して自動的にクリック
+                const a = document.createElement('a');
+                a.href = pdfUrl;
+                a.download = fileName; // ダウンロードするファイル名を指定
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+
+                // URLオブジェクトを解放
+                window.URL.revokeObjectURL(pdfUrl);
+            } catch (error) {
+                console.error(error);
+                alert('PDFの印刷およびダウンロードに失敗しました。');
+            }
+        }
+    </script>
+        
+        
+
+    </div>
+    <style>
+
+    .receipt-container {
+        width: 210mm; /* A4幅に固定 */
+    max-width: 100%;
+        page-break-inside: avoid; /* 領収書全体を1ページに収める */
+        break-inside: avoid; /* CSS改ページを防ぐ */
+        overflow: hidden; /* 不要なスクロールを防ぐ */
+        min-height:initial;
+    }
+
+
+    .receipt-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .receipt-table tr {
+        page-break-inside: avoid; /* テーブル行内での改ページを防ぐ */
+    }
+
+    </style>
+
+</div>
+{% endblock %}
+

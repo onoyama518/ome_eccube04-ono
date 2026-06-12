@@ -14,7 +14,6 @@
 namespace Eccube\Security\Http\Authentication;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
@@ -25,7 +24,7 @@ class EccubeAuthenticationFailureHandler extends DefaultAuthenticationFailureHan
     /**
      * {@inheritdoc}
      */
-    public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
+    public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
         try {
             $response = parent::onAuthenticationFailure($request, $exception);

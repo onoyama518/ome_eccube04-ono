@@ -135,6 +135,19 @@ class DeliveryController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // reCAPTCHA検証
+            $recaptchaResponse = $request->request->get(\Customize\Util\RecaptchaUtil::INPUT_NAME);
+            if (!\Customize\Util\RecaptchaUtil::check($recaptchaResponse)) {
+                log_warning('[DeliveryController] お届け先変更・追加でreCAPTCHA検証失敗');
+                $this->addFlash('eccube.front.error', 'セキュリティ確認に失敗しました。お手数ですが、ページを更新してもう一度ご入力ください。');
+                
+                return [
+                    'form' => $form->createView(),
+                    'parentPage' => $parentPage,
+                    'BaseInfo' => $this->BaseInfo,
+                ];
+            }
+
             log_info('お届け先登録開始', [$id]);
 
             $this->entityManager->persist($CustomerAddress);

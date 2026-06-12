@@ -35,7 +35,7 @@ class EccubeExtension extends Extension implements PrependExtensionInterface
         $configs = $this->processConfiguration($configuration, $configs);
     }
 
-    public function getAlias(): string
+    public function getAlias()
     {
         return 'eccube';
     }

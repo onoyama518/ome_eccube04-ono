@@ -77,8 +77,13 @@ class DeliveryFeeFreeByShippingPreprocessor implements ItemHolderPreprocessor
                 }
                 if ($isFree) {
                     foreach ($Shipping->getOrderItems() as $Item) {
+                        // 通常の送料のみを無料にし、特別送料（クール便追加料金）は無料にしない
                         if ($Item->getProcessorName() == DeliveryFeePreprocessor::class) {
                             $Item->setQuantity(0);
+                        }
+                        // 特別送料は無料にしない
+                        if ($Item->getProcessorName() == 'SpecialDeliveryFee') {
+                            // 何もしない
                         }
                     }
                 }

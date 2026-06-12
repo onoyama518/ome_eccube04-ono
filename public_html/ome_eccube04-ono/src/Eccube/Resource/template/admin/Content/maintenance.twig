@@ -37,11 +37,13 @@ file that was distributed with this source code.
                             <div class="row mb-2">
                                 <div class="col-auto">
                                     {% if isMaintenance %}
-                                    <input type="hidden" name="maintenance" value="off">
+                                    <input type="hidden" name="maintenance" value="off" style="color:red; bordrer:red 1px solid; background:#fff;">
                                     <button type="submit" class="btn btn-ec-conversion">{{ 'admin.content.maintenance_switch__off'|trans }}</button>
+                                    <p style="margin-top:20px; background:red; color:#fff; padding:10px;">現在メンテナンスモードになっています。</p>
+
                                     {% else %}
                                     <input type="hidden" name="maintenance" value="on">
-                                    <button type="submit" class="btn btn-ec-conversion">{{ 'admin.content.maintenance_switch__on'|trans }}</button>
+                                    <button type="submit" class="btn btn-ec-conversion" style="background-color:red;">{{ 'admin.content.maintenance_switch__on'|trans }}</button>
                                     {% endif %}
                                 </div>
                             </div>

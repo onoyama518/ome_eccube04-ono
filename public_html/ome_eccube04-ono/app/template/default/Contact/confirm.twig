@@ -1,0 +1,133 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% extends 'default_frame.twig' %}
+
+{% form_theme form 'Form/form_div_layout.twig' %}
+
+{% block stylesheet %}
+	<link rel="preload" href="{{ asset('assets/css/contact_renewal.css') }}" as="style">
+	<link rel="stylesheet" href="{{ asset('assets/css/contact_renewal.css') }}">
+{% endblock %}
+
+{% block main %}
+	<div id="lp-wrap" class="page_contact_renewal">
+		<div id="undercolumn">
+			<h2 class="title contact_title" style="text-align: center;"><span class="en_sub">CONTACT</span>{{ 'お問い合わせ(確認ページ)'|trans }}</h2>
+			<div id="undercolumn_contact">
+				<p class="on_form_text">
+					{{ '下記入力内容で送信してもよろしいでしょうか？<br />よろしければ、一番下の「送信する」ボタンを<br class="only_sp"/>クリックしてください。'|trans|raw }}
+				</p>
+				<form method="post" action="{{ url('contact') }}">
+					{{ form_widget(form._token) }}
+					<input type="hidden" name="mode" value="complete"/>
+          <div class="contact-form-container contact-confirm-form-container" style="margin:auto; font-size:14px;">
+						<div class="form-row">
+							<div class="form-label">{{ '会社名またはサロン名'|trans }}<span class="attention_text">必須</span>
+							</div>
+							<div class="form-field">
+								{{ form.company_name.vars.data|e }}
+								{{ form_widget(form.company_name, { type: 'hidden' }) }}
+							</div>
+						</div>
+
+						<div class="form-row">
+							<div class="form-label">{{ 'お名前'|trans }}<span class="attention_text">必須</span>
+							</div>
+							<div class="form-field">
+								{{ form.name.name01.vars.data|e }}
+								{{ form.name.name02.vars.data|e }}
+								{{ form_widget(form.name.name01, { type: 'hidden' }) }}
+								{{ form_widget(form.name.name02, { type: 'hidden' }) }}
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-label">{{ 'お名前(カナ)'|trans }}<span class="attention_text">必須</span>
+							</div>
+							<div class="form-field">
+								{{ form.kana.kana01.vars.data|e }}
+								{{ form.kana.kana02.vars.data|e }}
+								{{ form_widget(form.kana.kana01, { type: 'hidden' }) }}
+								{{ form_widget(form.kana.kana02, { type: 'hidden' }) }}
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-label">{{ '郵便番号'|trans }}</div>
+							<div class="form-field">
+                {% if form.postal_code.vars.data is not empty %}
+									〒{{ form.postal_code.vars.data|e }}
+								{% endif %}
+								{{ form_widget(form.postal_code, { type: 'hidden' }) }}
+							</div>
+						</div>
+            <div class="form-row">
+							<div class="form-label">{{ '都道府県'|trans }}</div>
+							<div class="form-field">
+                {{ form.address.pref.vars.data.name|e }}
+                {{ form_widget(form.address.pref, { type: 'hidden' }) }}
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-label">{{ '市区町村・町名'|trans }}</div>
+							<div class="form-field">
+                {{ form.address.addr01.vars.data|e }}
+                {{ form_widget(form.address.addr01, { type: 'hidden' }) }}
+							</div>
+						</div>
+            <div class="form-row">
+							<div class="form-label">{{ '番地・建物名・号室'|trans }}</div>
+							<div class="form-field">
+                {{ form.address.addr02.vars.data|e }}
+                {{ form_widget(form.address.addr02, { type: 'hidden' }) }}
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-label">{{ '電話番号'|trans }}</div>
+							<div class="form-field">
+                {% if form.phone_number.vars.data is not empty %}
+                  {{ form.phone_number.vars.data|e }}
+                {% endif %}
+                {{ form_widget(form.phone_number, { type: 'hidden' }) }}
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-label">{{ 'メールアドレス'|trans }}<span class="attention_text">必須</span>
+							</div>
+							<div class="form-field">
+                {{ form.email.vars.data|e }}
+                {{ form_widget(form.email, { type: 'hidden' }) }}
+							</div>
+						</div>
+            <div class="form-row">
+							<div class="form-label">{{ 'お問い合わせ種別'|trans }}<span class="attention_text">必須</span>
+							</div>
+							<div class="form-field">
+                {{ form.contact_type.vars.data|e }}
+                {{ form_widget(form.contact_type, { type: 'hidden' }) }}
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-label">{{ 'お問い合わせ内容'|trans }}<span class="attention_text">必須</span>
+							</div>
+							<div class="form-field" style="word-break: break-all; width: 100%;">
+								{{ form.contents.vars.data|nl2br | raw }}
+                {{ form_widget(form.contents, { type: 'hidden' }) }}
+							</div>
+						</div>
+					</div>
+					<div class="renewal_contact_submit_confirm">
+						<button type="submit" class="return_confirm_btn" name="mode" value="back">戻る</button>
+						<button type="submit" class="submit_confirm_btn">送信する</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+{% endblock %}

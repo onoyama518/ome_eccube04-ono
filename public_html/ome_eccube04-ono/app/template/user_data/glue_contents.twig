@@ -1,0 +1,630 @@
+{% extends 'default_frame.twig' %}
+
+{% block main %}
+<script>
+	
+	 /*スクロールでじわっと表示*/
+  $(window).scroll(function(){
+  $('.blurTrigger').each(function(){ //blurTriggerというクラス名が
+    var elemPos = $(this).offset().top-50;//要素より、50px上の
+    var scroll = $(window).scrollTop();
+    var windowHeight = $(window).height();
+    if (scroll >= elemPos - windowHeight){
+    $(this).addClass('blur');// 画面内に入ったらblurというクラス名を追記
+    }else{
+    $(this).removeClass('blur');// 画面外に出たらblurというクラス名を外す
+    }
+    });
+    });
+
+$(function(){
+  $('.slider').slick({
+    autoplay: true, //自動でスクロール
+    autoplaySpeed: 0, //自動再生のスライド切り替えまでの時間を設定
+    speed: 10000, //スライドが流れる速度を設定
+    cssEase: "linear", //スライドの流れ方を等速に設定
+    slidesToShow: 2, //表示するスライドの数
+    swipe: false, // 操作による切り替えはさせない
+    arrows: false, //矢印非表示
+    pauseOnFocus: false, //スライダーをフォーカスした時にスライドを停止させるか
+    pauseOnHover: false, //スライダーにマウスホバーした時にスライドを停止させるか
+    responsive: [
+      {
+        breakpoint: 750,
+        settings: {
+          slidesToShow: 1, //画面幅750px以下でスライド3枚表示
+        }
+      }
+    ]
+  });
+});
+	
+</script>
+
+<div id="lp-wrap">
+	<div class="glue-lp">
+			
+	<div class="slider-area">
+	  <ul class="slider">
+		  <li><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/true_glue_autoslide.jpg' }} alt="トゥルーグルー"></li>
+		  <li><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/fast_glue_autoslide.jpg' }} alt="ファストエチル系国産ブラックグルー"></li>
+		  <li><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/soft_glue_autoslide.jpg' }} alt="ソフトエチル系国産ブラックグルー"></li>
+		  <li><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/medi_glue_autoslide.jpg' }} alt="メディカル系国産ブラックグルー"></li>
+		  <li><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/lmg_glue_autoslide.jpg' }} alt="ロングメディカル系国産ブラックグルー"></li>
+		  <li><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/low_glue_autoslide.jpg' }} alt="ローイリテイション国産グルー"></li>
+	  </ul>
+	</div>
+
+
+		
+	<div class="glue-lp-sec01">
+		<h1 class="blurTrigger">Glue Series</h1>
+		<p class="blurTrigger">速乾性･安全性･まつげケアに<br/>こだわった国産グルー</p>
+		<p class="blurTrigger">原材料・製造・ボトル容器への充填など<br/>全てが日本製<span class="jp-flag" style="margin-left:10px;"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/jp-flag.png' }} alt="日本製"></span></p>
+	</div>	
+	
+	<div class="glue-lp-sec02">
+		
+	  <div>
+		<h2 class="scrollanime downup fadeInDown">エチル系国産グルー</h2>
+		<p class="scrollanime downup fadeInDown">本来のエチル系グルーの刺激を最小限に抑え、<br class="tr_sp">速乾性が重視されたプロ仕様のグルー</p>
+		<p class="scrollanime downup fadeInDown">施術スピードや持続性が求められる<br class="tr_sp">サロンワークでは必需品</p>
+	  </div>
+	  <div>
+		<h2 class="scrollanime downup fadeInDown">ブチル系国産グルー</h2>
+		<p class="scrollanime downup fadeInDown">医療用などでも使用される接着成分で、<br class="tr_sp">刺激が少なく安全性が重視されたグルー</p>
+		<p class="scrollanime downup fadeInDown">柔軟性があり硬化後も<br class="tr_sp">やわらかい質感で自然な付け心地</p>
+	  </div>
+	  <div>
+		<h2 class="scrollanime downup fadeInDown">エトキシエチル系国産グルー</h2>
+		<p class="scrollanime downup fadeInDown">殆ど無刺激・無臭でアレルギー発症率も<br class="tr_sp">最小限に抑えることが可能なグルー</p>
+		<p class="scrollanime downup fadeInDown">目が沁みやすい、刺激や臭いに<br class="tr_sp">敏感な方への施術に最適</p>
+	  </div>
+	</div>
+		
+	<div class="glue-lp-sec03">
+		<h2>オリジナル国産グルー早見表</h2>
+		<table class="echiru glue-table scrollanime downup fadeInDown">
+		  <tr><th colspan="3">エチル系国産グルー</th></tr>
+		  <tr class="tr_pc">
+		  <td>
+			  <ul>
+				  <li><a href="https://www.ome-shop.jp/products/detail/229"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/lineup_trueglue.jpg' }} alt="トゥルーグルー"></a></li>
+				  <li><a href="https://www.ome-shop.jp/products/detail/229"><h3>True Glue<br><span style="font-size:13px;">トゥルーグルー</span></h3></a></li>
+				  <li class="glue-catch"><span class="inline-text">プロ仕様！ピタッと硬化の</span><span class="inline-text">圧倒的最速グルー</span></li>
+				  <li><table class="glue-hyou">
+					    <tr><td>持続性</td><td>▶︎</td><td>約1ヵ月～ 1.5ヵ月</td></tr>
+					    <tr><td>速乾性</td><td>▶︎</td><td>超速乾　硬化速度約1～2秒</td></tr>
+					    <tr><td>粘　度</td><td>▶︎</td><td>さらさらしすぎず程よい粘性</td></tr>
+					    <tr><td>揮発性</td><td>▶︎</td><td>若干の刺激あり</td></tr>
+					    <tr><td>色</td><td>▶︎</td><td>かなり黒い　ディープブラック色</td></tr>
+					  </table>
+				  </li>
+			  </ul>
+			  </td>
+			  <td>
+			  <ul>
+				  <li><a href="https://www.ome-shop.jp/products/detail/86"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/lineup_fastglue.jpg' }} alt="ファストエチル系国産ブラックグルー"></a></li>
+				  <li><a href="https://www.ome-shop.jp/products/detail/86"><h3>Fast ethyl faction Glue<br><span style="font-size:13px;">ファストエチル系国産ブラックグルー</span></h3></a></li>
+				  <li class="glue-catch"><span class="inline-text">“つけ放題メニュー” に最適</span><span class="inline-text">超速乾グルー</span></li>
+				  <li><table class="glue-hyou">
+					    <tr><td>持続性</td><td>▶︎</td><td>約1ヵ月～ 1.5ヵ月</td></tr>
+					    <tr><td>速乾性</td><td>▶︎</td><td>超速乾　硬化速度約1～2秒</td></tr>
+					    <tr><td>粘　度</td><td>▶︎</td><td>かなりさらさらとした使用感</td></tr>
+					    <tr><td>揮発性</td><td>▶︎</td><td>若干の刺激あり</td></tr>
+					    <tr><td>色</td><td>▶︎</td><td>ブラック色</td></tr>
+					  </table>
+				  </li>
+			  </ul>
+			  </td>
+			  <td>
+			  <ul>
+				  <li><a href="https://www.ome-shop.jp/products/detail/156"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/lineup_softglue.jpg' }} alt="ソフトエチル系国産ブラックグルー"></a></li>
+				  <li><a href="https://www.ome-shop.jp/products/detail/156"><h3>Soft ethyl faction Glue<br><span style="font-size:13px;">ソフトエチル系国産ブラックグルー</span></h3></a></li>
+				  <li class="glue-catch"><span class="inline-text">“ボリュームラッシュ” に最適</span><span class="inline-text">柔軟性グルー</span></li>
+				  <li><table class="glue-hyou">
+					    <tr><td>持続性</td><td>▶︎</td><td>約1ヵ月～ 1.5ヵ月</td></tr>
+					    <tr><td>速乾性</td><td>▶︎</td><td>超速乾　硬化速度約1～2秒</td></tr>
+					    <tr><td>粘　度</td><td>▶︎</td><td>さらさらとした使用感</td></tr>
+					    <tr><td>揮発性</td><td>▶︎</td><td>若干の刺激あり</td></tr>
+					    <tr><td>色</td><td>▶︎</td><td>かなり黒い　ディープブラック色</td></tr>
+					  </table>
+				  </li>
+			  </ul>
+			  </td>
+		  </tr>
+		  <tr class="tr_sp">
+		  <td>
+			  <ul>
+				  <li><a href="https://www.ome-shop.jp/products/detail/229"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/lineup_trueglue.jpg' }} alt="トゥルーグルー"></a></li>
+				  <li><a href="https://www.ome-shop.jp/products/detail/229"><h3>True Glue<br><span style="font-size:13px;">トゥルーグルー</span></h3></a></li>
+				  <li class="glue-catch"><span class="inline-text">プロ仕様！ピタッと硬化の</span><span class="inline-text">圧倒的最速グルー</span></li>
+				  <li><table class="glue-hyou">
+					    <tr><td>持続性</td><td>▶︎</td><td>約1ヵ月～ 1.5ヵ月</td></tr>
+					    <tr><td>速乾性</td><td>▶︎</td><td>超速乾　硬化速度約1～2秒</td></tr>
+					    <tr><td>粘　度</td><td>▶︎</td><td>さらさらしすぎず程よい粘性</td></tr>
+					    <tr><td>揮発性</td><td>▶︎</td><td>若干の刺激あり</td></tr>
+					    <tr><td>色</td><td>▶︎</td><td>かなり黒い　ディープブラック色</td></tr>
+					  </table>
+				  </li>
+			  </ul>
+			  </td>
+			</tr>
+		  <tr class="tr_sp">
+			  <td>
+			  <ul>
+				  <li><a href="https://www.ome-shop.jp/products/detail/86"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/lineup_fastglue.jpg' }} alt="ファストエチル系国産ブラックグルー"></a></li>
+				  <li><a href="https://www.ome-shop.jp/products/detail/86"><h3>Fast ethyl faction Glue<br><span style="font-size:13px;">ファストエチル系国産ブラックグルー</span></h3></a></li>
+				  <li class="glue-catch"><span class="inline-text">“つけ放題メニュー” に最適</span><span class="inline-text">超速乾グルー</span></li>
+				  <li><table class="glue-hyou">
+					    <tr><td>持続性</td><td>▶︎</td><td>約1ヵ月～ 1.5ヵ月</td></tr>
+					    <tr><td>速乾性</td><td>▶︎</td><td>超速乾　硬化速度約1～2秒</td></tr>
+					    <tr><td>粘　度</td><td>▶︎</td><td>かなりさらさらとした使用感</td></tr>
+					    <tr><td>揮発性</td><td>▶︎</td><td>若干の刺激あり</td></tr>
+					    <tr><td>色</td><td>▶︎</td><td>ブラック色</td></tr>
+					  </table>
+				  </li>
+			  </ul>
+			  </td>
+			  </tr>
+		  <tr class="tr_sp">
+			  <td>
+			  <ul>
+				  <li><a href="https://www.ome-shop.jp/products/detail/156"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/lineup_softglue.jpg' }} alt="ソフトエチル系国産ブラックグルー"></a></li>
+				  <li><a href="https://www.ome-shop.jp/products/detail/156"><h3>Soft ethyl faction Glue<br><span style="font-size:13px;">ソフトエチル系国産ブラックグルー</span></h3></a></li>
+				  <li class="glue-catch"><span class="inline-text">“ボリュームラッシュ” に最適</span><span class="inline-text">柔軟性グルー</span></li>
+				  <li><table class="glue-hyou">
+					    <tr><td>持続性</td><td>▶︎</td><td>約1ヵ月～ 1.5ヵ月</td></tr>
+					    <tr><td>速乾性</td><td>▶︎</td><td>超速乾　硬化速度約1～2秒</td></tr>
+					    <tr><td>粘　度</td><td>▶︎</td><td>さらさらとした使用感</td></tr>
+					    <tr><td>揮発性</td><td>▶︎</td><td>若干の刺激あり</td></tr>
+					    <tr><td>色</td><td>▶︎</td><td>かなり黒い　ディープブラック色</td></tr>
+					  </table>
+				  </li>
+			  </ul>
+			  </td>
+		  </tr>
+		</table>
+		
+		<div class="flex-box">
+	<table class="buchiru glue-table scrollanime downup fadeInDown">
+                    <tr>
+                        <th colspan="3">ブチル系国産グルー</th>
+                    </tr>
+                    <tr class="tr_pc">
+                        <td>
+                            <ul>
+                                <li>
+                                    <a href="https://www.ome-shop.jp/products/detail/50"
+                                        ><img src={{ app.config.user_data_url ~
+                                        'packages/default/img_2018/lp/lineup_mediglue.jpg' }}
+                                        alt="メディカル系国産ブラックグルー"></a
+                                    >
+                                </li>
+                                <li>
+                                    <a href="https://www.ome-shop.jp/products/detail/50"
+                                        ><h3>
+                                            Medical faction Glue<br /><span style="font-size: 13px"
+                                                >メディカル系国産ブラックグルー</span
+                                            >
+                                        </h3></a
+                                    >
+                                </li>
+                                <li class="glue-catch">
+                                    <span class="inline-text">安心・安全性重視！</span
+                                    ><span class="inline-text"
+                                        >omeを代表するロングセラーグルー</span
+                                    >
+                                </li>
+                                <li>
+                                    <table class="glue-hyou">
+                                        <tr>
+                                            <td>持続性</td>
+                                            <td>▶︎</td>
+                                            <td>約1ヵ月～ 1.5ヵ月</td>
+                                        </tr>
+                                        <tr>
+                                            <td>速乾性</td>
+                                            <td>▶︎</td>
+                                            <td>超速乾　硬化速度約3～4秒</td>
+                                        </tr>
+                                        <tr>
+                                            <td>粘　度</td>
+                                            <td>▶︎</td>
+                                            <td>さらさらとした使用感</td>
+                                        </tr>
+                                        <tr>
+                                            <td>揮発性</td>
+                                            <td>▶︎</td>
+                                            <td>低刺激タイプ</td>
+                                        </tr>
+                                        <tr>
+                                            <td>色</td>
+                                            <td>▶︎</td>
+                                            <td>かなり黒い　ディープブラック色</td>
+                                        </tr>
+                                    </table>
+                                </li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul>
+                                <li>
+                                    <a href="https://www.ome-shop.jp/products/detail/70"
+                                        ><img src={{ app.config.user_data_url ~
+                                        'packages/default/img_2018/lp/lineup_lmgglue.jpg' }}
+                                        alt="ロングメディカル系国産ブラックグルー"></a
+                                    >
+                                </li>
+                                <li>
+                                    <a href="https://www.ome-shop.jp/products/detail/70"
+                                        ><h3>
+                                            Long Medical faction Glue<br /><span
+                                                style="font-size: 13px"
+                                                >ロングメディカル系国産ブラックグルー</span
+                                            >
+                                        </h3></a
+                                    >
+                                </li>
+                                <li class="glue-catch">
+                                    <span class="inline-text">安全性＆まつげケア重視！</span
+                                    ><span class="inline-text"
+                                        >4種の美容成分が配合された低刺激グルー</span
+                                    >
+                                </li>
+                                <li>
+                                    <table class="glue-hyou">
+                                        <tr>
+                                            <td>持続性</td>
+                                            <td>▶︎</td>
+                                            <td>約1ヵ月～ 1.5ヵ月</td>
+                                        </tr>
+                                        <tr>
+                                            <td>速乾性</td>
+                                            <td>▶︎</td>
+                                            <td>超速乾　硬化速度約2～4秒</td>
+                                        </tr>
+                                        <tr>
+                                            <td>粘　度</td>
+                                            <td>▶︎</td>
+                                            <td>さらさらとした使用感</td>
+                                        </tr>
+                                        <tr>
+                                            <td>揮発性</td>
+                                            <td>▶︎</td>
+                                            <td>低刺激タイプ</td>
+                                        </tr>
+                                        <tr>
+                                            <td>色</td>
+                                            <td>▶︎</td>
+                                            <td>ブラック色</td>
+                                        </tr>
+                                    </table>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="tr_sp">
+                        <td>
+                            <ul>
+                                <li>
+                                    <a href="https://www.ome-shop.jp/products/detail/50"
+                                        ><img src={{ app.config.user_data_url ~
+                                        'packages/default/img_2018/lp/lineup_mediglue.jpg' }}
+                                        alt="メディカル系国産ブラックグルー"></a
+                                    >
+                                </li>
+                                <li>
+                                    <a href="https://www.ome-shop.jp/products/detail/50"
+                                        ><h3>
+                                            Medical faction Glue<br /><span style="font-size: 13px"
+                                                >メディカル系国産ブラックグルー</span
+                                            >
+                                        </h3></a
+                                    >
+                                </li>
+                                <li class="glue-catch">
+                                    <span class="inline-text">安心・安全性重視！</span
+                                    ><span class="inline-text"
+                                        >omeを代表するロングセラーグルー</span
+                                    >
+                                </li>
+                                <li>
+                                    <table class="glue-hyou">
+                                        <tr>
+                                            <td>持続性</td>
+                                            <td>▶︎</td>
+                                            <td>約1ヵ月～ 1.5ヵ月</td>
+                                        </tr>
+                                        <tr>
+                                            <td>速乾性</td>
+                                            <td>▶︎</td>
+                                            <td>超速乾　硬化速度約3～4秒</td>
+                                        </tr>
+                                        <tr>
+                                            <td>粘　度</td>
+                                            <td>▶︎</td>
+                                            <td>さらさらとした使用感</td>
+                                        </tr>
+                                        <tr>
+                                            <td>揮発性</td>
+                                            <td>▶︎</td>
+                                            <td>低刺激タイプ</td>
+                                        </tr>
+                                        <tr>
+                                            <td>色</td>
+                                            <td>▶︎</td>
+                                            <td>かなり黒い　ディープブラック色</td>
+                                        </tr>
+                                    </table>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="tr_sp">
+                        <td>
+                            <ul>
+                                <li>
+                                    <a href="https://www.ome-shop.jp/products/detail/70"
+                                        ><img src={{ app.config.user_data_url ~
+                                        'packages/default/img_2018/lp/lineup_lmgglue.jpg' }}
+                                        alt="ロングメディカル系国産ブラックグルー"></a
+                                    >
+                                </li>
+                                <li>
+                                    <a href="https://www.ome-shop.jp/products/detail/70"
+                                        ><h3>
+                                            Long Medical faction Glue<br /><span
+                                                style="font-size: 13px"
+                                                >ロングメディカル系国産ブラックグルー</span
+                                            >
+                                        </h3></a
+                                    >
+                                </li>
+                                <li class="glue-catch">
+                                    <span class="inline-text">安全性＆まつげケア重視！</span
+                                    ><span class="inline-text"
+                                        >4種の美容成分が配合された低刺激グルー</span
+                                    >
+                                </li>
+                                <li>
+                                    <table class="glue-hyou">
+                                        <tr>
+                                            <td>持続性</td>
+                                            <td>▶︎</td>
+                                            <td>約1ヵ月～ 1.5ヵ月</td>
+                                        </tr>
+                                        <tr>
+                                            <td>速乾性</td>
+                                            <td>▶︎</td>
+                                            <td>超速乾　硬化速度約2～4秒</td>
+                                        </tr>
+                                        <tr>
+                                            <td>粘　度</td>
+                                            <td>▶︎</td>
+                                            <td>さらさらとした使用感</td>
+                                        </tr>
+                                        <tr>
+                                            <td>揮発性</td>
+                                            <td>▶︎</td>
+                                            <td>低刺激タイプ</td>
+                                        </tr>
+                                        <tr>
+                                            <td>色</td>
+                                            <td>▶︎</td>
+                                            <td>ブラック色</td>
+                                        </tr>
+                                    </table>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>	
+		
+		<table class="ekishitochiru glue-table scrollanime downup fadeInDown">
+			<tr><th colspan="3">エトキシエチル系国産グルー</th></tr>
+		  <tr><td>
+			  <ul>
+				  <li><a href="https://www.ome-shop.jp/products/detail/177"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/lineup_lowglue.jpg' }} alt="ローイリテイション国産グルー"></a></li>
+				  <li><a href="https://www.ome-shop.jp/products/detail/177"><h3>Low irritation Glue<br><span style="font-size:13px;">ローイリテイション国産グルー</span></h3></a></li>
+				  <li class="glue-catch"><span class="inline-text">ブチル系グルーを超える</span><span class="inline-text">極低刺激グルー</span></li>
+				  <li><table class="glue-hyou">
+					    <tr><td>持続性</td><td>▶︎</td><td>約3週間</td></tr>
+					    <tr><td>速乾性</td><td>▶︎</td><td>速乾　硬化速度約2～4秒</td></tr>
+					    <tr><td>粘　度</td><td>▶︎</td><td>さらさらとした使用感</td></tr>
+					    <tr><td>揮発性</td><td>▶︎</td><td>極低刺激タイプ</td></tr>
+					    <tr><td>色</td><td>▶︎</td><td>紫色</td></tr>
+					  </table>
+				  </li>
+			  </ul>
+			  </td>
+			</tr>
+		</table>
+	</div>
+		
+	</div><!--glue-lp-sec03-->
+		
+	<div class="glue-lp-sec04">
+		
+		<p>LEDエクステ専用グルー</p>
+		<div class="ledglue-area scrollanime downup fadeInDown">
+		  <img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/gelglue1.0.webp' }} alt="LED ジェルグルー">
+		  <ul>
+			  <li><h3>Gel Glue 1.0<br><span style="font-size:13px;">ジェルグルー1.0</span></h3></li>
+			  <li class="led-glue-catch"><span class="inline-text">日本初！完全硬化2秒を実現させる</span><span class="inline-text">超革新的グルー</span></li>
+			  <li>従来のグルーに比べ、完全硬化までの時間を圧倒的に短縮し、ホルムアルデヒドの発生を極限までカット。付け心地も非常に柔らかく、アレルギーリスクも最大まで抑えれます。</li>
+		  </ul>
+		</div>
+		<span class="led-glue-attension">※こちらのグルーはLEDエクステライトを使用した施術によります。 LEDエクステの詳細は<a href="/user_data/ledex-subsc">こちら</a>からご確認ください</span>
+	</div><!--glue-lp-sec04-->
+	
+	<div class="glue-lp-sec05">	
+		<section class="scrollanime downup fadeInDown">
+			
+		<h2>“一般社団法人日本まつげエクステメーカー連合会” 加盟<span style="font-size:13px;">（準正会員）</span></h2>
+		<p style="text-align:center;">まつげエクステンション産業の発展促進を目的とする非営利団体<br>
+			他主要メーカーと協力しまつげエクステンションを健全・安全に普及させるために<br>
+		   「道具商材の安全性の追求・知識技術の向上・業界自主基準の構築」を行っています</p>
+		
+		  <!--<h4>まつ連基準適合品とは？</h4>-->
+		<div class="glue-lp-sec05-inner matsuren-sec">
+	      <img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/MATSURENtekigouhin_fix.png' }} alt="まつれん">
+		  <ul>
+			  <li>“omeエンタープライズで販売しているグルー”は、すべて一般社団法人日本まつげエクステメーカー連合会の厳しい自主基準となるヒト皮膚一次刺激性試験（パッチテスト）ホルムアルデヒド試験を<b style="font-size:120%;">クリアした製品</b>です。</li>
+		      <!--<li>社会法人日本まつげエクステメーカー連合会（まつ連）の厳しい基準値</li>
+			  <li>①まつれんが定める正会員規約の条件を満たしていること</li>
+			  <li>②まつれんが定めるグルー規約をみたしていること</li>
+			  <li>③「ヒト皮膚一次刺激試験（パッチテスト）検査」が済んでいること</li>
+			  <li>④上記③の検査結果が刺激指数10以下であること</li>
+			  <li>⑤「まつげエクステンション用グルーホルムアルデヒド試験」を行い基準値をクリアしていること</li>
+			  <li>上記5項目をクリアした製品のみに与えられる「名称・印」です</li>-->
+		  </ul>
+		</div>
+		</section>
+		
+		<h3>安全の証①<br class="tr_sp">〈まつれん基準適合品　パッチテスト〉</h3>
+		<section class="scrollanime downup fadeInDown">
+		  <!--<h4>ヒト皮膚一次刺激性試験(パッチテスト)とは？</h4>-->
+		<div class="pachtest-sec">
+		  <p>「化粧品の安全性評価に関する指針（日本化粧品工業連合会）編」に従い、商品の接触による皮膚一次刺激反応（かぶれ）の有無をチェックするための試験です</p>
+            <picture>
+  <source media="(min-width: 768px)" srcset="{{ app.config.user_data_url ~ 'packages/default/img_2018/lp/glue-lp-img01.png' }}">
+  <img src="/html/user_data/packages/sphone/img_2018/lp/sp-glue-lp-img01.png" alt="パッチテスト試験">
+</picture>
+		</div>
+		</section>
+		
+		<h3>安全の証②<br class="tr_sp">〈まつれん基準適合品　ホルムアルデヒド試験〉</h3>
+		<section class="scrollanime downup fadeInDown">
+		  <!--<h4>まつげエクステンション用グルーホルムアルデヒド試験とは？</h4>-->
+		<div class="horumu-sec">
+		  <p>ホルムアルデヒドとは、グルーが揮発する際に発生し、普通に自然界（環境中）にも存在する常温で無色透明の気体・特徴的な臭気のある物質です。排出量によっては目がチカチカする・少し喉が痛くなる等、健康へ影響する可能性もあります。HPLC法（主に化粧品に用いられる方法）にて、グルーの中のホルムアルデヒドの濃度を測定する試験です</p>
+            <picture><source media="(min-width: 768px)" srcset="{{ app.config.user_data_url ~ 'packages/default/img_2018/lp/glue-lp-img02.png' }}"><img src="/html/user_data/packages/sphone/img_2018/lp/sp-glue-lp-img02.png" alt="ホルムアルデヒド試験">
+</picture>
+		</div>
+		</section>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		 <h3>グルーの効果を最大限に発揮させる正しい使い方</h3>
+		<section class="scrollanime downup fadeInDown">
+		<div class="glue-all-detail">
+			<label for="checkit01">使用環境を見る▼</label>
+			<input type="checkbox" id="checkit01">
+		    <div id="img01"><picture>
+  <source media="(min-width: 768px)" 
+          srcset="{{ app.config.user_data_url ~ 'packages/default/img_2018/lp/glue-lp-img03.png' }}">
+  <img src="/html/user_data/packages/sphone/img_2018/lp/sp-glue-lp-img03.png" 
+       alt="使用環境">
+</picture>
+            </div>
+			<label for="checkit02">保管方法を見る▼</label>
+			<input type="checkbox" id="checkit02">
+			<div id="img02"><picture>
+  <source media="(min-width: 768px)" 
+          srcset="{{ app.config.user_data_url ~ 'packages/default/img_2018/lp/glue-lp-img04.png' }}">
+  <img src="/html/user_data/packages/sphone/img_2018/lp/sp-glue-lp-img04.png" 
+       alt="保管方法">
+</picture>
+			<span class="scrollanime downup fadeInDown" style="display:block; text-align: center; height:260px;"><iframe width="615" height="346" src="https://www.youtube.com/embed/GsX4IHgUyoQ?rel=0" frameborder="0" allowfullscreen></iframe></span>
+			</div>
+		</div>
+		</section>
+	</div><!--glue-lp-sec05-->	
+	
+	<div class="glue-lp-sec06">	
+		<h3>よくある質問</h3>
+		<div class="wrap">
+           <label for="label01">Q.施術時しみますか？しみにくいグルーはどれですか？▼</label>
+            <input type="checkbox" id="label01" class="switch" />
+             <div class="content">
+               <p>A.グルーが乾く前に目を開けると、しみてしまいます。各グルーともに速乾性が高く施術中に乾いていきますので、お客様が突然目を開けた場合は別ですが、しみて困っているというお話はいただいておりません。エチル系グルーの方が刺激指数は高くなりますので、ブチル系に比べしみやすくはなります。敏感な方や不安な方への施術にはローイリテイション国産グルーやブチル系のメディカル系国産ブラックグルー、ロングメディカル系国産ブラックグルーがお勧めになります。</p>
+             </div>
+        </div>
+		<div class="wrap">
+           <label for="label02">Q.まつげに付けると白っぽくなったのですが、これは何ですか？▼</label>
+            <input type="checkbox" id="label02" class="switch" />
+             <div class="content">
+               <p>A.グルーが白化現象を起こしているかと思います。白化現象はグルーが硬化する際に揮発する成分が水分と過剰に反応し使用箇所が白化する現象で、エクステンションのオフやマスカラオフの際の水分をきちんと拭き取りが出来ていない場合やお客様の涙、湿度が高すぎる環境での施術の際に起こりやすくなります。白化現象が起こってもグルーの持続性・強度に変わりはございません。</p>
+             </div>
+        </div>
+		<div class="wrap">
+           <label for="label03">Q.グルーの付きが悪いように思うのですが、どうすればいいですか？▼</label>
+            <input type="checkbox" id="label03" class="switch" />
+             <div class="content">
+               <p>A.グルーの付きが悪くなる要因はいくつかございます。グルーはとても繊細なので、正しい方法で取り扱いが出来ていないと、本来の性能を発揮することができません。ボトルタイプグルーはご使用前に20回程度振り、成分を混ぜ合わせてからご使用ください。しっかり振らず成分が混ざり合っていない沈殿している状態で使用すると、本来の性能を発揮できないため、エクステンションの付き・持続性も悪くなります。また、キャップを完全に閉めていないとボトル内に空気が入り、グルーが劣化している場合がございます。ノズル・キャップ内部のグルーをきれいに拭き取り、キャップをきちんと閉めて保管ください。ボトル・チューブタイプともに、保管時の温度も影響してきます。グルーがさらさらしている場合は保管温度が低すぎますので、常温に戻してご使用いただくと本来の接着強度に戻ります。グルーがドロドロしている場合は保管温度が高すぎ劣化してしまっている状態なので、再冷却を行っても本来の接着強度には戻りません。新しいグルーに交換ください。</p>
+             </div>
+        </div>
+		<div class="wrap">
+           <label for="label04">Q.グルーが出なくなったのですが、どうすればいいですか？▼</label>
+            <input type="checkbox" id="label04" class="switch" />
+             <div class="content">
+               <p>A.ノズル内にグルーが残ったまま固まっている可能性がございます。安全ピンのような細いものでノズル内を貫通させてご使用ください。ご使用後は、ノズルに残っているグルーをボトル内に落としてから保管ください。もしくは、ボトル内に入っている玉がノズル付近で詰まっている可能性がございますので、安全ピンのような細いもので、ボトル内に玉を落としてご使用ください。</p>
+             </div>
+        </div>
+		<div class="wrap">
+           <label for="label05">Q.美容室併設のまつげエクステンションサロンですが、気をつけることはありますか？▼</label>
+            <input type="checkbox" id="label05" class="switch" />
+             <div class="content">
+               <p>A.グルーの主成分であるシアノアクリレートは、ヘアサロンで使用されるカラー剤・パーマ剤に含まれるアルカリ性（アミン）と反応し硬化を促進させます。グループレートに出したグルーが劣化する原因となり、粘度が出てきて糸を引いてくるなど、使用できる時間が短くなりますので、店内の換気を十分に行うことや、少し離れた場所で施術を行う(個室や隔離された空間)など、注意を払って施術することをお勧めいたします。</p>
+             </div>
+        </div>
+	</div>
+		
+		
+	<table class="tr_pc glue-lp-itemlist">
+	<tr>
+		<td><ul>
+			<li><a href="https://www.ome-shop.jp/products/detail/229"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/trueglue_botle.jpg' }} alt="トゥルーグルー"></a></li>
+			<li>トゥルーグルー</li>
+			<li class="glue-lp-itemlist-btn tg-btn"><a href="https://www.ome-shop.jp/products/detail/229">購入する</a></li>
+			</ul>
+		</td>
+		<td><ul>
+			<li><a href="https://www.ome-shop.jp/products/detail/86"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/fastglue_botle.jpg' }} alt="ファストエチル系国産ブラックグルー"></a></li>
+			<li>ファストエチル系国産ブラックグルー</li>
+			<li class="glue-lp-itemlist-btn fg-btn"><a href="https://www.ome-shop.jp/products/detail/86">購入する</a></li>
+			</ul>
+		</td>
+		<td><ul>
+			<li><a href="https://www.ome-shop.jp/products/detail/156"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/softglue_botle.jpg' }} alt="ソフトエチル系国産ブラックグルー"></a></li>
+			<li>ソフトエチル系国産ブラックグルー</li>
+			<li class="glue-lp-itemlist-btn sg-btn"><a href="https://www.ome-shop.jp/products/detail/156">購入する</a></li>
+			</ul>
+		</td>
+	</tr>	
+	<tr>
+		<td><ul>
+			<li><a href="https://www.ome-shop.jp/products/detail/50"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/mediglue_botle.jpg' }} alt="メディカル系国産ブラックグルー"></a></li>
+			<li>メディカル系国産ブラックグルー</li>
+			<li class="glue-lp-itemlist-btn mg-btn"><a href="https://www.ome-shop.jp/products/detail/50">購入する</a></li>
+			</ul>
+		</td>
+		<td><ul>
+			<li><a href="https://www.ome-shop.jp/products/detail/70"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/lmg_botle.jpg' }} alt="ロングメディカル系国産ブラックグルー"></a></li>
+			<li>ロングメディカル系国産ブラックグルー</li>
+			<li class="glue-lp-itemlist-btn lmg-btn"><a href="https://www.ome-shop.jp/products/detail/70">購入する</a></li>
+			</ul>
+		</td>
+		<td><ul>
+			<li><a href="https://www.ome-shop.jp/products/detail/177"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/lowglue_botle.jpg' }} alt="ローイリテイション国産グルー"></a></li>
+			<li>ローイリテイション国産グルー</li>
+			<li class="glue-lp-itemlist-btn lg-btn"><a href="https://www.ome-shop.jp/products/detail/177">購入する</a></li>
+			</ul>
+		</td>
+	</tr>
+	</table>
+
+	<div class="tr_sp">
+	<img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/sp-closing-image.jpg' }} alt="" style="margin:0 auto;">
+	<div class="btn">
+	<a href="{{ url('product_list', {'category_id': 100}) }}">国産グルー 一覧へ</a>
+	</div>
+	</div>
+		
+		
+	</div>
+</div>
+{% endblock %}

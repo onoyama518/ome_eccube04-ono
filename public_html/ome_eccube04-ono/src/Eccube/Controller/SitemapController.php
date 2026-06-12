@@ -51,6 +51,11 @@ class SitemapController extends AbstractController
     private $productRepository;
 
     /**
+     * @var RouterInterface
+     */
+    private $router;
+
+    /**
      * @var BaseInfo
      */
     protected $BaseInfo;
@@ -63,12 +68,14 @@ class SitemapController extends AbstractController
         PageRepository $pageRepository,
         ProductListOrderByRepository $productListOrderByRepository,
         ProductRepository $productRepository,
+        RouterInterface $router,
         BaseInfoRepository $baseInfoRepository
     ) {
         $this->categoryRepository = $categoryRepository;
         $this->pageRepository = $pageRepository;
         $this->productListOrderByRepository = $productListOrderByRepository;
         $this->productRepository = $productRepository;
+        $this->router = $router;
         $this->BaseInfo = $baseInfoRepository->get();
     }
 

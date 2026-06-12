@@ -1,38 +1,38 @@
 @import "./variables";
 
-@keyframes fadeIn{
-  0%{
-    opacity: 0;
-    visibility: hidden;
-  }
-  100%{
-    opacity: 1;
-    visibility: visible;
-  }
-}
+// @keyframes fadeIn{
+//   0%{
+//     opacity: 0;
+//     visibility: hidden;
+//   }
+//   100%{
+//     opacity: 1;
+//     visibility: visible;
+//   }
+// }
 
-@keyframes fadeOut{
-  0%{
-    opacity: 1;
-    visibility: visible;
-  }
-  100%{
-    opacity: 0;
-    visibility: hidden;
-  }
-}
+// @keyframes fadeOut{
+//   0%{
+//     opacity: 1;
+//     visibility: visible;
+//   }
+//   100%{
+//     opacity: 0;
+//     visibility: hidden;
+//   }
+// }
 
-@mixin fadeIn($display:block,$time:150ms) {
-  display: $display;
-  opacity: 1;
-  visibility: visible;
-  animation: fadeIn $time linear 0s;
-}
-@mixin fadeOut($time:150ms) {
-  opacity: 0;
-  visibility:hidden;
-  animation: fadeOut $time linear 0s;
-}
+// @mixin fadeIn($display: block, $time: 150ms) {
+//   display: $display;
+//   opacity: 1;
+//   visibility: visible;
+//   animation: fadeIn $time linear 0s;
+// }
+// @mixin fadeOut($time: 150ms) {
+//   opacity: 0;
+//   visibility: hidden;
+//   animation: fadeOut $time linear 0s;
+// }
 
 .bg-load-overlay {
   background: rgba(255, 255, 255, 0.4);

@@ -1,0 +1,35 @@
+@charset "utf-8";
+
+.box60 {
+width: 3em !important;
+height:15px;
+}
+
+.box100 {
+width: 60px;
+height:30px;
+}
+.box120 {
+width: 75px;
+height:30px;
+}
+
+.box200 {
+width: 190px;
+height:15px;
+}
+
+.box300 {
+width: 230px;
+height:15px;
+margin: 5px auto;
+}
+.box380 {
+width: 250px;
+height:500px;
+}
+/*
+.area380 {
+width: 94%;
+}
+*/

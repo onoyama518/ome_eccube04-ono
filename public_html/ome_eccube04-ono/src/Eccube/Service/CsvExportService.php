@@ -260,6 +260,14 @@ class CsvExportService
      */
     public function exportHeader()
     {
+        // 出力バッファリングを開始
+        ob_start();
+
+        // セッションが開始されていない場合は開始する
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        
         if (is_null($this->CsvType) || is_null($this->Csvs)) {
             throw new \LogicException('init csv type incomplete.');
         }
@@ -272,6 +280,9 @@ class CsvExportService
         $this->fopen();
         $this->fputcsv($row);
         $this->fclose();
+
+        // バッファをフラッシュし、出力を送信する
+        ob_end_flush();
     }
 
     /**
@@ -282,6 +293,14 @@ class CsvExportService
      */
     public function exportData(\Closure $closure)
     {
+        // 出力バッファリングを開始
+        ob_start();
+
+        // セッションが開始されていない場合は開始する
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+
         if (is_null($this->qb) || is_null($this->entityManager)) {
             throw new \LogicException('query builder not set.');
         }
@@ -305,6 +324,9 @@ class CsvExportService
         }
 
         $this->fclose();
+
+        // バッファをフラッシュし、出力を送信する
+        ob_end_flush();
     }
 
     /**

@@ -55,7 +55,7 @@ if (!class_exists('\Eccube\Entity\Product')) {
             if (!$this->_calc) {
                 $i = 0;
                 foreach ($this->getProductClasses() as $ProductClass) {
-                    /** @var \Eccube\Entity\ProductClass $ProductClass */
+                    /* @var $ProductClass \Eccube\Entity\ProductClass */
                     // stock_find
                     if ($ProductClass->isVisible() == false) {
                         continue;

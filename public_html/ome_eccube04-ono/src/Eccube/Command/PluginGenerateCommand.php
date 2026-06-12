@@ -13,7 +13,6 @@
 
 namespace Eccube\Command;
 
-use Eccube\Common\EccubeConfig;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Input\InputInterface;
@@ -21,6 +20,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
 class PluginGenerateCommand extends Command
@@ -38,14 +38,14 @@ class PluginGenerateCommand extends Command
     protected $fs;
 
     /**
-     * @var EccubeConfig
+     * @var ContainerInterface
      */
-    protected $eccubeConfig;
+    protected $container;
 
-    public function __construct(EccubeConfig $eccubeConfig)
+    public function __construct(ContainerInterface $container)
     {
         parent::__construct();
-        $this->eccubeConfig = $eccubeConfig;
+        $this->container = $container;
     }
 
     protected function configure()
@@ -108,7 +108,7 @@ class PluginGenerateCommand extends Command
         $this->validateCode($code);
         $this->validateVersion($version);
 
-        $pluginDir = $this->eccubeConfig->get('kernel.project_dir').'/app/Plugin/'.$code;
+        $pluginDir = $this->container->getParameter('kernel.project_dir').'/app/Plugin/'.$code;
 
         $this->createDirectories($pluginDir);
         $this->createConfig($pluginDir, $name, $code, $version);
@@ -136,7 +136,7 @@ class PluginGenerateCommand extends Command
             throw new InvalidArgumentException('The code [a-zA-Z_] is available.');
         }
 
-        $pluginDir = $this->eccubeConfig->get('kernel.project_dir').'/app/Plugin/'.$code;
+        $pluginDir = $this->container->getParameter('kernel.project_dir').'/app/Plugin/'.$code;
         if (file_exists($pluginDir)) {
             throw new InvalidArgumentException('Plugin directory exists.');
         }
@@ -486,19 +486,11 @@ class ConfigRepository extends AbstractRepository
     /**
      * @param int \$id
      *
-     * @return Config
-     *
-     * @throws \Exception
+     * @return null|Config
      */
     public function get(\$id = 1)
     {
-        \$Config = \$this->find(\$id);
-
-        if (null === \$Config) {
-            throw new \Exception('Config not found. id = '.\$id);
-        }
-
-        return \$Config;
+        return \$this->find(\$id);
     }
 }
 

@@ -1,0 +1,372 @@
+.cart-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+}
+
+.cart-modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.cart-modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 550px;
+  padding: 40px;
+  overflow-y: auto;
+  @media (max-width: 768px) {
+    width: 90%;
+    padding: 20px;
+  }
+  .cart-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: relative;
+    h3 {
+      margin: 0;
+      font-size: 26px;
+      margin-bottom: 20px;
+      font-weight: 700;
+      @media screen and (max-width:768px){
+        font-size:22px;
+        padding-right:24px;
+      }
+    }
+    .cart-modal-close {
+      position: absolute;
+      right: -20px;
+      top: -20px;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: #999;
+      &:hover {
+        color: #333;
+      }
+      @media screen and (max-width:768px){
+        right: -10px;
+      top: -10px;
+      }
+    }
+  }
+  .cart-modal-body {
+    .cart-form-container {
+      max-width: 100%;
+      .cart-form {
+        .form-group {
+          display: flex;
+          gap: 20px;
+          align-items: center;
+          margin-bottom: 10px;
+          label {
+            display: block;
+            font-weight: bold;
+            position: relative;
+            white-space: nowrap;
+            &::after {
+              position: absolute;
+              content: ":";
+              right: -13px;
+              font-weight: 900;
+            }
+          }
+          .form-control {
+            width: 100%;
+            height: auto;
+            margin: 0;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: left;
+          }
+        }
+        .review-detail {
+          margin-bottom: 15px;
+          a {
+            color: #997545;
+            text-decoration: none !important;
+          }
+        }
+        .review-jumplink {
+          margin-bottom: 20px;
+          a {
+            color: #997545;
+            border: 1px solid #997545;
+            padding: 5px;
+          }
+        }
+        .quantity-group {
+          margin-bottom: 20px;
+          padding: 8px 15px;
+          background-color: #fff;
+          border-radius: 30px;
+          border: 1px solid #997545;
+          width: fit-content;
+          .quantity-controls {
+            width: 100%;
+            margin: 0 !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            .cart_minus,
+            .cart_plus {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              padding: 5px;
+              border-radius: 50%;
+              width: 30px;
+              height: 30px;
+              font-size: 30px;
+              cursor: pointer;
+              &.not_zero {
+                color: #969696;
+                opacity: 0.4;
+              }
+            }
+            .cart_minus {
+              transform: translateY(-3px);
+            }
+            .quantity-input {
+              border: none;
+              font-size: 20px;
+              text-align: center;
+              padding: 0 !important;
+              width: 40px;
+            }
+          }
+        }
+        .btn-primary {
+          background-color: #997545;
+          color: #f3f3f3;
+          font-size: 20px;
+          border-radius: 4px;
+          font-weight: bold;
+          display: block;
+          width: 80%;
+          height: 74px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+          padding: 16px 16px;
+          transition: all 0.3s;
+          &:hover {
+            opacity: 0.7;
+          }
+        }
+      }
+    }
+  }
+}
+
+.ec-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  display: none;
+  background: rgba(0, 0, 0, 0.5); /* 背景を半透明 */
+}
+
+/* モーダルの中央部分 */
+.ec-modal-wrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 40px; /* パディングを広げて空白を確保 */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  width: 90%;
+  max-width: 550px; /* 最大幅を調整 */
+  text-align: center;
+}
+
+/* モーダル内のコンテンツ */
+.ec-modal-content {
+  position: relative;
+  font-size: 18px; /* 文字を少し大きめに */
+  line-height: 1.6; /* 行間を調整して読みやすく */
+  color: #333; /* 濃い文字色で視認性を向上 */
+}
+#ec-modal-header {
+  font-size: 26px; /* タイトルを大きめに */
+  margin-bottom: 20px;
+  font-weight: bold;
+  color: #333;
+}
+/* ボタンの配置 */
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* ボタン間の空白を広げる */
+  margin-top: 20px; /* ボタン上部の余白を調整 */
+}
+
+/* ボタンの基本スタイル */
+.modal-btn {
+  width: 210px;
+  padding: 12px 30px; /* ボタンを大きめに */
+  border: none;
+  border-radius: 4px;
+  font-size: 18px; /* ボタン内の文字を大きめに */
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* 「買い物を続ける」ボタン */
+#continue-shopping {
+  background-color: #525263;
+  color: #fff;
+  cursor: pointer;
+}
+
+#continue-shopping:hover {
+  opacity: 0.8;
+}
+
+/* 「カートに移動する」ボタン */
+#go-to-cart {
+  background-color: #ff8b3b;
+  color: #fff;
+  cursor: pointer;
+}
+
+#go-to-cart:hover {
+  opacity: 0.8;
+}
+
+/* 「最近見た商品」のセクション */
+.recently-viewed {
+  margin-top: 30px; /* 上部余白を調整 */
+  text-align: center;
+}
+
+/* 「最近見た商品」のタイトル */
+.recently-viewed h3 {
+  font-size: 20px; /* タイトルを大きめに */
+  margin-bottom: 20px;
+  font-weight: bold;
+  color: #333; /* タイトルの文字色を濃く */
+}
+
+/* 商品リスト全体 */
+.recommend-carousel {
+  display: flex;
+  justify-content: center; /* 商品を中央揃え */
+  gap: 30px; /* 商品間の間隔を広げる */
+  padding: 20px 0; /* 上下の余白を追加 */
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* 商品1つ分のスタイル */
+.recommend-carousel ul li {
+  flex: 1;
+  max-width: 150px; /* 商品の幅を調整 */
+  text-align: center;
+  font-weight: bold;
+}
+
+/* 商品画像のスタイル */
+.recommend-carousel ul li img {
+  width: 100%; /* 画像を親要素の幅に合わせる */
+  height: auto;
+  display: block;
+  margin: 0 auto 10px; /* 下部に余白を追加 */
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* 商品名のスタイル */
+.recommend-item-text {
+  font-size: 13px; /* 商品名を大きめに */
+  color: #333;
+  margin-top: 10px;
+  line-height: 1.4;
+  white-space: normal; /* 商品名を折り返し可能に */
+  overflow: hidden; /* テキストオーバーフローを隠す */
+  text-align: center;
+  font-weight: bold;
+}
+
+/* 閉じるボタン */
+.ec-modal-close {
+  margin-top: 30px; /* 上部に余白を追加 */
+  padding: 12px 30px; /* 閉じるボタンを大きめに */
+  background: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 18px; /* ボタンの文字サイズを拡大 */
+  cursor: pointer;
+}
+
+.ec-modal-close:hover {
+  background: #5a6268;
+}
+.br_recent_sp {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .modal-btn {
+    padding: 12px 30px; /* ボタンを大きめに */
+    border: none;
+    border-radius: 4px;
+    font-size: 14px; /* ボタン内の文字を大きめに */
+    cursor: pointer;
+    font-weight: bold;
+  }
+  #ec-modal-header {
+    font-size: 20px; /* タイトルを大きめに */
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: #333;
+  }
+  .recommend-carousel {
+    padding: 0 !important;
+    gap: 15px;
+  }
+  .recommend-carousel li {
+    max-width: 150px !important;
+    width: 33%;
+  }
+  .recent_item_thumb {
+    max-width: 150px !important;
+  }
+  .recommend-item-text {
+    font-size: 12px;
+  }
+  .all_delete {
+    display: none;
+  }
+  .br_recent_sp {
+    display: block;
+  }
+  .ec-modal-wrap {
+    width: 80%;
+    padding: 20px;
+  }
+}

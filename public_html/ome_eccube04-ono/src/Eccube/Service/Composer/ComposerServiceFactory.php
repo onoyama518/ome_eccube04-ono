@@ -13,7 +13,7 @@
 
 namespace Eccube\Service\Composer;
 
-use Psr\Container\ContainerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class ComposerServiceFactory
 {

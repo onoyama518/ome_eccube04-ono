@@ -16,17 +16,7 @@ file that was distributed with this source code.
 
 {% block stylesheet %}
     <style>
-        #product_review_recommend_level {
-            display: flex;
-            flex-direction: column;
-            flex-wrap: wrap;
-        }
-        #product_review_recommend_level label {
-            position: relative;
-            bottom: 18px;
-            left: 20px;
-            line-height: 0;
-        }
+        
     </style>
 {% endblock %}
 
@@ -39,6 +29,7 @@ file that was distributed with this source code.
             <div class="ec-off1Grid__cell">
                 <form method="post" action="{{ url('product_review_index', { id: Product.id }) }}">
                     {{ form_widget(form._token) }}
+                 
                     <p class="ec-para-nomal">{{ 'product_review.front.review.description'|trans }}</p>
                     <div class="ec-borderedDefs">
                         {# 商品名 #}
@@ -59,8 +50,8 @@ file that was distributed with this source code.
                             </dt>
                             <dd>
                                 <div class="ec-input{{ has_errors(form.reviewer_name) ? ' error' }}">
-                                    {{ form_widget(form.reviewer_name) }}
-                                    {{ form_errors(form.reviewer_name) }}
+                                    {{ form_widget(form.reviewer_name, {'attr': {'data-label': '投稿者名'}}) }}
+                                    <div class="attention">{{ form_errors(form.reviewer_name) }}</div>
                                 </div>
                             </dd>
                         </dl>
@@ -71,8 +62,8 @@ file that was distributed with this source code.
                             </dt>
                             <dd>
                                 <div class="ec-input{{ has_errors(form.reviewer_url) ? ' error' }}">
-                                    {{ form_widget(form.reviewer_url) }}
-                                    {{ form_errors(form.reviewer_url) }}
+                                    {{ form_widget(form.reviewer_url, {'attr': {'data-label': '投稿者URL'}}) }}
+                                    <div class="attention">{{ form_errors(form.reviewer_url) }}</div>
                                 </div>
                             </dd>
                         </dl>
@@ -83,8 +74,8 @@ file that was distributed with this source code.
                             </dt>
                             <dd>
                                 <div class="ec-radio{{ has_errors(form.sex) ? ' error' }}">
-                                    {{ form_widget(form.sex) }}
-                                    {{ form_errors(form.sex) }}
+                                    {{ form_widget(form.sex, {'attr': {'data-label': '性別'}}) }}
+                                    <div class="attention">{{ form_errors(form.sex) }}</div>
                                 </div>
                             </dd>
                         </dl>
@@ -95,8 +86,8 @@ file that was distributed with this source code.
                             </dt>
                             <dd>
                                 <div class="ec-radio{{ has_errors(form.recommend_level) ? ' error' }}">
-                                    {{ form_widget(form.recommend_level) }}
-                                    {{ form_errors(form.recommend_level) }}
+                                    {{ form_widget(form.recommend_level, {'attr': {'data-label': 'おすすめレベル'}}) }}
+                                    <div class="attention">{{ form_errors(form.recommend_level) }}</div>
                                 </div>
                             </dd>
                         </dl>
@@ -107,8 +98,8 @@ file that was distributed with this source code.
                             </dt>
                             <dd>
                                 <div class="ec-input{{ has_errors(form.title) ? ' error' }}">
-                                    {{ form_widget(form.title) }}
-                                    {{ form_errors(form.title) }}
+                                    {{ form_widget(form.title, {'attr': {'data-label': 'タイトル'}}) }}
+                                    <div class="attention">{{ form_errors(form.title) }}</div>
                                 </div>
                             </dd>
                         </dl>
@@ -119,8 +110,8 @@ file that was distributed with this source code.
                             </dt>
                             <dd>
                                 <div class="ec-input{{ has_errors(form.comment) ? ' error' }}">
-                                    {{ form_widget(form.comment) }}
-                                    {{ form_errors(form.comment) }}
+                                    {{ form_widget(form.comment, {'attr': {'data-label': 'コメント'}}) }}
+                                    <div class="attention">{{ form_errors(form.comment) }}</div>
                                 </div>
                             </dd>
                         </dl>

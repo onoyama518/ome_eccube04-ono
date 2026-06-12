@@ -1,0 +1,261 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+
+
+
+<!--▼HEADER-->
+
+
+<div class="on_header_text">
+  <p>
+    14時までのご注文で即日発送（土日祝は除く）<br/>7,000円（税込）以上で送料・代引き手数料無料
+  </p>
+</div>
+<div id="head-renew">
+  <div class="head-container">
+    <div class="logo">
+      <a href="{{ url('homepage') }}">
+        <picture>
+          <source
+            media="(max-width: 768px)"
+            srcset="{{ asset('assets/img/renewal_top/header/logo-sp.webp') }}"
+          >
+          <img
+            alt="まつげエクステ(マツエク)商材の企画・開発・卸 omeエンタープライズ"
+            src="{{ asset('assets/img/renewal_top/header/logo.webp') }}"
+          />
+        </picture>
+      </a>
+    </div>
+    <div id="menu-navi" class="menu-navi-renew">
+      <ul class="nav">
+        <li class="cat-hover-container">
+          <span class="cat-hover">
+            <a href="{{ url('product_list', {'category_id': 99}) }}">まつげエクステ<i class="icon fa-solid fa-angle-down"></i></a>
+          </span>
+          <div class="cat-open">
+            <div class="renew-cat-open-container">
+              <div class="cat-thumb-area">
+                <img
+                  src="{{ asset('assets/img_2018/top/ome_logo.webp') }}"
+                  class="change_image"
+                  alt="商品イメージ"
+                />
+              </div>
+              <nav class="renew_category-list">
+                <ul class="renew_category-column renew_category-column-sub">
+                  <li class="glue"><a href="{{ url('product_list', {'category_id': 100}) }}">国産グルー</a></li>
+                  <li class="extension"><a href="{{ url('product_list', {'category_id': 101}) }}">エクステンション</a></li>
+                  <li class="japan-lash sub-category"><a href="{{ url('product_list', {'category_id': 102}) }}">シングル・ボリューム</a></li>
+                  <li class="flat-lash sub-category"><a href="{{ url('product_list', {'category_id': 103}) }}">フラットラッシュ</a></li>
+                  <li class="color-lash sub-category"><a href="{{ url('product_list', {'category_id': 104}) }}">カラーラッシュ</a></li>
+                </ul>
+                <ul class="renew_category-column">
+                  <li class="pre-treatment"><a href="{{ url('product_list', {'category_id': 105}) }}">前処理</a></li>
+                  <li class="remover"><a href="{{ url('product_list', {'category_id': 106}) }}">リムーバー</a></li>
+                  <li class="tweezer"><a href="{{ url('product_list', {'category_id': 107}) }}">ツイーザー</a></li>
+                  <li class="treatment"><a href="{{ url('product_list', {'category_id': 9}) }}">トリートメント</a></li>
+                </ul>
+                <ul class="renew_category-column">
+                  <li class="tool"><a href="{{ url('product_list', {'category_id': 109}) }}">施術ツール・テープ</a></li>
+                  <li class="outlet"><a href="{{ url('product_list', {'category_id': 110}) }}">アウトレット</a></li>
+                </ul>
+              </nav>
+              <div class="renew_category-banner-area">
+                <div class="renew_category-banner">
+                  <a href="/user_data/tweezer_lp">
+                    <img src="{{ asset('assets/img/renewal_top/header/tweezer.webp') }}" alt="国産ツイーザー 特設ページ">
+                    <p class="renew_category-banner-text">国産ツイーザー 特設ページ</p>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="cat-hover-container">
+          <span class="cat-hover">
+            <a href="{{ url('product_list', {'category_id': 92}) }}">ラッシュリフト<i class="icon fa-solid fa-angle-down"></i></a>
+          </span>
+          <div class="cat-open cat-open-lift">
+            <div class="renew-cat-open-container">
+              <div class="cat-thumb-area">
+                <img
+                  src="{{ asset('assets/img_2018/top/ome_logo.webp') }}"
+                  class="change_image"
+                  alt="商品イメージ"
+                />
+              </div>
+              <nav class="renew_category-list">
+                <ul class="renew_category-column">
+                  <li class="all-lash-lift"><a href="{{ url('product_list', {'category_id': 92}) }}">ラッシュリフトの全て</a></li>
+                  <li class="lash-lift-cream"><a href="{{ url('product_list', {'category_id': 93}) }}">ラッシュリフト剤</a></li>
+                  <li class="lash-lift-glue"><a href="{{ url('product_list', {'category_id': 111}) }}">ラッシュリフトグルー</a></li>
+                </ul>
+                <ul class="renew_category-column">
+                  <li class="middle-after-treatment"><a href="{{ url('product_list', {'category_id': 112}) }}">中間・後処理</a></li>
+                  <li class="lash-treatment"><a href="{{ url('product_list', {'category_id': 9}) }}">トリートメント</a></li>
+                </ul>
+              </nav>
+              <div class="renew_category-banner-area">
+                <div class="renew_category-banner">
+                  <a href="/user_data/bringup-lp">
+                    <img src="{{ asset('assets/img/renewal_top/header/blingup.webp') }}" alt="Bring Up 特設ページ ">
+                    <p class="renew_category-banner-text">Bring Up 特設ページ</p>
+                  </a>
+                </div>
+                <div class="renew_category-banner">
+                  <a href="/user_data/keratin_amino_contents">
+                    <img src="{{ asset('assets/img/renewal_top/header/treatment.webp') }}" alt="トリートメント 特設ページ">
+                    <p class="renew_category-banner-text">トリートメント 特設ページ</p>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="cat-hover-container">
+        <span class="cat-hover">
+            <a href="{{ url('product_list', {'category_id': 7}) }}">店販コスメ<i class="icon fa-solid fa-angle-down"></i></a>
+          </span>
+          <div class="cat-open cat-open-cosmetic">
+            <div class="renew-cat-open-container">
+              <div class="cat-thumb-area">
+                <img
+                  src="{{ asset('assets/img_2018/top/ome_logo.webp') }}"
+                  class="change_image"
+                  alt="商品イメージ"
+                />
+              </div>
+              <nav class="renew_category-list">
+                <ul class="renew_category-column">
+                  <li class="all-cosmetic"><a href="{{ url('product_list', {'category_id': 7}) }}">店販コスメの全て</a></li>
+                  <li class="ac-mascara"><a href="{{ url('product_list', {'category_id': 113}) }}">マスカラ</a></li>
+                  <li class="ac-eyeliner"><a href="{{ url('product_list', {'category_id': 114}) }}">アイライナー</a></li>
+                  <li class="ac-cleansing"><a href="{{ url('product_list', {'category_id': 115}) }}">クレンジング</a></li>
+                </ul>
+                <ul class="renew_category-column">
+                  <li class="eyelid-serum"><a href="{{ url('product_list', {'category_id': 94}) }}">まつげ美容液</a></li>
+                  <li class="all-ac"><a href="{{ url('product_list', {'category_id': 116}) }}">ACの全て</a></li>
+                </ul>
+              </nav>
+              <div class="renew_category-banner-area">
+                <div class="renew_category-banner">
+                  <a href="/user_data/ac-mascara-lp">
+                    <img src="{{ asset('assets/img/renewal_top/header/ac-mascara.webp') }}" alt="ACマスカラ 特設ページ">
+                    <p class="renew_category-banner-text">ACマスカラ 特設ページ</p>
+                  </a>
+                </div>
+                <div class="renew_category-banner">
+                  <a href="/user_data/ac-eyeliner-lp">
+                    <img src="{{ asset('assets/img/renewal_top/header/ac-eyeliner.webp') }}" alt="ACアイライナー 特設ページ">
+                    <p class="renew_category-banner-text">ACアイライナー 特設ページ</p>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="cat-hover-container">
+          <a href="/user_data/ledex-subsc">LEDエクステ</a>
+        </li>
+      </ul>
+    </div>
+    <div class="header-info">
+      <div id="searchbar">{{ render(path('block_search_product')) }}</div>
+  
+      <ul class="header-right">
+      {# マイページ #}
+        <li class="head-icon head-icon-mypage">
+          <a href="{{ url('mypage') }}">
+            <span class="user_ico"
+              ><img src="{{ asset('assets/img/renewal_top/header/mypage.svg') }}" alt="マイページ" width="24" height="24" decoding="async"
+            /></span>
+          </a>
+        </li>
+        {# カート #}
+        <li class="head-icon head-icon-cart">
+          <a href="{{ url('cart') }}">
+            <span class="user_ico"
+              ><img src="{{ asset('assets/img/renewal_top/header/cart.svg') }}" alt="カート" width="24" height="24" decoding="async"
+            /></span>
+          </a>
+        </li>
+        {# ご利用ガイド #}
+        <li class="head-icon head-icon-guide">
+          <a  href="/user_data/shoppingGuide">
+            <span class="cart_ico"
+              ><img src="{{ asset('assets/img/renewal_top/header/guide.svg') }}" alt="ご利用ガイド" width="34" height="24" decoding="async"
+            /></span>
+          </a>
+        </li>
+        {# お問い合わせ #}
+        <li class="head-icon head-icon-contact">
+          <a  href="{{ url('contact') }}">
+            <span class="cart_ico"
+              ><img src="{{ asset('assets/img/renewal_top/header/mail.svg') }}" alt="お問い合わせ" width="34" height="24" decoding="async"
+            /></span>
+          </a>
+        </li>
+        <div id="top-cart">
+          <div class="head-tel">
+            <span class="tel_ico">
+              <a href="tel:0120-965-583">
+                <img src="{{ asset('assets/img/tel_icon.svg') }}" alt="電話番号"/>
+              </a>
+            </span>
+            <a href="tel:0120-965-583" class="tel_number">0120-965-583<span class="time">平日10:00〜18:00</span></a>
+          </div>
+        </div>
+        {# 電話 #}
+      </ul>
+      
+    </div>
+    <a class="down-arrow" id="open-footer-menu">
+      <div class="down-arrow-open">
+        <img src="{{ asset('assets/img/search_icon.svg') }}" alt="メニューを開く" />
+        <p class="down-arrow-text">商品を探す</p>
+      </div>
+      <div class="down-arrow-close">
+        <span></span><span></span>
+      </div>
+	  </a>
+  </div>
+</div>
+
+<script>
+  $(function () {
+    var $onHeaderText = $('.on_header_text');
+    var $headRenew = $('#head-renew');
+
+    var updateHeaderState = function () {
+      var scrollTop = $(window).scrollTop();
+
+      // .on_header_text をスクロールしたら非表示
+      if (scrollTop > 0) {
+        $onHeaderText.addClass('hidden_text');
+      } else {
+        $onHeaderText.removeClass('hidden_text');
+      }
+
+      // 100pxスクロールしたら #head-renew の top を 0 に変更
+      if (scrollTop > 0) {
+        $headRenew.addClass('adjusted');
+      } else {
+        $headRenew.removeClass('adjusted');
+      }
+    };
+
+    // スクロール時に更新
+    $(window).on('scroll', updateHeaderState);
+    // 初回ロード時に状態を反映（ページ内リンクやリロードで既にスクロール位置がある場合に対応）
+    updateHeaderState();
+  });
+</script>

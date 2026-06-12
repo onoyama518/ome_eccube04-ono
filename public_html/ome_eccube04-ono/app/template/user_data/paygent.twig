@@ -1,0 +1,115 @@
+{% extends 'default_frame.twig' %}
+
+{% block main %}
+
+    <div id="main_middle">
+        <div class="ec-role" id="undercolumn">
+            <div class="ec-rectHeading">
+                <h2 class="title" style="text-align: center;">ペイジェント クレジット</h2>
+            </div>
+            <div id="undercolumn_contact" style="margin:0 auto;" class="paygent_page_style">
+                <form name="credit_payment" method="post">
+                    <input type="hidden"  id="credit_payment__token" name="credit_payment[_token]" value="6c8aa925afdf1d435b7.UkgFlSaW386hBFkG-gSEtvPZFP6dqXk-1ud11ptV6uw.JX423muvl4vHZwpznFXjm5aXWczT3wh5ubJB5_c6h4sxLn38c9Cpp_tRMg" />
+                    <table class="ec-borderedDefs">
+                        <tr>
+                            <th>
+                                <label class="ec-label">支払い回数</label>
+                            </th>
+                            <td class="ec-select">
+                                            <select  id="credit_payment_payment_class" name="credit_payment[payment_class]"><option value="10">一括払い</option><option value="61-2">分割2回払い</option><option value="61-3">分割3回払い</option><option value="61-6">分割6回払い</option><option value="61-10">分割10回払い</option><option value="61-15">分割15回払い</option><option value="61-20">分割20回払い</option></select>
+        
+                                <span style="color:red">  </span>
+                            </td>
+                        </tr>
+                        <div id="clear_target">
+                            <tr id="card_no">
+                                <th>
+                                    <label class="ec-label">カード番号</label>
+                                </th>
+                                <td>
+                                    <span style="color:red">
+                                        
+                                    </span>
+                                    <div id="card_input_form" class="g-1  d-flex d-md-inline-flex flex-nowrap flex-fill flex-md-row align-items-center">
+                                        <div class="col-md-auto flex-fill">
+                                            <input type="text"  id="credit_payment_card_no" name="credit_payment[card_no]" minlength="0" maxlength="16" autocomplete="off" size="20" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <p>
+                                        <span style="color:red; margin-top: 10px;">
+                                            ご本人名義のカードをご使用ください。<br>
+                                        </span>
+                                        半角入力(例：1234567890123456)<br>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr id="security_code">
+                                <th>
+                                    <label class="ec-label">セキュリティコード</label>
+                                </th>
+                                <td class='ec-input'>
+                                    <input type="text"  id="credit_payment_security_code" name="credit_payment[security_code]" maxlength="4" autocomplete="off" class="form-control" />
+                                </td>
+                            </tr>
+                            <tr id="valid_term">
+                                <th>
+                                    <label class="ec-label">有効期限</label>
+                                </th>
+                                <td>
+                                    <div class="d-flex">
+                                        <div class="ec-select">
+                                                        <select  id="credit_payment_card_month" name="credit_payment[card_month]"><option value=""></option><option value="01">01</option><option value="02">02</option><option value="03">03</option><option value="04">04</option><option value="05">05</option><option value="06">06</option><option value="07">07</option><option value="08">08</option><option value="09">09</option><option value="10">10</option><option value="11">11</option><option value="12">12</option></select>
+                                                        月 / 
+                                        </div>
+                                        <div class="ec-select">
+                                                        <select  id="credit_payment_card_year" name="credit_payment[card_year]"><option value=""></option><option value="24">24</option><option value="25">25</option><option value="26">26</option><option value="27">27</option><option value="28">28</option><option value="29">29</option><option value="30">30</option><option value="31">31</option><option value="32">32</option><option value="33">33</option><option value="34">34</option><option value="35">35</option><option value="36">36</option><option value="37">37</option><option value="38">38</option><option value="39">39</option></select>
+                                                        年
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr id="credit_name">
+                                <th>
+                                    <label class="ec-label">
+                                        カード名義<br>
+                                        (ローマ字)
+                                    </label>
+                                </th>
+                                <td>
+                                    <span style="color:red">
+                                    </span>
+                                    <div class="ec-halfInput">
+                                        <input type="text"  id="credit_payment_card_name01" name="credit_payment[card_name01]" maxlength="24" placeholder="名" />
+                                        <input type="text"  id="credit_payment_card_name02" name="credit_payment[card_name02]" maxlength="25" placeholder="姓" />
+                                    </div>
+                                    <span>
+                                        (例: TARO YAMADA)
+                                    </span>
+                                </td>
+                            </tr>
+                        </div>
+                    </table>
+                    <div style="margin-top:10px; line-height:1.3em;">
+                        以上の内容で間違いなければ、下記「ご注文完了ページへ」ボタンをクリックしてください。<br>
+                        ※3Dセキュアをご利用の場合は認証画面に進む場合がございます。<br>
+                        <span style="color:red">
+                            ※画面が切り替るまで少々時間がかかる場合がございますが、そのままお待ちください。
+                        </span>
+                        <hr style="background:#ccc; border:0; border-top:dotted 1px;">
+                    </div>
+                    
+                    <div class="row justify-content-center btn_area" style="margin-bottom:50px">
+                        <div class="col-sm-offset-2 col-sm-4">
+                            <p><a href="https://www.ome-shop.jp/paygent_payment/payment_credit/back" class="ec-blockBtn--cancel" id="paygentPaymentBack">戻る</a></p>
+                        </div>
+                        <div class="col-sm-4">
+                            <p><button onclick="callCreateToken();return false" type="submit" class="ec-blockBtn--action">ご注文完了ページへ</button></p>
+                        </div>
+                    </div>
+                    <input type="hidden"  id="credit_payment_delete_card" name="credit_payment[delete_card]" /><input type="hidden"  id="credit_payment_card_token" name="credit_payment[card_token]" /><input type="hidden"  id="credit_payment_card_token_stock" name="credit_payment[card_token_stock]" />
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

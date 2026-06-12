@@ -17,6 +17,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Eccube\Entity\ItemHolderInterface;
 use Eccube\Entity\ItemInterface;
 use Eccube\Entity\Order;
+use Eccube\Entity\OrderItem;
 
 class PurchaseFlow
 {
@@ -225,14 +226,14 @@ class PurchaseFlow
         }
     }
 
-    public function addPurchaseProcessor(PurchaseProcessor $purchaseProcessor)
+    public function addPurchaseProcessor(PurchaseProcessor $processor)
     {
-        $this->purchaseProcessors[] = $purchaseProcessor;
+        $this->purchaseProcessors[] = $processor;
     }
 
-    public function addItemHolderPreprocessor(ItemHolderPreprocessor $itemHolderPreprocessor)
+    public function addItemHolderPreprocessor(ItemHolderPreprocessor $holderPreprocessor)
     {
-        $this->itemHolderPreprocessors[] = $itemHolderPreprocessor;
+        $this->itemHolderPreprocessors[] = $holderPreprocessor;
     }
 
     public function addItemPreprocessor(ItemPreprocessor $itemPreprocessor)
@@ -250,9 +251,9 @@ class PurchaseFlow
         $this->itemHolderValidators[] = $itemHolderValidator;
     }
 
-    public function addItemHolderPostValidator(ItemHolderPostValidator $itemHolderPostValidator)
+    public function addItemHolderPostValidator(ItemHolderPostValidator $itemHolderValidator)
     {
-        $this->itemHolderPostValidators[] = $itemHolderPostValidator;
+        $this->itemHolderPostValidators[] = $itemHolderValidator;
     }
 
     public function addDiscountProcessor(DiscountProcessor $discountProcessor)
@@ -345,18 +346,16 @@ class PurchaseFlow
      */
     protected function calculateTax(ItemHolderInterface $itemHolder)
     {
-        if ($itemHolder instanceof Order) {
-            $total = array_reduce($itemHolder->getTaxByTaxRate(), function ($sum, $tax) {
-                return $sum + $tax;
-            }, 0);
-        } else {
-            $total = $itemHolder->getItems()
-                ->reduce(function ($sum, ItemInterface $item) {
+        $total = $itemHolder->getItems()
+            ->reduce(function ($sum, ItemInterface $item) {
+                if ($item instanceof OrderItem) {
+                    $sum += $item->getTax() * $item->getQuantity();
+                } else {
                     $sum += ($item->getPriceIncTax() - $item->getPrice()) * $item->getQuantity();
+                }
 
-                    return $sum;
-                }, 0);
-        }
+                return $sum;
+            }, 0);
         $itemHolder->setTax($total);
     }
 
@@ -384,7 +383,7 @@ class PurchaseFlow
             return get_class($processor);
         };
         $flows = [
-            0 => $this->flowType . ' flow',
+            0 => $this->flowType.' flow',
             'ItemValidator' => $this->itemValidators->map($callback)->toArray(),
             'ItemHolderValidator' => $this->itemHolderValidators->map($callback)->toArray(),
             'ItemPreprocessor' => $this->itemPreprocessors->map($callback)->toArray(),
@@ -401,9 +400,9 @@ class PurchaseFlow
         $out = '';
         foreach ($tree as $key => $value) {
             if (is_numeric($key)) {
-                $out .= $value . PHP_EOL;
+                $out .= $value.PHP_EOL;
             } else {
-                $out .= $key . PHP_EOL;
+                $out .= $key.PHP_EOL;
             }
         }
 

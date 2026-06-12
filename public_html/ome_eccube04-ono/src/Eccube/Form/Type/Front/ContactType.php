@@ -23,6 +23,7 @@ use Eccube\Form\Validator\Email;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -49,11 +50,30 @@ class ContactType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('company_name', TextType::class, [
+                'required' => true,
+                'constraints' => [
+                    new Assert\NotBlank(),
+                    new Assert\Length(['min' => 1, 'max' => 100]),
+                    // 不正文字・禁止語・URL・スクリプトタグの入力制限
+                    new Assert\Regex([
+                        'pattern' => '/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/',
+                        'message' => '不正な文字が含まれています。',
+                        'match' => false,
+                    ]),
+                    new Assert\Regex([
+                        'pattern' => '/\s*<iframe|iframe|\s*<object|object|\s*<embed|embed|<script|script|javascript:|vbscript:|onload=|onclick=|eval\(|document\.|window\./i',
+                        'message' => '不正なHTMLタグまたはスクリプトが含まれています。',
+                        'match' => false,
+                    ]),
+                    
+                ],
+            ])
             ->add('name', NameType::class, [
                 'required' => true,
             ])
             ->add('kana', KanaType::class, [
-                'required' => false,
+                'required' => true,
             ])
             ->add('postal_code', PostalType::class, [
                 'required' => false,
@@ -67,15 +87,37 @@ class ContactType extends AbstractType
             ->add('email', EmailType::class, [
                 'constraints' => [
                     new Assert\NotBlank(),
+                    new Assert\Length(['min' => 1, 'max' => 254]),
                     new Email(null, null, $this->eccubeConfig['eccube_rfc_email_check'] ? 'strict' : null),
+                    // 不正文字・禁止語・URL・スクリプトタグの入力制限
+                    new Assert\Regex([
+                        'pattern' => '/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/',
+                        'message' => '不正な文字が含まれています。',
+                        'match' => false,
+                    ]),
+                    new Assert\Regex([
+                        'pattern' => '/\s*<iframe|iframe|\s*<object|object|\s*<embed|embed|<script|script|javascript:|vbscript:|onload=|onclick=|eval\(|document\.|window\./i',
+                        'message' => '不正なHTMLタグまたはスクリプトが含まれています。',
+                        'match' => false,
+                    ]),
                 ],
             ])
+            // お問い合わせ内容（2000字以下）
             ->add('contents', TextareaType::class, [
                 'constraints' => [
                     new Assert\NotBlank(),
-                    new Assert\Length([
-                        'max' => $this->eccubeConfig['eccube_lltext_len'],
-                    ])
+                    new Assert\Length(['max' => $this->eccubeConfig['eccube_lltext_len']]),
+                    // 不正文字・禁止語・URL・スクリプトタグの入力制限
+                    new Assert\Regex([
+                        'pattern' => '/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/',
+                        'message' => '不正な文字が含まれています。',
+                        'match' => false,
+                    ]),
+                    new Assert\Regex([
+                        'pattern' => '/\s*<iframe|iframe|\s*<object|object|\s*<embed|embed|<script|script|javascript:|vbscript:|onload=|onclick=|eval\(|document\.|window\./i',
+                        'message' => '不正なHTMLタグまたはスクリプトが含まれています。',
+                        'match' => false,
+                    ]),
                 ],
             ]);
     }

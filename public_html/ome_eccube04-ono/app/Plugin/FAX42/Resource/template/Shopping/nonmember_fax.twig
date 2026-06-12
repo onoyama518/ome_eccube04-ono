@@ -1,0 +1,16 @@
+<dl id="row-fax" style="display: none">
+	<dt>
+		{{ form_label(form.fax, 'common.fax', { 'label_attr': { 'class': 'ec-label' }}) }}
+	</dt>
+	<td>
+		<div class="ec-telInput{{ has_errors(form.fax) ? ' error' }}">
+			{{ form_widget(form.fax) }}
+			{{ form_errors(form.fax) }}
+			asxhicwciw
+		</div>
+	</td>
+</dl>
+
+<script>
+	move_row_from_to("#    {{ form.fax.vars.id }}", "#    {{ form.phone_number.vars.id }}", 'dl')
+</script>

@@ -1,9 +1,9 @@
-@import url('../../../../../node_modules/normalize.css/normalize.css');
+@import url("../../../../../node_modules/normalize.css/normalize.css");
 @import "mixins/variables";
 @import "../../../../../node_modules/bootstrap/scss/bootstrap";
 
 body {
-  color:#525263;
+  color: #525263;
   transition: z-index 0ms 5.28455ms;
   background: #f6f6f6;
   margin: 0;

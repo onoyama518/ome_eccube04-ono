@@ -1,0 +1,38 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% extends 'default_frame.twig' %}
+{% block stylesheet %}
+	<link rel="preload" href="{{ asset('assets/css/contact_renewal.css') }}" as="style">
+	<link rel="stylesheet" href="{{ asset('assets/css/contact_renewal.css') }}">
+{% endblock %}
+{% block main %}
+	<div id="lp-wrap" class="page_contact_renewal">
+		<div id="undercolumn">
+			<h2 class="title contact_complete_title" style="text-align: center;"><span class="en_sub">CONTACT</span>{{ 'お問い合わせ(完了)'|trans }}</h2>
+			<div id="undercolumn_contact">
+				<div class="renewal_contact_complete">
+					<p class="renewal_contact_complete_message">{{ 'お問い合わせ内容の送信が<br class="only_sp"/>完了いたしました。'|trans|raw }}</p>
+					<p class="renewal_contact_complete_text">
+						{{ '万一、ご回答メールが届かない場合は、<br class="only_sp"/>トラブルの可能性もありますので<br />大変お手数ではございますが<br class="only_sp"/>もう一度お問い合わせいただくか、<br class="only_sp"/>お電話にてお問い合わせください。<br />今後ともご愛顧賜りますよう<br class="only_sp"/>よろしくお願い申し上げます。'|trans|raw }}
+					</p>
+					<div class="shop_information">
+						<p class="name">omeエンタープライズ</p>
+						<a href="tel:0120-965-583" class="phone-link">TEL:0120-965-583</a>
+            <a href="mailto:info@ome-shouzai.com" class="email-link">E-MAIL:info@ome-shouzai.com</a>
+					</div>
+					<div class="renewal_contact_submit">
+						<a href="{{url('homepage')}}" class="button-to-top">TOPへ</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

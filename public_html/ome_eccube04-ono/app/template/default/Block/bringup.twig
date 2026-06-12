@@ -1,0 +1,254 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+<script>
+	// アコーディオン
+	$(document).ready(function () {
+		$('.bl_accordionTitle.active').next().show();
+		$(".bl_accordionTitle").on("click", function () {
+			$(this).next().slideToggle();
+			$(this).toggleClass("active");
+			$('.bl_accordionTitle').not($(this)).next().slideUp();
+			$('.bl_accordionTitle.active').not($(this)).removeClass("active");
+		});
+	});
+
+// フェードイン
+$(function () {
+    $(window).scroll(function () {
+        const wHeight = $(window).height();
+        const scrollAmount = $(window).scrollTop();
+        $('.scrollanime').each(function () {
+            const targetPosition = $(this).offset().top;
+            if(scrollAmount > targetPosition - wHeight + 60) {
+                $(this).addClass("fadeInDown");
+            }
+        });
+    });
+});
+
+//ウィンドウの高さを取得する
+var window_h = $(window).height();
+
+//スクロールイベント
+$(window).on("scroll", function() {
+  
+  //スクロールの位置を取得する
+  var scroll_top = $(window).scrollTop();
+ 
+  $(".left-fedeIn-box").each(function() {
+    //各box要素のtopの位置を取得する
+    var elem_pos = $(this).offset().top;
+    
+    //どのタイミングでフェードインさせるか
+    if (scroll_top >= elem_pos - window_h + 200) {
+      $(this).addClass("left-fadeIn");　//特定の位置を超えたらクラスを追加
+    } else {
+      $(this).removeClass("left-fadeIn"); //そうでない場合はクラスを削除
+    }
+  });
+});
+</script>
+	
+<!--font-->
+<link rel="stylesheet" href="https://use.typekit.net/lpe7rro.css">
+	
+<div class="bringup-lp" id="app">
+
+<nav class="bu-lp-navi">
+<a href="#bu-story">STORY</a>
+<a href="#bu-about">MOVIE</a>
+<a href="#bu-setting">Setting Cream</a>
+<a href="#bu-styling">Styling Cream</a>
+<a href="#bu-question">FAQ</a>
+<a href="#bu-closing">PRODUCTS</a>
+</nav>
+
+<div class="c-text-top">
+  <div class="c-text__item-right--left">BringUp</div>
+  <div class="c-text__item-right--left">BringUp</div>
+  <div class="c-text__item-right--left">BringUp</div>
+  <div class="c-text__item-right--left">BringUp</div>
+  <div class="c-text__item-right--left">BringUp</div>
+  <div class="c-text__item-right--left">BringUp</div>
+</div>
+<div class="c-text-bottom">
+  <div class="c-text__item-left--right">BRINGUP</div>
+  <div class="c-text__item-left--right">BRINGUP</div>
+  <div class="c-text__item-left--right">BRINGUP</div>
+  <div class="c-text__item-left--right">BRINGUP</div>
+  <div class="c-text__item-left--right">BRINGUP</div>
+  <div class="c-text__item-left--right">BRINGUP</div>
+</div>
+
+</div>
+
+	<div class="bringup-lp-inner">
+		<div class="bringup-lp-key-visual">
+			<h2 class="c-gara">LASHLIFT BRAND</h2>
+			{# <!--<img src="{{ asset('assets/img_2018/lp/bringup-lp-keyvisual.webp') }" alt="ラッシュリフトブランド ブリングアップ">--> #}
+		</div>
+		<section id="bu-story">
+			<div class="toumei">
+				<div class="bu-story-inner">
+				    <h2 class="bu-title-h2 c-gara scrollanime downup">STORY</h2>
+				    <p class="scrollanime downup">日々の生活をさらに楽しく、<br>
+					そしてナチュラルに可愛くまつ毛を<br>
+					UPすることで気分もUPでHAPPYに。<br>
+					<br>
+					そんな女性の可愛いを叶える<br>
+					魔法のようなアイテムを提供します。</p>
+			    </div>
+			</div>
+		</section>
+		<section id="bu-about">
+			<video loop muted autoplay playsinline>
+						<source src="{{ asset('assets/img_2018/movie/bringup-finished-movie.mp4') }}" type="video/mp4">
+            </video>
+		</section>
+		<section id="bu-setting">
+			<h2 class="bu-shouhinmei c-gara scrollanime downup">BU<br>Setting Cream<span class="bu-shouhinmei-min">セッティングクリーム</span></h2>
+			<h3 class="bu-catch-h3 scrollanime downup">セットタイム<br>最速。</h3>
+			<div class="bu-setting-detail scrollanime downup">
+				<img src="{{ asset('assets/img_2018/lp/bu-products-image-setting.webp') }}" alt="ブリングアップ セッティングクリーム">
+				<p class="scrollanime downup">
+                                     <ul>
+                                        <li>◆セットタイム最速のまつ毛の為のセッティング剤</li>
+                                        <li>◆軟化の速さ+軟化チェックのしやすさで施術スピードアップ</li>
+                                        <li>◆こだわり処方の豊富な有効成分で「まつ毛ケア+時短施術+長く健康な毛」</li>
+                                     </ul>
+                                </p>
+				<a class="bu-purchase-button scrollanime downup" href="https://www.ome-shop.jp/products/detail.php?product_id=301">購入する</a>
+			</div>
+			<div class="bu-setting-texture">
+				<h2 class="bu-title-h2 c-gara scrollanime downup">Texture<span class="bu-shouhinmei-min">テクスチャー</span></h2>
+				<div class="bu-setting-texture-movie scrollanime slide-left">
+					<img src="{{ asset('assets/img_2018/lp/bringup-circle-brown.webp') }}" alt="bringup">
+					<video loop muted autoplay playsinline>
+						<source src="{{ asset('assets/img_2018/movie/bu-setteing-texure.mp4') }}" type="video/mp4">
+					</video>
+				</div>
+				<p scrollanime downup>液だれせず塗りやすいテクスチャーで均一にまつ毛を立ち上げることが可能。</p>
+			</div>
+			<div class="bu-setting-finished">
+				<h2 class="bu-title-h2 c-gara scrollanime downup">Finished<span class="bu-shouhinmei-min">仕上がり</span></h2>
+				<span class="scrollanime downup"><img src="{{ asset('assets/img_2018/lp/settingcream-finished.webp') }}" alt="セッティングクリーム 仕上がりイメージ"></span>
+				<p class="scrollanime downup">セットタイム最速のBU セッティングクリームは、CMC や補修・美容成分を豊富に配合し繰り返しのラッシュリフトによるダメージも最小限に抑えパリッとハリのある仕上がりに！液だれせず塗りやすいテクスチャーで均一にまつ毛を立ち上げます！</p>
+			</div>	
+		</section>
+		<section id="bu-styling">
+			<h2 class="bu-shouhinmei c-gara scrollanime downup">BU<br>Styling Cream<span class="bu-shouhinmei-min">スタイリングクリーム</span></h2>
+			<h3 class="bu-catch-h3 scrollanime downup">カールキープ力<br>最強。</h3>
+			<div class="bu-setting-detail scrollanime downup">
+				<img src="{{ asset('assets/img_2018/lp/bu-products-image-styling.webp') }}" alt="ブリングアップ スタイリングクリーム">
+				<p class="scrollanime downup"><ul>
+                                        <li>◆カールキープ最強のまつ毛の為のスタイリング料</li>
+                                        <li>◆軟化後に修正することも可能な操作性は、初心者の方でも安心して使用可能</li>
+                                        <li>◆こだわり処方の豊富な有効成分で「まつ毛ケア+カールキープ+長く健康な毛」</li>
+                                     </ul></p>
+				<a class="bu-purchase-button scrollanime downup" href="https://www.ome-shop.jp/products/detail.php?product_id=300">購入する</a>
+			</div>
+			<div class="bu-setting-texture">
+				<h2 class="bu-title-h2 c-gara scrollanime downup">Texture<span class="bu-shouhinmei-min">テクスチャー</span></h2>
+				<div class="bu-setting-texture-movie scrollanime slide-right">
+					<img src="{{ asset('assets/img_2018/lp/bringup-circle-pink.webp') }}" alt="bringup">
+					<video loop muted autoplay playsinline>
+						<source src="{{ asset('assets/img_2018/movie/bu-styling-texure.mp4') }}" type="video/mp4">
+					</video>
+				</div>
+				<p class="scrollanime downup">柔らかすぎず硬すぎず、程よいテクスチャーで操作しやすく使いやすい。</p>
+			</div>
+			<div class="bu-setting-finished">
+				<h2 class="bu-title-h2 c-gara scrollanime downup">Finished<span class="bu-shouhinmei-min">仕上がり</span></h2>
+				<span class="scrollanime downup"><img src="{{ asset('assets/img_2018/lp/stylingcream-finished.webp') }}" alt="スタイリングクリーム 仕上がりイメージ"></span>
+				<p class="scrollanime downup">カールキープ力最強のBU スタイリングクリームは、11 種のアミノ酸・植物由来エキスを配合しまつ毛にも優しく低ダメージで、しっかりと続くカール力が魅力！</p>
+			</div>	
+		</section>
+		<section id="bu-question">
+			<h2 class="bu-title-h2 c-gara scrollanime downup">FAQ<span class="bu-shouhinmei-min">よくある質問</span></h2>
+			<div class="bl_accordion">
+				<!--<p class="bl_accordionTitle scrollanime downup">
+					<span class="qa-tips c-gara">Q.</span>BUセッティングクリームとBUスタイリングクリームの違いはなんですか？</p>
+				<div class="bl_accordionContent">
+					<span class="qa-tips c-gara">A.</span>各商品のおすすめポイントをご確認下さい。</div>-->
+				<p class="bl_accordionTitle scrollanime downup">
+					<span class="qa-tips c-gara">Q.</span>BUセッティングクリーム（1剤）とBUスタイリングクリーム（2剤）の併用は可能ですか？（逆パターンも）</p>
+				<div class="bl_accordionContent">
+					<span class="qa-tips c-gara">A.</span>基本的には同一商品の1剤2剤でご使用をお勧めしております。（併用してのご使用は弊社が考える商品の特徴が発揮できないのでお勧めはしておりません。）
+</div>
+				<p class="bl_accordionTitle scrollanime downup">
+					<span class="qa-tips c-gara">Q.</span>使用人数は何人ですか？</p>
+				<div class="bl_accordionContent">
+					<span class="qa-tips c-gara">A.</span>内容量は30gで約100人程にご使用可能です。</div>
+				<p class="bl_accordionTitle scrollanime downup">
+					<span class="qa-tips c-gara">Q.</span>眉毛への施術は可能ですか？</p>
+				<div class="bl_accordionContent">
+					<span class="qa-tips c-gara">A.</span>可能でございます。ただ、お肌に直接薬剤を塗布する為、敏感な方への施術の場合はBUスタイリングクリームをお勧めしております。
+</div>
+				<p class="bl_accordionTitle scrollanime downup">
+					<span class="qa-tips c-gara">Q. </span>仕上げにコーティングやマスカラなど塗っても大丈夫ですか？</p>
+				<div class="bl_accordionContent">
+					<span class="qa-tips c-gara">A. </span>ラッシュリフト剤の定着には施術後3～4時間程かかり、コーティングなども避けていただいた方が一番いいのですが、もしマスカラなどを塗りたい場合はフィルムタイプ(ACマスカラ)であれば問題なくご使用いただけます。
+</div>
+          </div>
+		</section>
+		<section id="bu-closing">
+			<div class="toumei">
+			<div class="bu-closing-inner">
+				<div class="bu-closing-inner-item">
+			      <h2 class="scrollanime downup">BUセッティングクリーム</h2>
+				  <div class="bu-closing-inner-image bu-closing-inner-image--setting scrollanime downup"><img src="{{ asset('assets/img_2018/lp/bu-lp-closing-products-setting.webp') }}" alt="BringUp セッティングクリーム"></div>
+				  <div class="bu-closing-button bu-closing-button--setting scrollanime downup">
+					<a href="https://www.ome-shop.jp/products/detail.php?product_id=301">1剤・2剤セット</a>
+					<a href="https://www.ome-shop.jp/products/detail.php?product_id=307">1剤単品</a><a href="https://www.ome-shop.jp/products/detail.php?product_id=306">2剤単品</a>
+				  </div>
+				</div>
+				<div class="bu-closing-inner-item">
+			      <h2 class="scrollanime downup">BUスタイリングクリーム</h2>
+				  <div class="bu-closing-inner-image bu-closing-inner-image--styling scrollanime downup"><img src="{{ asset('assets/img_2018/lp/bu-lp-closing-products-styling.webp') }}" alt="BringUp スタイリングクリーム"></div>
+				  <div class="bu-closing-button bu-closing-button--styling scrollanime downup">
+					<a href="https://www.ome-shop.jp/products/detail.php?product_id=300">1剤・2剤セット</a>
+					<a href="https://www.ome-shop.jp/products/detail.php?product_id=304">1剤単品</a><a href="https://www.ome-shop.jp/products/detail.php?product_id=305">2剤単品</a>
+				  </div>
+				</div>
+				<div class="bu-closing-inner-item">
+			      <h2 class="scrollanime downup">BUセッティングクリーム<br>×<br>BUスタイリングクリーム</h2>
+				  <div class="bu-closing-inner-image bu-closing-inner-image--setset scrollanime downup"><img src="{{ asset('assets/img_2018/lp/bu-lp-closing-products-setset.webp') }}" alt="BringUp セッティングクリームスタイリングクリームセット"></div>
+				  <div class="bu-closing-button bu-closing-button--setset scrollanime downup">
+					<a href="https://www.ome-shop.jp/products/detail.php?product_id=308">お得なセット購入</a>
+				  </div>
+				</div>
+			</div>
+<div class="bu-ome-backlink scrollanime downup"><a href="https://www.ome-shop.jp/"><img src="{{ asset('assets/img_2018/lp/ome-symbollogo.webp') }}" alt="omeエンタープライズ  ロゴ"><p>ome ショップサイトへ ＞</p></a></div>
+			</div>
+		</section>
+
+</div>
+
+<script>
+
+const app = document.getElementById('app')
+
+const myRand = () => {
+  let r = 50
+  while (40 < r && r < 60) {
+    r = Math.random() * 100
+  }
+  return r
+}
+
+for (let i = 0; i < 50; i++) {
+  const delay = Math.random() + 's';
+  const el = document.createElement('img')
+  el.src            = 'https://dl.dropboxusercontent.com/s/soxcov4m81dx55l/star.svg'
+  el.className      = 'glitter-star'
+  el.style.top      = myRand() + '%'
+  el.style.left     = myRand() + '%'
+  el.style.animationDelay       = delay
+  el.style.msAnimationDelay     = delay
+  el.style.webkitAnimationDelay = delay
+  el.style.monAnimationDelay    = delay
+  app.appendChild(el)
+}
+</script>

@@ -22,7 +22,6 @@ use Eccube\Service\PurchaseFlow\PurchaseContext;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Workflow\Event\Event;
 use Symfony\Component\Workflow\StateMachine;
-use Symfony\Component\Workflow\WorkflowInterface;
 
 class OrderStateMachine implements EventSubscriberInterface
 {
@@ -45,7 +44,7 @@ class OrderStateMachine implements EventSubscriberInterface
      */
     private $stockReduceProcessor;
 
-    public function __construct(WorkflowInterface $_orderStateMachine, OrderStatusRepository $orderStatusRepository, PointProcessor $pointProcessor, StockReduceProcessor $stockReduceProcessor)
+    public function __construct(StateMachine $_orderStateMachine, OrderStatusRepository $orderStatusRepository, PointProcessor $pointProcessor, StockReduceProcessor $stockReduceProcessor)
     {
         $this->machine = $_orderStateMachine;
         $this->orderStatusRepository = $orderStatusRepository;
@@ -104,6 +103,11 @@ class OrderStateMachine implements EventSubscriberInterface
             'workflow.order.completed' => ['onCompleted'],
             'workflow.order.transition.pay' => ['updatePaymentDate'],
             'workflow.order.transition.cancel' => [['rollbackStock'], ['rollbackUsePoint']],
+            'workflow.order.transition.cancel_pending' => [
+                ['rollbackStock'],
+                ['rollbackUsePoint'],
+            ],
+
             'workflow.order.transition.back_to_in_progress' => [['commitStock'], ['commitUsePoint']],
             'workflow.order.transition.ship' => [['commitAddPoint']],
             'workflow.order.transition.return' => [['rollbackUsePoint'], ['rollbackAddPoint']],
@@ -114,6 +118,23 @@ class OrderStateMachine implements EventSubscriberInterface
     /*
      * Event handlers.
      */
+
+    // /**
+    //  * 「更新日」を「注文日」に設定する（注文キャンセル時用）
+    //  *
+    //  * @param Event $event
+    //  */
+
+    // public function setOrderDateFromLastUpdate(Event $event)
+    // {
+    //     /** @var OrderStateMachineContext $context */
+    //     $context = $event->getSubject();
+    //     $Order = $context->getOrder();
+
+    //     if (is_null($Order->getOrderDate())) {
+    //         $Order->setOrderDate($context->getPreviousUpdateDate());
+    //     }
+    // }
 
     /**
      * 入金日を更新する.
@@ -217,7 +238,7 @@ class OrderStateMachine implements EventSubscriberInterface
      */
     public function onCompleted(Event $event)
     {
-        /** @var OrderStateMachineContext $context */
+        /** @var $context OrderStateMachineContext */
         $context = $event->getSubject();
         $Order = $context->getOrder();
         $CompletedOrderStatus = $this->orderStatusRepository->find($context->getStatus());
@@ -238,6 +259,10 @@ class OrderStateMachineContext
     /** @var Order */
     private $Order;
 
+    /** @var \DateTimeInterface|null */
+    private $previousUpdateDate;
+
+
     /**
      * OrderStateMachineContext constructor.
      *
@@ -248,6 +273,9 @@ class OrderStateMachineContext
     {
         $this->status = $status;
         $this->Order = $Order;
+
+        // 遷移直前の update_date を保持（clone で安全に）
+        $this->previousUpdateDate = clone $Order->getUpdateDate();
     }
 
     /**
@@ -291,5 +319,10 @@ class OrderStateMachineContext
     public function setMarking(string $status): void
     {
         $this->setStatus($status);
+    }
+
+    public function getPreviousUpdateDate(): ?\DateTimeInterface
+    {
+        return $this->previousUpdateDate;
     }
 }

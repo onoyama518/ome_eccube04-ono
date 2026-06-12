@@ -37,8 +37,8 @@ common.pref: 都道府県
 common.postal_symbol: 〒
 common.postal_code_sample: 例：5300001
 common.search_postal_code: 郵便番号検索
-common.address_sample_01: 市区町村名(例：大阪市北区)
-common.address_sample_02: 番地・ビル名(例：西梅田1丁目6-8)
+# common.address_sample_01: 市区町村名(例：大阪市北区)
+# common.address_sample_02: 番地・ビル名(例：西梅田1丁目6-8)
 common.phone_number: 電話番号
 common.phone_number_sample: 例：11122223333
 common.mail_address: メールアドレス
@@ -120,7 +120,6 @@ front.block.eyecatch.view_list: 一覧を見る
 front.block.new_item.title__en: NEW ITEM
 front.block.new_item.title__ja: 新着商品
 front.block.new_item.more: more
-# Deprecated https://github.com/EC-CUBE/ec-cube/pull/4920
 front.block.new_item.item_1_name: 彩のジェラート"CUBE"
 front.block.new_item.item_1_price: ￥1,200(税込)
 front.block.new_item.item_2_name: チェリーアイスサンド
@@ -392,7 +391,6 @@ front.shopping.payment_method_unselected: お支払い方法を選択してく�
 front.shopping.not_available_payment_method: 選択したお支払い方法はご利用できません。
 front.shopping.payment_method_not_fount: 選択できるお支払い方法がありません。配送方法が異なる場合は同じ配送方法を選んでください。
 front.under_maintenance: メンテナンスモードが有効になっています。
-front.under_debug_mode: デバッグモードが有効になっています。
 
 #====================================================================================
 # 管理画面
@@ -417,7 +415,6 @@ admin.common.create_complete: 作成しました
 admin.common.system_error: システムエラーが発生しました
 admin.common.to_show_complete: "「%name%」を表示にしました。"
 admin.common.to_hide_complete: "「%name%」を非表示にしました。"
-admin.common.date_range_error: 終了日時は、開始日時より大きく設定してください
 
 # action系のラベル
 admin.common.save: 保存
@@ -505,8 +502,6 @@ admin.common.move_to_confirm_move_only: 保存せずに移動
 admin.common.move_to_confirm_save_and_move: 保存して移動
 admin.common.admin_url_warning: '管理画面URLは、セキュリティのため推測されにくいものを設定してください。「<a href="%url%">セキュリティ管理</a>」から設定できます。'
 admin.common.restrict_file_upload_info: "この機能の利用頻度が低い場合、使用しない間は無効化することでセキュリティを更に向上させることができます。環境変数 ECCUBE_RESTRICT_FILE_UPLOAD を 1 に設定することで機能を無効化することが可能です。"
-admin.common.notice_maintenance_mode: "現在メンテナンスモード中です。"
-admin.common.notice_debug_mode: "デバッグモードが有効になっています。"
 
 # エンティティに関連するラベル
 admin.common.id: ID
@@ -545,7 +540,6 @@ admin.common.device_type: 端末種別
 admin.common.authority: 権限
 admin.common.payment_method: 支払方法
 admin.common.charge: 手数料
-admin.common.ga.tracking_id: "G-XXXXXXXXXX"
 #------------------------------------------------------------------------------------
 # ホーム
 #------------------------------------------------------------------------------------
@@ -606,8 +600,6 @@ admin.product.class_category_management: 規格分類管理
 admin.product.category_management: カテゴリ管理
 admin.product.tag_management: タグ管理
 admin.product.product_csv_upload: 商品CSV登録
-admin.product.class_name_csv_upload: 規格CSV登録
-admin.product.class_category_csv_upload: 規格分類CSV登録
 admin.product.category_csv_upload: カテゴリCSV登録
 
 # flashメッセージ
@@ -778,28 +770,6 @@ admin.product.category_csv.parent_category_id_description: ""
 admin.product.category_csv.delete_flag_col: カテゴリ削除フラグ
 admin.product.category_csv.delete_flag_description: 0:登録 1:削除を指定します。未指定の場合、0として扱います。
 
-# 規格CSV雛形
-admin.product.class_name_csv.class_name_id_col: 規格ID
-admin.product.class_name_csv.class_name_id_description: 新規登録の場合は空にしてください。既存の規格を更新する場合は、規格IDを指定してください。
-admin.product.class_name_csv.class_name_col: 規格名
-admin.product.class_name_csv.class_name_description: ''
-admin.product.class_name_csv.class_backend_name_col: 管理名
-admin.product.class_name_csv.class_backend_name_description: ''
-admin.product.class_name_csv.delete_flag_col: 規格削除フラグ
-admin.product.class_name_csv.delete_flag_description: 0:登録 1:削除を指定します。未指定の場合、0として扱います。
-
-# 規格分類CSV雛形
-admin.product.class_category_csv.class_name_id_col: 規格ID
-admin.product.class_category_csv.class_name_id_description: 既存の規格IDを指定してください。
-admin.product.class_category_csv.class_category_id_col: 規格分類ID
-admin.product.class_category_csv.class_category_id_description: 新規登録の場合は空にしてください。既存の規格分類を更新する場合は、規格分類IDを指定してください。
-admin.product.class_category_csv.class_category_name_col: 規格分類名
-admin.product.class_category_csv.class_category_name_description: ''
-admin.product.class_category_csv.class_category_backend_name_col: 規格分類管理名
-admin.product.class_category_csv.class_category_backend_name_description: ''
-admin.product.class_category_csv.delete_flag_col: 規格分類削除フラグ
-admin.product.class_category_csv.delete_flag_description: 0:登録 1:削除を指定します。未指定の場合、0として扱います。
-
 # 商品CSV
 admin.product.product_csv_upload__title: "商品CSVをアップロードします"
 admin.product.product_csv_upload__message: "商品CSVファイルをアップロードします。よろしいですか？"
@@ -894,7 +864,7 @@ admin.order.delivery_date: お届け日
 admin.order.delivery_time: お届け時間
 admin.order.delivery_provider: 配送方法
 admin.order.to_shipped: 出荷済にする
-admin.order.send_mail: メールする
+admin.order.send_mail: 出荷通知
 admin.order.shop_memo_for_shipped: 出荷用メモ欄
 admin.order.shipping__card_title: 出荷情報
 admin.order.shipping_id: 出荷ID
@@ -935,7 +905,7 @@ admin.order.edit_multiple_shipping_description: 複数配送を指定してい�
 admin.order.product_item_not_found: 商品が追加されていません
 admin.order.delivery_note_create_date: 発行日
 admin.order.delivery_note_title: タイトル
-admin.order.delivery_note_title__default: お買上げ明細書(納品書)
+admin.order.delivery_note_title__default: 受注明細書
 admin.order.delivery_note_output_format: 出力形式
 admin.order.delivery_note_output_format__browser: ブラウザで開く
 admin.order.delivery_note_output_format__file: ファイルに保存
@@ -1179,8 +1149,6 @@ admin.setting.shop.shop.option_point: ポイント設定
 admin.setting.shop.shop.option_point_enabled: ポイント機能
 admin.setting.shop.shop.option_point_rate: ポイント付与率
 admin.setting.shop.shop.option_point_conversion_rate: ポイント換算レート
-admin.setting.shop.shop.ga: "Googleアナリティクス設定"
-admin.setting.shop.shop.ga.tracking_id: "トラッキングID"
 
 #------------------------------------------------------------------------------------
 # 設定：店舗設定：特定商取引法設定
@@ -1236,16 +1204,11 @@ admin.setting.shop.tax.apply_date.available_error: 同時刻の適用日時を�
 
 admin.setting.shop.mail.mail_template_edit: テンプレート編集
 admin.setting.shop.mail.mail_template: テンプレート
-admin.setting.shop.mail.mail_template_name: テンプレート名
-admin.setting.shop.mail.mail_file_name: ファイル名
 admin.setting.shop.mail.mail_subject: 件名
 admin.setting.shop.mail.mail_body: 本文
 admin.setting.shop.mail.mail_text: テキスト
 admin.setting.shop.mail.mail_html: HTML
 admin.setting.shop.mail.preview: プレビュー
-admin.setting.shop.mail.file_exists: このファイル名はすでに使用されています。
-admin.setting.shop.mail.delete__confirm_title: メールテンプレートを削除します。
-admin.setting.shop.mail.delete__confirm_message: メールテンプレートを削除してよろしいですか？
 
 #------------------------------------------------------------------------------------
 # 設定：店舗設定：CSV出力項目設定
@@ -1738,7 +1701,6 @@ tooltip.setting.shop.shop.option_invoice_registration_number: 納品書に適格
 tooltip.setting.shop.shop.option_point_enabled: オンにすると、ポイント機能を有効化できます。
 tooltip.setting.shop.shop.option_point_rate: 購入金額に対するポイント付与率を編集できます。
 tooltip.setting.shop.shop.option_point_conversion_rate: 1ポイントあたりの換算レートです。例：「1」と設定すると1ポイント「1円」として利用可能になります。
-tooltip.setting.shop.shop.ga.tracking_id: "Googleアナリティクスでアクセス解析を行う場合に設定してください（Googleアナリティクスの規約も参照ください）"
 tooltip.setting.shop.payment.rule: お支払い方法の利用条件を設定できます。自身の手数料を含む支払総額(税込)が条件に一致する場合、購入フローのお支払い方法の選択肢に表示されまます。
 tooltip.setting.shop.payment.logo_image: 購入フローのお支払い方法に表示される画像を登録できます。登録がない場合は画像なしで表示されます。
 tooltip.setting.shop.delivery.tracking_number_url: 配送業者のお問い合わせページURLを指定します。
@@ -1773,8 +1735,6 @@ tooltip.setting.system.system.php_info: このEC-CUBEに関係しているPHPの
 tooltip.store.template.template_code: テンプレートの格納先のディレクトリ名になります。
 tooltip.store.template.template_name: 管理画面で表示するテンプレートの名前を設定します。
 tooltip.store.template.template_file: テンプレート一式となるアーカイブをアップロードします。
-tooltip.class_name.csv_upload: 所定の型のCSVデータを用いて規格を一括で登録することができます。
-tooltip.class_name.csv_format: 雛形ファイルをダウンロードして編集すれば、簡単に所定の型のCSVデータを作成できます。
 
 #====================================================================================
 # インストール画面

@@ -1,0 +1,21 @@
+<div id="customer_registration_point" class="row" style="display: none">
+    <div class="col-3">
+        <div class="d-inline-block" data-tooltip="true" data-placement="top" title="{{ 'tooltip.setting.shop.shop.customer_registration_point'|trans }}"><span>{{ 'admin.setting.shop.shop.customer_registration_point'|trans }}</span><i class="fa fa-question-circle fa-lg ml-1"></i></div>
+    </div>
+    <div class="col mb-2">
+        <div class="input-group col-2 pl-0">
+            <div class="input-group">
+                {{ form_widget(form.customer_registration_point) }}
+                <div class="input-group-append">
+                    <span class="input-group-text">pt</span>
+                </div>
+                {{ form_errors(form.customer_registration_point) }}
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('#customer_registration_point').appendTo('#ex-shop-point').show()
+    })
+</script>

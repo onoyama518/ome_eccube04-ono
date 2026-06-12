@@ -1,0 +1,161 @@
+<!-- ＊新規作成　レビュー(管：ブロック)ここから＊ -->
+{% set ReviewProduct01 = repository('Eccube\\Entity\\Product').find(299) %}
+{% set ReviewProduct02 = repository('Eccube\\Entity\\Product').find(14) %}
+{% set ReviewProduct03 = repository('Eccube\\Entity\\Product').find(300) %}
+{% set ReviewProduct04 = repository('Eccube\\Entity\\Product').find(76) %}
+
+<div class="renewal-review">
+	<h2 class="sec-title">REVIEW<span class="sub-title">レビュー</span>
+	</h2>
+	<div class="renewal-review-inner review-slider">
+		<!--Google！タグ変更しない！-->
+		<div class="review-item">
+			<a href="{{ url('product_detail', {'id': 299}) }}" id="review01">
+				<div class="area_img">
+					<img src="{{ asset('assets/img/renewal_top/review/ac-cleansing.png') }}" alt="{{ ReviewProduct01.name }}"/>
+				</div>
+			</a>
+			<div class="area_info_item">
+				<a href="{{ url('product_detail', {'id': 299}) }}" class="main_info" id="review01">
+					<h3 class="item_name">{{ ReviewProduct01.name }}</h3>
+					<span class="price">{{ ReviewProduct01.getPrice02IncTaxMin|number_format }}円<span class="tax">（税込）</span></span>
+				</a>
+         <div class="area_review">
+					{{ render_review_block(299, RankingReviewAvgList, RankingReviewCountList)|raw }}
+				</div>
+				<div class="area_ex_review">
+					<div class="icon_review">
+						<img src="{{ asset('assets/img/renewal_top/review/icon.svg') }}" alt="人物アイコン" class="icon"/>
+						<div class="info">
+							<div class="ex_name">リピしてます！ </div>
+							<img src="{{ asset('assets/img/renewal_top/review/star.svg') }}" alt="☆☆☆☆☆"/>
+						</div>
+					</div>
+					<p class="ex_text">Wクレンジング不要今まで信じた事なかったですが、ACクレンジングはスッキリ！お客様も皆さん洗顔いらずで喜ばれます！</p>
+				</div>
+			</div>
+			<div class="cart-form-area">
+				{% if ReviewProduct01.stock_find %}
+					<button type="button" class="btn btn_cart purchase-btn" data-product-id="299" onclick="openCartModal(299)">カートに入れる</button>
+				{% else %}
+					<button type="button" class="btn btn_cart purchase-btn" disabled aria-disabled="true">在庫切れ</button>
+				{% endif %}
+			</div>
+		</div>
+
+		<!--Google！タグ変更しない！-->
+		<div class="review-item">
+			<a href="{{ url('product_detail', {'id': 14}) }}" id="review02">
+				<div class="area_img">
+					<img src="{{ asset('assets/img/renewal_top/review/keratin-pro.png') }}" alt="{{ ReviewProduct02.name }}"/>
+				</div>
+			</a>
+			<div class="area_info_item">
+				<a href="{{ url('product_detail', {'id': 14}) }}" class="main_info" id="review02">
+					<h3 class="item_name">{{ ReviewProduct02.name }}</h3>
+					<span class="price">{{ ReviewProduct02.getPrice02IncTaxMin|number_format }}円<span class="tax">（税込）</span></span>
+				</a>
+        <div class="area_review">
+					{{ render_review_block(14, RankingReviewAvgList, RankingReviewCountList)|raw }}
+				</div>
+				<div class="area_ex_review">
+					<div class="icon_review">
+						<img src="{{ asset('assets/img/renewal_top/review/icon.svg') }}" alt="人物アイコン" class="icon"/>
+						<div class="info">
+							<div class="ex_name">バッチリ！ </div>
+							<img src="{{ asset('assets/img/renewal_top/review/star.svg') }}" alt="☆☆☆☆☆"/>
+						</div>
+					</div>
+					<p class="ex_text">こちらのケラチンをつけてるとまつ毛がのびます！最初は半信半疑でつけ始めましたが、短いまつ毛も綺麗に伸びてます！</p>
+				</div>
+			</div>
+			<div class="cart-form-area">
+				{% if ReviewProduct02.stock_find %}
+					<button type="button" class="btn btn_cart purchase-btn" data-product-id="14" onclick="openCartModal(14)">カートに入れる</button>
+				{% else %}
+					<button type="button" class="btn btn_cart purchase-btn" disabled aria-disabled="true">在庫切れ</button>
+				{% endif %}
+			</div>
+		</div>
+
+		<!--Google！タグ変更しない！-->
+		<div class="review-item">
+			<a href="{{ url('product_detail', {'id': 300}) }}" id="review03">
+				<div class="area_img">
+					<img src="{{ asset('assets/img/renewal_top/review/bu-styling.png') }}" alt="{{ ReviewProduct03.name }}"/>
+				</div>
+			</a>
+
+			<div class="area_info_item">
+				<a href="{{ url('product_detail', {'id': 300}) }}" class="main_info" id="review03">
+					<h3 class="item_name">{{ ReviewProduct03.name }}</h3>
+					<span class="price">{{ ReviewProduct03.getPrice02IncTaxMin|number_format }}円<span class="tax">（税込）</span></span>
+				</a>
+        <div class="area_review">
+					{{ render_review_block(300, RankingReviewAvgList, RankingReviewCountList)|raw }}
+				</div>
+				<div class="area_ex_review">
+					<div class="icon_review">
+						<img src="{{ asset('assets/img/renewal_top/review/icon.svg') }}" alt="人物アイコン" class="icon"/>
+						<div class="info">
+							<div class="ex_name">スタイリング剤 </div>
+							<img src="{{ asset('assets/img/renewal_top/review/star.svg') }}" alt="☆☆☆☆☆"/>
+						</div>
+					</div>
+					<p class="ex_text">香りもよくカールもしっかりついて時短になりました！</p>
+				</div>
+			</div>
+			<div class="cart-form-area">
+				{% if ReviewProduct03.stock_find %}
+					<button type="button" class="btn btn_cart purchase-btn" data-product-id="300" onclick="openCartModal(300)">カートに入れる</button>
+				{% else %}
+					<button type="button" class="btn btn_cart purchase-btn" disabled aria-disabled="true">在庫切れ</button>
+				{% endif %}
+			</div>
+		</div>
+
+		<!--Google！タグ変更しない！-->
+		<div class="review-item">
+			<a href="{{ url('product_detail', {'id': 76}) }}" id="review04">
+				<div class="area_img">
+					<img src="{{ asset('assets/img/renewal_top/review/ac-mascara.png') }}" alt="{{ ReviewProduct04.name }}"/>
+				</div>
+			</a>
+			<div class="area_info_item">
+				<a href="{{ url('product_detail', {'id': 76}) }}" class="main_info" id="review04">
+					<h3 class="item_name">{{ ReviewProduct04.name }}</h3>
+					<span class="price">{{ ReviewProduct04.getPrice02IncTaxMin|number_format }}円<span class="tax">（税込）</span></span>
+				</a>
+        <div class="area_review">
+					{{ render_review_block(76, RankingReviewAvgList, RankingReviewCountList)|raw }}
+				</div>
+				<div class="area_ex_review">
+					<div class="icon_review">
+						<img src="{{ asset('assets/img/renewal_top/review/icon.svg') }}" alt="人物アイコン" class="icon"/>
+						<div class="info">
+							<div class="ex_name">人気マスカラ </div>
+							<img src="{{ asset('assets/img/renewal_top/review/star.svg') }}" alt="☆☆☆☆☆"/>
+						</div>
+					</div>
+					<p class="ex_text">だまにならず軽い付け心地。なのに黒々としてしっかり目力もでてお客様からも人気です！</p>
+				</div>
+			</div>
+			<div class="cart-form-area">
+				{% if ReviewProduct04.stock_find %}
+					<button type="button" class="btn btn_cart purchase-btn" data-product-id="76" onclick="openCartModal(76)">カートに入れる</button>
+				{% else %}
+					<button type="button" class="btn btn_cart purchase-btn" disabled aria-disabled="true">在庫切れ</button>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+
+	<div class="review-modals-container">
+		{{ render_cart_modal(299)|raw }}
+		{{ render_cart_modal(14)|raw }}
+		{{ render_cart_modal(300)|raw }}
+		{{ render_cart_modal(76)|raw }}
+	</div>
+</div>
+
+<!-- ＊新規作成　レビュー(管：ブロック)ここまで＊ -->

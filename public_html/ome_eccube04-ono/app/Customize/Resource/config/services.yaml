@@ -1,0 +1,23 @@
+services:
+  # カスタムMailServiceをベースのMailServiceの代わりに使用
+  Customize\Service\MailService:
+    decorates: Eccube\Service\MailService
+    arguments:
+      - '@mailer'
+      - '@Eccube\Repository\MailTemplateRepository'
+      - '@Eccube\Repository\MailHistoryRepository'
+      - '@Eccube\Repository\BaseInfoRepository'
+      - '@event_dispatcher'
+      - '@twig'
+      - '@Eccube\Common\EccubeConfig'
+      - '@service_container'
+
+  # カスタムOrderTypeを使用（商品小計ベースでの支払い方法フィルタリング）
+  Customize\Form\Type\Shopping\OrderType:
+    decorates: Eccube\Form\Type\Shopping\OrderType
+    arguments:
+      - '@Eccube\Repository\OrderRepository'
+      - '@Eccube\Repository\DeliveryRepository'
+      - '@Eccube\Repository\PaymentRepository'
+      - '@Eccube\Repository\BaseInfoRepository'
+      - '@Eccube\Request\Context'

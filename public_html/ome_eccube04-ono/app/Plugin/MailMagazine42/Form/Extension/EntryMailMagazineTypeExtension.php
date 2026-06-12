@@ -46,7 +46,7 @@ class EntryMailMagazineTypeExtension extends AbstractTypeExtension
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $mailmagaFlg = null;
+        $mailmagaFlg = true;
         $token = $this->tokenStorage->getToken();
         $Customer = $token ? $token->getUser() : null;
 
@@ -76,8 +76,7 @@ class EntryMailMagazineTypeExtension extends AbstractTypeExtension
                     'auto_render' => true,
                     'form_theme' => '@MailMagazine42/entry_add_mailmaga.twig',
                 ],
-            ])
-            ;
+            ]);
     }
 
     /**

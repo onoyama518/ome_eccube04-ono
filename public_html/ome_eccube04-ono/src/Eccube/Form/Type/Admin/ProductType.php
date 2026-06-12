@@ -86,7 +86,7 @@ class ProductType extends AbstractType
                 'mapped' => false,
             ])
             ->add('description_detail', TextareaType::class, [
-                'purify_html' => true,
+                // 'purify_html' => true, //
                 'constraints' => [
                     new Assert\Length(['max' => $this->eccubeConfig['eccube_ltext_len']]),
                 ],
@@ -114,7 +114,7 @@ class ProductType extends AbstractType
                 'class' => 'Eccube\Entity\Tag',
                 'query_builder' => function ($er) {
                     return $er->createQueryBuilder('t')
-                    ->orderBy('t.sort_no', 'DESC');
+                        ->orderBy('t.sort_no', 'DESC');
                 },
                 'required' => false,
                 'multiple' => true,
@@ -129,7 +129,7 @@ class ProductType extends AbstractType
             ])
             // サブ情報
             ->add('free_area', TextareaType::class, [
-                'purify_html' => true,
+                // 'purify_html' => true,
                 'required' => false,
                 'constraints' => [
                     new TwigLint(),
@@ -209,7 +209,7 @@ class ProductType extends AbstractType
                 break;
             }
             $fileInDir = array_filter($dirs, function ($dir) use ($fileName) {
-                $filePath = realpath($dir.'/'.$fileName);
+                $filePath = realpath($dir . '/' . $fileName);
                 $topDirPath = realpath($dir);
 
                 return strpos($filePath, $topDirPath) === 0 && $filePath !== $topDirPath;
@@ -223,9 +223,7 @@ class ProductType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-    }
+    public function configureOptions(OptionsResolver $resolver) {}
 
     /**
      * {@inheritdoc}

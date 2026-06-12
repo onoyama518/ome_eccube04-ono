@@ -1,0 +1,135 @@
+{% extends 'default_frame.twig' %}
+
+{% block main %}
+<script>
+//リストに切り替え
+$(function() {
+jQuery('#ac-eyeliner--black').addClass('active');
+jQuery('.ac-eyeliner--black').addClass('active');
+  $('.productslist').on('click', function() {
+    var tabWrap = $(this).parents('.ac-eyeliner_lp--products');
+    var tabBtn = tabWrap.find(".productslist");
+    var tabContents = tabWrap.find('.ac-eyeliner--productslist');
+    tabBtn.removeClass('active');
+    $(this).addClass('active');
+    var elmIndex = tabBtn.index(this);
+    tabContents.removeClass('active');
+    tabContents.eq(elmIndex).addClass('active');
+  });
+});
+</script>
+
+<div id="ac-eyeliner_lp">
+	<div class="ac-eyeliner_lp--keyvis">
+		<div class="ac-eyeliner_lp--keyvis-innertext">
+			<h1><img src={{app.config.user_data_url ~ 'packages/default/img_2018/lp/ac-eyeliner-textlogo.webp' }} alt="ACアイライナー"></h1>
+			<p>美ライン、<sapn class="breaks">１日中ずっとキープ</sapn></p>
+		</div>
+	</div>
+	
+	<div class="ac-eyeliner_lp--concept">
+		<div class="ac-eyeliner_lp--concept-inner">
+		  <div class="ac-eyeliner_lp--concept-innertext">
+			<h2>濡れても擦れてもずっとキープ</h2>
+			<p>滲みや崩れ知らずのスーパーウォータープルーフアイライナーは、一度ラインを描くと、手で擦っても水で濡らしても全く滲まず落ちません。なのにオフする時は簡単にお湯で落とせる優れものです。ラインを重ねて描いても、肌内部には浸透せず色素沈着しないので安心してご使用いただけます。</p>
+		  </div>
+		<img src={{app.config.user_data_url ~ 'packages/default/img_2018/lp/ac-eyleiner-image-cross.webp' }} alt="ACアイライナー イメージ">
+		</div>
+	</div>
+	
+	<div class="ac-eyeliner_lp--point">
+		<h2 class="ac-big-title">Point</h2>
+		<ul>
+			<li><span><img src={{app.config.user_data_url ~ 'packages/default/img_2018/lp/aceyeliner-point-checkbox.webp' }} alt="ACアイライナー チェックボックス"></span>滲みや崩れ知らずのスーパーウォータープルーフ</li>
+			<li><span><img src={{app.config.user_data_url ~ 'packages/default/img_2018/lp/aceyeliner-point-checkbox.webp' }} alt="ACアイライナー チェックボックス"></span>水・汗・皮脂に強く、お湯または通常洗顔でスッと落ちる</li>
+			<li><span><img src={{app.config.user_data_url ~ 'packages/default/img_2018/lp/aceyeliner-point-checkbox.webp' }} alt="ACアイライナー チェックボックス"></span>筆先が細く（ペン先0.1㎜）コシがあり細い線も描きやすい</li>
+			<li><span><img src={{app.config.user_data_url ~ 'packages/default/img_2018/lp/aceyeliner-point-checkbox.webp' }} alt="ACアイライナー チェックボックス"></span>メイク初心者の方でも使いやすくラインが描きやすい</li>
+			<li><span><img src={{app.config.user_data_url ~ 'packages/default/img_2018/lp/aceyeliner-point-checkbox.webp' }} alt="ACアイライナー チェックボックス"></span>着色剤の顔料は、発色がよく、肌内部に浸透せず色素沈着を起こさない</li>
+		</ul>
+		<div class="ac-eyeliner_lp--colorvari">
+			<img src={{app.config.user_data_url ~ 'packages/default/img_2018/lp/aceyeliner-point-colorvari-bk.webp' }} alt="ACアイライナー ブラック">
+			<img src={{app.config.user_data_url ~ 'packages/default/img_2018/lp/aceyeliner-point-colorvari-bb.webp' }} alt="ACアイライナー ブラックブラウン">
+			<img src={{app.config.user_data_url ~ 'packages/default/img_2018/lp/aceyeliner-point-colorvari-br.webp' }} alt="ACアイライナー ブラウン">
+		</div>
+	</div>
+	
+	<div class="ac-eyeliner_lp--brush">
+		<h2 class="ac-big-title">Brush</h2>
+		<div class="ac-eyeliner_lp--brush-inner">
+			<img src={{app.config.user_data_url ~ 'packages/default/img_2018/lp/aceyeliner-brush.webp' }} alt="ACアイライナー 筆">
+			<p>塗布部のブラシ・ニブは書き心地を徹底的にこだわり、目のキワに描いても痛さが気になりません。筆先が細く（ペン先0.1㎜）コシがあり細い線も描きやすい為、メイク初心者の方でも使いやすく簡単にラインを描くことができます。</p>
+		</div>
+	</div>
+	
+	<div class="ac-eyeliner_lp--quality">
+		<h2 class="ac-big-title">Quality</h2>
+		<table>
+			<tr><td>コート紙に描いたアイライナーを消しゴムで５往復擦った状態</td><td><img src={{app.config.user_data_url ~ 'packages/default/img_2018/lp/aceyeliner-hikaku01.webp' }} alt="他社比較 消しゴムで擦る"></td></tr>
+			<tr><td>コート紙に描いたアイライナーを15秒間コットンで拭いた状態</td><td><img src={{app.config.user_data_url ~ 'packages/default/img_2018/lp/aceyeliner-hikaku02.webp' }} alt="他社比較 コットンで拭く"></td></tr>
+			<tr><td>お湯(約40℃)に20秒程浸透後、綿棒で拭いた状態</td><td><img src={{app.config.user_data_url ~ 'packages/default/img_2018/lp/aceyeliner-hikaku03.webp' }} alt="他社比較 お湯でオフ"></td></tr>
+		</table>
+	</div>
+	
+	<div class="ac-eyeliner_lp--products">
+		<h2 class="ac-big-title">Products</h2>
+		<div class="productslist-switch-button">
+		    <div class="et_pb_module">
+			    <button id="ac-eyeliner--black" class="productslist">ブラック</button>
+		    </div>
+		    <div class="et_pb_module">
+			    <button id="ac-eyeliner--blackbrown" class="productslist">ブラックブラウン</button>
+		    </div>
+		    <div class="et_pb_module">
+			    <button id="ac-eyeliner--brown" class="productslist">ブラウン</button>
+		    </div>
+			<div class="et_pb_module">
+			    <button id="ac-eyeliner--nine" class="productslist">3色セット</button>
+		    </div>
+		</div>
+		
+		<div class="ac-eyeliner--black ac-eyeliner--productslist">
+			<div class="ac-eyeliner--productslist--detail">
+				<img src={{app.config.user_data_url ~ 'packages/default/img_2018/top_newpr/ac-eyeliner-bk.webp' }} alt="ACアイライナー ブラック">
+				<div class="ac-eyeliner--productslist-buttonarea">
+					<a href="https://www.ome-shop.jp/products/detail.php?product_id=272">1本</a>
+					<a href="https://www.ome-shop.jp/products/detail.php?product_id=275">3本</a>
+					<a href="https://www.ome-shop.jp/products/detail.php?product_id=278">6本</a>
+					<a href="https://www.ome-shop.jp/products/detail.php?product_id=282">12本</a>
+				</div>
+			</div>
+		</div>
+		<div class="ac-eyeliner--blackbrown ac-eyeliner--productslist">
+			<div class="ac-eyeliner--productslist--detail">
+				<img src={{app.config.user_data_url ~ 'packages/default/img_2018/top_newpr/ac-eyeliner-bb.webp' }} alt="ACアイライナー ブラックブラウン">
+				<div class="ac-eyeliner--productslist-buttonarea">
+					<a href="https://www.ome-shop.jp/products/detail.php?product_id=273">1本</a>
+					<a href="https://www.ome-shop.jp/products/detail.php?product_id=276">3本</a>
+					<a href="https://www.ome-shop.jp/products/detail.php?product_id=279">6本</a>
+					<a href="https://www.ome-shop.jp/products/detail.php?product_id=283">12本</a>
+				</div>
+			</div>
+		</div>
+		<div class="ac-eyeliner--brown ac-eyeliner--productslist">
+			<div class="ac-eyeliner--productslist--detail">
+				<img src={{app.config.user_data_url ~ 'packages/default/img_2018/top_newpr/ac-eyeliner-br.webp' }} alt="ACアイライナー ブラウン">
+				<div class="ac-eyeliner--productslist-buttonarea">
+					<a href="https://www.ome-shop.jp/products/detail.php?product_id=274">1本</a>
+					<a href="https://www.ome-shop.jp/products/detail.php?product_id=277">3本</a>
+					<a href="https://www.ome-shop.jp/products/detail.php?product_id=280">6本</a>
+					<a href="https://www.ome-shop.jp/products/detail.php?product_id=284">12本</a>
+				</div>
+			</div>
+		</div>
+		<div class="ac-eyeliner--nine ac-eyeliner--productslist">
+			<div class="ac-eyeliner--productslist--detail">
+				<img src={{app.config.user_data_url ~ 'packages/default/img_2018/lp/ac-eyeliner-3color-nine-textdel.webp' }} alt="ACアイライナー 9本セット">
+				<div class="ac-eyeliner--productslist-buttonarea">
+					<a href="https://www.ome-shop.jp/products/detail.php?product_id=281">3色9本セット</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+</div><!--ac-eyliner_lp-->
+{% endblock %}

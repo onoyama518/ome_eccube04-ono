@@ -13,33 +13,24 @@
 
 namespace Eccube\Security\Core\User;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Eccube\Entity\Customer;
 use Eccube\Entity\Master\CustomerStatus;
 use Eccube\Repository\CustomerRepository;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
-class CustomerProvider implements UserProviderInterface, PasswordUpgraderInterface
+class CustomerProvider implements UserProviderInterface
 {
     /**
      * @var CustomerRepository
      */
     protected $customerRepository;
 
-    /**
-     * @var EntityManagerInterface
-     */
-    private $entityManager;
-
-    public function __construct(CustomerRepository $customerRepository, EntityManagerInterface $entityManager)
+    public function __construct(CustomerRepository $customerRepository)
     {
         $this->customerRepository = $customerRepository;
-        $this->entityManager = $entityManager;
     }
 
     /**
@@ -51,7 +42,16 @@ class CustomerProvider implements UserProviderInterface, PasswordUpgraderInterfa
      */
     public function loadUserByUsername($username): Customer
     {
-        return $this->loadUserByIdentifier($username);
+        $Customer = $this->customerRepository->findOneBy([
+            'email' => $username,
+            'Status' => CustomerStatus::REGULAR,
+        ]);
+
+        if (null === $Customer) {
+            throw new UserNotFoundException(sprintf('Username "%s" does not exist.', $username));
+        }
+
+        return $Customer;
     }
 
     /**
@@ -85,25 +85,5 @@ class CustomerProvider implements UserProviderInterface, PasswordUpgraderInterfa
     public function supportsClass($class)
     {
         return Customer::class === $class || is_subclass_of($class, Customer::class);
-    }
-
-    public function loadUserByIdentifier(string $identifier): UserInterface
-    {
-        $Customer = $this->customerRepository->findOneBy([
-            'email' => $identifier,
-            'Status' => CustomerStatus::REGULAR,
-        ]);
-
-        if (null === $Customer) {
-            throw new UserNotFoundException(sprintf('Username "%s" does not exist.', $identifier));
-        }
-
-        return $Customer;
-    }
-
-    public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
-    {
-        $user->setPassword($newHashedPassword);
-        $this->entityManager->flush();
     }
 }

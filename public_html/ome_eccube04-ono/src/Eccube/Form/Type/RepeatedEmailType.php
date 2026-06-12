@@ -50,7 +50,7 @@ class RepeatedEmailType extends AbstractType
             'invalid_message' => 'form_error.same_email',
             'options' => [
                 'constraints' => [
-                    new Assert\NotBlank(),
+                    // new Assert\NotBlank(),
                     new Email(null, null, $this->eccubeConfig['eccube_rfc_email_check'] ? 'strict' : null),
                     new Assert\Length([
                         'max' => $this->eccubeConfig['eccube_email_len'],
@@ -61,10 +61,20 @@ class RepeatedEmailType extends AbstractType
                 'attr' => [
                     'placeholder' => 'common.mail_address_sample',
                 ],
+                'constraints' => [
+                    new Assert\NotBlank([
+                        'message' => 'メールアドレスが入力されていません。',
+                    ]),
+                ],
             ],
             'second_options' => [
                 'attr' => [
-                    'placeholder' => 'common.repeated_confirm',
+                    'placeholder' => 'common.mail_address_sample',
+                ],
+                'constraints' => [
+                    new Assert\NotBlank([
+                        'message' => 'メールアドレス（確認用）が入力されていません。',
+                    ]),
                 ],
             ],
             'error_bubbling' => false,

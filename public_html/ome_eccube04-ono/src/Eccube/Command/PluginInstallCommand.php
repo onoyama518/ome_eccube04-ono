@@ -29,7 +29,6 @@ class PluginInstallCommand extends Command
         $this
             ->addOption('path', null, InputOption::VALUE_OPTIONAL, 'path of tar or zip')
             ->addOption('code', null, InputOption::VALUE_OPTIONAL, 'plugin code')
-            ->addOption('if-not-exists', null, InputOption::VALUE_NONE, 'If plugin is already installed, skip install.')
             ->setDescription('Install plugin from local.');
     }
 
@@ -39,11 +38,10 @@ class PluginInstallCommand extends Command
 
         $path = $input->getOption('path');
         $code = $input->getOption('code');
-        $ifNotExists = $input->getOption('if-not-exists');
 
         // アーカイブからインストール
         if ($path) {
-            if ($this->pluginService->install($path, $ifNotExists)) {
+            if ($this->pluginService->install($path)) {
                 $io->success('Installed.');
 
                 return 0;
@@ -52,7 +50,7 @@ class PluginInstallCommand extends Command
 
         // 設置済ファイルからインストール
         if ($code) {
-            $this->pluginService->installWithCode($code, $ifNotExists);
+            $this->pluginService->installWithCode($code);
             $this->clearCache($io);
             $io->success('Installed.');
 

@@ -36,6 +36,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Plugin\ProductReview42\Repository\ProductReviewRepository;
 
 class ProductController extends AbstractController
 {
@@ -76,6 +77,10 @@ class ProductController extends AbstractController
 
     private $title = '';
 
+
+    protected $productReviewRepository;
+
+
     /**
      * ProductController constructor.
      *
@@ -94,7 +99,8 @@ class ProductController extends AbstractController
         ProductRepository $productRepository,
         BaseInfoRepository $baseInfoRepository,
         AuthenticationUtils $helper,
-        ProductListMaxRepository $productListMaxRepository
+        ProductListMaxRepository $productListMaxRepository,
+        ProductReviewRepository $productReviewRepository
     ) {
         $this->purchaseFlow = $cartPurchaseFlow;
         $this->customerFavoriteProductRepository = $customerFavoriteProductRepository;
@@ -103,6 +109,7 @@ class ProductController extends AbstractController
         $this->BaseInfo = $baseInfoRepository->get();
         $this->helper = $helper;
         $this->productListMaxRepository = $productListMaxRepository;
+        $this->productReviewRepository = $productReviewRepository;
     }
 
     /**
@@ -124,7 +131,7 @@ class ProductController extends AbstractController
         }
 
         // searchForm
-        /** @var \Symfony\Component\Form\FormBuilderInterface $builder */
+        /* @var $builder \Symfony\Component\Form\FormBuilderInterface */
         $builder = $this->formFactory->createNamedBuilder('', SearchProductType::class);
 
         if ($request->getMethod() === 'GET') {
@@ -133,13 +140,13 @@ class ProductController extends AbstractController
 
         $event = new EventArgs(
             [
-                'builder' => $builder,
-            ],
+            'builder' => $builder,
+      ],
             $request
         );
         $this->eventDispatcher->dispatch($event, EccubeEvents::FRONT_PRODUCT_INDEX_INITIALIZE);
 
-        /** @var \Symfony\Component\Form\FormInterface $searchForm */
+        /* @var $searchForm \Symfony\Component\Form\FormInterface */
         $searchForm = $builder->getForm();
 
         $searchForm->handleRequest($request);
@@ -150,16 +157,16 @@ class ProductController extends AbstractController
 
         $event = new EventArgs(
             [
-                'searchData' => $searchData,
-                'qb' => $qb,
-            ],
+            'searchData' => $searchData,
+            'qb' => $qb,
+      ],
             $request
         );
         $this->eventDispatcher->dispatch($event, EccubeEvents::FRONT_PRODUCT_INDEX_SEARCH);
         $searchData = $event->getArgument('searchData');
 
         $query = $qb->getQuery()
-            ->useResultCache(true, $this->eccubeConfig['eccube_result_cache_lifetime_short']);
+          ->useResultCache(true, $this->eccubeConfig['eccube_result_cache_lifetime_short']);
 
         /** @var SlidingPagination $pagination */
         $pagination = $paginator->paginate(
@@ -167,6 +174,15 @@ class ProductController extends AbstractController
             !empty($searchData['pageno']) ? $searchData['pageno'] : 1,
             !empty($searchData['disp_number']) ? $searchData['disp_number']->getId() : $this->productListMaxRepository->findOneBy([], ['sort_no' => 'ASC'])->getId()
         );
+        $reviewAvgList = [];
+        $reviewCountList = [];
+
+        foreach ($pagination as $Product) {
+            $avgResult = $this->productReviewRepository->getAvgAll($Product);
+            $reviewAvgList[$Product->getId()] = $avgResult['recommend_avg'] ?? 0;
+            $reviewCountList[$Product->getId()] = $avgResult['review_count'] ?? 0;
+        }
+
 
         $ids = [];
         foreach ($pagination as $Product) {
@@ -177,15 +193,15 @@ class ProductController extends AbstractController
         // addCart form
         $forms = [];
         foreach ($pagination as $Product) {
-            /** @var \Symfony\Component\Form\FormBuilderInterface $builder */
+            /* @var $builder \Symfony\Component\Form\FormBuilderInterface */
             $builder = $this->formFactory->createNamedBuilder(
                 '',
                 AddCartType::class,
                 null,
                 [
-                    'product' => $ProductsAndClassCategories[$Product->getId()],
-                    'allow_extra_fields' => true,
-                ]
+                'product' => $ProductsAndClassCategories[$Product->getId()],
+                'allow_extra_fields' => true,
+        ]
             );
             $addCartForm = $builder->getForm();
 
@@ -195,11 +211,13 @@ class ProductController extends AbstractController
         $Category = $searchForm->get('category_id')->getData();
 
         return [
-            'subtitle' => $this->getPageTitle($searchData),
-            'pagination' => $pagination,
-            'search_form' => $searchForm->createView(),
-            'forms' => $forms,
-            'Category' => $Category,
+          'subtitle' => $this->getPageTitle($searchData),
+          'pagination' => $pagination,
+          'search_form' => $searchForm->createView(),
+          'forms' => $forms,
+          'Category' => $Category,
+          'ProductReviewAvgList' => $reviewAvgList, // ★追加
+          'ProductReviewCountList' => $reviewCountList, // ★追加
         ];
     }
 
@@ -221,21 +239,22 @@ class ProductController extends AbstractController
             throw new NotFoundHttpException();
         }
 
+        // カートフォームの作成
         $builder = $this->formFactory->createNamedBuilder(
             '',
             AddCartType::class,
             null,
             [
-                'product' => $Product,
-                'id_add_product_id' => false,
-            ]
+            'product' => $Product,
+            'id_add_product_id' => false,
+      ]
         );
 
         $event = new EventArgs(
             [
-                'builder' => $builder,
-                'Product' => $Product,
-            ],
+            'builder' => $builder,
+            'Product' => $Product,
+      ],
             $request
         );
         $this->eventDispatcher->dispatch($event, EccubeEvents::FRONT_PRODUCT_DETAIL_INITIALIZE);
@@ -246,13 +265,90 @@ class ProductController extends AbstractController
             $is_favorite = $this->customerFavoriteProductRepository->isFavorite($Customer, $Product);
         }
 
-        return [
-            'title' => $this->title,
-            'subtitle' => $Product->getName(),
-            'form' => $builder->getForm()->createView(),
-            'Product' => $Product,
-            'is_favorite' => $is_favorite,
+        // --- 最近見た商品 保存処理 ---
+        $session = $request->getSession();
+        $recentProducts = $session->get('recent_products', []);
+
+        $productData = [
+          'id' => $Product->getId(),
+          'name' => $Product->getName(),
+          'image' => $Product->getMainListImage() ? $Product->getMainListImage()->getFileName() : null,
         ];
+
+        $recentProducts = array_filter($recentProducts, function ($item) use ($Product) {
+            return $item['id'] !== $Product->getId();
+        });
+
+        array_unshift($recentProducts, $productData);
+        $recentProducts = array_slice($recentProducts, 0, 4);
+        $session->set('recent_products', $recentProducts);
+
+        // --- レビュー情報（現在の商品） ---
+
+        // --- レビュー情報（現在の商品） ---
+        $ProductId = $Product->getId();
+        $avgResult = $this->productReviewRepository->getAvgAll($Product);
+        $avg = $avgResult['recommend_avg'] ?? 0;
+        $count = $avgResult['review_count'] ?? 0;
+
+        // ★ここで代入
+        $ProductReviewAvgList = [$ProductId => $avg];
+        $ProductReviewCountList = [$ProductId => $count];
+
+
+        // --- 関連商品のレビュー情報 ---
+        $relatedReviewAvgList = [];
+        $relatedReviewCountList = [];
+
+        foreach ($Product->getRelatedProducts() as $RelatedProduct) {
+            $ChildProduct = $RelatedProduct->getChildProduct();
+            if ($ChildProduct && $ChildProduct->getStatus()->getId() === \Eccube\Entity\Master\ProductStatus::DISPLAY_SHOW) {
+                $avgResult = $this->productReviewRepository->getAvgAll($ChildProduct);
+                $relatedReviewAvgList[$ChildProduct->getId()] = $avgResult['recommend_avg'] ?? 0;
+                $relatedReviewCountList[$ChildProduct->getId()] = $avgResult['review_count'] ?? 0;
+            }
+        }
+        // --- ランキング商品用レビュー情報追加 ---
+        $rankingProductIds = [14, 300, 27, 269, 301, 13]; // 固定でOKならベタ書きで
+
+        $rankingAvgList = [];
+        $rankingCountList = [];
+
+        foreach ($rankingProductIds as $rankingProductId) {
+            $TargetProduct = $this->productRepository->find($rankingProductId);
+            if ($TargetProduct) {
+                $avgResult = $this->productReviewRepository->getAvgAll($TargetProduct);
+                $rankingAvgList[$rankingProductId] = $avgResult['recommend_avg'] ?? 0;
+                $rankingCountList[$rankingProductId] = $avgResult['review_count'] ?? 0;
+            }
+        }
+
+        return [
+          'title' => $this->title,
+          'subtitle' => $Product->getName(),
+          'form' => $builder->getForm()->createView(),
+          'Product' => $Product,
+          'is_favorite' => $is_favorite,
+          'ProductReviewAvgList' => $ProductReviewAvgList, // ★修正済み
+          'ProductReviewCountList' => $ProductReviewCountList, // ★修正済み
+          'RelatedProductReviewAvgList' => $relatedReviewAvgList,
+          'RelatedProductReviewCountList' => $relatedReviewCountList,
+          'RankingReviewAvgList' => $rankingAvgList,
+          'RankingReviewCountList' => $rankingCountList,
+        ];
+    }
+
+    /**
+     * 履歴をすべて削除
+     *
+     * @Route("/clear-recent-products", name="clear_recent_products")
+     */
+    public function clearRecentProducts(Request $request)
+    {
+        // セッションから履歴を削除
+        $this->session->remove('recent_products');
+
+        return $this->redirectToRoute('homepage'); // 適切なリダイレクト先
     }
 
     /**
@@ -266,8 +362,8 @@ class ProductController extends AbstractController
 
         $event = new EventArgs(
             [
-                'Product' => $Product,
-            ],
+            'Product' => $Product,
+      ],
             $request
         );
         $this->eventDispatcher->dispatch($event, EccubeEvents::FRONT_PRODUCT_FAVORITE_ADD_INITIALIZE);
@@ -279,8 +375,8 @@ class ProductController extends AbstractController
 
             $event = new EventArgs(
                 [
-                    'Product' => $Product,
-                ],
+                'Product' => $Product,
+        ],
                 $request
             );
             $this->eventDispatcher->dispatch($event, EccubeEvents::FRONT_PRODUCT_FAVORITE_ADD_COMPLETE);
@@ -294,8 +390,8 @@ class ProductController extends AbstractController
 
             $event = new EventArgs(
                 [
-                    'Product' => $Product,
-                ],
+                'Product' => $Product,
+        ],
                 $request
             );
             $this->eventDispatcher->dispatch($event, EccubeEvents::FRONT_PRODUCT_FAVORITE_ADD_COMPLETE);
@@ -322,21 +418,21 @@ class ProductController extends AbstractController
             AddCartType::class,
             null,
             [
-                'product' => $Product,
-                'id_add_product_id' => false,
-            ]
+            'product' => $Product,
+            'id_add_product_id' => false,
+      ]
         );
 
         $event = new EventArgs(
             [
-                'builder' => $builder,
-                'Product' => $Product,
-            ],
+            'builder' => $builder,
+            'Product' => $Product,
+      ],
             $request
         );
         $this->eventDispatcher->dispatch($event, EccubeEvents::FRONT_PRODUCT_CART_ADD_INITIALIZE);
 
-        /** @var \Symfony\Component\Form\FormInterface $form */
+        /* @var $form \Symfony\Component\Form\FormInterface */
         $form = $builder->getForm();
         $form->handleRequest($request);
 
@@ -349,10 +445,10 @@ class ProductController extends AbstractController
         log_info(
             'カート追加処理開始',
             [
-                'product_id' => $Product->getId(),
-                'product_class_id' => $addCartData['product_class_id'],
-                'quantity' => $addCartData['quantity'],
-            ]
+            'product_id' => $Product->getId(),
+            'product_class_id' => $addCartData['product_class_id'],
+            'quantity' => $addCartData['quantity'],
+      ]
         );
 
         // カートへ追加
@@ -379,17 +475,17 @@ class ProductController extends AbstractController
         log_info(
             'カート追加処理完了',
             [
-                'product_id' => $Product->getId(),
-                'product_class_id' => $addCartData['product_class_id'],
-                'quantity' => $addCartData['quantity'],
-            ]
+            'product_id' => $Product->getId(),
+            'product_class_id' => $addCartData['product_class_id'],
+            'quantity' => $addCartData['quantity'],
+      ]
         );
 
         $event = new EventArgs(
             [
-                'form' => $form,
-                'Product' => $Product,
-            ],
+            'form' => $form,
+            'Product' => $Product,
+      ],
             $request
         );
         $this->eventDispatcher->dispatch($event, EccubeEvents::FRONT_PRODUCT_CART_ADD_COMPLETE);

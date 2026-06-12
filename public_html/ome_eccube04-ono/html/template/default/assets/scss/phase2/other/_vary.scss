@@ -1,0 +1,445 @@
+.btn-download {
+  width: initial;
+  display: inline-block;
+  background-color: #007bff; /* プライマリカラー */
+  color: #fff; /* テキストカラー */
+  padding: 10px 20px; /* パディング */
+  font-size: 16px; /* フォントサイズ */
+  font-weight: bold; /* フォントの太さ */
+  border: none; /* 枠線をなくす */
+  border-radius: 5px; /* ボタンを少し丸く */
+  text-decoration: none; /* テキストの下線をなくす */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* ボタンに影を追加 */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* ホバー時のエフェクト */
+}
+
+.btn-download:hover {
+  background-color: #0056b3; /* ホバー時の色変更 */
+  transform: translateY(-2px); /* ホバー時の浮き上がりエフェクト */
+  text-decoration: none; /* 下線を再確認 */
+}
+
+.btn-download:active {
+  background-color: #003d80; /* クリック時の色変更 */
+  transform: translateY(1px); /* クリック時に押し下げるエフェクト */
+}
+
+body {
+  line-height: 1.5;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+@media print {
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+  }
+  @page {
+    margin: 0; /* 印刷時の余白をゼロに設定 */
+  }
+}
+.page_receipt {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.receipt-container {
+  position: relative;
+  top: 0; /* 最上部に固定 */
+  width: 100%;
+  max-width: 210mm; /* A4の幅 */
+  min-height: 297mm; /* A4の高さ */
+  margin: 0; /* 要素自体の余白をゼロに設定 */
+  padding: 0; /* 内側余白をゼロに設定 */
+  box-sizing: border-box;
+  padding: 20px;
+  border: 1px solid #ddd;
+  page-break-inside: avoid; /* ページ途中で切れないようにする */
+  overflow: hidden; /* はみ出しを防ぐ */
+}
+.receipt-header {
+  display: flex;
+  justify-content: space-between;
+  .logo_receipt {
+    width: 270px;
+    @media screen and (max-width: 768px) {
+      width: 180px;
+    }
+    @media print {
+      width: 270px;
+    }
+  }
+  p {
+    display: flex;
+    align-items: center;
+    transform: translateY(-1px);
+    @media screen and (max-width: 500px) {
+      font-size: 10px;
+    }
+  }
+}
+.shop_information {
+  position: relative;
+  .receipt_kakuin {
+    position: absolute;
+    right: 0;
+    top: 0;
+
+    width: 80px;
+  }
+}
+.receipt-header,
+.receipt-footer {
+  text-align: right;
+  font-size: 12px;
+}
+.receipt-title {
+  text-align: center;
+  font-size: 20px;
+  margin-top: 20px;
+}
+.receipt-info-section {
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+.receipt-info-section p {
+  margin: 5px 0;
+}
+.receipt-section-title {
+  font-size: 13px;
+  border-bottom: 1px solid #333;
+  margin-bottom: 10px;
+}
+.receipt-table {
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+.receipt-table th,
+.receipt-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+.receipt-summary {
+  text-align: right;
+}
+.button-container {
+  text-align: center;
+  margin-top: 20px;
+}
+.button-container button {
+  display: inline-block;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 10px;
+  transition: background-color 0.3s ease;
+}
+.button-container button:hover {
+  background-color: #0056b3;
+}
+.button-container button:active {
+  background-color: #003d80;
+}
+/* 印刷時に特定の要素を非表示にする */
+@media print {
+  .button-container {
+    display: none;
+  }
+}
+.area_flex_receipt {
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-between;
+  .receipt_info {
+    br {
+      display: none;
+    }
+  }
+
+  @media screen and (max-width: 500px) {
+    gap: 20px;
+    .receipt_info {
+      font-size: 12px;
+      p {
+        width: fit-content;
+      }
+      br {
+        display: block;
+      }
+    }
+    .shop_information {
+      font-size: 12px;
+      p {
+        width: fit-content;
+      }
+      img {
+        width: 40px;
+      }
+    }
+  }
+}
+@media screen and (max-width: 500px) {
+  .receipt-info-section {
+    font-size: 12px;
+    .receipt-section-title {
+      font-size: 14px !important;
+    }
+    .receipt-table {
+      font-size: 12px;
+    }
+    .receipt-summary {
+      font-size: 12px;
+    }
+  }
+}
+@media print {
+  .receipt-container {
+    width: 210mm; /* A4サイズにフィット */
+  }
+}
+
+.area_flex_history {
+  margin: 30px 0;
+  display: flex;
+  justify-content: space-between;
+  @media screen and (max-width: 768px) {
+    gap: 15px;
+    flex-direction: column;
+    .btn-download {
+      max-width: 320px;
+      width: 80%;
+      margin: 0 auto;
+      text-align: center;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .order-by-options {
+    padding: 0 5%;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    a {
+      text-align: center;
+    }
+  }
+  .ec-productRole__description {
+    .info_area {
+      font-size: 13px !important;
+      text-align: center !important;
+      .video-container {
+        width: initial !important;
+        height: 55vw;
+      }
+    }
+    .video-container {
+      width: initial !important;
+      height: 55vw;
+    }
+  }
+}
+
+.ec-productRole__description {
+  table th,
+  table td {
+    word-break: break-word;
+    text-align: left !important;
+    br {
+      display: block !important;
+    }
+    p {
+      text-align: left !important;
+    }
+  }
+}
+
+.add-cart {
+  background-color: #997545;
+  color: #f3f3f3;
+  font-size: 20px !important;
+  border-radius: 4px;
+  font-weight: bold;
+  width: fit-content;
+  display: block;
+  height: 74px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 16px 16px;
+  @media screen and (max-width: 768px) {
+    width: 100% !important;
+  }
+  &:hover {
+    opacity: 0.7;
+    transition: all 0.3s;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  div.sub_area h3.detailtext_ex,
+  div#detailarea h3.detailtext_ex {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 768px) {
+  .detailrightbloc-right {
+    padding: 0 !important;
+  }
+}
+#cart_quantity {
+  margin-bottom: 20px;
+  padding: 8px 15px;
+  background-color: #fff;
+  border-radius: 30px;
+  border: 1px solid #997545;
+  width: fit-content;
+
+  ul {
+    margin: 0 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5px;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      font-size: 30px;
+      cursor: pointer;
+      &.not_zero {
+        color: #969696;
+        opacity: 0.4;
+      }
+      &.cart_plus {
+        font-size: 26px;
+        color: #3e3e3e;
+
+      }
+      &.cart_minus {
+        font-size: 26px;
+        color: #3e3e3e;
+        @media screen and (max-width: 768px) {
+          transform: translateY(-3px);
+        }
+      }
+      &.at_max {
+        color: #969696;
+        opacity: 0.4;
+      }
+    }
+    input {
+      border: none;
+      font-size: 20px;
+      text-align: center;
+      padding: 0 !important;
+    }
+  }
+}
+
+//FB74
+@media screen and (max-width: 768px) {
+  #RelatedProduct-product_area {
+    .uresuji-inner {
+      width: 100% !important;
+
+      tr {
+        gap: 20px;
+        td {
+          padding: 0 !important;
+        }
+      }
+    }
+  }
+}
+
+//FB74
+@media screen and (max-width: 768px) {
+  #uresuji-ranking {
+    .uresuji-inner {
+      width: 90% !important;
+      overflow-x: scroll;
+      table {
+        overflow-x: scroll;
+        width: 200%;
+        tr {
+          display: flex;
+          gap: 20px;
+          td {
+            padding: 0 !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+@media screen and (max-width: 768px) {
+  #pr-uresuji-ranking {
+    .uresuji-inner {
+      width: 100% !important;
+      overflow-x: scroll;
+      table {
+        overflow-x: scroll;
+        width: 200%;
+        tr {
+          display: flex;
+          gap: 20px;
+          td {
+            padding: 0 !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+//FB41
+#news {
+  dl {
+    height: 400px;
+    @media screen and (max-width: 768px) {
+      height: 300px;
+    }
+
+    dd {
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 25px;
+      @media screen and (max-width: 768px) {
+        max-height: 66px;
+      }
+      &::before {
+        @media screen and (max-width: 768px) {
+          top: 64px;
+        }
+      }
+    }
+    dt {
+      margin-top: 25px;
+    }
+  }
+}

@@ -111,4 +111,11 @@ class PaymentRepository extends AbstractRepository
 
         return $payments;
     }
+    public function getConfirmPage()
+    {
+        return $this->findOneBy([
+            'confirm_file_name' => 'Mypage/change_confirm.twig', // 確認画面のテンプレートファイル名
+            'edit_type' => Page::EDIT_TYPE_DEFAULT_CONFIRM,
+        ]);
+    }
 }

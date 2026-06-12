@@ -15,8 +15,6 @@ namespace Eccube\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Security\Core\User\LegacyPasswordAuthenticatedUserInterface;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
@@ -31,7 +29,7 @@ if (!class_exists('\Eccube\Entity\Member')) {
      * @ORM\HasLifecycleCallbacks()
      * @ORM\Entity(repositoryClass="Eccube\Repository\MemberRepository")
      */
-    class Member extends \Eccube\Entity\AbstractEntity implements UserInterface, PasswordAuthenticatedUserInterface, LegacyPasswordAuthenticatedUserInterface, \Serializable
+    class Member extends \Eccube\Entity\AbstractEntity implements UserInterface, \Serializable
     {
         public static function loadValidatorMetadata(ClassMetadata $metadata)
         {
@@ -52,7 +50,7 @@ if (!class_exists('\Eccube\Entity\Member')) {
         /**
          * {@inheritdoc}
          */
-        public function getRoles(): array
+        public function getRoles()
         {
             return ['ROLE_ADMIN'];
         }
@@ -315,7 +313,7 @@ if (!class_exists('\Eccube\Entity\Member')) {
          *
          * @return string
          */
-        public function getPassword(): ?string
+        public function getPassword()
         {
             return $this->password;
         }
@@ -339,7 +337,7 @@ if (!class_exists('\Eccube\Entity\Member')) {
          *
          * @return string
          */
-        public function getSalt(): ?string
+        public function getSalt()
         {
             return $this->salt;
         }
@@ -601,11 +599,6 @@ if (!class_exists('\Eccube\Entity\Member')) {
                 $this->login_id,
                 $this->password,
                 $this->salt) = unserialize($serialized);
-        }
-
-        public function getUserIdentifier(): string
-        {
-            return $this->login_id;
         }
     }
 }

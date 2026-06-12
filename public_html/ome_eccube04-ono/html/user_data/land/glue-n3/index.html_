@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+
+<title>まつげエクステ商材・通販専門 omeエンタープライズ | 初回限定!国産グルー2500円お試しキャンペーン!!</title>
+<meta content="まつげ,エクステ,まつ毛,通販,まつげエクステ商材,国産グルー,商材" name="keywords">
+<link rel="stylesheet" type="text/css" href="01.css" media="all" />
+</head>
+
+<body>
+<noscript>
+    <p>JavaScript を有効にしてご利用下さい.</p>
+</noscript>
+
+<div id="warp">
+    <a name="top" id="top"></a>
+
+                        
+<div id="contens">
+                     
+<div id="main">
+
+<div id="lpWarp">
+<form name="form1" method="post" action="/products/detail.php?">
+<input type="hidden" name="land" value="1">
+<input type="hidden" name="mode" value="cart" />
+<input type="hidden" name="product_id" value="61" />
+<input type="hidden" name="product_class_id" value="158" id="product_class_id" />
+<input type="hidden" name="favorite_product_id" value="" />
+<input type="hidden" name="quantity" value="1" />
+</form>
+
+	<p class="img">
+    <img src="img/n3-top.png" alt="ロングメディカル系 国産ブラックグルー お試しキャンペーン!!" /></p>
+	
+	<p class="buy2">
+    <a href="javascript:void(document.form1.submit())"><img src="img/01_button2-n3.png" alt="2500円で購入する" /></a>    </p>
+	
+	<p class="img">
+    <img src="img/01_02.jpg" alt="ome enterprises productsは美容成分を配合した、次世代グルーを開発しました" />
+    </p>
+
+    <p class="img">
+    <img src="img/01_03.jpg" alt="冷蔵保存(未開封)では約8ヶ月の保存を実現!!" />
+    </p>
+
+    <p class="buy">
+    <a href="javascript:void(document.form1.submit())"><img src="img/01_button2-n3.png" alt="2500円で購入する" /></a>
+    </p>
+
+	<p class="img">
+    <img src="img/01_04_2.jpg" alt="長期保存・美容成分配合だけではありません!! 安心の国内生産" />
+    </p>
+
+    <p class="img">
+    <img src="img/01_05.jpg" alt="業界初のチューブタイプ" />
+    </p>
+
+    <p class="img">
+    <img src="img/01_06_2.jpg" alt="オイルクレンジング使用可能" />
+    </p>
+
+
+    <p class="img">
+    <img src="img/01_07.jpg" alt="業界随一の保存性" />
+    </p>
+
+
+    <p class="img">
+    <img src="img/01_09_2.jpg" alt="ご利用者さまの声1" />
+    </p>
+
+    <p class="img"><img src="img/01_10_2.jpg" alt="ご利用者さまの声2" /></p>
+
+    <p class="buy">
+    <a href="javascript:void(document.form1.submit())"><img src="img/01_button2-n3.png" alt="2500円で購入する" /></a>
+    </p>
+
+</div>
+</div>
+</div>
+</div>
+
+</body>
+</html>

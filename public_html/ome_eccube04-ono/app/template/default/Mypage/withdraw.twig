@@ -1,0 +1,105 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% extends 'default_frame.twig' %}
+
+{% set mypageno = 'withdraw' %}
+
+{% set body_class = 'mypage' %}
+
+{% block main %}
+	<div id="undercolumn">
+		<div class="ec-layoutRole__main" id="mypagecolumn">
+			<div class="ec-mypageRole">
+				<div class="ec-pageHeader">
+					<h2 class="title">{{ 'マイページ'|trans }}</h2>
+				</div>
+				{{ include('Mypage/navi.twig') }}
+			</div>
+			<div class="ec-withdrawRole" id="mycontents_area">
+				<h3>退会手続き(入力ページ)</h3>
+
+
+				<form method="post" action="{{ url('mypage_withdraw') }}" id="withdraw_form">
+					{{ form_widget(form._token) }}
+					<div class="ec-off3Grid" id="complete_area">
+						<div class="message">会員を退会された場合には、現在保存されている購入履歴や、<br/>
+							お届け先などの情報は、すべて削除されますがよろしいでしょうか？</div>
+						<div class="message_area">
+							<p>退会手続きが完了した時点で、現在保存されている購入履歴や、<br/>
+								お届け先等の情報はすべてなくなりますのでご注意ください。</p>
+			  {% include "Block/recaptcha-link.twig" %}
+              
+							<div class="btn_area">
+								<ul>
+
+									<li>
+										<button type="submit" class="ec-blockBtn--cancel btn_confirm btn_revise btn_not_orange" name="mode" value="confirm">
+											会員退会手続きへ
+										</button>
+										<style>
+											.btn_confirm {
+												transition: opacity 0.3s ease; /* マウスオーバー時の滑らかな変化を追加 */
+											}
+
+											.btn_confirm:hover {
+												opacity: 0.7; /* マウスオーバー時に不透明度を下げる */
+											}
+										</style>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+
+				</form>
+				<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+				<script src="https://www.google.com/recaptcha/api.js?render={{ constant('Customize\\Util\\RecaptchaUtil::SITE_KEY') }}"></script>
+				<script>
+				grecaptcha.ready(function() {
+					var form = $('#withdraw_form');
+					var recaptchaInput = $("<input>").attr({
+						type: 'hidden', 
+						name: '{{ constant('Customize\\Util\\RecaptchaUtil::INPUT_NAME') }}'
+					});
+					var submitButton = null;
+
+					form.append(recaptchaInput);
+
+					// ボタンクリックを監視してどのボタンが押されたかを記録
+					form.find('button[type="submit"]').on('click', function(e) {
+						submitButton = $(this);
+					});
+
+					form.on('submit', function(e){
+						e.preventDefault();
+						
+						grecaptcha.execute('{{ constant('Customize\\Util\\RecaptchaUtil::SITE_KEY') }}', {action: 'mypage_withdraw'}).then(function(token) {
+							recaptchaInput.val(token);
+							
+							// ボタンの name/value を hidden フィールドとして追加
+							if (submitButton && submitButton.attr('name') && submitButton.attr('value')) {
+								var modeInput = $('<input>').attr({
+									type: 'hidden',
+									name: submitButton.attr('name'),
+									value: submitButton.attr('value')
+								});
+								form.append(modeInput);
+							}
+							
+							form.off('submit')[0].submit();
+						});
+					});
+				});
+				</script>
+			</div>
+		</div>
+	</div>
+{% endblock %}

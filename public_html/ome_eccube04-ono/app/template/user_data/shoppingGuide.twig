@@ -1,0 +1,288 @@
+{% extends 'default_frame.twig' %}
+
+{% block main %}
+	<!-- ＊ショッピングガイド(shopping-guide)ここから＊ -->
+
+	<div id="undercolumn_pages">
+
+		<h2 class="title" style="text-align: center;" id="sp-g01">ショッピングガイド</h2>
+
+		<p style="width:90%; font-size: 16px; line-height: 25px; margin:0 auto 20px; text-align: center;">
+			omeエンタープライズオンラインショップをご利用頂きありがとうございます。<br/>
+			当社では、インターネットを通じて、まつげエクステンションのプロ用商材を販売しております。<br/>
+			このコンテンツでは、販売に関してのショッピングガイドとなっております。
+		</p>
+
+
+		<!--ご購入について-->
+		<div class="shoppingBox">
+
+			<div class="img">
+				<img src={{ app.config.user_data_url ~ 'packages/default/img_2018/shopping/shoppingImg01.gif' }} alt="販売方法"/>
+			</div>
+
+			<div class="text" id="sp-g02">
+				<p class="title">
+					<span><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/icon/shoppingGuide01.png' }} alt="ご購入について"/></span>
+					ご購入について
+				</p>
+
+				<p class="text">
+					まつげエクステンションを不特定多数の方に対して美容目的の施術営業を行う場合は、保健所への美容所登録が義務付けられ、施術を行う人は美容師免許の保持が美容師法にて定められております。<br/>
+					omeエンタープライズでは、美容師免許を保持するアイデザイナーが施術を担当する、美容所登録済みサロン様への販売を行っております。<br/>
+					一般消費者様や美容師免許をお持ちでないアイデザイナー様・美容所登録がお済みでないサロン様への販売は行っておりません。<br/>
+					ご新規でご注文の場合は、お電話にて確認のご連絡を差し上げる場合もございます。<br/>
+					ご理解・ご協力をお願い申し上げます。<br/>
+					また、商品は使用目的に合った用法でご使用をいただき、保管についても十分なご注意をお願いいたします。<br/>
+					ご使用は自己責任とさせていただき、何らかのトラブルが発生した際、ご相談をお受けする事は可能ですが、責任は一切負いかねます。ご理解の上ご使用ください。<br/>
+				</p>
+			</div>
+
+		</div>
+
+
+		<!--お支払いついて-->
+		<div class="shoppingBox">
+
+			<div class="img">
+				<img src={{ app.config.user_data_url ~ 'packages/default/img_2018/shopping/shoppingImg02.gif' }} alt="配送について"/>
+			</div>
+
+			<a name="cool"></a>
+			<div class="text">
+				<p class="title">
+					<span><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/icon/shoppingGuide02.png' }} alt="配送について"/></span>
+					配送について
+				</p>
+
+				<p class="text">
+					<em>
+						■<B>配送方法</B>
+					</em><br/>
+					「通常配送」「クール便」からお選びいただけます。<br/>
+					配送時の温度環境が気になる方はクール便をご利用下さい。（クール便の温度は2～10℃となります）<br/>
+					複数商材をご購入いただいた場合に通常配送・クール便を使い分ける事はできません。<br/>
+					<span style="font-size:11px;">※弊社指定の配送業者よりお届けいたします。</span>
+				</p>
+				<br/>
+				<p class="text">
+					<em>
+						■<B>発送</B>
+					</em><br/>
+					<span style="font-weight:bold;">◆「クレジットカード」「代金引換支払い」にて購入◆</span><br/>
+					「平日14時」までのご注文で当日発送いたします。<br/>
+					<span style="font-size:11px;">（14時以降・土日祝日のご注文は翌営業日の発送となります）</span><br/>
+					<br/>
+					<span style="font-weight:bold;">◆銀行振込支払いにて購入◆</span><br/>
+					入金確認後、3営業日以内に発送いたします。<br/>
+				</p>
+				<br/>
+				<p class="text">
+					<em>
+						■<B>日時指定</B>
+					</em><br/>
+					<span style="font-weight:bold;">◆お届け日◆</span><br/>
+					ご注文日より5営業日以降からご指定をお受けしております。<br/>
+					<br/>
+					<span style="font-weight:bold;">◆お届け時間◆</span><br/>
+					「9～12時」「12～14時」「14～16時」「16～18時」「18～21時」の全5種類の時間帯からお選びいただけます。<br/>
+					<br/>
+					最短日・最短時間でのお届けをご希望の際は、「指定なし」を選択ください。<br/>
+					運送会社・道路交通の状況により配達時間は前後いたします。<br/>
+				</p>
+
+			</div>
+
+		</div>
+
+
+		<!--ポイントについて-->
+		<div class="shoppingBox">
+
+			<div class="img">
+				<img src={{ app.config.user_data_url ~ 'packages/default/img_2018/shopping/shoppingImg04.gif' }} alt="ポイントについて"/>
+			</div>
+
+
+			<div class="text" id="sp-g05">
+				<p class="title">
+					<span><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/icon/shoppingGuide04.png' }} alt="ポイントについて"/></span>
+					ポイントについて
+				</p>
+
+				<p class="text">
+					オンラインショップからのご注文の場合、商品金額（税抜）の３％をポイントとして、商品発送後に発行いたします。<br/>
+					取得されたポイントは次回以降の決済時に1ポイント = 1円としてご使用いただけます。<br/>
+					保有ポイントについてはオンラインショップ マイページにてご確認いただけます。<br/>
+					<span style="font-size:11px;">※TEL・FAXからのご注文の場合はポイントの付与やご使用はいたしかねます</span>
+				</p>
+			</div>
+		</div>
+
+
+		<!--送料・代引手数料について-->
+		<div class="shoppingBox souryou">
+
+			<div class="img">
+				<img src={{ app.config.user_data_url ~ 'packages/default/img_2018/shopping/shopping-souryou.webp' }} alt="送料について" width="70%"/>
+			</div>
+
+			<div class="text" id="sp-g03">
+
+				<p class="title">
+					送料・代引手数料について
+				</p>
+
+				<em>
+					■<B>送料・代引手数料</B>
+				</em><br/>
+				<span style="font-weight:bold;">◆購入金額¥7,000（税込）未満◆</span><br/>
+				送料全国一律¥700(税込 ¥770)・代引手数料¥300(税込 ¥330)<br/>
+				<br/>
+				<span style="font-weight:bold;">◆購入金額¥7,000（税込）以上◆</span><br/>
+				送料・代引手数料無料<br/>
+				<br/>
+				クール便をご希望の場合は、ご購入金額にかかわらずクール便配送料金の ¥200(税抜)が掛かってまいります。
+			</div>
+
+		</div>
+
+		<style>
+			#sp-g03 {
+				display: inline-block;
+				width: 65%;
+				vertical-align: middle;
+				line-height: 20px;
+			}
+
+			@media screen and(max-width: 768px) {
+				#sp-g03 {
+					width: 90%;
+					display: block;
+				}
+				.souryou .img {
+					width: 60% !important;
+					margin-bottom: 20px !important;
+				}
+				.souryou img {
+					width: 100%;
+				}
+			}
+		</style>
+
+
+		<!--配送について-->
+		<div class="shoppingBox">
+
+			<div class="img">
+				<img src={{ app.config.user_data_url ~ 'packages/default/img_2018/shopping/shoppingImg03.gif' }} alt="お支払いと領収書について"/>
+			</div>
+			<div class="text" id="sp-g04">
+				<p class="title">
+					<span><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/icon/shoppingGuide03.png' }} alt="お支払いと領収書について"/></span>
+					お支払いと領収書について
+				</p>
+				<em>
+					■<B>支払方法</B>
+				</em><br/>
+				<p class="text">
+					「<strong>代金引換</strong>」、「<strong>クレジットカード決済</strong>」、「<strong>銀行振込</strong>」からお選びいただけます。<br/>
+					※TEL・FAXからのご注文の場合は代金引換のみとさせていただいております</p>
+				<br/>
+				<p class="text">
+					<span style="font-weight:bold;">◆代金引換◆</span><br/>
+					商品配送時、ドライバーへ直接お支払いください。<br/>
+					<span style="font-size:11px;">※商品合計金額が¥7,000(税込)未満の場合、代引手数料¥300(税抜)が掛かってまいります</span>
+				</p>
+				<span style="font-weight:bold;">◆クレジットカード決済◆</span><br/>
+				VISA、Master Card、JCB、Diners Club、AMERICAN EXPRESSがご利用いただけ、一括・分割支払いがお選びいただけます。<br/>
+				<br/>
+				<span style="font-weight:bold;">◆銀行振込◆</span><br/>
+				お振込口座は「三菱UFJ銀行」となり、振込手数料はお客様のご負担となります。注文直後にご注文受付メールをお送りいたします。<br/>
+				メールに記載のお支払い金額・振込先情報をご確認の上、お振込をお願いいたします。<br/>
+				お支払い期限はご注文確定メールをお送りしてから3営業日以内となります。<br/>
+				メール送付後3営業日以内にお振込が確認出来ない場合は一旦ご注文をキャンセルとさせていただきます。<br/>
+				<br/>
+				<br/>
+				<p class="text">
+					<em>
+						■<B>領収書の発行</B>
+					</em><br/>
+					マイページ（会員ページ）からご購入商品の領収書を発行しております。発行方法は以下の通りです。
+				</p>
+
+				<p class="text">
+					（1）マイページ（会員ページ）にログイン後、「購入履歴一覧」をクリックします。<br>
+					（2）購入履歴の右側にある「領収書をダウンロード」 をクリックして、領収書を発行してください。<br>
+					<br>
+					・領収書の発行は商品発送後に可能となります。<br>
+					・領収書の宛名は会員情報にご登録の会社名・サロン名が反映されます。宛名の変更はできかねます。<br>
+					※ご希望の宛名がある場合は、事前に会員情報内容を変更してからご注文にお進みください。
+				</p>
+
+			</div>
+		</div>
+
+
+		<!--返品交換・返品返金について-->
+		<div class="shoppingBox">
+
+			<div class="img">
+				<img src={{ app.config.user_data_url ~ 'packages/default/img_2018/shopping/shoppingImg05.gif' }} alt="返品・交換について"/>
+			</div>
+
+			<div class="text">
+				<p class="title">
+					<span><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/icon/shoppingGuide05.png' }} alt="返品・交換について"/></span>
+					返品交換・返品返金について
+				</p>
+
+				<p class="text">
+					◆共通事項◆<br/>
+					購入商品がお手元に届きましたら直ちに包装を解き、内容・数量等のご確認、商品状態を点検ください。
+																														商品の管理・発送には細心の注意を払っておりますが、万が一、不良品（破損・汚損）や発送ミス（ご注文と異なる商品のお届け）が生じた場合は、
+																														弊社の費用負担にて返品交換もしくは返品返金にて対応いたします。
+																														お客様都合による返品交換をご希望の際はお客様の費用負担とさせていただきます。（返品交換時：返品交換配送料/返品返金時：ご購入時配送料・返品配送料・返金振込手数料）
+																														原則的にお客様都合による返品返金対応は行っておりません。<br/>
+					（1）対応は商品到着から7日以内の未開封・未使用品に限ります<br/>
+					（2）お電話またはメールにてご連絡の上、「<a href="{{ asset('assets/pdf/koukan.pdf')}}" target="_blank" class="attention" style="font-weight:bold">返品交換申込書</a>」もしくは「<a href="{{ asset('assets/pdf/henkin.pdf')}}" target="_blank" class="attention" style="font-weight:bold">返品返金申込書</a>」に必要事項を記入後、「返品商品（付属品も含む）」「納品書（コピー可）」を同封しご郵送をお願いいたします。<br/>
+					<span style="font-size:11px;">※事前のご連絡なく上記３点をご郵送された場合、上記３点のうち１点でも同封なくご郵送された場合、返品商品の付属品などが欠陥しご郵送された場合の対応はいたしかねます。</span><br/>
+					（3）オンラインショップからご購入の際の付与ポイントは、差し替え（返品交換時）もしくは差し引き（返品返金時）させていただきます。<br/>
+					（4）どのような理由に関わらず当社へのご連絡が無く商品を返送された場合、一切対応を致しかねます。<br/>
+					（5）輸入商品の塗装ムラ、キズに関しての対応は対象外となります。<br/>
+					（6）商品の使用・使用不可能・配達遅れなどによって生じた、いかなる損害に関して当社では一切の責任を負いかねます。
+				</p>
+				<br/>
+				<p class="text">
+					◆返品交換◆<br/>
+					（1）原則的に同一商品と交換させていただきます<br/>
+					（2）別商品（サイズ・タイプ違いも含む）への交換をご希望の場合は、ご相談ください。だたし、お受けできない場合もございます<br/>
+					（3）当社に交換商品の在庫が不足している場合、交換希望日に間に合わない場合がございます。
+				</p>
+				<br/>
+				<p class="text">
+					◆返品返金◆<br/>
+					（1）セット商品の一部のみの返金はお受けできません。<br/>
+					（2）ご返金の手続きは当社に返品商品が到着後、検品作業を行ってからとなり約10営業日が目安となります。<br/>
+					（3）お客様都合による返品の場合、当社までの送料はお客様負担とさせて頂きます。またご返金金額は振込手数料・ご購入時の送料・代引き手数料（商品購入金額7,000円(税込)以上を超え無料サービスとなった場合も含む）を差し引いた金額になります。<br/>
+					（4）ご返金方法はご購入時のお支払い方法により異なり、以下の通り対応させていただきます。<br/>
+					<br/>
+					●代金引換・銀行振込にて購入<br/>
+					ご指定の銀行口座へ株式会社kichi （キチ）の名義にてお振込みいたします。<br/>
+					<span style="font-size:11px;">※金融機関営業日の都合上１週間程度要する場合がございます。</span>
+					<br/><br/>
+					●クレジットカードにて購入<br/>
+					弊社にてキャンセル処理をさせていただきます。<br/>
+					<span style="font-size:11px;">※カード会社の締日により一度引き落とされ後日返金される場合がございます</span>
+				</p>
+
+			</div>
+		</div>
+
+	</div>
+
+
+</div>
+<!-- lp-wrap -->
+
+<!-- ＊ショッピングガイド(shopping-guide)ここまで＊ -->{% endblock %}

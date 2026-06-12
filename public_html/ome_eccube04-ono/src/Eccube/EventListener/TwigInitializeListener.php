@@ -235,7 +235,6 @@ class TwigInitializeListener implements EventSubscriberInterface
         $this->twig->addGlobal('Page', $Page);
         $this->twig->addGlobal('title', $Page->getName());
         $this->twig->addGlobal('isMaintenance', $this->systemService->isMaintenanceMode());
-        $this->twig->addGlobal('isDebugMode', env('APP_DEBUG'));
     }
 
     public function setAdminGlobals(RequestEvent $event)
@@ -254,9 +253,6 @@ class TwigInitializeListener implements EventSubscriberInterface
             $eccubeNav = $this->getDisplayEccubeNav($eccubeNav, $AuthorityRoles, $baseUrl);
         }
         $this->twig->addGlobal('eccubeNav', $eccubeNav);
-        $this->twig->addGlobal('isMaintenance', $this->systemService->isMaintenanceMode());
-        $this->twig->addGlobal('isDebugMode', env('APP_DEBUG'));
-
     }
 
     /**

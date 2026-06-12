@@ -15,6 +15,7 @@ namespace Eccube\Service;
 
 use Eccube\Common\EccubeConfig;
 use Eccube\Entity\BaseInfo;
+use Eccube\Entity\Customer;
 use Eccube\Entity\OrderItem;
 use Eccube\Entity\Shipping;
 use Eccube\Repository\BaseInfoRepository;
@@ -178,7 +179,7 @@ class OrderPdfService extends Fpdi
     public function makePdf(array $formData)
     {
         // 発行日の設定
-        $this->issueDate = '作成日: '.$formData['issue_date']->format('Y年m月d日');
+        $this->issueDate = '作成日: ' . $formData['issue_date']->format('Y年m月d日');
         // ダウンロードファイル名の初期化
         $this->downloadFileName = null;
 
@@ -203,11 +204,13 @@ class OrderPdfService extends Fpdi
 
             // テンプレートファイルを読み込む
             $Order = $Shipping->getOrder();
+            $Customer = $Order->getCustomer();
+
             if ($Order->isMultiple()) {
                 // 複数配送の時は読み込むテンプレートファイルを変更する
-                $userPath = $this->eccubeConfig->get('eccube_html_admin_dir').'/assets/pdf/nouhinsyo_multiple.pdf';
+                $userPath = $this->eccubeConfig->get('eccube_html_admin_dir') . '/assets/pdf/nouhinsyo_multiple.pdf';
             } else {
-                $userPath = $this->eccubeConfig->get('eccube_html_admin_dir').'/assets/pdf/nouhinsyo.pdf';
+                $userPath = $this->eccubeConfig->get('eccube_html_admin_dir') . '/assets/pdf/nouhinsyo.pdf';
             }
             $this->setSourceFile($userPath);
 
@@ -218,7 +221,7 @@ class OrderPdfService extends Fpdi
             $this->renderTitle($formData['title']);
 
             // 店舗情報を描画する
-            $this->renderShopData();
+            $this->renderShopData($Customer);
 
             // 注文情報を描画する
             $this->renderOrderData($Shipping);
@@ -259,7 +262,7 @@ class OrderPdfService extends Fpdi
         }
         $this->downloadFileName = self::DEFAULT_PDF_FILE_NAME;
         if ($this->PageNo() == 1) {
-            $this->downloadFileName = 'nouhinsyo-No'.$this->lastOrderId.'.pdf';
+            $this->downloadFileName = 'nouhinsyo-No' . $this->lastOrderId . '.pdf';
         }
 
         return $this->downloadFileName;
@@ -290,50 +293,49 @@ class OrderPdfService extends Fpdi
     }
 
     /**
-     * PDFに店舗情報を設定する
-     * ショップ名、ロゴ画像以外はdtb_helpに登録されたデータを使用する.
+     * 購入者情報を設定する
+     * 
+     * @param Customer $Customer
      */
-    protected function renderShopData()
+    protected function renderShopData(Customer $Customer)
     {
         // 基準座標を設定する
         $this->setBasePosition();
 
-        // ショップ名
-        $this->lfText(125, 58, $this->baseInfoRepository->getShopName(), 8, 'B');
+        // フォント情報のバックアップ
+        $this->backupFont();
 
-        //郵便番号
-        $this->lfText(121, 63, "\u{3012}". ' ' . mb_substr($this->baseInfoRepository->getPostalCode(), 0, 3) . ' - ' . mb_substr($this->baseInfoRepository->getPostalCode(), 3, 4), 8);
+        $this->SetFont(self::FONT_SJIS, 'B', 14);
+        $this->Text(122, 35, '購入者情報');
+        $this->Ln(8);
 
+        // 購入者郵便番号(3012は郵便マークのUTFコード)
+        $text = "\u{3012}" . ' ' . mb_substr($Customer->getPostalCode(), 0, 3) . ' - ' . mb_substr($Customer->getPostalCode(), 3, 4);
+        $this->lfText(123, 46, $text, 10);
 
         // 都道府県+所在地
-        $text = $this->baseInfoRepository->getPref().$this->baseInfoRepository->getAddr01();
-        $this->lfText(125, 66, $text, 8);
-        $this->lfText(125, 69, $this->baseInfoRepository->getAddr02(), 8);
+        $text = $Customer->getPref() . $Customer->getAddr01();
+        $this->lfText(127, 50, $text, 10);
+        $this->lfText(127, 54, $Customer->getAddr02(), 10);
 
-        // 電話番号
-        $text = 'TEL: '.$this->baseInfoRepository->getPhoneNumber();
-        $this->lfText(125, 72, $text, 8); // TEL・FAX
+        // 購入者氏名
+        if (null !== $Customer->getCompanyName()) {
+            // 会社名
+            $text = $Customer->getCompanyName();
+            $this->lfText(127, 60, $text, 11);
+            // 氏名
+            $text = $Customer->getName01() . '　' . $Customer->getName02() . '　様';
+            $this->lfText(127, 64, $text, 11);
+        } else {
+            $text = $Customer->getName01() . '　' . $Customer->getName02() . '　様';
+            $this->lfText(127, 60, $text, 11);
+        }
 
         // メールアドレス
-        if (strlen($this->baseInfoRepository->getEmail01()) > 0) {
-            $text = 'Email: '.$this->baseInfoRepository->getEmail01();
-            $this->lfText(125, 75, $text, 8); // Email
-        }
+        $this->lfText(127, 70, 'E-Mail ≫ ' . $Customer->getEmail(), 10);
 
-        // インボイス登録番号
-        if (!empty($this->baseInfoRepository->getInvoiceRegistrationNumber())) {
-            $text = '登録番号: '.$this->baseInfoRepository->getInvoiceRegistrationNumber();
-            $this->lfText(125, 79, $text, 8);
-        }
-
-        // user_dataにlogo.pngが配置されている場合は優先的に読み込む
-        $logoFile = $this->eccubeConfig->get('eccube_html_dir').'/user_data/assets/pdf/logo.png';
-
-        if (!file_exists($logoFile)) {
-            $logoFile = $this->eccubeConfig->get('eccube_html_admin_dir').'/assets/pdf/logo.png';
-        }
-
-        $this->Image($logoFile, 124, 46, 40);
+        // 電話番号
+        $this->lfText(127, 74, 'TEL ≫ ' . $Customer->getPhoneNumber(), 10);
     }
 
     /**
@@ -371,7 +373,7 @@ class OrderPdfService extends Fpdi
 
         $this->Ln();
         // rtrimを行う
-        $text = preg_replace('/\s+$/us', '', $formData['note1']."\n".$formData['note2']."\n".$formData['note3']);
+        $text = preg_replace('/\s+$/us', '', $formData['note1'] . "\n" . $formData['note2'] . "\n" . $formData['note3']);
         $this->MultiCell(0, 4, $text, '', 2, 'L', 0, '');
 
         // フォント情報の復元
@@ -392,7 +394,7 @@ class OrderPdfService extends Fpdi
         $this->backupFont();
 
         // 文書タイトル（納品書・請求書）
-        $this->SetFont(self::FONT_GOTHIC, '', 15);
+        $this->SetFont(self::FONT_SJIS, '', 15);
         $this->Cell(0, 10, $title, 0, 2, 'C', 0, '');
         $this->Cell(0, 66, '', 0, 2, 'R', 0, '');
         $this->Cell(5, 0, '', 0, 0, 'R', 0, '');
@@ -402,7 +404,7 @@ class OrderPdfService extends Fpdi
     }
 
     /**
-     * 購入者情報を設定する.
+     * お届け先情報を設定する
      *
      * @param Shipping $Shipping
      */
@@ -415,33 +417,63 @@ class OrderPdfService extends Fpdi
         $this->backupFont();
 
         // =========================================
-        // 購入者情報部
+        // お届け先情報部
         // =========================================
 
         $Order = $Shipping->getOrder();
 
+        $this->SetFont(self::FONT_SJIS, 'B', 14);
+        $this->Text(22, 35, 'お届け先情報');
+        $this->Ln(8);
+
         // 購入者郵便番号(3012は郵便マークのUTFコード)
         $text = "\u{3012}" . ' ' . mb_substr($Shipping->getPostalCode(), 0, 3) . ' - ' . mb_substr($Shipping->getPostalCode(), 3, 4);
-        $this->lfText(22, 43, $text, 10);
+        $this->lfText(23, 46, $text, 10);
 
         // 購入者都道府県+住所1
-        // $text = $Order->getPref().$Order->getAddr01();
-        $text = $Shipping->getPref().$Shipping->getAddr01();
-        $this->lfText(27, 47, $text, 10);
-        $this->lfText(27, 51, $Shipping->getAddr02(), 10); // 購入者住所2
+        $text = $Shipping->getPref() . $Shipping->getAddr01();
+        $this->lfText(27, 50, $text, 10);
+        $this->lfText(27, 54, $Shipping->getAddr02(), 10);
 
         // 購入者氏名
         if (null !== $Shipping->getCompanyName()) {
             // 会社名
             $text = $Shipping->getCompanyName();
-            $this->lfText(27, 57, $text, 11);
+            $this->lfText(27, 60, $text, 11);
             // 氏名
-            $text = $Shipping->getName01().'　'.$Shipping->getName02().'　様';
-            $this->lfText(27, 63, $text, 11);
+            $text = $Shipping->getName01() . '　' . $Shipping->getName02() . '　様';
+            $this->lfText(27, 64, $text, 11);
         } else {
-            $text = $Shipping->getName01().'　'.$Shipping->getName02().'　様';
-            $this->lfText(27, 59, $text, 11);
+            $text = $Shipping->getName01() . '　' . $Shipping->getName02() . '　様';
+            $this->lfText(27, 60, $text, 11);
         }
+
+        // 電話番号
+        $this->lfText(27, 70, 'TEL ≫ ' . $Shipping->getPhoneNumber(), 10);
+
+        // 配達日
+        $deliveryDate = $Shipping->getShippingDeliveryDate();
+        if (is_null($deliveryDate)) {
+            $deliveryDateText = '指定なし';
+        } else {
+            $deliveryDateText = $deliveryDate->format('Y-m-d');
+        }
+        $this->lfText(27, 74, '配達日 ≫ ' . $deliveryDateText, 10);
+
+        // 時間指定
+        $deliveryTime = $Shipping->getShippingDeliveryTime();
+        if (is_null($deliveryTime) || $deliveryTime === '') {
+            $deliveryTime = '指定なし';
+        }
+        $this->lfText(27, 78, '時間指定 ≫ ' . $deliveryTime, 10);
+
+        // 支払方法
+        $paymentMethod = $Order->getPayment()->getMethod();
+        $this->lfText(27, 82, '支払方法 ≫ ' . $paymentMethod, 10);
+
+        // 配送方法
+        $deliveryMethod = $Shipping->getDelivery();
+        $this->lfText(27, 86, '配送方法 ≫ ' . $deliveryMethod, 10);
 
         // =========================================
         // お買い上げ明細部
@@ -498,21 +530,21 @@ class OrderPdfService extends Fpdi
             $classCategory = '';
             /** @var OrderItem $OrderItem */
             if ($OrderItem->getClassCategoryName1()) {
-                $classCategory .= ' [ '.$OrderItem->getClassCategoryName1();
+                $classCategory .= ' [ ' . $OrderItem->getClassCategoryName1();
                 if ($OrderItem->getClassCategoryName2() == '') {
                     $classCategory .= ' ]';
                 } else {
-                    $classCategory .= ' * '.$OrderItem->getClassCategoryName2().' ]';
+                    $classCategory .= ' * ' . $OrderItem->getClassCategoryName2() . ' ]';
                 }
             }
 
             // product
             $productName = $OrderItem->getProductName();
             if (null !== $OrderItem->getProductCode()) {
-                $productName .= ' / '.$OrderItem->getProductCode();
+                $productName .= ' / ' . $OrderItem->getProductCode();
             }
             if ($classCategory) {
-                $productName .= ' / '.$classCategory;
+                $productName .= ' / ' . $classCategory;
             }
             if ($this->taxExtension->isReducedTaxRate($OrderItem)) {
                 $productName .= ' ※';
@@ -522,7 +554,7 @@ class OrderPdfService extends Fpdi
             // 購入数量
             $arrOrder[$i][1] = number_format($OrderItem->getQuantity());
             // 税込金額（単価）
-            $arrOrder[$i][2] = $this->eccubeExtension->getPriceFilter($OrderItem->getPrice());
+            $arrOrder[$i][2] = $this->eccubeExtension->getPriceFilter($OrderItem->getPriceIncTax());
             // 小計（商品毎）
             $arrOrder[$i][3] = $this->eccubeExtension->getPriceFilter($OrderItem->getTotalPrice());
 
@@ -562,37 +594,41 @@ class OrderPdfService extends Fpdi
             $arrOrder[$i][2] = '値引き';
             $arrOrder[$i][3] = $this->eccubeExtension->getPriceFilter($Order->getTaxableDiscount());
 
-            ++$i;
-            $arrOrder[$i][0] = '';
-            $arrOrder[$i][1] = '';
-            $arrOrder[$i][2] = '';
-            $arrOrder[$i][3] = '';
-
-            ++$i;
-            $arrOrder[$i][0] = '';
-            $arrOrder[$i][1] = '';
-            $arrOrder[$i][2] = '合計';
-            $arrOrder[$i][3] = $this->eccubeExtension->getPriceFilter($Order->getTaxableTotal());
-
-            ++$i;
-            $arrOrder[$i][0] = '';
-            $arrOrder[$i][1] = '';
-            $arrOrder[$i][2] = '';
-            $arrOrder[$i][3] = '';
-
             foreach ($Order->getTaxFreeDiscountItems() as $Item) {
                 ++$i;
                 $arrOrder[$i][0] = '';
                 $arrOrder[$i][1] = '';
-                $arrOrder[$i][2] = $Item->getProductName();
-                $arrOrder[$i][3] = $this->eccubeExtension->getPriceFilter($Item->getTotalPrice());
-            }
 
+                if ($Item->getProductName() === "ポイント") {
+                    $arrOrder[$i][2] = "利用ポイント";
+                } else {
+                    $arrOrder[$i][2] = $Item->getProductName();
+                }
+
+                if ($Item->getProductName() === "ポイント") {
+                    $arrOrder[$i][3] = $Item->getTotalPrice() . "Pt";
+                } else {
+                    $arrOrder[$i][3] = $this->eccubeExtension->getPriceFilter($Item->getTotalPrice());
+                }
+            }
             ++$i;
             $arrOrder[$i][0] = '';
             $arrOrder[$i][1] = '';
             $arrOrder[$i][2] = '請求金額';
             $arrOrder[$i][3] = $this->eccubeExtension->getPriceFilter($Order->getPaymentTotal());
+
+            ++$i;
+            $arrOrder[$i][0] = '';
+            $arrOrder[$i][1] = '';
+            $arrOrder[$i][2] = '';
+            $arrOrder[$i][3] = '';
+
+
+            ++$i;
+            $arrOrder[$i][0] = '';
+            $arrOrder[$i][1] = '';
+            $arrOrder[$i][2] = '加算ポイント';
+            $arrOrder[$i][3] = $Order->getAddPoint() . "Pt";
 
             if ($isShowReducedTaxMess) {
                 ++$i;
@@ -622,9 +658,9 @@ class OrderPdfService extends Fpdi
         $this->SetX(20);
         $message = '';
         foreach ($Order->getTotalByTaxRate() as $rate => $total) {
-            $message .= '('.$rate.'%対象: ';
+            $message .= '(' . $rate . '%対象: ';
             $message .= $this->eccubeExtension->getPriceFilter($total);
-            $message .= ' 内消費税: '.$this->eccubeExtension->getPriceFilter($Order->getTaxByTaxRate()[$rate]).')'.PHP_EOL;
+            $message .= ' 内消費税: ' . $this->eccubeExtension->getPriceFilter($Order->getTaxByTaxRate()[$rate]) . ')' . PHP_EOL;
         }
         $this->MultiCell($width, 4, $message, 0, 'R', 0, '');
 
@@ -690,7 +726,7 @@ class OrderPdfService extends Fpdi
         $this->SetFont('');
         // Data
         $fill = 0;
-        $writeRow = function($row, $cellHeight, $fill, $isBorder) use($w) {
+        $writeRow = function ($row, $cellHeight, $fill, $isBorder) use ($w) {
             $i = 0;
             $h = 0;
             foreach ($row as $col) {
@@ -785,5 +821,22 @@ class OrderPdfService extends Fpdi
     protected function restoreFont()
     {
         $this->SetFont($this->bakFontFamily, $this->bakFontStyle, $this->bakFontSize);
+    }
+
+    public function makePdfFromHtml(string $htmlContent): bool
+    {
+        try {
+            // PDF の基本設定
+            $this->AddPage();
+            $this->SetFont('kozminproregular', '', 12);
+
+            // HTML を PDF に変換
+            $this->writeHTML($htmlContent);
+
+            return true;
+        } catch (\Exception $e) {
+            log_error('PDF生成エラー: ' . $e->getMessage(), [$e]);
+            return false;
+        }
     }
 }

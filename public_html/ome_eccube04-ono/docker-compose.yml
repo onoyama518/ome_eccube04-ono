@@ -1,0 +1,91 @@
+version: "3"
+
+networks:
+  backend:
+    driver: bridge
+
+volumes:
+  db-data:
+    driver: local
+  mailcatcher-data:
+    driver: local
+
+  ### ignore folder volume #####
+  var:
+    driver: local
+  vendor:
+    driver: local
+  node_modules:
+    driver: local
+
+services:
+  ### ECCube4 ##################################
+  ec-cube:
+    ### ローカルでビルドする場合は以下のコマンドを使用します
+    ## docker build -t ec-cube --no-cache --pull --build-arg TAG=8.1-apache .
+    ## docker tag ec-cube ghcr.io/ec-cube/ec-cube-php:8.1-apache
+    image: ${REGISTRY:-ghcr.io}/${IMAGE_NAME:-ec-cube/ec-cube-php}:${TAG:-8.1-apache}
+    ports:
+      - 8080:80
+      - 4430:443
+    volumes:
+      # プロジェクトのソースコードをコンテナにマウント（本番と同じコードを使用する）
+      - .:/var/www/html
+      ### 同期対象からコストの重いフォルダを除外 #####################
+      - "var:/var/www/html/var"
+      # vendor は一時的にコメントアウト（composer install 後に戻す）
+      # - "vendor:/var/www/html/vendor"
+      - "node_modules:/var/www/html/node_modules"
+    environment:
+      # EC-CUBE environments
+      APP_ENV: "dev"
+      APP_DEBUG: 0
+      # 本番と同じ MySQL8 を想定した設定（必要に応じてDB名/ユーザー/パスワードを変更してください）
+      DATABASE_URL: "mysql://kir303604:xZf5pr2BwyB29Ey@db:3306/ome_db_4_stg"
+      DATABASE_SERVER_VERSION: 8.0
+      DATABASE_CHARSET: 'utf8mb4'
+      MAILER_DSN: "smtp://mailcatcher:1025"
+      ECCUBE_AUTH_MAGIC: "<change.me>"
+      # TRUSTED_HOSTS: '^127.0.0.1$$,^localhost$$'
+      # ECCUBE_LOCALE: "ja"
+      # ECCUBE_TIMEZONE: "Asia/Tokyo"
+      # ECCUBE_CURRENCY: "JPY"
+      # ECCUBE_ADMIN_ROUTE: "admin"
+      # ECCUBE_USER_DATA_ROUTE: "user_data"
+      # ECCUBE_ADMIN_ALLOW_HOSTS: []
+      ECCUBE_FORCE_SSL: false
+      # ECCUBE_TEMPLATE_CODE: "default"
+      # ECCUBE_COOKIE_NAME: "eccube"
+      # ECCUBE_COOKIE_PATH: "/"
+      # ECCUBE_COOKIE_LIFETIME: 0
+      # ECCUBE_GC_MAXLIFETIME: 1440
+      # ECCUBE_ADMIN_USER: "admin"
+      # ECCUBE_ADMIN_PASS: "password"
+    depends_on:
+      - db
+    networks:
+      - backend
+
+  db:
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_DATABASE: ome_db_4_stg
+      MYSQL_USER: kir303604
+      MYSQL_PASSWORD: xZf5pr2BwyB29Ey
+      MYSQL_ROOT_PASSWORD: rootpass
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - backend
+
+  ### Mailcatcher ##################################
+  mailcatcher:
+    image: schickling/mailcatcher
+    ports:
+      - "1080:1080"
+      - "1025:1025"
+    networks:
+      - backend

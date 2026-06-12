@@ -34,13 +34,12 @@ use Eccube\Service\Payment\PaymentDispatcher;
 use Eccube\Service\Payment\PaymentMethodInterface;
 use Eccube\Service\PurchaseFlow\PurchaseContext;
 use Eccube\Service\PurchaseFlow\PurchaseFlow;
-use Psr\Container\ContainerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\RouterInterface;
@@ -312,7 +311,34 @@ class ShoppingController extends AbstractShoppingController
         $form = $this->createForm(OrderType::class, $Order);
         $form->handleRequest($request);
 
+        log_info('[ShoppingController] リクエストメソッド: ' . $request->getMethod());
+        log_info('[ShoppingController] フォーム送信状況: ' . ($form->isSubmitted() ? 'true' : 'false'));
+        
+        if ($form->isSubmitted()) {
+            log_info('[ShoppingController] フォーム検証状況: ' . ($form->isValid() ? 'true' : 'false'));
+            
+            if ($form->getErrors(true)->count() > 0) {
+                foreach ($form->getErrors(true) as $error) {
+                    log_warning('[ShoppingController] フォームエラー: ' . $error->getMessage());
+                }
+            }
+        }
+
         if ($form->isSubmitted() && $form->isValid()) {
+            log_info('[注文確認] フォーム送信検証成功');
+            
+            // reCAPTCHA検証
+            $recaptchaResponse = $request->request->get(\Customize\Util\RecaptchaUtil::INPUT_NAME);
+            log_info('[ShoppingController] reCAPTCHAトークン受信: ' . ($recaptchaResponse ? substr($recaptchaResponse, 0, 20) . '...' : 'null'));
+            
+            if (!\Customize\Util\RecaptchaUtil::check($recaptchaResponse)) {
+                log_warning('[ShoppingController] 購入確認でreCAPTCHA検証失敗');
+                $this->addFlash('eccube.front.error', 'セキュリティ確認に失敗しました。お手数ですが、ページを更新してもう一度ご入力ください。');
+                
+                return $this->redirectToRoute('shopping');
+            }
+            log_info('[ShoppingController] reCAPTCHA検証成功');
+
             log_info('[注文確認] 集計処理を開始します.', [$Order->getId()]);
             $response = $this->executePurchaseFlow($Order);
             $this->entityManager->flush();
@@ -667,21 +693,21 @@ class ShoppingController extends AbstractShoppingController
             return $this->redirectToRoute('shopping_error');
         }
 
-        $CustomerAddress = new CustomerAddress();
-        if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
-
-            $Customer = $this->getUser();
-            $addressCurrNum = count($Customer->getCustomerAddresses());
-            $addressMax = $this->eccubeConfig['eccube_deliv_addr_max'];
-            if ($addressCurrNum >= $addressMax) {
-                throw new NotFoundHttpException();
+        $customerAddressId = $request->query->get('customer_address_id');
+        if ($customerAddressId) {
+            // 既存のCustomerAddressを取得
+            $CustomerAddress = $this->entityManager->getRepository(CustomerAddress::class)->find($customerAddressId);
+            if (!$CustomerAddress || $CustomerAddress->getCustomer() !== $this->getUser()) {
+                return $this->redirectToRoute('shopping_error');
             }
-
-            // ログイン時は会員と紐付け
-            $CustomerAddress->setCustomer($this->getUser());
         } else {
-            // 非会員時はお届け先をセット
-            $CustomerAddress->setFromShipping($Shipping);
+            // 新規のCustomerAddressを作成
+            $CustomerAddress = new CustomerAddress();
+            if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
+                $CustomerAddress->setCustomer($this->getUser());
+            } else {
+                $CustomerAddress->setFromShipping($Shipping);
+            }
         }
         $builder = $this->formFactory->createBuilder(ShoppingShippingType::class, $CustomerAddress);
 
@@ -700,6 +726,18 @@ class ShoppingController extends AbstractShoppingController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // reCAPTCHA検証
+            $recaptchaResponse = $request->request->get(\Customize\Util\RecaptchaUtil::INPUT_NAME);
+            if (!\Customize\Util\RecaptchaUtil::check($recaptchaResponse)) {
+                log_warning('[ShoppingController] お届け先変更・追加でreCAPTCHA検証失敗');
+                $this->addFlash('eccube.front.error', 'セキュリティ確認に失敗しました。お手数ですが、ページを更新してもう一度ご入力ください。');
+                
+                return [
+                    'form' => $form->createView(),
+                    'shippingId' => $Shipping->getId(),
+                ];
+            }
+
             log_info('お届け先追加処理開始', ['order_id' => $Order->getId(), 'shipping_id' => $Shipping->getId()]);
 
             $Shipping->setFromCustomerAddress($CustomerAddress);
@@ -761,7 +799,7 @@ class ShoppingController extends AbstractShoppingController
             return $this->redirectToRoute('shopping');
         }
 
-        /** @var \Symfony\Component\Form\FormInterface $form */
+        /* @var $form \Symfony\Component\Form\FormInterface */
         $builder = $this->formFactory->createNamedBuilder('', CustomerLoginType::class);
 
         if ($this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {

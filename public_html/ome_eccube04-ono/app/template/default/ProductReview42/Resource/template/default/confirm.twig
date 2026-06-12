@@ -1,0 +1,148 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) LOCKON CO.,LTD. All Rights Reserved.
+
+http://www.lockon.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% extends 'default_frame.twig' %}
+
+{% set body_class = 'product_review_confirm' %}
+
+{% form_theme form 'Form/form_div_layout.twig' %}
+
+{% block main %}
+	<div id="window_area">
+		<div class="ec-registerRole" id="undercolumn_contact">
+			<div class="ec-pageHeader">
+				<h2 class="title">レビュー書き込み</h2>
+			</div>
+			<div class="ec-off1Grid">
+				<div class="ec-off1Grid__cell">
+					<form id="productReviewConfirmForm" method="post" action="{{ url('product_review_index', { id: Product.id }) }}">
+						{{ form_widget(form._token) }}
+
+						<table summary="お客様の声書き込み" style="width:100%;">
+							<colgroup width="30%"></colgroup>
+							<colgroup width="70%"></colgroup>
+							<tr>
+								<th>商品名</th>
+								<td>{{ Product.name }}</td>
+							</tr>
+							<tr>
+								<th>投稿者名<span class="attention">※</span>
+								</th>
+								<td>
+									<div class="ec-input{{ has_errors(form.reviewer_name) ? ' error' }}">
+										{{ form.reviewer_name.vars.data }}
+										{{ form_widget(form.reviewer_name, { type: 'hidden' }) }}
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th>投稿者URL</th>
+								<td>
+									<div class="ec-input{{ has_errors(form.reviewer_url) ? ' error' }}">
+										{{ form.reviewer_url.vars.data }}
+										{{ form_widget(form.reviewer_url, { type: 'hidden' }) }}
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th>性別</th>
+								<td>
+									<div class="ec-radio{{ has_errors(form.sex) ? ' error' }}">
+										{{ form.sex.vars.data }}
+										{{ form_widget(form.sex, { type: 'hidden' }) }}
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th>おすすめレベル<span class="attention">※</span>
+								</th>
+								<td>
+									<div class="ec-radio{{ has_errors(form.recommend_level) ? ' error' }}">
+										{% for child in form.recommend_level.children|filter(child => child.vars.checked) %}
+											{{ child.vars.label }}
+										{% endfor %}
+										{{ form_widget(form.recommend_level, { type: 'hidden' }) }}
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th>タイトル<span class="attention">※</span>
+								</th>
+								<td>
+									<div class="ec-input{{ has_errors(form.title) ? ' error' }}">
+										{{ form.title.vars.data }}
+										{{ form_widget(form.title, { type: 'hidden' }) }}
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th>コメント<span class="attention">※</span>
+								</th>
+								<td>
+									<div class="ec-input{{ has_errors(form.comment) ? ' error' }}">
+										{{ form.comment.vars.data }}
+										{{ form_widget(form.comment, { type: 'hidden' }) }}
+									</div>
+								</td>
+							</tr>
+						</table>
+
+						<div class="btn_area">
+							<ul>
+                <li>
+									<button class="ec-blockBtn--cancel btn_revise btn_review_submit" type="submit" name="mode" value="complete" >送信</button>
+								</li>
+								<li>
+									<button class="ec-blockBtn--action btn_revise btn_review_return" type="submit" name="mode" value="back" >戻る</button>
+								</li>
+							</ul>
+						</div>
+					</form>
+					<script>
+					/**
+					 * レビュー確認画面のフォーム送信処理
+					 * 
+					 * 問題: フォームを JavaScript の submit() メソッドで送信する際、
+					 * クリックされたボタンの name/value は送信されない。
+					 * また、reCAPTCHA等の外部スクリプトがフォーム送信を干渉する可能性がある。
+					 * 
+					 * 解決策: ボタンクリック時に hidden フィールドで mode パラメータを
+					 * 明示的に設定してからフォームを送信する。
+					 */
+					(function($) {
+						'use strict';
+						
+						$(document).ready(function() {
+							var $form = $('#productReviewConfirmForm');
+							
+							// ボタンクリック時にhiddenフィールドでmodeを設定してから送信
+							$form.find('button[type="submit"]').on('click', function(e) {
+								e.preventDefault();
+								var mode = $(this).val();
+								
+								// hiddenフィールドでmodeを設定
+								var $modeInput = $form.find('input[name="mode"]');
+								if ($modeInput.length === 0) {
+									$modeInput = $('<input type="hidden" name="mode">');
+									$form.append($modeInput);
+								}
+								$modeInput.val(mode);
+								
+								// DOM要素のsubmit()メソッドで送信（jQueryのsubmitイベントをバイパス）
+								$form.get(0).submit();
+							});
+						});
+					})(jQuery);
+					</script>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

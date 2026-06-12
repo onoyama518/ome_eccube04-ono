@@ -1,0 +1,113 @@
+{% extends 'default_frame.twig' %}
+
+{% block main %}
+<!-- ＊popダウンロードここから＊ -->
+
+<div id="lp-wrap">
+		
+<!--▼CONTENTS-->
+<div id="pop-dl">
+<h2 class="title">POPダウンロード</h2>
+<table>
+ <tr>
+        <td>
+             <ul>
+                <li><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/bana/pop-linkbana-acmascara.jpg' }} alt="ACマスカラ POP ダウンロード"></li>
+                <li><h2>ACマスカラ</h2></li>
+                <li><a href={{ app.config.user_data_url ~ 'packages/default/img/pdf/ac-mascara-pop.pdf' }} target="_blank">ダウンロード</a></li>
+             </ul>
+        </td>
+        <td>
+             <ul>
+                <li><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/bana/pop-linkbana-aceyeliner.jpg' }} alt="ACアイライナー POP ダウンロード"></li>
+                <li><h2>ACアイライナー</h2></li>
+                <li><a href={{ app.config.user_data_url ~ 'packages/default/img/pdf/ac-eyeliner-pop.pdf' }} target="_blank">ダウンロード</a></li>
+             </ul>
+        </td>
+        <td>
+             <ul>
+                <li><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/bana/pop-linkbana-accleansing.jpg' }} alt="ACクレンジング POP ダウンロード"></li>
+                <li><h2>ACクレンジング</h2></li>
+                <li><a href={{ app.config.user_data_url ~ 'packages/default/img/pdf/ac-cleansing-pop.pdf' }} target="_blank">ダウンロード</a></li>
+             </ul>
+        </td>
+        <td>
+             <ul>
+                <li><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/bana/pop-linkbana-flat.jpg' }} alt="Flatラッシュセーブル POP ダウンロード"></li>
+                <li><h2>Flatラッシ・セーブル</h2></li>
+                <li><a href={{ app.config.user_data_url ~ 'packages/default/img/pdf/Flat_pop.pdf' }} target="_blank">ダウンロード</a></li>
+             </ul>
+        </td>
+        <td>
+             <ul>
+                <li><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/bana/pop-linkbana-keratin.jpg' }} alt="ケラチンPro POP ダウンロード"></li>
+                <li><h2>ケラチンPro</h2></li>
+                <li><a href={{ app.config.user_data_url ~ 'packages/default/img/pdf/keratin_pop.pdf' }} target="_blank">ダウンロード</a></li>
+             </ul>
+        </td>
+        <td>
+             <ul>
+                <li><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/bana/pop-linkbana-amino.jpg' }} alt="アミノPro POP ダウンロード"></li>
+                <li><h2>アミノPro</h2></li>
+                <li><a href={{ app.config.user_data_url ~ 'packages/default/img/pdf/amino_pop.pdf' }} target="_blank">ダウンロード</a></li>
+             </ul>
+        </td>
+        <td>
+             <ul>
+                <li><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/bana/pop-linkbana-keratinamino.jpg' }} alt="アミノPro×ケラチンPro POP ダウンロード"></li>
+                <li><h2>アミノPro×ケラチンPro</h2></li>
+                <li><a href={{ app.config.user_data_url ~ 'packages/default/img/pdf/amino_keratin_pop.pdf' }} target="_blank">ダウンロード</a></li>
+             </ul>
+        </td>
+        <!--<td>
+             <ul>
+                <li><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/bana/pop-linkbana-brilliant.jpg' }} alt="ブリリアントブラックコーティング POP ダウンロード"></li>
+                <li><h2>ブリリアントブラックコーティング</h2></li>
+                <li><a href={{ app.config.user_data_url ~ 'packages/default/img/pdf/brilliant_bc_pop.pdf' }} target="_blank">ダウンロード</a></li>
+             </ul>
+        </td>-->
+        <!--<td>
+             <ul>
+                <li><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/bana/pop-linkbana-eyepack.jpg' }} alt="アイパック POP ダウンロード"></li>
+                <li><h2>アイパック</h2></li>
+                <li><a href={{ app.config.user_data_url ~ 'packages/default/img/pdf/item_pop_eyecampaign_201606.pdf' }} target="_blank">ダウンロード</a></li>
+             </ul>
+        </td>-->
+        <td>
+             <ul>
+                <li><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/bana/pop-linkbana-trgel.jpg' }} alt="トリートメントジェル POP ダウンロード"></li>
+                <li><h2>トリートメントジェル</h2></li>
+                <li><a href={{ app.config.user_data_url ~ 'packages/default/img/pdf/treatment-gel_pop.pdf' }} target="_blank">ダウンロード</a></li>
+             </ul>
+        </td>
+        <td>
+             <ul>
+                <li><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/bana/pop-linkbana-salon.jpg' }} alt="サロン向けチラシダウンロード用" /></li>
+                <li><h2>サロン関係者様向けチラシ</h2></li>
+                <li><a href="/html/user_data/packages/default/img/pdf/for-salons.pdf">ダウンロード</a></li>
+             </ul>
+        </td>
+        <td>
+             <ul>
+                <li><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/bana/pop-linkbana-custamer.jpg' }} alt="一般消費者向けチラシダウンロード用"/></li>
+                <li><h2>一般消費者者様向けチラシ</h2></li>
+                <li><a href="/html/user_data/packages/default/img/pdf/for-consumers.pdf">ダウンロード</a></li>
+             </ul>
+        </td>
+<tr>
+	</table>
+</div>
+<!--▲CONTENTS-->
+
+
+<!--▼非表示バナー-->
+<!--<tr><td><a href="http://www.ome-shouzai.com/ec/user_data/packages/default/img/pdf/gf-power-lash_pop.pdf" target="_blank"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/bana/GFPowerlash_pop_bana.jpg' }} alt="GFパワーラッシュ POP ダウンロード"></td></tr>-->
+
+
+<!--▲非表示バナー-->
+
+
+</div><!-- lp-wrap -->
+
+<!-- ＊popダウンロードここまで＊ -->
+{% endblock %}

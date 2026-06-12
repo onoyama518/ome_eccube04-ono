@@ -1,0 +1,133 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% extends 'default_frame.twig' %}
+
+{% set body_class = 'mypage' %}
+
+{% block javascript %}
+	<script src="{{ asset('assets/js/validation.js', 'user_data') }}"></script>
+{% endblock javascript %}
+
+{% block main %}
+	<div class="ec-role" id="under02column">
+		<div class="ec-pageHeader">
+			<h2 class="title">{{ 'マイページ（ログイン）'|trans }}</h2>
+		</div>
+		<div class="ec-off2Grid" id="under02column_login">
+			<div class="ec-off2Grid__cell">
+
+				<form name="login_mypage" id="login_mypage" method="post" action="{{ url('mypage_login') }}">
+					<div class="ec-login login_area">
+
+						<div class="ec-login__input inputbox">
+							<div class="ec-input">
+								<dl class="formlist clearfix">
+									<dt>メールアドレス</dt>
+									<dd>
+										{{ form_widget(form.login_email, {'attr': {'class': 'box300', 'style' : 'ime-mode: disabled;', 'placeholder' : 'メールアドレス', 'autofocus': true, 'data-validation': 'required email', 'data-label': 'メールアドレス'}}) }}
+										{% if BaseInfo.option_remember_me %}
+
+											<p
+												class="login_memory">
+												<!--{assign var=key value="mypage_login_memory"}-->
+												{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+													<input type="hidden" name="login_memory" value="1">
+												{% else %}
+													{{ form_widget(form.login_memory, { 'label': 'メールアドレスを記憶させる'|trans }) }}
+												{% endif %}
+											</p>
+										{% endif %}
+
+									</dd>
+								</dl>
+								<dl class="formlist clearfix">
+									<dt>
+
+										パスワード
+									</dt>
+									<dd>
+										{{ form_widget(form.login_pass, {'attr': {'class': 'box300', 'placeholder' : 'パスワード', 'data-validation': 'required', 'data-label': 'パスワード' }}) }}
+
+									</dd>
+								</dl>
+							</div>
+
+							{% for reset_complete in app.session.flashbag.get('password_reset_complete') %}
+								<p>{{ reset_complete|trans }}</p>
+							{% endfor %}
+							{% if error %}
+								<p class="ec-errorMessage">{{ error.messageKey|trans(error.messageData, 'validators')|nl2br }}</p>
+							{% endif %}
+
+						</div>
+
+						<div class="ec-grid2__cell">
+							<div class="ec-login__actions">
+								<button type="submit" id="log" class="ec-blockBtn--cancel btn_revise btn_mypage_login">ログイン</button>
+							</div>
+						</div>
+						<p>
+							※パスワードを忘れた方は<a href="{{ url('forgot') }}" class="attention">こちら</a>［再発行］<br/>
+							※メールアドレスを忘れた方は、お手数ですが、<a href="{{ url('contact') }}" class="attention">お問い合わせページ</a>からお問い合わせください。
+						</p>
+
+					</div>
+					<div class="login_area">
+						<h3>はじめてご利用の方</h3>
+						<div class="btn_area">
+							<ul>
+								<a href="{{url('help_agreement')}}" id="log2" class="btn_revise btn_mypage_login_sign_up">新規会員登録</a>
+							</ul>
+						</div>
+						<p class="inputtext">オンラインショップをご利用いただくには、会員登録が必要です。<br class="br_pc_only"/>新規会員登録ですぐに使える<span style="color:red">500Pをプレゼント</span>いたします。
+						</p>
+            <div class="recaptcha-link-area" style="margin: 24px auto 0;">
+             {% include "Block/recaptcha-link.twig" %}
+					  </div>
+
+					</div>
+					<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+				</form>
+			</div>
+			<script src="https://www.google.com/recaptcha/api.js?render={{ constant('Customize\\Util\\RecaptchaUtil::SITE_KEY') }}"></script>
+			<script>
+			grecaptcha.ready(function() {
+				var form = $('#login_mypage');
+				var recaptchaInput = $('<input>').attr({
+					type: 'hidden',
+					name: '{{ constant('Customize\\Util\\RecaptchaUtil::INPUT_NAME') }}'
+				});
+				form.append(recaptchaInput);
+				var isSubmitting = false;
+
+				form.on('submit', function(e) {
+					e.preventDefault();
+					
+					// 二重送信防止
+					if (isSubmitting) {
+						return;
+					}
+					isSubmitting = true;
+					
+					// reCAPTCHAトークンを取得
+					grecaptcha.execute('{{ constant('Customize\\Util\\RecaptchaUtil::SITE_KEY') }}', {action: 'login'}).then(function(token) {
+						recaptchaInput.val(token);
+						form[0].submit();
+					}).catch(function(error) {
+						isSubmitting = false;
+						alert('セキュリティ確認に失敗しました。ページを再読み込みしてもう一度お試しください。');
+					});
+				});
+			});
+			</script>
+		</div>
+	</div>
+{% endblock %}

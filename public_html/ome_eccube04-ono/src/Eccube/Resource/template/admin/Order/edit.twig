@@ -220,12 +220,13 @@ file that was distributed with this source code.
 {% endblock javascript %}
 
 {% block main %}
-    {# 決済処理中/購入処理中ステータスは登録・更新等の操作を無効にする #}
+    {# 購入処理中ステータスは登録・更新等の操作を無効にする #}
     {% set action_disabled = false %}
-    {% if Order.OrderStatus is not empty and Order.OrderStatus.id in [
-        constant('Eccube\\Entity\\Master\\OrderStatus::PROCESSING'), constant('Eccube\\Entity\\Master\\OrderStatus::PENDING')] -%}
+    {% set action_disabled = false %}
+    {% if Order.OrderStatus is not empty and Order.OrderStatus.id == constant('Eccube\\Entity\\Master\\OrderStatus::PROCESSING') -%}
         {% set action_disabled = true %}
     {%- endif %}
+
     <!-- 移動確認モーダル-->
     <div class="modal fade" id="confirmFormChangeModal" tabindex="-1" role="dialog"
          aria-labelledby="confirmFormChangeModal" aria-hidden="true">

@@ -1,0 +1,44 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+
+<div class="renewal_mypage_menu">
+	<ul class="mynavi_list">
+		<li class="renewal_menu_item {% if mypageno|default('') == 'index' %}active{% endif %}">
+			<a href="{{ url('mypage') }}">{{ '購入履歴一覧'|trans }}</a>
+		</li>
+
+		<li class="renewal_menu_item {% if mypageno|default('') == 'change' %}active{% endif %}">
+			<a href="{{ url('mypage_change') }}">{{ '会員登録内容変更'|trans }}</a>
+		</li>
+		<li class="renewal_menu_item {% if mypageno|default('') == 'delivery' %}active{% endif %}">
+			<a href="{{ url('mypage_delivery') }}">{{ 'お届け先追加・変更'|trans }}</a>
+		</li>
+		<li class="renewal_menu_item {% if mypageno|default('') == 'withdraw' %}active{% endif %}">
+			<a href="{{ url('mypage_withdraw') }}">{{ '退会手続き'|trans }}</a>
+		</li>
+		<li class="renewal_menu_item {% if mypageno|default('') == 'logout' %}active{% endif %}">
+			<a href="{{ url('logout') }}">{{ 'ログアウト'|trans }}</a>
+		</li>
+	</ul>
+	<div class="point_announce">
+    <div class="area_icon"></div>
+		<div class="area_info"> 
+      <p class="welcome">ようこそ</p>     
+      <p>{{ '%last_name% %first_name%様'|trans({ '%last_name%': app.user.name01, '%first_name%': app.user.name02 }) }}</p>
+      {% if BaseInfo.option_point %}
+        <p><span>{{ ('現在の所持ポイントは<em> %point%pt </em>です。'|trans({ '%point%': app.user.point|number_format })) | raw }}</span></p>
+      {% endif %}
+    </div>
+
+	</div>
+</div>
+
+

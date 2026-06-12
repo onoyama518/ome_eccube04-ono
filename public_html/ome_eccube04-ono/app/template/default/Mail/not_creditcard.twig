@@ -1,0 +1,165 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% autoescape 'safe_textmail' %}
+{% if Order.company_name %}
+{{ Order.company_name }}
+{% endif %}
+{{ Order.name01 }} {{ Order.name02 }} 様
+
+━━━━━━━━━━━━━━━━━━━━━━━
+【クレジットカード決済不可のご案内　　omeエンタープライズ online shop】
+
+この度は、omeエンタープライズをご利用いただき、
+誠にありがとうございます。
+
+ご注文いただいた商品のお支払い方法にクレジットカードをご選択いただいておりましたが、
+決済承認を得られませんでした。
+
+ご購入手続き画面で以下の様な場合、カード情報がクレジットカード会社に正しく送信されず、
+決済承認を得られない事がございます。
+・ご購入手続き中に、他のサイトやページを閲覧された場合
+・ご購入手続き中に「サイト上の進む・戻る」を使用せず、「ブラウザ上の進む・戻る」を使用した場合
+・カード番号・有効期限などのご入力内容に誤りがある場合
+
+上記にお心当たりがない場合、
+ご契約のカード会社へお問い合わせいただきますよう、お願い致します。
+
+大変申し訳ございませんが、
+今回のご注文につきましては、一度キャンセルとさせていただきます。
+お手数ではございますが、改めてご注文をお願い致します。
+
+今回いただいたご注文内容は下記の通りです。
+
+この度はご注文いただき誠にありがとうございました。
+またのご注文をスタッフ一同、心よりお待ちしております。
+
+ご注文番号：{{ Order.order_no }}
+━━━━━━━━━━━━━━━━━━━━━━━
+◎ご注文商品明細
+
+{% set isShowReducedTaxMess = false %}
+{% for OrderItem in Order.MergedProductOrderItems %}
+商品コード：{{ OrderItem.product_code }}
+商品名：{{ OrderItem.product_name }}  {{ OrderItem.classcategory_name1 }}  {{ OrderItem.classcategory_name2 }} {% if is_reduced_tax_rate(OrderItem) %}※{% set isShowReducedTaxMess = true %}{% endif %}
+単価：{{ OrderItem.price_inctax|price }}
+数量：{{ OrderItem.quantity|number_format }}
+
+{% endfor %}
+{% if isShowReducedTaxMess %}※は軽減税率対象商品です。
+{% endif %}
+-----------------------
+小　計：{{ Order.subtotal|price }}
+送　料：{{ Order.delivery_fee_total|price}}
+手数料：{{ Order.charge|price }}
+
+{% if BaseInfo.isOptionPoint and Order.Customer is not null %}
+ご使用ポイント：{{ Order.usePoint|number_format }} pt
+{% endif %}
+{% if Order.taxable_discount < 0 %}
+値引き：{{ Order.taxable_discount|price }}
+{% endif %}
+
+合　計：{{ Order.taxable_total|price }}
+{% for item in Order.tax_free_discount_items %}
+{{ item.product_name }}：{{ item.total_price|price }}
+{% endfor %}
+
+お支払い合計：{{ Order.payment_total|price }}
+  {% for rate, total in Order.total_by_tax_rate %}
+  ({{ rate }} %対象：{{ total|price }} 内消費税：{{ Order.tax_by_tax_rate[rate]|price }})
+  {% endfor %}
+
+━━━━━━━━━━━━━━━━━━━━━━━
+◎ご請求金額
+
+ご注文日時：{{ Order.order_date|date_sec }}
+お支払い合計：{{ Order.payment_total|price}}
+お支払い方法：{{ Order.payment_method }}
+メッセージ：{{ Order.message }}
+
+━━━━━━━━━━━━━━━━━━━━━━━
+◎ご注文者情報
+{% if Order.company_name %}
+会社名：{{ Order.company_name }}
+{% endif %}
+お名前：{{ Order.name01 }} {{ Order.name02 }} 様
+お名前(カナ)：{{ Order.kana01 }} {{ Order.kana02 }} 様
+郵便番号：〒{{ Order.postal_code }}
+住所：{{ Order.Pref.name }}{{ Order.addr01 }}{{ Order.addr02 }}
+電話番号：{{ Order.phone_number }}
+メールアドレス：{{ Order.email }}
+
+━━━━━━━━━━━━━━━━━━━━━━━
+◎配送情報
+
+{%  for Shipping in Order.Shippings %}
+お届け先{% if Order.multiple %}{{ loop.index }}{% endif %}
+
+{% if Shipping.company_name %}
+会社名：{{ Shipping.company_name }}
+{% endif %}
+お名前：{{ Shipping.name01 }} {{ Shipping.name02 }} 様
+お名前(カナ)：{{ Shipping.kana01 }} {{ Shipping.kana02 }} 様
+郵便番号：〒{{ Shipping.postal_code }}
+住所：{{ Shipping.Pref.name }}{{ Shipping.addr01 }}{{ Shipping.addr02 }}
+電話番号：{{ Shipping.phone_number }}
+
+配送方法：{{ Shipping.shipping_delivery_name }}
+お届け日：{{ Shipping.shipping_delivery_date is empty ? '指定なし' : Shipping.shipping_delivery_date|date_day }}
+お届け時間：{{ Shipping.shipping_delivery_time|default('指定なし') }}
+
+{%  for OrderItem in Shipping.productOrderItems %}
+商品コード：{{ OrderItem.product_code }}
+商品名：{{ OrderItem.product_name }}  {{ OrderItem.classcategory_name1 }}  {{ OrderItem.classcategory_name2 }}
+数量：{{ OrderItem.quantity|number_format }}
+
+{% endfor %}
+{% endfor %}
+{% if BaseInfo.isOptionPoint and Order.Customer is not null %}
+━━━━━━━━━━━━━━━━━━━━━━━
+ご使用ポイント：{{ Order.usePoint|number_format }} pt
+今回加算される加算ポイント：{{ Order.addPoint|number_format }} pt
+現在の所持ポイント：{{ Order.Customer.getPoint()|number_format }} pt
+━━━━━━━━━━━━━━━━━━━━━━━
+{% endif %}
+
+{% if Order.complete_mail_message is not empty %}
+{{ Order.complete_mail_message }}
+{% endif %}
+
+============================================
+
+
+
+本メールは自動配信専用です。
+本メールにご返信いただいても確認ができないため、ご対応致しかねます。
+
+万一、ご注文に覚えがない場合や、記載内容に間違いがある場合には、
+大変お手数をお掛け致しますが、「info@ome-shouzai.com」までご連絡をお願い致します。
+
+
+□■□――――――――――――――――――――――――
+omeエンタープライズ
+まつげエクステンション商材の企画・開発・卸
+
+TEL　                0120-965-583        06-6252-3773
+FAX　                06-6252-3774
+E-mail                info@ome-shouzai.com
+営業時間                10:00〜18:00　(定休日:土・日・祝)
+
+online shop         https://www.ome-shop.jp
+Instagram        https://www.instagram.com/ome_enterprises
+LINE@                https://lin.ee/ifbQdqX
+
+〒550-0013
+大阪市西区新町1-4-26 四ツ橋グランドビル8F
+――――――――――――――――――――――――□■□
+{% endautoescape %}

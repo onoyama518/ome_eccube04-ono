@@ -27,7 +27,7 @@ Markup:
 
 Styleguide 12.3.1
 */
-.ec-inlineBtn--top{
+.ec-inlineBtn--top {
   @include _btn(white, black, black);
 }
 
@@ -41,11 +41,11 @@ Markup:
 
 Styleguide 2.1.2
 */
-.ec-blockBtn--top{
+.ec-blockBtn--top {
   @include _btn(white, black, black);
   display: block;
-  height:56px;
-  line-height:56px;
+  height: 56px;
+  line-height: 56px;
   padding-top: 0;
   padding-bottom: 0;
 

@@ -35,14 +35,18 @@ use Eccube\Repository\Master\OrderStatusRepository;
 use Eccube\Repository\Master\PrefRepository;
 use Eccube\Repository\OrderRepository;
 use Eccube\Repository\PaymentRepository;
-use Eccube\Session\Session;
 use Eccube\Util\StringUtil;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class OrderHelper
 {
+    /**
+     * @var ContainerInterface
+     */
+    protected $container;
+
     /**
      * @var string 非会員情報を保持するセッションのキー
      */
@@ -66,7 +70,7 @@ class OrderHelper
     public const SESSION_CART_DIVIDE_FLAG = 'eccube.front.cart.divide';
 
     /**
-     * @var Session
+     * @var SessionInterface
      */
     protected $session;
 
@@ -115,17 +119,8 @@ class OrderHelper
      */
     protected $entityManager;
 
-    /**
-     * @var AuthorizationCheckerInterface
-     */
-    protected $authorizationChecker;
-
-    /**
-     * @var TokenStorageInterface
-     */
-    protected $tokenStorage;
-
     public function __construct(
+        ContainerInterface $container,
         EntityManagerInterface $entityManager,
         OrderRepository $orderRepository,
         OrderItemTypeRepository $orderItemTypeRepository,
@@ -135,10 +130,9 @@ class OrderHelper
         DeviceTypeRepository $deviceTypeRepository,
         PrefRepository $prefRepository,
         MobileDetect $mobileDetector,
-        Session $session,
-        AuthorizationCheckerInterface $authorizationChecker,
-        TokenStorageInterface $tokenStorage,
+        SessionInterface $session
     ) {
+        $this->container = $container;
         $this->orderRepository = $orderRepository;
         $this->orderStatusRepository = $orderStatusRepository;
         $this->orderItemTypeRepository = $orderItemTypeRepository;
@@ -149,8 +143,6 @@ class OrderHelper
         $this->prefRepository = $prefRepository;
         $this->mobileDetector = $mobileDetector;
         $this->session = $session;
-        $this->authorizationChecker = $authorizationChecker;
-        $this->tokenStorage = $tokenStorage;
     }
 
     /**
@@ -386,10 +378,10 @@ class OrderHelper
         $ProductItemType = $this->orderItemTypeRepository->find(OrderItemType::PRODUCT);
 
         return array_map(function ($item) use ($ProductItemType) {
-            /** @var CartItem $item */
-            /** @var \Eccube\Entity\ProductClass $ProductClass */
+            /* @var $item CartItem */
+            /* @var $ProductClass \Eccube\Entity\ProductClass */
             $ProductClass = $item->getProductClass();
-            /** @var \Eccube\Entity\Product $Product */
+            /* @var $Product \Eccube\Entity\Product */
             $Product = $ProductClass->getProduct();
 
             $OrderItem = new OrderItem();
@@ -519,7 +511,7 @@ class OrderHelper
      */
     private function isGranted($attribute, $subject = null): bool
     {
-        return $this->authorizationChecker->isGranted($attribute, $subject);
+        return $this->container->get('security.authorization_checker')->isGranted($attribute, $subject);
     }
 
     /**
@@ -527,7 +519,7 @@ class OrderHelper
      */
     private function getUser(): ?UserInterface
     {
-        if (null === $token = $this->tokenStorage->getToken()) {
+        if (null === $token = $this->container->get('security.token_storage')->getToken()) {
             return null;
         }
 

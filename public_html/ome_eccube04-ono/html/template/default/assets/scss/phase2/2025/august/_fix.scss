@@ -1,0 +1,58 @@
+@media screen and (min-width: 768px) {
+  .oem-bana{
+    a{
+      display: block !important;
+      width: 60%;
+      margin:0 auto;
+      img{
+          width:100% !important;
+          margin: auto !important;
+          margin-top: 20px !important;
+          display: block !important;
+      }
+    }   
+  }
+  #page_product_detail #detailarea{
+    margin-bottom: 80px !important;
+  }
+  .add-checkout-btn{
+    background-color: #ff8b3b !important;
+  }
+  .flatlp-navi{
+    a{
+      li{
+        width:100px;
+        height:65px;
+      }
+    }
+  }
+}
+@media screen and (max-width: 768px) {
+  .ac-header .toggle_led {
+    right: 16px !important  ;
+  }
+  #page_product_detail #customervoice_area .review_bloc .review_btn{
+    margin-top: 10px;
+  }
+  #page_product_detail #customervoice_area .review_bloc .review_btn .new-comm{
+    margin-bottom:0;
+  }
+  div#customervoice_area .review_bloc p{
+    margin-right: 0;
+  }
+  
+}
+div#detailarea h2{
+  font-family: "source-han-sans-japanese";
+  font-size: 16px;
+}
+.pd_review_icon{
+  img{
+    width:22px;
+  }
+}
+
+.review_list{
+  height: 300px;
+  overflow:auto;
+}

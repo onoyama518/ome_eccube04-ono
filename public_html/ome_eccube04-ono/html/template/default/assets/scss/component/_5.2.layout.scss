@@ -73,6 +73,10 @@ Styleguide 5.2.1
   & &__content{
     vertical-align: middle;
     display: table-cell;
+    font-size: 14px;
+    @include media_desktop {
+      font-size: 16px;
+    }
     span {
       margin-left: 10px;
     }

@@ -1,0 +1,46 @@
+{#
+This file is part of EC-CUBE
+
+Copyright (c) 2006 PAYGENT Co.,Ltd. All rights reserved.
+
+https://www.paygent.co.jp/
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+#}
+{% block javascript %}
+<script type="text/javascript">
+    $(function(){
+    $('input#shopping_order_Payment_' + "{{ paygent_credit_payment_id }}").closest(".ec-orderPayment").append($("#paygent_credit_info"));
+    });
+</script>
+{% endblock javascript %}
+<div class="hidden">
+    <div id="paygent_credit_info" class="container-fluid">
+        <div class="row" style="padding-top: 1rem !important;">
+            <hr style="margin-top: 0px;">
+            <p>
+                カード発行会社が行う不正利用検知・防止のため、当社がお客様から収集したemailアドレス、請求先住所、配送先住所等の個人情報をお客様が利用されているカード発行会社へ提供させていただくことがあります。<br>
+                お客様が利用されているカード発行会社が外国にある場合、これらの情報は当該発行会社が所属する国に移転される場合があります。<br>
+                当社では、お客様から収集した情報からは、ご利用のカード発行会社及び当該会社が所在する国を特定することができないため、以下の個人情報保護措置に関する情報を把握して、ご提供することはできません。<br>
+                ・提供先が所在する外国の名称<br>
+                ・当該国の個人情報保護制度に関する情報<br>
+                ・発行会社の個人情報保護の措置<br>
+                なお、個人情報保護委員会のホームページ（https://www.ppc.go.jp/）では、各国における個人情報保護制度に関する情報について掲載されています。<br>
+                お客様が未成年の場合、親権者または後見人の承諾を得た上で、本サービスを利用するものとします。<br>
+                <span style="color:red">決済を行うと上記に同意したものとみなします。</span>
+            </p>
+        </div>
+    </div>
+</div>

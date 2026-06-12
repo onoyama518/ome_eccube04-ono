@@ -1,0 +1,25 @@
+@media screen and (max-width: 768px) {
+  #page_cart {
+    .ec-alert-warning {
+      display: flex;
+    }
+  }
+  #page_shopping {
+    .ec-orderRole__summary {
+      dd {
+        color: #525263;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 769px) {
+  #page_cart {
+    .br_cart_not_have {
+      display: none;
+    }
+    .ec-progress .ec-progress__item:after {
+      top: 1.4em;
+    }
+  }
+}

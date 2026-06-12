@@ -106,9 +106,9 @@ class MypageController extends AbstractController
             return $this->redirectToRoute('mypage');
         }
 
-        /** @var \Symfony\Component\Form\FormInterface $form */
+        /* @var $form \Symfony\Component\Form\FormInterface */
         $builder = $this->formFactory
-            ->createNamedBuilder('', CustomerLoginType::class);
+          ->createNamedBuilder('', CustomerLoginType::class);
 
         $builder->get('login_memory')->setData((bool) $request->getSession()->get('_security.login_memory'));
 
@@ -116,14 +116,14 @@ class MypageController extends AbstractController
             $Customer = $this->getUser();
             if ($Customer instanceof Customer) {
                 $builder->get('login_email')
-                    ->setData($Customer->getEmail());
+                  ->setData($Customer->getEmail());
             }
         }
 
         $event = new EventArgs(
             [
-                'builder' => $builder,
-            ],
+            'builder' => $builder,
+      ],
             $request
         );
         $this->eventDispatcher->dispatch($event, EccubeEvents::FRONT_MYPAGE_MYPAGE_LOGIN_INITIALIZE);
@@ -131,8 +131,8 @@ class MypageController extends AbstractController
         $form = $builder->getForm();
 
         return [
-            'error' => $utils->getLastAuthenticationError(),
-            'form' => $form->createView(),
+          'error' => $utils->getLastAuthenticationError(),
+          'form' => $form->createView(),
         ];
     }
 
@@ -148,17 +148,17 @@ class MypageController extends AbstractController
 
         // 購入処理中/決済処理中ステータスの受注を非表示にする.
         $this->entityManager
-            ->getFilters()
-            ->enable('incomplete_order_status_hidden');
+          ->getFilters()
+          ->enable('incomplete_order_status_hidden');
 
         // paginator
         $qb = $this->orderRepository->getQueryBuilderByCustomer($Customer);
 
         $event = new EventArgs(
             [
-                'qb' => $qb,
-                'Customer' => $Customer,
-            ],
+            'qb' => $qb,
+            'Customer' => $Customer,
+      ],
             $request
         );
         $this->eventDispatcher->dispatch($event, EccubeEvents::FRONT_MYPAGE_MYPAGE_INDEX_SEARCH);
@@ -166,11 +166,12 @@ class MypageController extends AbstractController
         $pagination = $paginator->paginate(
             $qb,
             $request->get('pageno', 1),
-            $this->eccubeConfig['eccube_search_pmax']
+            5
         );
 
         return [
-            'pagination' => $pagination,
+          'pagination' => $pagination,
+          'paginationData' => $pagination->getPaginationData(), // ← これを追加！
         ];
     }
 
@@ -183,18 +184,26 @@ class MypageController extends AbstractController
     public function history(Request $request, $order_no)
     {
         $this->entityManager->getFilters()
-            ->enable('incomplete_order_status_hidden');
+          ->enable('incomplete_order_status_hidden');
         $Order = $this->orderRepository->findOneBy(
             [
-                'order_no' => $order_no,
-                'Customer' => $this->getUser(),
-            ]
+            'order_no' => $order_no,
+            'Customer' => $this->getUser(),
+      ]
         );
+
+        if (!$Order) {
+            throw new NotFoundHttpException();
+        }
+
+        // Shippingデータを取得
+        $Shipping = $Order->getShippings()->first(); // 配送情報が1件の場合
 
         $event = new EventArgs(
             [
-                'Order' => $Order,
-            ],
+            'Order' => $Order,
+            'Shipping' => $Shipping, // Shippingをイベントに追加
+      ],
             $request
         );
         $this->eventDispatcher->dispatch($event, EccubeEvents::FRONT_MYPAGE_MYPAGE_HISTORY_INITIALIZE);
@@ -215,10 +224,12 @@ class MypageController extends AbstractController
         }
 
         return [
-            'Order' => $Order,
-            'stockOrder' => $stockOrder,
+          'Order' => $Order,
+          'Shipping' => $Shipping, // Shippingをテンプレートに渡す
+          'stockOrder' => $stockOrder,
         ];
     }
+
 
     /**
      * 再購入を行う.
@@ -233,19 +244,19 @@ class MypageController extends AbstractController
 
         $Customer = $this->getUser();
 
-        /** @var \Eccube\Entity\Order $Order */
+        /* @var $Order \Eccube\Entity\Order */
         $Order = $this->orderRepository->findOneBy(
             [
-                'order_no' => $order_no,
-                'Customer' => $Customer,
-            ]
+            'order_no' => $order_no,
+            'Customer' => $Customer,
+      ]
         );
 
         $event = new EventArgs(
             [
-                'Order' => $Order,
-                'Customer' => $Customer,
-            ],
+            'Order' => $Order,
+            'Customer' => $Customer,
+      ],
             $request
         );
         $this->eventDispatcher->dispatch($event, EccubeEvents::FRONT_MYPAGE_MYPAGE_ORDER_INITIALIZE);
@@ -293,9 +304,9 @@ class MypageController extends AbstractController
 
         $event = new EventArgs(
             [
-                'Order' => $Order,
-                'Customer' => $Customer,
-            ],
+            'Order' => $Order,
+            'Customer' => $Customer,
+      ],
             $request
         );
         $this->eventDispatcher->dispatch($event, EccubeEvents::FRONT_MYPAGE_MYPAGE_ORDER_COMPLETE);
@@ -327,9 +338,9 @@ class MypageController extends AbstractController
 
         $event = new EventArgs(
             [
-                'qb' => $qb,
-                'Customer' => $Customer,
-            ],
+            'qb' => $qb,
+            'Customer' => $Customer,
+      ],
             $request
         );
         $this->eventDispatcher->dispatch($event, EccubeEvents::FRONT_MYPAGE_MYPAGE_FAVORITE_SEARCH);
@@ -342,7 +353,7 @@ class MypageController extends AbstractController
         );
 
         return [
-            'pagination' => $pagination,
+          'pagination' => $pagination,
         ];
     }
 
@@ -369,9 +380,10 @@ class MypageController extends AbstractController
 
         $event = new EventArgs(
             [
-                'Customer' => $Customer,
-                'CustomerFavoriteProduct' => $CustomerFavoriteProduct,
-            ], $request
+            'Customer' => $Customer,
+            'CustomerFavoriteProduct' => $CustomerFavoriteProduct,
+      ],
+            $request
         );
         $this->eventDispatcher->dispatch($event, EccubeEvents::FRONT_MYPAGE_MYPAGE_DELETE_COMPLETE);
 

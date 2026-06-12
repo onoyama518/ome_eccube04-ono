@@ -1,0 +1,5 @@
+20130408_NewLMG|100|http://www.ome-shouzai.com/ec/m/product/LMG.html|1362660553|新カーボンメルマガ： LMG：20130408|
+20130408_NewMG|25|http://www.ome-shouzai.com/ec/m/product/MG.html|1362661195|新カーボンメルマガ：　 MG：20130408|
+20130422_moreLASHsilk|0|http://www.ome-shouzai.com/ec/m/product/moreLASHsilkLIST.html|1366615645|moreラッシュシルク：ラインナップ追加：シルク一覧：20130422|
+20130422_moreLASHpetit|0|http://www.ome-shouzai.com/ec/m/product/moreLASHpetitLIST.html|1366615791|moreラッシュシルク：ラインナップ追加：プチ一覧：20130422|
+20130422_moreLASHy|0|http://www.ome-shouzai.com/ec/m/product/moreLASHyLIST.html|1366615858|moreラッシュシルク：ラインナップ追加：Ｙ一覧：20130422|

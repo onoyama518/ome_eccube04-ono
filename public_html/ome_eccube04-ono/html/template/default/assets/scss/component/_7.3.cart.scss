@@ -1,5 +1,5 @@
 @import "../mixins/media";
-@import "../mixins/animation";
+// @import "../mixins/animation";
 @import "../mixins/projects";
 /*
 カート
@@ -34,7 +34,7 @@ sg-wrapper:
 
 Styleguide 7.3.1
 */
-.ec-progress{
+.ec-progress {
   margin: 0 auto;
   padding: 8px 0 16px;
   display: table;
@@ -47,8 +47,8 @@ Styleguide 7.3.1
     padding: 0;
   }
 
-  & &__item{
-    display:table-cell;
+  & &__item {
+    display: table-cell;
     position: relative;
     font-size: 14px;
     text-align: center;
@@ -56,22 +56,26 @@ Styleguide 7.3.1
     z-index: 10;
 
     &:after {
-      content: '';
+      content: "";
       position: absolute;
       display: block;
       background: #525263;
       width: 100%;
       height: 0.25em;
-      top: 1.25em;
+      top: 1em;
       left: 50%;
       margin-left: 1.5em\9;
       z-index: -1;
+      @include media_desktop {
+        top: 1.3em;
+      }
     }
     &:last-child:after {
       display: none;
+      top: 1.25em;
     }
   }
-  & &__number{
+  & &__number {
     line-height: 30px;
     width: 30px;
     height: 30px;
@@ -85,7 +89,7 @@ Styleguide 7.3.1
     text-align: center;
     vertical-align: middle;
     border-radius: 50%;
-    @include media_desktop(){
+    @include media_desktop() {
       line-height: 42px;
       width: 42px;
       height: 42px;
@@ -93,19 +97,20 @@ Styleguide 7.3.1
     }
   }
   & &__label {
-    font-size: 12px;
+    font-size: 10px;
+    @include media_desktop() {
+      font-size: 12px;
+    }
   }
   .is-complete {
     .ec-progress__number {
-      background: #5CB1B1;
+      background: #ff8b3b;
     }
     .ec-progress__label {
-      color: #5CB1B1;
+      color: #ff8b3b;
     }
   }
 }
-
-
 
 /*
 カートナビゲーション
@@ -126,12 +131,12 @@ sg-wrapper:
 
 Styleguide 7.3.5
 */
-.ec-cartNaviWrap{
+.ec-cartNaviWrap {
   @include media_desktop {
     position: relative;
   }
 }
-.ec-cartNavi{
+.ec-cartNavi {
   display: inline-block;
   padding: 10px 0 0 20px;
   width: auto;
@@ -148,17 +153,16 @@ Styleguide 7.3.5
     height: 44px;
     white-space: nowrap;
     cursor: pointer;
-    background: #F8F8F8;
+    background: #f8f8f8;
   }
 
   & &__icon {
     display: inline-block;
     font-size: 20px;
-    @include fadeIn(inline-block,200ms);
+    // @include fadeIn(inline-block, 200ms);
     position: relative;
-
   }
-  & &__badge{
+  & &__badge {
     display: inline-block;
     border-radius: 99999px;
     box-sizing: border-box;
@@ -170,7 +174,7 @@ Styleguide 7.3.5
     color: #fff;
     text-align: left;
     white-space: nowrap;
-    background-color: #DE5D50;
+    background-color: #de5d50;
     position: absolute;
     left: 60%;
     top: -10px;
@@ -182,7 +186,7 @@ Styleguide 7.3.5
       top: 0;
     }
   }
-  & &__price{
+  & &__price {
     display: none;
 
     @include media_desktop {
@@ -194,7 +198,6 @@ Styleguide 7.3.5
   }
 }
 .ec-cartNavi.is-active {
-
   .ec-cartNavi__icon {
     &:before {
       content: "\f00d";
@@ -202,15 +205,13 @@ Styleguide 7.3.5
       font-weight: 900;
     }
   }
-  .ec-cartNavi__badge{
+  .ec-cartNavi__badge {
     display: none;
     @include media_desktop {
       display: none;
     }
-
   }
 }
-
 
 /*
 カートナビゲーションのポップアップ(商品詳細)
@@ -261,7 +262,7 @@ Styleguide 7.3.6
   @include media_desktop {
     margin-top: 10px;
     min-width: 256px;
-    max-width:256px;
+    max-width: 256px;
 
     &::before {
       display: inline-block;
@@ -273,15 +274,12 @@ Styleguide 7.3.6
       border-color: transparent transparent #f8f8f8 transparent;
       position: absolute;
       top: -9px;
-
     }
   }
 
-
-
   & &__cart {
     @include clearfix;
-    border-bottom: 1px solid #E8E8E8;
+    border-bottom: 1px solid #e8e8e8;
     margin-bottom: 16px;
     padding-bottom: 32px;
   }
@@ -296,12 +294,12 @@ Styleguide 7.3.6
     float: right;
     width: 55%;
     padding-left: 16px;
-    text-align:left;
-    box-sizing:border-box;
+    text-align: left;
+    box-sizing: border-box;
   }
   & &__action {
     .ec-blockBtn--action {
-      color:#fff;
+      color: #fff;
       margin-bottom: 8px;
     }
   }
@@ -325,8 +323,6 @@ Styleguide 7.3.6
 .ec-cartNaviIsset.is-active {
   display: block;
 }
-
-
 
 /*
 カートナビゲーションのポップアップ(商品なし)
@@ -375,7 +371,6 @@ sg-wrapper:
 Styleguide 7.3.7
 */
 
-
 .ec-cartNaviNull {
   display: none;
   width: 100%;
@@ -390,7 +385,7 @@ Styleguide 7.3.7
   @include media_desktop {
     margin-top: 10px;
     min-width: 256px;
-    max-width:256px;
+    max-width: 256px;
 
     &::before {
       display: inline-block;
@@ -402,17 +397,16 @@ Styleguide 7.3.7
       border-color: transparent transparent #f8f8f8 transparent;
       position: absolute;
       top: -9px;
-
     }
   }
 
   & &__message {
-    border: 1px solid #D9D9D9;
+    border: 1px solid #d9d9d9;
     padding: 16px 0;
     font-size: 16px;
     font-weight: bold;
     color: #fff;
-    background-color: #F99;
+    background-color: #f99;
     p {
       margin: 0;
     }
@@ -422,8 +416,6 @@ Styleguide 7.3.7
 .ec-cartNaviNull.is-active {
   display: block;
 }
-
-
 
 /*
 総計
@@ -438,50 +430,50 @@ include /assets/tmpl/elements/7.3.cart.pug
 
 Styleguide 7.3.8
 */
-.ec-totalBox{
-  background:#F3F3F3;
+.ec-totalBox {
+  background: #e5dee1;
   padding: 16px;
   margin-bottom: 16px;
-  & &__spec{
+  & &__spec {
     display: -ms-flexbox;
     display: flex;
     -webkit-justify-content: space-between;
     justify-content: space-between;
     -ms-flex-pack: space-between;
-    margin-bottom:8px;
-    dt{
+    margin-bottom: 8px;
+    dt {
       font-weight: normal;
       text-align: left;
     }
-    dd{
+    dd {
       text-align: right;
     }
     & &__specTotal {
       color: $clrRed;
     }
   }
-  & &__total{
-    border-top: 1px dotted #ccc;
+  & &__total {
+    border-top: 1px dotted #e5dee1;
     padding: 8px 0;
     text-align: right;
     font-size: 14px;
-    font-weight:bold;
+    font-weight: bold;
   }
-  & &__paymentTotal{
-    border-top: 1px dotted #ccc;
+  & &__paymentTotal {
+    border-top: 1px dotted #e5dee1;
     padding: 8px 0;
     text-align: right;
     font-size: 14px;
-    font-weight:bold;
+    font-weight: bold;
     .ec-totalBox__price,
-    .ec-totalBox__taxLabel{
-        color: $clrRed;
+    .ec-totalBox__taxLabel {
+      color: $clrRed;
     }
   }
-  & &__price{
+  & &__price {
     margin-left: 16px;
     font-size: 16px;
-    font-weight:bold;
+    font-weight: bold;
     @include media_desktop {
       font-size: 24px;
     }
@@ -499,12 +491,12 @@ Styleguide 7.3.8
     -webkit-justify-content: flex-end;
     -ms-flex-pack: end;
     justify-content: flex-end;
-    margin-bottom:8px;
+    margin-bottom: 8px;
     font-size: 10px;
     @include media_desktop {
-      font-size: 12px;
+      font-size: 10px;
     }
-    dt{
+    dt {
       font-weight: normal;
       text-align: left;
       margin-right: 8px;
@@ -512,21 +504,21 @@ Styleguide 7.3.8
         content: "[ ";
       }
     }
-    dd{
+    dd {
       text-align: right;
       &::after {
         content: " ]";
       }
     }
   }
-  & &__pointBlock{
+  & &__pointBlock {
     padding: 18px 20px 10px;
     margin-bottom: 10px;
-    background: #fff;
+    background: #f3f3f3;
   }
   & &__btn {
     @include reset_link();
-    color: #fff;
+    color: #f3f3f3;
     .ec-blockBtn--action {
       font-size: 16px;
       font-weight: bold;

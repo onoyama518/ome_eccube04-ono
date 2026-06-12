@@ -1,0 +1,305 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% extends 'default_frame.twig' %}
+
+{% set mypageno = 'index' %}
+
+{% set body_class = 'mypage' %}
+
+{% block main %}
+	<div id="mypagecolumn">
+		<div class="ec-mypageRole">
+				<div class="ec-pageHeader">
+					<h2 class="title">{{ 'マイページ'|trans }}</h2>
+				</div>
+				{{ include('Mypage/navi.twig') }}
+		</div>
+		{% set remessage = false %}
+
+		<div id="mycontents_area">
+			<div class="area_flex_history">
+				<h3>購入履歴</h3>
+				<!-- 領収書発行ボタン -->
+				{% if Order.OrderStatus == '発送済み' %}
+					<button id="download-pdf" onclick="downloadPdf()" class="btn btn-download">
+						<i class="fa fa-download"></i>
+						領収書をダウンロード</button>
+					<script>
+						async function downloadPdf() {
+const orderId = {{ Order.id }}; // TwigテンプレートからOrder.idを取得
+const url = `/mypage/receipt-pdf/${orderId}`;
+
+try {
+const response = await fetch(url, {method: 'GET'});
+
+if (! response.ok) {
+throw new Error('PDFの取得に失敗しました。');
+}
+
+const blob = await response.blob(); // PDFデータをBlob形式で取得
+const downloadUrl = window.URL.createObjectURL(blob);
+// BlobをURLに変換
+
+// プレビュー表示（ブラウザでPDFを開く）
+window.open(downloadUrl, '_blank');
+// 新しいタブまたはウィンドウで開く
+
+// ダウンロード処理
+const a = document.createElement('a'); // 仮のリンクを作成
+a.href = downloadUrl;
+a.download = `receipt-${orderId}.pdf`; // ダウンロード時のファイル名
+document.body.appendChild(a); // 仮のリンクをDOMに追加
+a.click(); // リンクをクリックしてダウンロードを開始
+document.body.removeChild(a); // リンクをDOMから削除
+window.URL.revokeObjectURL(downloadUrl); // URLを解放
+} catch (error) {
+console.error(error);
+alert('PDFのダウンロードに失敗しました。');
+}
+}
+					</script>
+				{% endif %}
+			</div>
+			<div class="mycondition_area">
+				<p class="mycondition_title">
+					<span class="st">ご注文日：&nbsp;</span>
+					{{ Order.order_date|date("Y年m月d日") }}<br/>
+					<span class="st">ご注文番号：&nbsp;</span>
+					{{ Order.order_no }}<br/>
+					<span class="st">ご注文状況：&nbsp;</span>
+					{{ Order.OrderStatus }}<br/>
+					<span class="st">お支払い方法：&nbsp;</span>
+					{{ Order.PaymentMethod }}<br>
+					<span class="st">{{ '配送方法'|trans }}:&nbsp;</span>
+					{{ Shipping.shipping_delivery_name }}
+				</p>
+				<form>
+					{% if stockOrder %}
+						<a href="{{ url('mypage_order', {'order_no': Order.order_no }) }}" class="ec-blockBtn--action load-overlay btn btn_revise btn_not_orange" {{ csrf_token_for_anchor() }} data-method="put" data-confirm="false">この購入内容で再注文する</a>
+					{% endif %}
+				</form>
+			</div>
+			{% for Shipping in Order.Shippings %}
+				<div class="sp_x_scroll">
+					<table summary="購入商品詳細" class="hyou ">
+						<colgroup width="10%"></colgroup>
+						<colgroup></colgroup>
+						<colgroup></colgroup>
+						<colgroup></colgroup>
+						<colgroup></colgroup>
+						<colgroup width="30%"></colgroup>
+						<tr>
+							<th class="alignC">商品コード</th>
+							<th class="alignC">商品名</th>
+							<th class="alignC">商品種別</th>
+							<th class="alignC">単価</th>
+							<th class="alignC">数量</th>
+							<th class="alignC">小計</th>
+						</tr>
+
+						{% for orderItem in Shipping.productOrderItems %}
+							{% set isShowReducedTaxMess = false %}
+
+							<tr>
+								<td>{{orderItem.Product.code_min}}</td>
+								<td>
+									<a href="{{ url('product_detail', {'id': orderItem.Product.id}) }}">{{ orderItem.productName }}</a>
+								</td>
+								<td class="alignC sp_none">
+									{{ Order.OrderStatus }}
+								</td>
+
+								<td class="alignR">
+									{{ orderItem.price_inc_tax|price }}
+								</td>
+								<td class="alignR">{{ orderItem.quantity }}</td>
+								<td class="alignR">{{ orderItem.productClass.price02IncTax|price }}円</td>
+							</tr>
+						{% endfor %}
+
+						<tr>
+							<th colspan="5" class="alignR">小計</th>
+							<td class="alignR">{{ Order.subtotal|price }}円</td>
+						</tr>
+
+
+						{% for item in Order.taxable_discount_items %}
+							<tr>
+								<th colspan="5" class="alignR">
+									{{ item.product_name }}</th>
+								<td class="alignR">{{ item.total_price|number_format }}円</td>
+							</tr>
+						{% endfor %}
+						{% for item in Order.tax_free_discount_items %}
+							<tr>
+								<th colspan="5" class="alignR">
+									{{ item.product_name }}</th>
+								<td class="alignR">{{ item.total_price|number_format }}円</td>
+							</tr>
+						{% endfor %}
+						<tr>
+							<th colspan="5" class="alignR">送料</th>
+							<td class="alignR">
+								{{ Order.delivery_fee_total|price }}
+								円
+							</td>
+						</tr>
+						<tr>
+							<th colspan="5" class="alignR">
+								手数料</th>
+							<td class="alignR">{{ Order.charge|price }}円</td>
+						</tr>
+						<tr>
+							<th colspan="5" class="alignR">合計</th>
+							<td class="alignR">
+								<span class="price">{{ Order.payment_total|price }}円</span>
+								<span class="ec-totalBox__taxLabel">{{ '税込'|trans }}</span>
+							</td>
+						</tr>
+					</table>
+				</div>
+				{% if BaseInfo.isOptionPoint %}
+
+					<table summary="使用ポイント" class="hyou">
+						<colgroup width="30%"></colgroup>
+						<colgroup width="70%"></colgroup>
+						<tr>
+							<th class="alignL">ご使用ポイント</th>
+							<td>
+								{{ Order.usePoint|number_format }}
+								pt
+							</td>
+						</tr>
+						<tr>
+							<th class="alignL">
+								今回加算されるポイント</th>
+							<td>
+								{{ Order.addPoint|number_format }}
+								pt</td>
+						</tr>
+					</table>
+				{% endif %}
+
+
+				<h3>
+					お届け先
+
+				</h3>
+
+				<table summary="お届け内容確認" class="hyou">
+					<colgroup width="30%"></colgroup>
+					<colgroup width="40%"></colgroup>
+					<colgroup width="20%"></colgroup>
+					<colgroup width="10%"></colgroup>
+					<tr>
+						<th class="alignC">商品コード</th>
+						<th class="alignC">商品名</th>
+						<th class="alignC">単価</th>
+						<th class="alignC">数量</th>
+					</tr>
+
+					{% for orderItem in Shipping.productOrderItems %}
+						{% set isShowReducedTaxMess = false %}
+
+						<tr>
+
+							<td>{{orderItem.Product.code_min}}</td>
+							<td>
+								{{ orderItem.productName }}
+
+							</td>
+							<td class="alignR">
+								{{ orderItem.price_inc_tax|price }}
+								円
+							</td>
+							<td class="alignC">{{ orderItem.quantity|number_format }}</td>
+
+
+						</tr>
+
+
+					{% endfor %}
+
+				</table>
+				<table summary="お届け先" class="delivname hyou">
+					<colgroup width="30%"></colgroup>
+					<colgroup width="70%"></colgroup>
+					<tr>
+						<th class="alignL">会社名</th>
+						<td>{{ Shipping.company_name }}</td>
+					</tr>
+
+
+					<tr>
+						<th class="alignL">お名前</th>
+						<td>{{ Shipping.name01 }}&nbsp;{{ Shipping.name02 }}&nbsp;</td>
+					</tr>
+					<tr>
+						<th class="alignL">お名前(フリガナ)</th>
+						<td>
+							({{ Shipping.kana01 }}&nbsp;{{ Shipping.kana02 }})</td>
+					</tr>
+					<tr>
+						<th class="alignL">郵便番号</th>
+						<td>{{ '〒'|trans }}{{ Shipping.postal_code }}</td>
+					</tr>
+					<tr>
+						<th class="alignL">住所</th>
+						<td>{{ Shipping.Pref }}{{ Shipping.addr01 }}{{ Shipping.addr02 }}
+						</td>
+					</tr>
+					<tr>
+						<th class="alignL">
+							電話番号</th>
+						<td>{{ Shipping.phone_number }}</td>
+					</tr>
+					<tr>
+						<th class="alignL">お届け日</th>
+						<td>{{ Shipping.shipping_delivery_date|date_day_with_weekday|default('指定なし'|trans) }}</td>
+					</tr>
+					<tr>
+						<th class="alignL">お届け時間</th>
+						<td>{{ Shipping.shipping_delivery_time|default('指定なし'|trans) }}</td>
+					</tr>
+				</table>
+			{% endfor %}
+
+			<h3>メール配信履歴一覧</h3>
+			<table class="hyou">
+				<tr>
+					<th class="alignC">処理日</th>
+					<th class="alignC">件名</th>
+				</tr>
+				{% for MailHistory in Order.MailHistories %}
+
+					<tr class="center">
+						<td class="alignC">{{ MailHistory.send_date|date_sec }}</td>
+						<td>
+							<a>{{ MailHistory.mail_subject }}</a>
+
+						</td>
+					</tr>
+				{% else %}
+					<p class="ec-reportDescription">{{ 'メール履歴はありません。'|trans }}</p>
+				{% endfor %}
+			</table>
+			<div class="btn_area">
+				<ul>
+					<li>
+            <a class="return btn_revise btn_not_orange btn_history_return" href="{{ url('mypage') }}">
+              戻る  
+            </a>
+          </li>
+				</ul>
+			</div>
+		</div>
+	</div>
+{% endblock %}

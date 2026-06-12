@@ -1,0 +1,170 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% extends 'default_frame.twig' %}
+
+{% set mypageno = 'index' %}
+
+{% set body_class = 'mypage' %}
+
+{% block main %}
+	<div id="undercolumn">
+
+		<div class="ec-layoutRole__main renewal_mypage" id="mypagecolumn">
+			<div class="ec-mypageRole">
+				<div class="ec-pageHeader">
+					<h2 class="title">{{ 'マイページ'|trans }}</h2>
+				</div>
+				{% include 'Mypage/navi.twig' %}
+			</div>
+			<div class="ec-mypageRole" id="mycontents_area" >
+			<h3>{{ '購入履歴一覧'|trans }}</h3>
+
+			{% set visibleOrders = [] %}
+			{% for Order in pagination %}
+				{% if Order.OrderStatus != '決済処理中から注文取消し' %}
+				{% set visibleOrders = visibleOrders|merge([Order]) %}
+				{% endif %}
+			{% endfor %}
+      {% if pagination.totalItemCount > 0 %}
+        <p class="ec-para-normal">
+          {{ '%count%件の購入履歴があります。'|trans({'%count%': pagination.totalItemCount}) }}
+        </p>
+
+        <div class="area_mypage_history">
+          {% for Order in pagination %}
+            {% if Order.OrderStatus != '決済処理中から注文取消し' %}
+              <div class="history_item">
+                <div class="area_order">
+                  <div class="left">
+                    <div class="order_info">
+                      <p class="order_date">{{ Order.order_date|date('Y/m/d') }}</p>
+                      <p class="order_number order_no">ご注文番号<span>{{ Order.order_no }}</span></p>
+                      <p class="order_number">ご注文状況<span>{{ Order.OrderStatus }}</span></p>
+                      <a href="{{ url('mypage_history', {'order_no': Order.order_no}) }}" class="detail_link">詳細を表示</a>
+                    </div>
+
+                    <div class="item_info_gallery">
+                      {% set totalItems = 0 %}
+                      {% for Shipping in Order.Shippings %}
+                        {% set totalItems = totalItems + Shipping.productOrderItems|length %}
+                      {% endfor %}
+                      
+                      {% set itemCount = 0 %}
+                      {% for Shipping in Order.Shippings %}
+                        {% for orderItem in Shipping.productOrderItems %}
+                          {% set itemCount = itemCount + 1 %}
+                          {% if itemCount <= 3 %}
+                            <div class="item_info">
+                              <div class="item_image">
+                                {% if orderItem.Product.main_list_image %}
+                                  <img src="{{ asset(orderItem.Product.main_list_image, 'save_image') }}" alt="{{ orderItem.productName }}">
+                                {% endif %}
+                              </div>
+                              <div class="item_detail">
+                                <p class="product_name">{{ orderItem.productName }}</p>
+                                <p class="product_price">
+                                  {% if orderItem.quantity > 1 %}
+                                    {{ orderItem.price_inc_tax|price }} × {{ orderItem.quantity }}
+                                  {% else %}
+                                    {{ orderItem.price_inc_tax|price }}
+                                  {% endif %}
+                                </p>
+                              </div>
+                            </div>
+                          {% endif %}
+                        {% endfor %}
+                      {% endfor %}
+                      
+                      {% if totalItems > 3 %}
+                        <div class="item_info">
+                          <p class="more_items_message">その他の商品は「詳細を表示」からご確認ください。</p>
+                        </div>
+                      {% endif %}
+                    </div>
+                  </div>
+
+                  <div class="button_pdf">
+                    <a href="{{ url('mypage_history', {'order_no': Order.order_no}) }}" class="detail_link">詳細を表示</a>
+
+                    {% if Order.OrderStatus == '発送済み' %}
+                      <button onclick="downloadPdf('{{ Order.order_no }}')" class="btn btn-primary btn-active">領収書を発行</button>
+                    {% elseif Order.OrderStatus == '返品' %}
+                      <button class="btn btn-primary">領収書を発行</button>
+                      <span>返品の為、発行不可</span>
+                    {% elseif Order.OrderStatus == '注文取消し' %}
+                      <button class="btn btn-primary">領収書を発行</button>
+                      <span>注文取消しの為、発行不可</span>
+                    {% else %}
+                      <button class="btn btn-primary">領収書を発行</button>
+                      <span>商品発送後に発行</span>
+                    {% endif %}
+                  </div>
+                </div>
+
+                <div class="order_total">
+                  {# {% if stockOrder %} #}
+                    <a href="{{ url('mypage_order', {'order_no': Order.order_no }) }}" class="btn btn_reorder" {{ csrf_token_for_anchor() }} data-method="put" data-confirm="false">再注文</a>
+                  {# {% endif %} #}
+                  合計金額：<span class="total_price">{{ Order.payment_total|price }}</span>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+        <script>
+ 							async function downloadPdf(orderId) {
+ 								const url = `/mypage/receipt-pdf/${orderId}`;
+ 								console.log(url);
+ 								try {
+ 									const response = await fetch(url, { method: 'GET' });
+ 
+ 									if (!response.ok) {
+ 										throw new Error('PDFの取得に失敗しました。');
+ 									}
+ 
+ 									const blob = await response.blob(); // PDFデータをBlob形式で取得
+ 									const downloadUrl = window.URL.createObjectURL(blob); // BlobをURLに変換
+ 
+ 									// プレビュー表示（ブラウザでPDFを開く）
+ 									window.open(downloadUrl, '_blank'); // 新しいタブまたはウィンドウで開く
+ 
+ 									// ダウンロード処理
+ 									const a = document.createElement('a'); // 仮のリンクを作成
+ 									a.href = downloadUrl;
+ 									a.download = `領収書_{{ Order.Shippings[0].shipping_date|date("Y-m-d") }}-${orderId}.pdf`; // ダウンロード時のファイル名
+ 									document.body.appendChild(a); // 仮のリンクをDOMに追加
+ 									a.click(); // リンクをクリックしてダウンロードを開始
+ 									document.body.removeChild(a); // リンクをDOMから削除
+ 									window.URL.revokeObjectURL(downloadUrl); // URLを解放
+ 								} catch (error) {
+ 									console.error(error);
+ 									alert('PDFのダウンロードに失敗しました。');
+ 								}
+ 							}
+ 						</script>
+
+        <div class="ec-searchnavRole">
+          <div class="ec-searchnavRole__infos">
+            <div class="pagenation_product pagenumberarea" style="justify-content:center; background:initial;">
+              <div class="ec-pagerRole center">
+                 {% include "pager.twig" with {'pages': paginationData} %}
+              </div>
+            </div>
+          </div>
+        </div>
+      {% else %}
+        <p class="ec-para-normal">{{ '購入履歴はありません。'|trans }}</p>
+      {% endif %}
+
+		</div>
+
+	</div>
+{% endblock %}

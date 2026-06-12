@@ -40,6 +40,12 @@ file that was distributed with this source code.
                 $('#form_bulk').attr('action', "{{ url('admin_order_bulk_delete') }}").submit();
                 return false;
             });
+              $('#bulkGoToPage').on('click', function(event) {
+                event.preventDefault();
+                $('#form_bulk').attr('action', "{{ url('admin_order_bulk_mail') }}").submit();
+                return false;
+            });
+
 
             // PDF出力(複数)
             $('#bulkExportPdf').on('click', function(event) {
@@ -49,6 +55,7 @@ file that was distributed with this source code.
                 $('#form_bulk').submit();
                 return false;
             });
+            
 
             // PDF出力(単一)
             $('.pdf-print').click(function() {
@@ -133,8 +140,9 @@ file that was distributed with this source code.
     $('#bulkChangeComplete').on('click', function() {
         location.href = '{{ url('admin_order', { 'resume': 1 }) }}';
     });
-
+       
 });
+
 </script>
 
 {{ include('@admin/Order/confirmationModal_js.twig') }}
@@ -398,9 +406,13 @@ file that was distributed with this source code.
                                 <div class="row justify-content-between">
                                     <div class="col-auto d-none btn-bulk-wrapper">
                                         <label class="me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ 'tooltip.order.bulk_actions'|trans }}">{{ 'admin.common.bulk_actions'|trans }}<i class="fa fa-question-circle fa-lg ms-1"></i></label>
+                                        <button id="bulkGoToPage" type="button" class="btn btn-ec-regular me-2">
+                                            一括通知
+                                        </button>
                                         <button id="bulkSendMail" type="button" class="btn btn-ec-regular me-2" data-type="mail" data-bulk-update="true">
                                             {{ 'admin.order.send_mail'|trans }}
                                         </button>
+                                        
                                         <button type="button" id="bulkExportPdf" class="btn btn-ec-regular me-2">{{ 'admin.order.output_delivery_note_short'|trans }}</button>
                                         {# TODO 削除処理は将来バージョンで対応 <button type="button" class="btn btn-ec-delete" data-bs-toggle="modal" data-bs-target="#bulkDeleteModal">{{ 'admin.common.delete'|trans }}</button> #}
                                     </div>
@@ -625,7 +637,7 @@ file that was distributed with this source code.
                                     <div class="fw-bold mb-2 notificationMail">{{ 'admin.order.to_shipped__confirm_send_mail'|trans }}</div>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="checkbox" id="notificationMail">
-                                        <label class="form-check-label notificationMail" for="notificationMail">
+                                        <label class="form-check-label notificationMail">
                                             {{ 'admin.order.to_shipped__confirm_send_mail_in_same_time'|trans }}
                                         </label>
                                     </div>

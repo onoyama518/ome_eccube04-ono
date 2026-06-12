@@ -18,25 +18,26 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
 use Eccube\Entity\ProductClass;
 use Eccube\Service\TaxRuleService;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class TaxRuleEventSubscriber implements EventSubscriber
 {
     /**
      * @var TaxRuleService
      */
-    protected $taxRuleService;
+    protected $container;
 
     /**
      * TaxRuleEventSubscriber constructor.
      */
-    public function __construct(TaxRuleService $taxRuleService)
+    public function __construct(ContainerInterface $container)
     {
-        $this->taxRuleService = $taxRuleService;
+        $this->container = $container;
     }
 
     public function getTaxRuleService()
     {
-        return $this->taxRuleService;
+        return $this->container->get(TaxRuleService::class);
     }
 
     public function getSubscribedEvents()

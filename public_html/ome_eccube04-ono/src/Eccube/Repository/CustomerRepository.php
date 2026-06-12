@@ -24,6 +24,7 @@ use Eccube\Entity\Master\OrderStatus;
 use Eccube\Entity\Master\Pref;
 use Eccube\Entity\Master\Sex;
 use Eccube\Util\StringUtil;
+use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 /**
  * CustomerRepository
@@ -53,6 +54,11 @@ class CustomerRepository extends AbstractRepository
      */
     protected $eccubeConfig;
 
+    /**
+     * @var EncoderFactoryInterface
+     */
+    protected $encoderFactory;
+
     public const COLUMNS = [
         'customer_id' => 'c.id', 'name' => 'c.name01',
     ];
@@ -64,6 +70,7 @@ class CustomerRepository extends AbstractRepository
      * @param Queries $queries
      * @param EntityManagerInterface $entityManager
      * @param OrderRepository $orderRepository
+     * @param EncoderFactoryInterface $encoderFactory
      * @param EccubeConfig $eccubeConfig
      */
     public function __construct(
@@ -71,6 +78,7 @@ class CustomerRepository extends AbstractRepository
         Queries $queries,
         EntityManagerInterface $entityManager,
         OrderRepository $orderRepository,
+        EncoderFactoryInterface $encoderFactory,
         EccubeConfig $eccubeConfig
     ) {
         parent::__construct($registry, Customer::class);
@@ -78,6 +86,7 @@ class CustomerRepository extends AbstractRepository
         $this->queries = $queries;
         $this->entityManager = $entityManager;
         $this->orderRepository = $orderRepository;
+        $this->encoderFactory = $encoderFactory;
         $this->eccubeConfig = $eccubeConfig;
     }
 
@@ -88,9 +97,7 @@ class CustomerRepository extends AbstractRepository
 
         $Customer = new \Eccube\Entity\Customer();
         $Customer
-            ->setStatus($CustomerStatus)
-            ->setSecretKey($this->getUniqueSecretKey())
-            ->setPoint(0);
+            ->setStatus($CustomerStatus);
 
         return $Customer;
     }

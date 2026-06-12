@@ -13,33 +13,24 @@
 
 namespace Eccube\Security\Core\User;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Eccube\Entity\Master\Work;
 use Eccube\Entity\Member;
 use Eccube\Repository\MemberRepository;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
-class MemberProvider implements UserProviderInterface, PasswordUpgraderInterface
+class MemberProvider implements UserProviderInterface
 {
     /**
      * @var MemberRepository
      */
     protected $memberRepository;
 
-    /**
-     * @var EntityManagerInterface
-     */
-    private $entityManager;
-
-    public function __construct(MemberRepository $memberRepository, EntityManagerInterface $entityManager)
+    public function __construct(MemberRepository $memberRepository)
     {
         $this->memberRepository = $memberRepository;
-        $this->entityManager = $entityManager;
     }
 
     /**
@@ -51,7 +42,13 @@ class MemberProvider implements UserProviderInterface, PasswordUpgraderInterface
      */
     public function loadUserByUsername($username): Member
     {
-        return $this->loadUserByIdentifier($username);
+        $Member = $this->memberRepository->findOneBy(['login_id' => $username, 'Work' => Work::ACTIVE]);
+
+        if (null === $Member) {
+            throw new UserNotFoundException(sprintf('Username "%s" does not exist.', $username));
+        }
+
+        return $Member;
     }
 
     /**
@@ -85,22 +82,5 @@ class MemberProvider implements UserProviderInterface, PasswordUpgraderInterface
     public function supportsClass($class)
     {
         return Member::class === $class || is_subclass_of($class, Member::class);
-    }
-
-    public function loadUserByIdentifier(string $identifier): UserInterface
-    {
-        $Member = $this->memberRepository->findOneBy(['login_id' => $identifier, 'Work' => Work::ACTIVE]);
-
-        if (null === $Member) {
-            throw new UserNotFoundException(sprintf('Username "%s" does not exist.', $identifier));
-        }
-
-        return $Member;
-    }
-
-    public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
-    {
-        $user->setPassword($newHashedPassword);
-        $this->entityManager->flush();
     }
 }

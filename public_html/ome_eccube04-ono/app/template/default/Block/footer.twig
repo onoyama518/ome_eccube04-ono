@@ -1,0 +1,428 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+<div class="sp_footer">
+  <div id="footer-banner">
+    <a href="/user_data/bringup-lp" class="footer-banner-link">
+      <picture>
+        <source
+          media="(max-width: 768px)"
+          srcset="{{ asset('assets/img/renewal_top/footer/bring-up-banner-sp.png') }}"
+        >
+        <img
+          src="{{ asset('assets/img/renewal_top/footer/bring-up-banner.webp') }}"
+          alt=""
+          loading="lazy"
+        >
+      </picture>
+    </a>
+    <a href="/user_data/ac-mascara-lp" class="footer-banner-link">
+      <picture>
+        <source
+          media="(max-width: 768px)"
+          srcset="{{ asset('assets/img/renewal_top/footer/ac-banner-sp.png') }}"
+        >
+        <img
+          src="{{ asset('assets/img/renewal_top/footer/ac-banner.webp') }}"
+          alt=""
+          loading="lazy"
+        >
+      </picture>
+    </a>
+    <a href="/user_data/ledex-subsc" class="footer-banner-link">
+      <picture>
+        <source
+          media="(max-width: 768px)"
+          srcset="{{ asset('assets/img/renewal_top/footer/led-banner-sp.png') }}"
+        >
+        <img
+          src="{{ asset('assets/img/renewal_top/footer/led-banner.webp') }}"
+          alt=""
+          loading="lazy"
+        >
+      </picture>
+    </a>
+  </div>
+  <div id="foot">
+    <div class="foot-inner">
+      <div class="shomei-area">
+        <div class="shomei-logo">
+          <img src="{{ asset('assets/img/renewal_top/footer/footer-logo-white.png') }}" alt="omeエンタープライズ　ロゴ"/>
+        </div>
+      </div>
+      <span class="sns-title">ome公式SNS</span>
+      <div class="head-snsico">
+        <a href="https://www.instagram.com/ome_enterprises/" target="_blank">
+          <img src="{{ asset('assets/img_2018/icon/instagram_icon.png') }}" alt="インスタグラム">
+        </a>
+        <a href="https://lin.ee/b9CFnoC" target="_blank">
+          <img src="{{ asset('assets/img_2018/icon/line_icon.png') }}" alt="LINE@">
+        </a>
+        <a href="https://www.facebook.com/ome.shouzai/" target="_blank">
+          <img src="{{ asset('assets/img_2018/icon/facebook_icon.png') }}" alt="facebook">
+        </a>
+        <a href="https://www.youtube.com/channel/UCrlf7zRmPvHmW45Iqn8uvNg" target="_blank">
+          <img src="{{ asset('assets/img_2018/icon/youtube_icon.png') }}" alt="YouTube公式チャンネル">
+        </a>
+      </div>
+      <p id="copy">Copyright©kichi CO.,LTD. All Rights Reserved.</p>
+    </div>
+  </div>
+  <div class="footer-fixed">
+    <ul class="fixed-nav">
+      <li class="fixed-nav-item" data-megamenu-trigger="menu">
+        <div class="icon">
+          <div class="humbergur">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+        <div class="text">menu</div>
+      </li>
+      <li class="fixed-nav-item" data-megamenu-trigger="contents">
+        <div class="icon">
+          <img src="{{ asset('assets/img/search.svg') }}" alt="" loading="lazy" />
+        </div>
+        <div class="text">contents</div>
+      </li>
+      <li class="fixed-nav-item" data-megamenu-trigger="guide">
+        <div class="icon">
+          <img src="{{ asset('assets/img/Open_Book.svg') }}" alt="" loading="lazy" />
+        </div>
+        <div class="text">guide</div>
+      </li>
+      <li class="fixed-nav-item" data-megamenu-trigger="mypage">
+        <div class="icon">
+          <img src="{{ asset('assets/img/user.svg') }}" alt="" loading="lazy" />
+        </div>
+        <div class="text">my page</div>
+      </li>
+      <li class="fixed-nav-item">
+        <div class="icon">
+          <img src="{{ asset('assets/img/cart.svg') }}" alt="" loading="lazy" />
+        </div>
+        <div class="text">cart</div>
+        <a href="{{ url('cart') }}" class="link"></a>
+      </li>
+    </ul>
+    <div class="megamenu" data-megamenu="menu">
+      <div class="megamenu-inner">
+        <div id="searchbar">{{ render(path('block_search_product')) }}</div>
+        <div class="megamenu-content">
+          <div class="megamenu-title-wrap" data-list-trigger="eyelash-extensions">
+            <h2 class="megamenu-title">まつげエクステ</h2>
+            <div class="megamenu-subtitle">EYELASH EXTENSIONS<span class="icon"></span></div>
+          </div>
+          <ul class="megamenu-list" data-list="eyelash-extensions">
+            <li><a href="{{ url('product_list', {'category_id': 99}) }}">全て</a></li>
+            <li><a href="{{ url('product_list', {'category_id': 100}) }}">国産グルー</a></li>
+            <li><a href="{{ url('product_list', {'category_id': 101}) }}">エクステンション</a></li>
+            <li class="sub-category"><a href="{{ url('product_list', {'category_id': 102}) }}">シングル・ボリューム</a></li>
+            <li class="sub-category"><a href="{{ url('product_list', {'category_id': 103}) }}">フラットラッシュ</a></li>
+            <li class="sub-category"><a href="{{ url('product_list', {'category_id': 104}) }}">カラーラッシュ</a></li>
+            <li><a href="{{ url('product_list', {'category_id': 105}) }}">前処理</a></li>
+            <li><a href="{{ url('product_list', {'category_id': 106}) }}">リムーバー</a></li>
+            <li><a href="{{ url('product_list', {'category_id': 107}) }}">ツイーザー</a></li>
+            <li><a href="{{ url('product_list', {'category_id': 9}) }}">トリートメント</a></li>
+            <li><a href="{{ url('product_list', {'category_id': 109}) }}">施術ツール・テープ</a></li>
+            <li><a href="{{ url('product_list', {'category_id': 110}) }}">アウトレット</a></li>
+          </ul>
+        </div>
+        <div class="megamenu-content">
+          <div class="megamenu-title-wrap" data-list-trigger="rushlift">
+            <h2 class="megamenu-title">ラッシュリフト</h2>
+            <div class="megamenu-subtitle">LASH LIFT<span class="icon"></span></div>
+          </div>
+          <ul class="megamenu-list" data-list="rushlift">
+            <li><a href="{{ url('product_list', {'category_id': 92}) }}">全て</a></li>
+            <li><a href="{{ url('product_list', {'category_id': 93}) }}">ラッシュリフト剤</a></li>
+            <li><a href="{{ url('product_list', {'category_id': 111}) }}">ラッシュリフトグルー</a></li>
+            <li><a href="{{ url('product_list', {'category_id': 112}) }}">中間・後処理</a></li>
+            <li><a href="{{ url('product_list', {'category_id': 9}) }}">トリートメント</a></li>
+          </ul>
+        </div>
+        <div class="megamenu-content">
+          <div class="megamenu-title-wrap" data-list-trigger="storecosmetics">
+            <h2 class="megamenu-title">店販コスメ</h2>
+            <div class="megamenu-subtitle">COSMETICS<span class="icon"></span></div>
+          </div>
+          <ul class="megamenu-list" data-list="storecosmetics">
+            <li><a href="{{ url('product_list', {'category_id': 7}) }}">全て</a></li>
+            <li><a href="{{ url('product_list', {'category_id': 113}) }}">マスカラ</a></li>
+            <li><a href="{{ url('product_list', {'category_id': 114}) }}">アイライナー</a></li>
+            <li><a href="{{ url('product_list', {'category_id': 115}) }}">クレンジング</a></li>
+            <li><a href="{{ url('product_list', {'category_id': 94}) }}">まつげ美容液</a></li>
+            <li class="all-ac"><a href="{{ url('product_list', {'category_id': 116}) }}">ACの全て</a></li>
+          </ul>
+        </div>
+        <ul class="megamenu-info">
+          <li><a href="{{ url('homepage') }}">TOP</a></li>
+          <li><a href="{{url('help_agreement')}}">新規会員登録</a></li>
+          <li><a href="{{ url('contact') }}">お問い合わせ</a></li>
+          <li class="tel">
+            <a href="tel:0120-965-583">0120-965-583</a><span class="time">平日10:00～18:00</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="megamenu" data-megamenu="contents">
+      <div class="megamenu-inner">
+        <div class="megamenu-content">
+          <div class="megamenu-title-wrap" data-list-trigger="productsfeature">
+            <h2 class="megamenu-title">商品特集</h2>
+            <div class="megamenu-subtitle">PRODUCTS FEATURE<span class="icon"></span></div>
+          </div>
+          <ul class="megamenu-list" data-list="productsfeature">
+            <li><a href="/user_data/bringup-lp">Bring Up</a></li>
+            <li><a href="/user_data/glue_contents">国産グルー</a></li>
+            <li><a href="/user_data/flatlash-sable">Flat Lash Sable</a></li>
+            <li><a href="/user_data/tweezer_lp">国産ツイーザー</a></li>
+            <li><a href="/user_data/keratin_amino_contents">トリートメント</a></li>
+            <li><a href="/user_data/ac-mascara-lp">AC MASCARA</a></li>
+            <li><a href="/user_data/ac-eyeliner-lp">AC Eyeliner</a></li>
+            <li><a href="/user_data/ledex-subsc">LEDエクステ</a></li>
+            <li><a href="/user_data/oem_originalbrand">OEMオリジナル商品製作</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="megamenu" data-megamenu="guide">
+      <div class="megamenu-inner">
+        <div class="megamenu-content">
+          <div class="megamenu-title-wrap" data-list-trigger="support">
+            <h2 class="megamenu-title">サポート・ヘルプ</h2>
+            <div class="megamenu-subtitle">SUPPORT<span class="icon"></span></div>
+          </div>
+          <ul class="megamenu-list" data-list="support">
+            <li><a href="/user_data/shoppingGuide">ショッピングガイド</a></li>
+            <li><a href="/user_data/faq">よくある質問</a></li>
+            <li><a href="/contact">お問い合わせ</a></li>
+            <li><a href="{{ url('contact', {'contact_type': 'OEMについて'}) }}">OEMお問い合わせ</a></li>
+          </ul>
+        </div>
+        <ul class="megamenu-info">
+          <li><a href="/user_data/company">会社概要</a></li>
+          <li><a href="http://www.ome-shouzai.com" target="_blank">omeブランドサイト</a></li>
+          <li><a href="{{ url('help_tradelaw') }}">特定商取引法に基づく表示</a></li>
+          <li><a href="{{ url('help_privacy') }}">プライバシーポリシー</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="megamenu" data-megamenu="mypage">
+      <div class="megamenu-inner">
+        <div class="megamenu-content">
+          <div class="megamenu-title-wrap" data-list-trigger="userinfo">
+            <h2 class="megamenu-title">会員情報</h2>
+            <div class="megamenu-subtitle">USER INFORMATION<span class="icon"></span></div>
+          </div>
+          <ul class="megamenu-list" data-list="userinfo">
+            <li><a href="{{url('help_agreement')}}">新規会員登録</a></li>
+            <li><a href="{{ url('mypage') }}">ログイン</a></li>
+            <li><a href="{{ url('mypage') }}">マイページ</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+<div class="pc_footer">
+    <div id="footer-banner">
+      <a href="/user_data/bringup-lp" class="footer-banner-link">
+        <picture>
+          <source
+            media="(max-width: 768px)"
+            srcset="{{ asset('assets/img/renewal_top/footer/bring-up-banner-sp.png') }}"
+          >
+          <img
+            src="{{ asset('assets/img/renewal_top/footer/bring-up-banner.webp') }}"
+            alt=""
+            loading="lazy"
+          >
+        </picture>
+      </a>
+      <a href="/user_data/ac-mascara-lp" class="footer-banner-link">
+        <picture>
+          <source
+            media="(max-width: 768px)"
+            srcset="{{ asset('assets/img/renewal_top/footer/ac-banner-sp.png') }}"
+          >
+          <img
+            src="{{ asset('assets/img/renewal_top/footer/ac-banner.webp') }}"
+            alt=""
+            loading="lazy"
+          >
+        </picture>
+      </a>
+      <a href="/user_data/ledex-subsc" class="footer-banner-link">
+        <picture>
+          <source
+            media="(max-width: 768px)"
+            srcset="{{ asset('assets/img/renewal_top/footer/led-banner-sp.png') }}"
+          >
+          <img
+            src="{{ asset('assets/img/renewal_top/footer/led-banner.webp') }}"
+            alt=""
+            loading="lazy"
+          >
+        </picture>
+      </a>
+    </div>
+    <div id="foot">
+      <div class="foot-inner">
+        <ul>
+          <li class="foot-cat">
+            <p class="footer-title">カテゴリー</p>
+            <p class="footer-title-en">CATEGORY</p>
+          </li>
+          <li></li>
+          <li>
+            <a href="{{ url('product_list') }}?category_id=100">国産グルー</a>
+          </li>
+          <li>
+            <a href="{{ url('product_list') }}?category_id=101">エクステンション</a>
+          </li>
+          <li>
+            <a href="{{ url('product_list') }}?category_id=105">前処理</a>
+          </li>
+          <li>
+            <a href="{{ url('product_list') }}?category_id=106">リムーバー</a>
+          </li>
+          <li>
+            <a href="{{ url('product_list') }}?category_id=107">ツイーザー</a>
+          </li>
+          <li>
+            <a href="{{ url('product_list') }}?category_id=9">トリートメント</a>
+          </li>
+          <li>
+            <a href="{{ url('product_list') }}?category_id=109">施術ツール</a>
+          </li>
+          <li>
+            <a href="{{ url('product_list') }}?category_id=92">ラッシュリフト</a>
+          </li>
+          <li>
+            <a href="{{ url('product_list') }}?category_id=7">店販コスメ</a>
+          </li>
+        </ul>
+        <ul>
+          <li class="foot-cat">
+            <p class="footer-title">商品特集</p>
+            <p class="footer-title-en">PRODUCTS FEATURE</p>
+          </li>
+          <li></li>
+          <li>
+            <a href="/user_data/bringup-lp">Bring Up</a>
+          </li>
+          <li>
+            <a href="/user_data/glue_contents">国産グルー</a>
+          </li>
+          <li>
+            <a href="/user_data/flatlash-sable">Flat Lash Sable</a>
+          </li>
+          <li>
+            <a href="/user_data/tweezer_lp">国産ツイーザー</a>
+          </li>
+          <li>
+            <a href="/user_data/keratin_amino_contents">トリートメント</a>
+          </li>
+          <li>
+            <a href="/user_data/ac-mascara-lp">AC MASCARA</a>
+          </li>
+          <li>
+            <a href="/user_data/ac-eyeliner-lp">AC Eyeliner</a>
+          </li>
+          <li>
+            <a href="/user_data/ledex-subsc">LEDエクステ</a>
+          </li>
+          <li>
+            <a href="/user_data/oem_originalbrand">OEMオリジナル商材製作</a>
+          </li>
+        </ul>
+        <ul>
+          <li class="foot-cat">
+            <p class="footer-title">会員情報</p>
+            <p class="footer-title-en">USER INFORMATION</p>
+          </li>
+          <li></li>
+          <li>
+            <a href="{{ url('help_agreement') }}">新規会員登録</a>
+          </li>
+          <li>
+            <a href="{{ url('mypage') }}">ログイン</a>
+          </li>
+          <li>
+            <a href="{{ url('mypage') }}">マイページ</a>
+          </li>
+          <li>
+            <a href="{{ url('cart') }}">カート</a>
+          </li>
+        </ul>
+        <ul>
+          <li class="foot-cat">
+            <p class="footer-title">サポート・ヘルプ</p>
+            <p class="footer-title-en">SUPPORT</p>
+          </li>
+          <li></li>
+          <li>
+            <a href="/user_data/shoppingGuide">ショッピングガイド</a>
+          </li>
+          <li>
+            <a href="/user_data/faq">よくある質問</a>
+          </li>
+          <li>
+            <a href="/contact/">お問い合わせ</a>
+          </li>
+          <li>
+            <a href="{{ url('contact', {'contact_type': 'OEMについて'}) }}">OEMお問い合わせ</a>
+          </li>
+        </ul>
+
+        <div class="shomei-area">
+          <a class="shomei-logo" href="{{ url('homepage') }}" style="display: block;">
+            <img src="{{ asset('assets/img/renewal_top/footer/footer-logo-white.png') }}" alt="omeエンタープライズ　ロゴ"/>
+          </a>
+          <div class="shomei-detail">
+            <ul>
+              <li>ome公式SNS</li>
+              <li>
+                <a href="https://www.instagram.com/ome_enterprises/" target="_blank"><img src="{{ asset('assets/img_2018/icon/instagram_icon.png') }}" alt="インスタグラム"></a>
+                <a href="https://lin.ee/b9CFnoC" target="_blank"><img src="{{ asset('assets/img_2018/icon/line_icon.png') }}" alt="LINE@"></a>
+                <a href="https://www.facebook.com/ome.shouzai/" target="_blank"><img src="{{ asset('assets/img_2018/icon/facebook_icon.png') }}" alt="facebook"></a>
+                <a href="https://www.youtube.com/channel/UCrlf7zRmPvHmW45Iqn8uvNg" target="_blank"><img src="{{ asset('assets/img_2018/icon/youtube_icon.png') }}" alt="YouTube公式チャンネル"></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-bottom-inner">
+        <div class="footer-bottom-left">
+          <ul>
+            <li><a href="/user_data/company">会社概要</a></li>
+            <li>
+              <a href="http://www.ome-shouzai.com" target="_blank">omeブランドサイト</a>
+            </li>
+            <li>
+              <a href="{{ url('help_tradelaw') }}">特定商取引法に基づく表示</a>
+            </li>
+            <li>
+              <a href="{{ url('help_privacy') }}">プライバシーポリシー</a>
+            </li>
+          </ul>
+          <p class="copy">Copyright©kichi CO.,LTD. All Rights Reserved.</p>
+        </div>
+        <a href="{{ url('homepage') }}" class="footer-bottom-right">
+          <img src="{{ asset('assets/img/renewal_top/footer/ome_logo_footer.webp') }}" alt="omeエンタープライズ ロゴ"/>
+        </a>
+      </div>
+    </div>
+</div>

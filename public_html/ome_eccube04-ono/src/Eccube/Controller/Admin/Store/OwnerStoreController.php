@@ -293,7 +293,7 @@ class OwnerStoreController extends AbstractController
         } else {
             try {
                 $log = $this->composerService->execRequire('ec-cube/'.$pluginCode);
-    
+
                 return $this->json(['success' => true, 'log' => $log]);
             } catch (\Exception $e) {
                 $log = $e->getMessage();
@@ -413,7 +413,7 @@ class OwnerStoreController extends AbstractController
         if (empty($log)) {
             try {
                 $log = $this->composerService->execRequire('ec-cube/'.$pluginCode.':'.$version);
-
+    
                 return $this->json(['success' => true, 'log' => $log]);
             } catch (\Exception $e) {
                 $log = $e->getMessage();

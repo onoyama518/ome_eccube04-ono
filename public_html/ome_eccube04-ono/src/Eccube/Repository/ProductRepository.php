@@ -45,7 +45,13 @@ class ProductRepository extends AbstractRepository
     protected $eccubeConfig;
 
     public const COLUMNS = [
-        'product_id' => 'p.id', 'name' => 'p.name', 'product_code' => 'pc.code', 'stock' => 'pc.stock', 'status' => 'p.Status', 'create_date' => 'p.create_date', 'update_date' => 'p.update_date',
+        'product_id' => 'p.id',
+        'name' => 'p.name',
+        'product_code' => 'pc.code',
+        'stock' => 'pc.stock',
+        'status' => 'p.Status',
+        'create_date' => 'p.create_date',
+        'update_date' => 'p.update_date',
     ];
 
     /**
@@ -164,20 +170,36 @@ class ProductRepository extends AbstractRepository
             }
         }
 
-        // name
         if (isset($searchData['name']) && StringUtil::isNotBlank($searchData['name'])) {
             $keywords = preg_split('/[\s　]+/u', str_replace(['%', '_'], ['\\%', '\\_'], $searchData['name']), -1, PREG_SPLIT_NO_EMPTY);
 
             foreach ($keywords as $index => $keyword) {
                 $key = sprintf('keyword%s', $index);
+
                 $qb
-                    ->andWhere(sprintf('NORMALIZE(p.name) LIKE NORMALIZE(:%s) OR
+                    ->andWhere(sprintf(
+                        'NORMALIZE(p.name) LIKE NORMALIZE(:%s) OR
                         NORMALIZE(p.search_word) LIKE NORMALIZE(:%s) OR
-                        EXISTS (SELECT wpc%d FROM \Eccube\Entity\ProductClass wpc%d WHERE p = wpc%d.Product AND NORMALIZE(wpc%d.code) LIKE NORMALIZE(:%s))',
-                        $key, $key, $index, $index, $index, $index, $key))
-                    ->setParameter($key, '%'.$keyword.'%');
+                        EXISTS (SELECT wpc%d FROM \Eccube\Entity\ProductClass wpc%d WHERE p = wpc%d.Product AND NORMALIZE(wpc%d.code) LIKE NORMALIZE(:%s)) ',
+                        $key,
+                        $key,
+                        $index,
+                        $index,
+                        $index,
+                        $index,
+                        $key,
+                        $index,
+                        $index,
+                        $index,
+                        $index,
+                        $index,
+                        $index,
+                        $key
+                    ))
+                    ->setParameter($key, '%' . $keyword . '%');
             }
         }
+
 
         // Order By
         // 価格低い順
@@ -190,7 +212,7 @@ class ProductRepository extends AbstractRepository
             $qb->groupBy('p.id');
             $qb->orderBy('price02_min', 'ASC');
             $qb->addOrderBy('p.id', 'DESC');
-        // 価格高い順
+            // 価格高い順
         } elseif (!empty($searchData['orderby']) && $searchData['orderby']->getId() == $config['eccube_product_order_price_higher']) {
             $qb->addSelect('MAX(pc.price02) as HIDDEN price02_max');
             $qb->innerJoin('p.ProductClasses', 'pc');
@@ -198,7 +220,7 @@ class ProductRepository extends AbstractRepository
             $qb->groupBy('p.id');
             $qb->orderBy('price02_max', 'DESC');
             $qb->addOrderBy('p.id', 'DESC');
-        // 新着順
+            // 新着順
         } elseif (!empty($searchData['orderby']) && $searchData['orderby']->getId() == $config['eccube_product_order_newer']) {
             // 在庫切れ商品非表示の設定が有効時対応
             // @see https://github.com/EC-CUBE/ec-cube/issues/1998
@@ -266,7 +288,7 @@ class ProductRepository extends AbstractRepository
             $qb
                 ->andWhere('p.id = :id OR p.name LIKE :likeid OR pc.code LIKE :likeid')
                 ->setParameter('id', $id)
-                ->setParameter('likeid', '%'.str_replace(['%', '_'], ['\\%', '\\_'], $searchData['id']).'%');
+                ->setParameter('likeid', '%' . str_replace(['%', '_'], ['\\%', '\\_'], $searchData['id']) . '%');
         }
 
         // code

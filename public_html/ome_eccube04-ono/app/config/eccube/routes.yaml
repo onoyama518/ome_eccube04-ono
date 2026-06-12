@@ -1,16 +1,16 @@
 controllers:
-    resource: ../../../src/Eccube/Controller
-    type: annotation
+  resource: ../../../src/Eccube/Controller
+  type: annotation
 customize_controllers:
-    resource: ../../../app/Customize/Controller
-    type: annotation
+  resource: ../../../app/Customize/Controller
+  type: annotation
 
 #    prefix: /{_locale}
-    # prefix: /
-    # requirements:
-    #     _locale: '%app_locales%'
-    # defaults:
-    #     _locale: '%locale%'
+# prefix: /
+# requirements:
+#     _locale: '%app_locales%'
+# defaults:
+#     _locale: '%locale%'
 
 # These lines define a route using YAML configuration. The controller used by
 # the route (FrameworkBundle:Template:template) is a convenient shortcut when
@@ -25,6 +25,13 @@ customize_controllers:
 #         template: default/homepage.html.twig
 #         _locale: '%locale%'
 admin_logout:
-    path: '/%eccube_admin_route%/logout'
+  path: "/%eccube_admin_route%/logout"
 logout:
-    path: /logout
+  path: /logout
+# shopping_shipping:
+#     path: /shopping/shipping/{id}
+#     controller: Eccube\Controller\ShoppingController::shipping
+#     # requirements行を削除する、または以下のように文字列を許可する正規表現に変更
+#     requirements:
+#         id: '.+'
+

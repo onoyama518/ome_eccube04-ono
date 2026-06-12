@@ -1,0 +1,340 @@
+{% extends 'default_frame.twig' %}
+
+{% block main %}
+<script>
+
+// フェードイン
+$(function () {
+    $(window).scroll(function () {
+        const wHeight = $(window).height();
+        const scrollAmount = $(window).scrollTop();
+        $('.scrollanime').each(function () {
+            const targetPosition = $(this).offset().top;
+            if(scrollAmount > targetPosition - wHeight + 60) {
+                $(this).addClass("fadeInDown");
+            }
+        });
+    });
+});
+
+//ウィンドウの高さを取得する
+var window_h = $(window).height();
+
+//スクロールイベント
+$(window).on("scroll", function() {
+  
+  //スクロールの位置を取得する
+  var scroll_top = $(window).scrollTop();
+ 
+  $(".left-fedeIn-box").each(function() {
+    //各box要素のtopの位置を取得する
+    var elem_pos = $(this).offset().top;
+    
+    //どのタイミングでフェードインさせるか
+    if (scroll_top >= elem_pos - window_h + 300) {
+      $(this).addClass("left-fadeIn");　//特定の位置を超えたらクラスを追加
+    } else {
+      $(this).removeClass("left-fadeIn"); //そうでない場合はクラスを削除
+    }
+  });
+});
+
+</script>
+
+<div id="lp-wrap">
+	<div id="tweezer_lp" class="tweezer_lp_pc">
+		<h1><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/tweezer_lp_top.jpg' }} alt="使いやすくて疲れにくい技術者想いの純国産ツイーザー"></h1>
+	
+		<div class="tweezer_lp_section01 middle-wid">
+			<h2><span class="jp-flag"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/jp-flag.png' }} alt="日本製"></span>MADE IN JAPANのこだわり</h2>
+			<p>創業当時から現在に至るまで、一貫して守り抜いているのが、 MADE IN JAPANへのこだわりです。本当に良い品を企業努力を怠ることなく作り続けてきました。海外での大量生産が主流の中、当社が一貫して続けてきた日本品質へのこだわりを皆様にご満足頂けるように日々努力を重ねております。</p>
+			<table>
+			  <tr>
+				<td><ul>
+					<li class="scrollanime downup"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/twee_tokucho01.jpg' }} alt="最軽量化"></li>
+					<li class="scrollanime downup">最軽量を実現</li>
+					<li class="scrollanime downup">軽量でばねが柔らかく手が疲れにくいプロ仕様</li>
+					</ul>
+				</td>
+				  <td><ul>
+					<li class="scrollanime downup"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/twee_tokucho02.jpg' }} alt="耐久性抜群"></li>
+					<li class="scrollanime downup">耐久性抜群</li>
+					<li class="scrollanime downup">毎日の施術に使用してもばねのへたりがなく錆びにくい耐久性に優れたサロン用</li>
+					</ul>
+				</td>
+                                  <td><ul>
+					<li class="scrollanime downup"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/S__113639428_remk.jpg' }} alt="国産"></li>
+					<li class="scrollanime downup">MADE IN JAPAN</li>
+					<li class="scrollanime downup">製造ロットによるクオリティがぶれない日本製</li>
+					</ul>
+				</td> 
+			  </tr>
+				<tr>
+                                  <td><ul>
+					<li class="scrollanime downup"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/twee_tokucho03.jpg' }} alt="サロン共同開発"></li>
+					<li class="scrollanime downup">サロン共同開発</li>
+					<li class="scrollanime downup">サロン技術者と日本の匠のコラボレーション</li>
+					</ul>
+				</td>
+				<td><ul>
+					<li class="scrollanime downup"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/twee_tokucho04.jpg' }} alt="追求した噛み合わせ"></li>
+					<li class="scrollanime downup">追求した噛み合わせ</li>
+					<li class="scrollanime downup">ぴったりとした噛み合わせで細いエクステンションを掴みやすい</li>
+					</ul>
+				</td>
+				  <td class="tweezer_lp_section01-last-td"><ul>
+					<li class="scrollanime downup"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/twee_tokucho05.jpg' }} alt="最高品質原材料を使用"></li>
+					<li class="scrollanime downup">最高品質原材料を使用</li>
+					<li class="scrollanime downup">まつげエクステンションに適したステンレスSUS304を原材料に採用</li>
+                                       <li class="scrollanime downup" style="margin-top:5px;"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/twee_tokucho06.jpg' }} alt="SUS304とは"></li>
+					</ul>
+				</td>
+			  </tr>
+			</table>
+		</div>
+		
+		
+		<div class="tweezer_lp_section02 middle-wid">
+				<h2 class="tweezer_lp_label">商品</h2>
+
+                         <div class="tw-prod-area"><div class="prod-img tw-img-a left-fedeIn-box"><a href="https://www.ome-shop.jp/products/detail.php?product_id=37"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/tweezer-a.png' }} alt="国産ツイーザーA"></a></div>
+				<ul class="tw-detail">
+				  <li><h3><a href="https://www.ome-shop.jp/products/detail.php?product_id=37">国産ツイーザーA</a></h3></li>
+					<li class="min-text">長さ:14.0cm　重さ:17.1g</li>
+					<li class="min-text">使いやすくて掴みやすい人気No.１国産ストレートツイーザー</li>
+				</ul>
+			</div>
+
+			<div class="tw-prod-area"><div class="prod-img tw-img-c left-fedeIn-box"><a href="https://www.ome-shop.jp/products/detail.php?product_id=35"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/tweezer-c.png' }} alt="国産ツイーザーC"></a></div>
+			    <ul class="tw-detail">
+				  <li><h3><a href="https://www.ome-shop.jp/products/detail.php?product_id=35">国産ツイーザーC</a></h3></li>
+					<li class="min-text">長さ:11.0cm　重さ:14.0g</li>
+					<li class="min-text">程よい厚みとサイズ感で安定感のある国産ストレートツイーザー</li>
+				</ul>
+			</div>
+
+			<div class="tw-prod-area"><div class="prod-img tw-img-g left-fedeIn-box"><a href="https://www.ome-shop.jp/products/detail.php?product_id=150"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/tweezer-g.png' }} alt="国産ツイーザーG"></a></div>
+			    <ul class="tw-detail">
+				  <li><h3><a href="https://www.ome-shop.jp/products/detail.php?product_id=150">国産ツイーザーG</a></h3></li>
+					<li class="min-text">長さ:12.5cm　重さ:13.0g</li>
+					<li class="min-text">最小限に厚みを抑えた軽量タイプの国産ストレートツイーザー</li>
+				</ul></div>
+
+			<div class="tw-prod-area"><div class="prod-img tw-img-j left-fedeIn-box"><a href="https://www.ome-shop.jp/products/detail.php?product_id=36"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/tweezer-j.png' }} alt="国産ツイーザーJ"></a></div>
+			    <ul class="tw-detail">
+				  <li><h3><a href="https://www.ome-shop.jp/products/detail.php?product_id=36">国産ツイーザーJ</a></h3></li>
+					<li class="min-text">長さ:12.5cm　重さ:17.3g</li>
+					<li class="min-text">極細毛も掴みやすくボリュームラッシュにも適している国産カーブツイーザー</li>
+				</ul></div>
+
+			<div class="tw-prod-area"><div class="prod-img tw-img-h left-fedeIn-box"><a href="https://www.ome-shop.jp/products/detail.php?product_id=166"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/tweezer-h.png' }} alt="国産ツイーザーH"></a></div>
+			    <ul class="tw-detail">
+				  <li><h3><a href="https://www.ome-shop.jp/products/detail.php?product_id=166">国産ツイーザーH</a></h3></li>
+					<li class="min-text">長さ:13.0cm　重さ:17.0g</li>
+					<li class="min-text">極細毛を一気に掴める国産ボリュームラッシュツイーザー</li>
+				</ul></div>
+
+			<div class="tw-prod-area"><div class="prod-img tw-img-h2 left-fedeIn-box"><a href="https://www.ome-shop.jp/products/detail.php?product_id=200"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/tweezer-h2.png' }} alt="国産ツイーザーH2"></a></div>
+			    <ul class="tw-detail">
+				  <li><h3><a href="https://www.ome-shop.jp/products/detail.php?product_id=200">国産ツイーザーH2</a></h3></li>
+					<li class="min-text">長さ:12.5cm　重さ:16.5g</li>
+					<li class="min-text">先端の長さ・密着にこだわりぬいた国産ボリュームラッシュツイーザー</li>
+				</ul></div>
+		</div>
+	
+                <div class="tweezer_lp_section02-02 middle-wid">
+                       <h2 class="tweezer_lp_label">ランキング</h2>
+                       <ul class="tweezer-ranking-top scrollanime downup"><li class="crown-no1"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/top/ranking_crown1.png' }} alt="No.1"></li>
+                          </li><a href="https://www.ome-shop.jp/products/detail.php?product_id=37#customervoice_area"><li class="tweezer-ranking-no1"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/tweezer-a.png' }} alt="国産ツイーザーA"></li><li><h3>国産ツイーザーA</h3></li></a>
+                           <li class="tw-voice-button"><a href="https://www.ome-shop.jp/products/detail.php?product_id=37#customervoice_area">お客様の声</a></li>
+                       </ul>
+                       <table class="tweezer-ranking scrollanime downup">
+                            <tr>
+                               <td><ul><li class="crown"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/top/ranking_crown2.png' }} alt="No.2"></li>
+                                           <a href="https://www.ome-shop.jp/products/detail.php?product_id=200#customervoice_area"><li><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/tweezer-h2.png' }} alt="国産ツイーザーH2"></li><li><h3>国産ツイーザーH2</h3></li></a>
+                                           <li class="tw-voice-button"><a href="https://www.ome-shop.jp/products/detail.php?product_id=200#customervoice_area">お客様の声</a></li>
+                                        </ul></td>
+                                <td><ul><li class="crown"><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/top/ranking_crown3.png' }} alt="No.3"></li>
+                                            <a href="https://www.ome-shop.jp/products/detail.php?product_id=36#customervoice_area"><li><img src={{ app.config.user_data_url ~ 'packages/default/img_2018/lp/tweezer-j.png' }} alt="国産ツイーザーJ"></li><li><h3>国産ツイーザーJ</h3></li></a>
+                                           <li class="tw-voice-button"><a href="https://www.ome-shop.jp/products/detail.php?product_id=36#customervoice_area">お客様の声</a></li>
+                                         </ul></td>
+                           </tr>
+                       </table>
+                </div>
+		
+		<div class="tweezer_lp_section03 middle-wid">
+				<h2 class="tweezer_lp_label">お手入れについて</h2>
+			<p>グルーの付着汚れをツイーザーで無理にはがそうとすると先端が徐々に研磨されかみ合わせが悪くなります。ツイーザーのお手入れはリムーバーをご使用ください。</p>
+		</div>
+                <div class="tweezer_lp_aller middle-wid">
+			 <h2 class="tweezer_lp_label">金属アレルギーについて</h2>
+			<p>ツイーザー原材料であるステンレスも鉄という金属の一種です。金属アレルギーをお持ちの方が使用された場合や、アレルギーをお持ちの方へ使用する場合はアレルギー反応を起こす場合がございます。施術前お客様に金属アレルギーの有無を確認後、ご使用されますことをお勧めいたします。</p>
+			</div>
+		
+		
+		<div class="tweezer_lp_section04 middle-wid">
+			<h2>商品一覧</h2>
+			<table>
+				<tr>
+					<td><a href="https://www.ome-shop.jp/products/detail.php?product_id=37">国産ツイーザーA</a></td>
+					<td><a href="https://www.ome-shop.jp/products/detail.php?product_id=35">国産ツイーザーC</a></td>
+					<td><a href="https://www.ome-shop.jp/products/detail.php?product_id=150">国産ツイーザーG</a></td>
+				</tr>
+				<tr>
+					<td><a href="https://www.ome-shop.jp/products/detail.php?product_id=36">国産ツイーザーJ</a></td>
+					<td><a href="https://www.ome-shop.jp/products/detail.php?product_id=166">国産ツイーザーH</a></td>
+					<td><a href="https://www.ome-shop.jp/products/detail.php?product_id=200">国産ツイーザーH2</a></td>
+				</tr>
+                        </table>
+		</div>	
+</div>
+<div id="tweezer_lp" class="tweezer_lp_sp">
+		<h1><img src="/html/user_data/packages/sphone/img_2018/lp/tweezer_lp_top.jpg" alt="使いやすくて疲れにくい技術者想いの純国産ツイーザー"></h1>
+	
+		<div class="tweezer_lp_section01 middle-wid">
+			<h2><span class="jp-flag"><img src="/html/user_data/packages/sphone/img_2018/lp/jp-flag.png" alt="日本製"></span>MADE IN JAPANのこだわり</h2>
+			<p>創業当時から現在に至るまで、一貫して守り抜いているのが、 MADE IN JAPANへのこだわりです。本当に良い品を企業努力を怠ることなく作り続けてきました。海外での大量生産が主流の中、当社が一貫して続けてきた日本品質へのこだわりを皆様にご満足頂けるように日々努力を重ねております。</p>
+			<table>
+			  <tr>
+				<td><ul>
+					<li class="scrollanime downup"><img src="/html/user_data/packages/sphone/img_2018/lp/twee_tokucho01.jpg" alt="最軽量化"></li>
+					<li class="scrollanime downup">最軽量を実現</li>
+					<li class="scrollanime downup">軽量でばねが柔らかく手が疲れにくいプロ仕様</li>
+					</ul>
+				</td>
+				  <td><ul>
+					<li class="scrollanime downup"><img src="/html/user_data/packages/sphone/img_2018/lp/twee_tokucho02.jpg" alt="耐久性抜群"></li>
+					<li class="scrollanime downup">耐久性抜群</li>
+					<li class="scrollanime downup">毎日の施術に使用してもばねのへたりがなく錆びにくい耐久性に優れたサロン用</li>
+					</ul>
+				</td>
+			  </tr>
+			  <tr>
+                                  <td><ul>
+					<li class="scrollanime downup"><img src="/html/user_data/packages/sphone/img_2018/lp/S__113639428_remk.jpg" alt="国産"></li>
+					<li class="scrollanime downup">MADE IN JAPAN</li>
+					<li class="scrollanime downup">製造ロットによるクオリティがぶれない日本製</li>
+					</ul>
+				</td> 
+                                  <td><ul>
+					<li class="scrollanime downup"><img src="/html/user_data/packages/sphone/img_2018/lp/twee_tokucho03.jpg" alt="サロン共同開発"></li>
+					<li class="scrollanime downup">サロン共同開発</li>
+					<li class="scrollanime downup">サロン技術者と日本の匠のコラボレーション</li>
+					</ul>
+				</td>
+			  </tr>
+			  <tr>
+				<td><ul>
+					<li class="scrollanime downup"><img src="/html/user_data/packages/sphone/img_2018/lp/twee_tokucho04.jpg" alt="追求した噛み合わせ"></li>
+					<li class="scrollanime downup">追求した噛み合わせ</li>
+					<li class="scrollanime downup">ぴったりとした噛み合わせで細いエクステンションを掴みやすい</li>
+					</ul>
+				</td>
+				  <td class="tweezer_lp_section01-last-td"><ul>
+					<li class="scrollanime downup"><img src="/html/user_data/packages/sphone/img_2018/lp/twee_tokucho05.jpg" alt="最高品質原材料を使用"></li>
+					<li class="scrollanime downup">最高品質原材料を使用</li>
+					<li class="scrollanime downup">まつげエクステンションに適したステンレスSUS304を原材料に採用</li>
+                                       <li class="scrollanime downup" style="margin-top:5px;"><img src="/html/user_data/packages/sphone/img_2018/lp/twee_tokucho06.jpg" alt="SUS304とは"></li>
+					</ul>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+		
+		
+		<div class="tweezer_lp_section02 middle-wid">
+				<h2 class="tweezer_lp_label">商品</h2>
+
+			<div class="tw-prod-area"><div class="prod-img tw-img-a left-fedeIn-box"><a href="https://www.ome-shop.jp/products/detail.php?product_id=37"><img src="/html/user_data/packages/sphone/img_2018/lp/tweezer-a.png" alt="国産ツイーザーA"></a></div>
+				<ul class="tw-detail">
+				  <li><h3><a href="https://www.ome-shop.jp/products/detail.php?product_id=37">国産ツイーザーA</a></h3></li>
+					<li class="min-text">長さ:14.0cm　重さ:17.1g</li>
+					<li class="min-text">使いやすくて掴みやすい人気No.１<br>国産ストレートツイーザー</li>
+				</ul>
+			</div>
+
+			<div class="tw-prod-area"><div class="prod-img tw-img-c left-fedeIn-box"><a href="https://www.ome-shop.jp/products/detail.php?product_id=35"><img src="/html/user_data/packages/sphone/img_2018/lp/tweezer-c.png" alt="国産ツイーザーC"></a></div>
+			    <ul class="tw-detail">
+				  <li><h3><a href="https://www.ome-shop.jp/products/detail.php?product_id=35">国産ツイーザーC</a></h3></li>
+					<li class="min-text">長さ:11.0cm　重さ:14.0g</li>
+					<li class="min-text">程よい厚みとサイズ感で安定感のある<br>国産ストレートツイーザー</li>
+				</ul>
+			</div>
+
+			<div class="tw-prod-area"><div class="prod-img tw-img-g left-fedeIn-box"><a href="https://www.ome-shop.jp/products/detail.php?product_id=150"><img src="/html/user_data/packages/sphone/img_2018/lp/tweezer-g.png" alt="国産ツイーザーG"></a></div>
+			    <ul class="tw-detail">
+				  <li><h3><a href="https://www.ome-shop.jp/products/detail.php?product_id=150">国産ツイーザーG</a></h3></li>
+					<li class="min-text">長さ:12.5cm　重さ:13.0g</li>
+					<li class="min-text">最小限に厚みを抑えた軽量タイプの<br>国産ストレートツイーザー</li>
+				</ul></div>
+
+			<div class="tw-prod-area"><div class="prod-img tw-img-j left-fedeIn-box"><a href="https://www.ome-shop.jp/products/detail.php?product_id=36"><img src="/html/user_data/packages/sphone/img_2018/lp/tweezer-j.png" alt="国産ツイーザーJ"></a></div>
+			    <ul class="tw-detail">
+				  <li><h3><a href="https://www.ome-shop.jp/products/detail.php?product_id=36">国産ツイーザーJ</a></h3></li>
+					<li class="min-text">長さ:12.5cm　重さ:17.3g</li>
+					<li class="min-text">極細毛も掴みやすくボリュームラッシュ<br>にも適している国産カーブツイーザー</li>
+				</ul></div>
+
+			<div class="tw-prod-area"><div class="prod-img tw-img-h left-fedeIn-box"><a href="https://www.ome-shop.jp/products/detail.php?product_id=166"><img src="/html/user_data/packages/sphone/img_2018/lp/tweezer-h.png" alt="国産ツイーザーH"></a></div>
+			    <ul class="tw-detail">
+				  <li><h3><a href="https://www.ome-shop.jp/products/detail.php?product_id=166">国産ツイーザーH</a></h3></li>
+					<li class="min-text">長さ:13.0cm　重さ:17.0g</li>
+					<li class="min-text">極細毛を一気に掴める<br>国産ボリュームラッシュツイーザー</li>
+				</ul></div>
+
+			<div class="tw-prod-area"><div class="prod-img tw-img-h2 left-fedeIn-box"><a href="https://www.ome-shop.jp/products/detail.php?product_id=200"><img src="/html/user_data/packages/sphone/img_2018/lp/tweezer-h2.png" alt="国産ツイーザーH2"></a></div>
+			    <ul class="tw-detail">
+				  <li><h3><a href="https://www.ome-shop.jp/products/detail.php?product_id=200">国産ツイーザーH2</a></h3></li>
+					<li class="min-text">長さ:12.5cm　重さ:16.5g</li>
+					<li class="min-text">先端の長さ・密着にこだわりぬいた<br>国産ボリュームラッシュツイーザー</li>
+				</ul></div>
+		</div>
+	
+		<div class="tweezer_lp_section02-02 middle-wid">
+                       <h2 class="tweezer_lp_label">ランキング</h2>
+                       <ul class="tweezer-ranking-top scrollanime downup"><li class="crown-no1"><img src="/html/user_data/packages/sphone/img_2018/top/ranking_crown1.png" alt="No.1"></li>
+                          </li><a href="https://www.ome-shop.jp/products/detail.php?product_id=37#customervoice_area"><li class="tweezer-ranking-no1"><img src="/html/user_data/packages/sphone/img_2018/lp/tweezer-a.png" alt="国産ツイーザーA"></li><li><h3>国産ツイーザーA</h3></li></a>
+                           <li class="tw-voice-button"><a href="https://www.ome-shop.jp/products/detail.php?product_id=37#customervoice_area">お客様の声</a></li>
+                       </ul>
+                       <table class="tweezer-ranking scrollanime downup">
+                            <tr>
+                               <td><ul><li class="crown"><img src="/html/user_data/packages/sphone/img_2018/top/ranking_crown2.png" alt="No.2"></li>
+                                           <a href="https://www.ome-shop.jp/products/detail.php?product_id=200#customervoice_area"><li><img src="/html/user_data/packages/sphone/img_2018/lp/tweezer-h2.png" alt="国産ツイーザーH2"></li><li><h3>国産ツイーザーH2</h3></li></a>
+                                           <li class="tw-voice-button"><a href="https://www.ome-shop.jp/products/detail.php?product_id=200#customervoice_area">お客様の声</a></li>
+                                        </ul></td>
+                                <td><ul><li class="crown"><img src="/html/user_data/packages/sphone/img_2018/top/ranking_crown3.png" alt="No.3"></li>
+                                            <a href="https://www.ome-shop.jp/products/detail.php?product_id=36#customervoice_area"><li><img src="/html/user_data/packages/sphone/img_2018/lp/tweezer-j.png" alt="国産ツイーザーJ"></li><li><h3>国産ツイーザーJ</h3></li></a>
+                                           <li class="tw-voice-button"><a href="https://www.ome-shop.jp/products/detail.php?product_id=36#customervoice_area">お客様の声</a></li>
+                                         </ul></td>
+                           </tr>
+                       </table>
+                </div>
+
+		<div class="tweezer_lp_section03 middle-wid">
+				<h2 class="tweezer_lp_label">お手入れについて</h2>
+			<p>グルーの付着汚れをツイーザーで無理にはがそうとすると先端が徐々に研磨されかみ合わせが悪くなります。ツイーザーのお手入れはリムーバーをご使用ください。</p>
+		</div>
+			<div class="tweezer_lp_aller">
+			 <h2 class="tweezer_lp_label">金属アレルギーについて</h2>
+			<p>ツイーザー原材料であるステンレスも鉄という金属の一種です。金属アレルギーをお持ちの方が使用された場合や、アレルギーをお持ちの方へ使用する場合はアレルギー反応を起こす場合がございます。施術前お客様に金属アレルギーの有無を確認後、ご使用されますことをお勧めいたします。</p>
+			</div>
+		
+		<div class="tweezer_lp_section04 middle-wid">
+			<h2>商品一覧</h2>
+			<table class="fade-in scrollanime downup">
+				<tr>
+					<td><a href="https://www.ome-shop.jp/products/detail.php?product_id=37">国産ツイーザーA</a></td>
+					<td><a href="https://www.ome-shop.jp/products/detail.php?product_id=35">国産ツイーザーC</a></td>
+					<td><a href="https://www.ome-shop.jp/products/detail.php?product_id=150">国産ツイーザーG</a></td>
+				</tr>
+				<tr>
+					<td><a href="https://www.ome-shop.jp/products/detail.php?product_id=36">国産ツイーザーJ</a></td>
+					<td><a href="https://www.ome-shop.jp/products/detail.php?product_id=166">国産ツイーザーH</a></td>
+					<td><a href="https://www.ome-shop.jp/products/detail.php?product_id=200">国産ツイーザーH2</a></td>
+				</tr>
+                        </table>
+		</div>	
+</div>
+</div>
+{% endblock %}

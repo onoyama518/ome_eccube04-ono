@@ -55,13 +55,30 @@ class CustomerAddressType extends AbstractType
             ->add('company_name', TextType::class, [
                 'required' => false,
                 'constraints' => [
-                    new Assert\Length([
-                        'max' => $this->eccubeConfig['eccube_stext_len'],
+                    new Assert\Length(['min' => 1, 'max' => 100]),
+                    new Assert\NotBlank([
+                        'message' => '会社名またはサロン名が入力されていません。',
+                    ]),
+                    // 不正文字・禁止語・URL・スクリプトタグの入力制限
+                    new Assert\Regex([
+                        'pattern' => '/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/',
+                        'message' => '不正な文字が含まれています。',
+                        'match' => false,
+                    ]),
+                    new Assert\Regex([
+                        'pattern' => '/\s*<iframe|iframe|\s*<object|object|\s*<embed|embed|<script|script|javascript:|vbscript:|onload=|onclick=|eval\(|document\.|window\./i',
+                        'message' => '不正なHTMLタグまたはスクリプトが含まれています。',
+                        'match' => false,
                     ]),
                 ],
             ])
-            ->add('postal_code', PostalType::class)
-            ->add('address', AddressType::class)
+            ->add('postal_code', PostalType::class, [
+                'required' => true,
+            ])
+            ->add('address', AddressType::class, [
+                'required' => true,
+
+            ])
             ->add('phone_number', PhoneNumberType::class, [
                 'required' => true,
             ]);

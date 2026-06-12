@@ -110,8 +110,38 @@ class WithdrawController extends AbstractController
 
         $form->handleRequest($request);
 
+        log_info('[WithdrawController] リクエストメソッド: ' . $request->getMethod());
+        log_info('[WithdrawController] フォーム送信状況: ' . ($form->isSubmitted() ? 'true' : 'false'));
+        
+        if ($form->isSubmitted()) {
+            log_info('[WithdrawController] フォーム検証状況: ' . ($form->isValid() ? 'true' : 'false'));
+            
+            if ($form->getErrors(true)->count() > 0) {
+                foreach ($form->getErrors(true) as $error) {
+                    log_warning('[WithdrawController] フォームエラー: ' . $error->getMessage());
+                }
+            }
+        }
+
         if ($form->isSubmitted() && $form->isValid()) {
-            switch ($request->get('mode')) {
+            log_info('[WithdrawController] フォーム送信検証成功');
+            
+            // reCAPTCHA検証
+            $recaptchaResponse = $request->request->get(\Customize\Util\RecaptchaUtil::INPUT_NAME);
+            if (!\Customize\Util\RecaptchaUtil::check($recaptchaResponse)) {
+                log_warning('[WithdrawController] 退会手続きでreCAPTCHA検証失敗');
+                $this->addFlash('eccube.front.error', 'セキュリティ確認に失敗しました。お手数ですが、ページを更新してもう一度ご入力ください。');
+                
+                return [
+                    'form' => $form->createView(),
+                ];
+            }
+
+            log_info('[WithdrawController] reCAPTCHA検証成功');
+            $mode = $request->get('mode');
+            log_info('[WithdrawController] モード: ' . ($mode ?? 'null'));
+
+            switch ($mode) {
                 case 'confirm':
                     log_info('退会確認画面表示');
 
@@ -126,7 +156,7 @@ class WithdrawController extends AbstractController
                 case 'complete':
                     log_info('退会処理開始');
 
-                    /** @var \Eccube\Entity\Customer $Customer */
+                    /* @var $Customer \Eccube\Entity\Customer */
                     $Customer = $this->getUser();
                     $email = $Customer->getEmail();
 

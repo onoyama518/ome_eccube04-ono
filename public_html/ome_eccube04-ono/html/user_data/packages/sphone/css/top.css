@@ -1,0 +1,116 @@
+@charset "utf-8";
+
+/* page overflow要包含
+   ----------------------------------------------- */
+#page{ min-width:320px; }
+
+
+/* ヘッダー
+   ----------------------------------------------- */
+#topbox {
+    position: relative;
+    width: 100%;
+    background-color: #333333;
+}
+
+/* ヘッダーロゴ
+   ------------------------------------------------ */
+#header {
+    background-color: #fff;
+    margin: 0 auto;
+    padding-bottom: 10px;
+}
+#header h1 {
+    margin: 0;
+}
+#header h1 a {
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+    width: 300px;
+    height: 190px;
+    background: url("../img/header/head_logo.jpg") no-repeat;
+	background-size: 100%;
+}
+#header em {
+    display: none;
+}
+
+/* 検索バー
+   ----------------------------------------------- */
+/*#searchbar {
+    border-top: 1px solid #5c5c5c;
+    border-bottom: 1px solid #000000;
+    background-color: #333333;
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#333333), to(#5C5C5C), color-stop(0.6,#2E2E2E));
+    width: 100%;
+    padding: 2px 0;
+}*/
+
+/* メンバーメニュー
+   ----------------------------------------------- */
+#block-login {
+    display: block;
+    font-size: 100%;
+    margin: 10px auto;
+    width: 301px;
+}
+
+/* ニュース
+   ----------------------------------------------- */
+#block-news{
+    position: relative;
+    width: 106.8%;
+    margin-left: -3.4%;
+    height: 3em;
+    border-bottom: 1px solid #ccc;
+	padding: 0 0 2% 0;
+}
+.anews{
+    color: #666666;
+    font: 90% Helvetica;
+    margin: 0.3em 10px;
+}
+
+.bannar_area {
+	width:95%;
+	background-color: #eeeeee; /*F0FED3*/
+    padding:0 2.5% 8% 2.5%;
+}
+.bannar_area p{
+    padding-top:2em;
+}
+.bannar_area2 {
+	width: 98.8%;
+	/*background-color: #FEE7F1;*/
+	padding: 1%;
+}
+
+.bannar_area3 {
+	width: 92%;
+	height:270px;
+	background: #eeeeee;
+	background-size: 100%;
+	background-color: #F1EFEF;
+	margin: 0 0 4% 0;
+	padding: 10% 4% 1%;
+}
+
+.bannar {
+	width:100%;
+}
+.bannar2{
+    width:100%;	
+}
+
+.bannar2_l {
+	width: 49%;
+	float: left;
+	margin: 0 0 3% 0;
+}
+
+.bannar2_r {
+	width: 49%;
+	float: right;
+	margin: 0 0 3% 0;
+}

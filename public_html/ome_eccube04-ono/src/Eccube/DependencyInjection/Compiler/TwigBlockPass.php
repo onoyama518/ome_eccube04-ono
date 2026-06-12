@@ -33,7 +33,7 @@ class TwigBlockPass implements CompilerPassInterface
                 throw new \InvalidArgumentException(sprintf('Service "%s" must implement interface "%s".', $id, EccubeTwigBlock::class));
             }
 
-            /** @var EccubeTwigBlock $class */
+            /** @var $class EccubeTwigBlock */
             $blocks = $class::getTwigBlock();
             foreach ($blocks as $block) {
                 $templates[] = $block;

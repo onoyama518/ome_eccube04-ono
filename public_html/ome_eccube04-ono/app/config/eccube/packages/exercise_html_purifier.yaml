@@ -1,0 +1,5 @@
+exercise_html_purifier:
+    html_profiles:
+        default:
+            config:
+                Attr.AllowedFrameTargets: ['_self','_top','_blank']

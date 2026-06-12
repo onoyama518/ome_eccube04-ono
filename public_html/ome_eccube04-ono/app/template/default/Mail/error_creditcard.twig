@@ -1,0 +1,53 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% autoescape 'safe_textmail' %}
+{% if Order.company_name %}
+{{ Order.company_name }}
+{% endif %}
+{{ Order.name01 }} {{ Order.name02 }} 様  
+
+数あるまつげエクステンション商材卸店の中から、
+omeエンタープライズをご利用いただき、誠にありがとうございます。
+
+2023年7月13日04:00〜 実施したオンラインショップのメンテナンスの際、
+クレジットカード決済に必要なIPアドレスとの接続が出来ておらず、
+クレジットカードによる決済画面でエラーになってしまい、決済が完了しない不具合が起こっておりました。
+現在は改修し、復旧しております。
+※本不具合によるカード情報の流出などは一切ございません
+
+ご迷惑をおかけしましたことを心よりお詫び申し上げます。
+
+ご注文がまだの場合は大変お手数ですが、再度オンラインショップよりご注文をお願い申し上げます。
+
+お客様には安心してご利用いただけますよう再発防止に努めてまいります。
+今後とも、omeエンタープライズをご愛顧くださいますよう何卒お願い申し上げます。
+
+万一、記載内容に覚えがない場合や、間違いがある場合には、
+大変お手数をお掛け致しますが、「info@ome-shouzai.com」までご連絡をお願い致します。
+
+
+□■□――――――――――――――――――――――――
+omeエンタープライズ
+まつげエクステンション商材の企画・開発・卸
+
+TEL　                0120-965-583        06-6252-3773
+FAX　                06-6252-3774
+E-mail                info@ome-shouzai.com
+営業時間                10:00〜18:00　(定休日:土・日・祝)
+
+online shop         https://www.ome-shop.jp
+Instagram        https://www.instagram.com/ome_enterprises
+LINE@                https://lin.ee/ifbQdqX
+
+〒550-0013
+大阪市西区新町1-4-26 四ツ橋グランドビル8F
+――――――――――――――――――――――――□■□
+{% endautoescape %}

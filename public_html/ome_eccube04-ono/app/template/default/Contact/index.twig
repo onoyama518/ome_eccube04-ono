@@ -1,0 +1,190 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% extends 'default_frame.twig' %}
+
+{% form_theme form 'Form/form_div_layout.twig' %}
+
+{% block stylesheet %}
+	<link rel="preload" href="{{ asset('assets/css/contact_renewal.css') }}" as="style">
+	<link rel="stylesheet" href="{{ asset('assets/css/contact_renewal.css') }}">
+{% endblock %}
+
+{% block javascript %}
+	<script src="//yubinbango.github.io/yubinbango/yubinbango.js" charset="UTF-8"></script>
+	<script src="{{ asset('assets/js/validation.js', 'user_data') }}"></script>
+{% endblock javascript %}
+
+{% block main %}
+	<div id="lp-wrap" class="page_contact_renewal">
+
+		<div id="undercolumn">
+			<h2 class="title contact_title" style="text-align: center;"><span class="en_sub">CONTACT</span>{{ 'お問い合わせ'|trans }}</h2>
+
+			<div id="undercolumn_contact">
+     
+				<p class="on_form_text" >{{ '内容によっては回答をさしあげるのに<br class="only_sp"/>お時間をいただくこともございます。<br />また、休業日は翌営業日以降の対応と<br class="only_sp"/>なりますのでご了承ください。'|trans|raw }}</p>
+				<form id="contactForm" method="post" action="{{ url('contact') }}" novalidate class="h-adr">
+					{{ form_widget(form._token) }}
+					<input type="hidden" name="mode" value="confirm" />
+					<span class="p-country-name" style="display:none;">Japan</span>
+					<div class="contact-form-container" style="margin:auto; font-size:14px;">
+						<div class="form-row">
+							<div class="form-label">{{ '会社名またはサロン名'|trans }}<span class="attention_text">必須</span>
+							</div>
+							<div class="form-field">
+								<span class="attention_text">{{ form_errors(form.company_name) }}</span>
+								{{ form_widget(form.company_name, {'attr': {'class': 'half-size-form', 'style': has_errors(form.company_name) ? 'border-color:red;' : '', 'placeholder': '', 'data-validation': 'required', 'data-label': '会社名またはサロン名' }}) }}
+							</div>
+						</div>
+
+						<div class="form-row">
+							<div class="form-label">{{ 'お名前'|trans }}<span class="attention_text">必須</span>
+							</div>
+							<div class="form-field">
+                <div class="area_full_name">
+                  <div class="sei">
+                    {% if has_errors(form.name.name01) or has_errors(form.name.name02) %}
+                      <span class="attention_text">
+                      {{ form_errors(form.name.name01) }}
+                      </span>
+                    {% endif %}
+					{{ form_widget(form.name.name01, {'attr': { 'class': 'half-size-form', 'style': has_errors(form.name.name01) ? 'border-color:red;' : '', 'placeholder': 'お名前（姓）', 'data-validation': 'required', 'data-label': 'お名前（姓）' }}) }}
+                  </div>
+                  <div class="mei">
+                    {% if has_errors(form.name.name01) or has_errors(form.name.name02) %}
+                      <span class="attention_text">
+                      {{ form_errors(form.name.name02) }}
+                      </span>
+                    {% endif %}
+					{{ form_widget(form.name.name02, {'attr': { 'class': 'half-size-form', 'style': has_errors(form.name.name02) ? 'border-color:red;' : '', 'placeholder': 'お名前（名）', 'data-validation': 'required', 'data-label': 'お名前（名）' }}) }}
+                  </div>
+							  </div>
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-label">{{ 'お名前(カナ)'|trans }}<span class="attention_text">必須</span>
+							</div>
+							<div class="form-field">
+								<div class="area_full_name">
+                  <div class="sei">
+                    {% if has_errors(form.kana.kana01) %}
+                      <span class="attention_text">
+                      {{ form_errors(form.kana.kana01) }}
+                      </span>
+                    {% endif %}
+					{{ form_widget(form.kana.kana01, {'attr': { 'class': 'half-size-form', 'style': has_errors(form.kana.kana01) ? 'border-color:red;' : '', 'placeholder': 'お名前（セイ）', 'data-validation': 'required kana', 'data-label': 'お名前（セイ）' }}) }}
+                  </div>
+                  <div class="mei">
+                    {% if has_errors(form.kana.kana02) %}
+                      <span class="attention_text">
+                      {{ form_errors(form.kana.kana02) }}
+                      </span>
+                    {% endif %}
+					{{ form_widget(form.kana.kana02, {'attr': { 'class': 'half-size-form', 'style': has_errors(form.kana.kana02) ? 'border-color:red;' : '', 'placeholder': 'お名前（メイ）', 'data-validation': 'required kana', 'data-label': 'お名前（メイ）' }}) }}
+                  </div>
+							  </div>
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-label">{{ '郵便番号'|trans }}</div>
+							<div class="form-field">
+								<span class="attention_text">{{ form_errors(form.postal_code) }}</span>
+								{{ form_widget(form.postal_code, {'attr': {'class': 'half-size-form p-postal-code', 'style': has_errors(form.postal_code) ? 'border-color:red;' : '', 'placeholder': '〒', 'data-validation': 'postalCode', 'data-label': '郵便番号' }}) }}
+							</div>
+						</div>
+            <div class="form-row">
+							<div class="form-label">{{ '都道府県'|trans }}</div>
+							<div class="form-field">
+								<span class="attention_text">{{ form_errors(form.address.pref) }}</span>
+                <div class="half-size-form-select">
+								  {{ form_widget(form.address.pref, {'attr': {'class': ' p-region-id','style': has_errors(form.address.pref) ? 'border-color:red;' : '', 'data-label': '都道府県', 'required': 'required' }}) }}
+                </div>
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-label">{{ '市区町村・町名'|trans }}</div>
+							<div class="form-field">
+								<span class="attention_text">
+									{{ form_errors(form.address.addr01) }}
+                </span>
+								{{ form_widget(form.address.addr01, {'attr': { 'class': 'full-size-form p-locality p-street-address', 'style': has_errors(form.address.addr01) ? 'border-color:red;' : '', 'placeholder': '', 'data-label': '市区町村・町名' }}) }}<br/>
+							</div>
+						</div>
+            <div class="form-row">
+							<div class="form-label">{{ '番地・建物名・号室'|trans }}</div>
+							<div class="form-field">
+								<span class="attention_text">
+									{{ form_errors(form.address.addr02) }}
+                </span>
+								{{ form_widget(form.address.addr02, {'attr': { 'class': 'full-size-form', 'style': has_errors(form.address.addr02) ? 'border-color:red;' : '', 'placeholder': '', 'data-label': '番地・建物名・号室' }}) }}
+								<p class="mini_text attention_text">{{ '建物名・号室は必ず記入してください。'|trans }}</p>
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-label">{{ '電話番号'|trans }}<span class="attention_text">必須</span>
+              </div>
+							<div class="form-field">
+								<span class="attention_text">{{ form_errors(form.phone_number) }}</span>
+								{{ form_widget(form.phone_number, {'attr': { 'class': 'half-size-form', 'style': has_errors(form.phone_number) ? 'border-color:red;' : '', 'placeholder': '', 'data-validation': 'required phone', 'data-label': '電話番号' }}) }}
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-label">{{ 'メールアドレス'|trans }}<span class="attention_text">必須</span>
+							</div>
+							<div class="form-field">
+								<span class="attention_text">{{ form_errors(form.email) }}</span>
+								{{ form_widget(form.email, {'attr': { 'class': 'half-size-form', 'style': has_errors(form.email) ? 'border-color:red;' : '', 'placeholder': '', 'data-validation': 'required email', 'data-label': 'メールアドレス' }}) }}<br/>
+							</div>
+						</div>
+            <div class="form-row">
+							<div class="form-label">{{ 'お問い合わせ種別'|trans }}<span class="attention_text">必須</span>
+							</div>
+							<div class="form-field">
+								<span class="attention_text">{{ form_errors(form.contact_type) }}</span>
+                <div class="half-size-form-select">
+                  {{ form_widget(form.contact_type, {'attr': {'style': has_errors(form.contact_type) ? 'border-color:red;' : '','data-label': 'お問い合わせ種別'}}) }}
+                </div>
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-label">{{ 'お問い合わせ内容'|trans }}<span class="attention_text">必須</span>
+							</div>
+							<div class="form-field">
+								<span class="attention_text">{{ form_errors(form.contents) }}</span>
+								{{ form_widget(form.contents, {'attr': { 'class': 'full-size-form', 'cols': '60', 'rows': '20', 'style': has_errors(form.contents) ? 'border-color:red;' : '', 'placeholder': '', 'data-validation': 'required', 'data-label': 'お問い合わせ内容' }}) }}
+								<p class="mini_text">ご注文に関するお問い合わせには、必ず「ご注文番号」をご記入くださいますようお願いいたします。</p>
+								<p class="mini_text mini_text2">カタログのご請求に関するお問い合わせには、必ず「ご住所」をご記入くださいますようお願いいたします。</p>
+							</div>
+						</div>
+						{# エンティティ拡張の自動出力 #}
+						{% for f in form|filter(f => f.vars.eccube_form_options.auto_render and f.vars.name not in ['_token', 'salon_name', 'section_name', 'name', 'kana', 'postal_code', 'address', 'phone_number', 'email', 'contact_type', 'contents']) %}
+							<div class="form-row">
+								<div class="form-label">{{ form_label(f, null, {'label_attr': {'class': 'ec-label'}}) }}</div>
+								<div class="form-field">
+									<span class="attention_text">{{ form_errors(f) }}</span>
+									{{ form_widget(f, {'attr': { 'class': 'full-size-form', 'style': has_errors(f) ? 'border-color:red;' : '', 'placeholder': '' }}) }}
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+			    {% include "Block/recaptcha-link.twig" %}
+
+					<div class="renewal_contact_submit">
+						<button type="submit" name="mode" value="confirm">確認する</button>
+					</div>
+
+				</form>
+			</div>
+			{% include "Block/recaptcha.twig" with {'form': '#contactForm'} %}
+		</div>
+	</div>
+
+{% endblock %}

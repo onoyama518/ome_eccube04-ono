@@ -270,7 +270,7 @@ class CategoryController extends AbstractController
         if ($this->isTokenValid()) {
             $sortNos = $request->request->all();
             foreach ($sortNos as $categoryId => $sortNo) {
-                /** @var \Eccube\Entity\Category $Category */
+                /* @var $Category \Eccube\Entity\Category */
                 $Category = $this->categoryRepository
                     ->find($categoryId);
                 $Category->setSortNo($sortNo);
@@ -319,7 +319,7 @@ class CategoryController extends AbstractController
             $this->csvExportService->exportData(function ($entity, $csvService) use ($request) {
                 $Csvs = $csvService->getCsvs();
 
-                /** @var \Eccube\Entity\Category $Category */
+                /** @var $Category \Eccube\Entity\Category */
                 $Category = $entity;
 
                 // CSV出力項目と合致するデータを取得.

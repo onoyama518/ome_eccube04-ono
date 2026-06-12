@@ -1,0 +1,215 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<body bgcolor="#F0F0F0" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" style="margin:0;padding:0;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;">
+<!-- 100% background wrapper (grey background) -->
+
+<table border="0" width="100%" height="100%" cellpadding="0" cellspacing="0" bgcolor="#F0F0F0" style="border-spacing:0;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+    <tr>
+        <td align="center" valign="top" bgcolor="#F0F0F0" style="background-color:#F0F0F0;border-collapse:collapse;">
+            <br>
+            <div class="area_logo" style="margin:0; width:600px; text-align:left;">
+                <img src="https://www.ome-shop.jp/html/template/default/assets/img/ome_mail_logo_re.png" alt="ロゴ" style="width:250px; margin:0;">
+            </div>
+            <br>
+            <!-- 600px container (white background) -->
+            <table id="html-mail-table1" border="0" width="600px" cellpadding="10" cellspacing="0" class="container" style="border-spacing:0;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+                <tr>
+                    <td class="container-padding content" align="left" style="border-collapse:collapse;padding-left:24px;padding-right:24px;padding-top:12px;padding-bottom:12px;background-color:#ffffff;">
+                        <br>
+                        <div class="body-text" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:left;color:#333333;">
+                            {% if Order.company_name %}
+                            {{ Order.company_name }}<br/>
+                            {% endif %}
+                            {{ Order.name01 }} {{ Order.name02 }} 様<br/>
+                            <br/>
+                            <hr style="border-top: 3px double #8c8b8b;">
+                            【商品出荷のご案内　　omeエンタープライズ online shop】<br/>
+                            <br/>
+                            **********************************************************<br/>
+                            本メールは、ご注文に関する大切なメールです。<br/>
+                            お取り引きが完了するまで保存をお願い致します。<br/>
+                            **********************************************************<br/>
+                            <br/>
+                            この度は、omeエンタープライズをご利用いただき、<br/>
+                            誠にありがとうございます。<br/>
+                            ご注文いただいた下記商品をお客様へ発送致しました。<br/>
+                            <br/>
+                            お客様がご選択しました配達日時を指定しておりますが、<br/>
+                            交通状況などによりお届け時間が前後する場合がございます。予めご了承下さいませ。<br/>
+                            {% if Shipping.tracking_number %}
+                            以下の佐川急便ホームページURLより「お問い合わせ No.」を入力していただきますと、<br/>
+                            お荷物の配送状況をご確認いただけます。<br/>
+                            <br/>
+                            領収書の発行は、マイページ（会員ページ）の「購入履歴一覧」よりダウンロードいただけます。<br/>
+                            <br/>
+                            商品のご到着まで、しばらくお待ち下さいませ。<br/>
+                            <br/>
+                            {% endif %}
+                            ご注文番号：{{ Order.order_no }}<br/>
+                            <hr style="border-top: 3px solid #8c8b8b;">
+                            ◎ご注文商品明細<br/>
+                            <br/>
+                            {% set isShowReducedTaxMess = false %}
+                            {% for OrderItem in Order.MergedProductOrderItems %}
+                            商品コード：{{ OrderItem.product_code }}<br/>
+                            商品名：{{ OrderItem.product_name }}  {{ OrderItem.classcategory_name1 }}  {{ OrderItem.classcategory_name2 }} {% if is_reduced_tax_rate(OrderItem) %}※{% set isShowReducedTaxMess = true %}{% endif %}
+                            単価：{{ OrderItem.price_inctax|price }}<br/>
+                            数量：{{ OrderItem.quantity|number_format }}<br/>
+                            <br/>
+                            {% endfor %}
+                            {% if isShowReducedTaxMess %}※は軽減税率対象商品です。<br/>
+                            {% endif %}
+                            <hr style="border-top: 1px dotted #8c8b8b;">
+                            小　計：{{ Order.subtotal|price }}<br/>
+                            送　料：{{ Order.delivery_fee_total|price}}<br/>
+                            手数料：{{ Order.charge|price }}<br/>
+                            <br/>
+                            {% if BaseInfo.isOptionPoint and Order.Customer is not null %}
+                            ご使用ポイント：{{ Order.usePoint|number_format }} pt<br/>
+                            {% endif %}
+                            {% if Order.taxable_discount < 0 %}
+                            値引き：{{ Order.taxable_discount|price }}<br/>
+                            {% endif %}
+                            <br/>
+                            合　計：{{ Order.taxable_total|price }}<br/>
+                            {% for item in Order.tax_free_discount_items %}
+                            {{ item.product_name }}：{{ item.total_price|price }}<br/>
+                            {% endfor %}
+                            <br/>
+                            お支払い合計：{{ Order.payment_total|price }}<br/>
+                            {% for rate, total in Order.total_by_tax_rate %}
+                            ({{ rate }} %対象：{{ total|price }} 内消費税：{{ Order.tax_by_tax_rate[rate]|price }})<br/>
+                            {% endfor %}
+                            <br/>
+                            <hr style="border-top: 1px solid #8c8b8b;">
+                            ◎ご請求金額<br/>
+                            <br/>
+                            ご注文日時：{{ Order.order_date|date_sec }}<br/>
+                            お支払い合計：{{ Order.payment_total|price}}<br/>
+                            お支払い方法：{{ Order.payment_method }}<br/>
+                            メッセージ：{{ Order.message }}<br/>
+                            <br/>
+                            <hr style="border-top: 1px solid #8c8b8b;">
+                            ◎ご注文者情報<br/>
+                            {% if Order.company_name %}
+                            会社名：{{ Order.company_name }}<br/>
+                            {% endif %}
+                            お名前：{{ Order.name01 }} {{ Order.name02 }} 様<br/>
+                            お名前(カナ)：{{ Order.kana01 }} {{ Order.kana02 }} 様<br/>
+                            郵便番号：〒{{ Order.postal_code }}<br/>
+                            住所：{{ Order.Pref.name }}{{ Order.addr01 }}{{ Order.addr02 }}<br/>
+                            電話番号：{{ Order.phone_number }}<br/>
+                            メールアドレス：{{ Order.email }}<br/>
+                            <br/>
+                            <hr style="border-top: 1px solid #8c8b8b;">
+                            ◎配送情報<br/>
+                            <br/>
+                            {%  for Shipping in Order.Shippings %}
+                            お届け先{% if Order.multiple %}{{ loop.index }}{% endif %}<br/>
+                            {% if Shipping.company_name %}
+                            会社名：{{ Shipping.company_name }}<br/>
+                            {% endif %}
+                            お名前：{{ Shipping.name01 }} {{ Shipping.name02 }} 様<br/>
+                            お名前(カナ)：{{ Shipping.kana01 }} {{ Shipping.kana02 }} 様<br/>
+                            郵便番号：〒{{ Shipping.postal_code }}<br/>
+                            住所：{{ Shipping.Pref.name }}{{ Shipping.addr01 }}{{ Shipping.addr02 }}<br/>
+                            電話番号：{{ Shipping.phone_number }}<br/>
+                            <br/>
+                            配送方法：{{ Shipping.shipping_delivery_name }}<br/>
+                            お届け日：{{ Shipping.shipping_delivery_date is empty ? '指定なし' : Shipping.shipping_delivery_date|date_day }}<br/>
+                            お届け時間：{{ Shipping.shipping_delivery_time|default('指定なし') }}<br/>
+                            {% if Shipping.tracking_number %}
+                            佐川急便お問い合わせNO.：{{ Shipping.tracking_number }}<br/>
+                            <br/>
+                            ～～～～～～～～～～～～～～～～<br/>
+                            ■佐川急便株式会社ホームページ<br/>
+                            　http://www.sagawa-exp.co.jp/<br/>
+                            ～～～～～～～～～～～～～～～～<br/>
+                            {% endif %}
+                            <br/>
+                            <br/>
+                            {%  for OrderItem in Shipping.productOrderItems %}
+                            商品コード：{{ OrderItem.product_code }}<br/>
+                            商品名：{{ OrderItem.product_name }}  {{ OrderItem.classcategory_name1 }}  {{ OrderItem.classcategory_name2 }}<br/>
+                            数量：{{ OrderItem.quantity|number_format }}<br/>
+                            <br/>
+                            {% endfor %}
+                            {% endfor %}
+                            {% if BaseInfo.isOptionPoint and Order.Customer is not null %}
+                            <hr style="border-top: 1px solid #8c8b8b;">
+                            ご使用ポイント：{{ Order.usePoint|number_format }} pt<br/>
+                            今回加算される加算ポイント：{{ Order.addPoint|number_format }} pt<br/>
+                            現在の所持ポイント：{{ Order.Customer.getPoint()|number_format }} pt<br/>
+                            <hr style="border-top: 1px dotted #8c8b8b;">
+                            {% endif %}
+                            <br/>
+                            {% if Order.complete_mail_message is not empty %}
+                            {{ Order.complete_mail_message }}<br/>
+                            {% endif %}
+                            <br/>
+                            <hr style="border-top: 3px double #8c8b8b;">
+                            <br/>
+                            この度はご注文いただき誠にありがとうございました。<br/>
+                            今後とも、omeエンタープライズをよろしくお願い致します。<br/>
+                            またのご注文をスタッフ一同、心よりお待ちしております。<br/>
+                            <br/>
+                            <br/>
+                            本メールは自動配信専用です。<br/>
+                            本メールにご返信いただいても確認ができないため、ご対応致しかねます。<br/>
+                            <br/>
+                            <br/>
+                            □■□――――――――――――――――――――――――<br/>
+                            omeエンタープライズ<br/>
+                            まつげエクステンション商材の企画・開発・卸<br/>
+                            <br/>
+                            TEL　          0120-965-583     06-6252-3773<br/>
+                            FAX　          06-6252-3774<br/>
+                            E-mail         info@ome-shouzai.com<br/>
+                            営業時間        10:00〜18:00　(定休日:土・日・祝)<br/>
+                            <br/>
+                            online shop    https://www.ome-shop.jp<br/>
+                            Instagram      https://www.instagram.com/ome_enterprises<br/>
+                            LINE@          https://lin.ee/ifbQdqX<br/>
+                            <br/>
+                            〒550-0013<br/>
+                            大阪市西区新町1-4-26 四ツ橋グランドビル8F<br/>
+                            ――――――――――――――――――――――――□■□<br/>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <!--/600px container -->
+            <br>
+            <br>
+            <table id="html-mail-table2" border="0" width="600px" cellpadding="10" cellspacing="0" class="container" style="border-spacing:0;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+                <tr>
+                    <td class="container-padding content footer-text" align="left" style="border-collapse:collapse;font-family:Helvetica, Arial, sans-serif;font-size:12px;line-height:16px;color:#aaaaaa;padding-left:24px;padding-right:24px;padding-top:12px;padding-bottom:12px;background-color:#ffffff;">
+                        本メールは、{{ BaseInfo.shop_name }}より送信しております。<br/>
+                        もしお心当たりが無い場合は、その旨 <a href="mailto:{{ BaseInfo.email02 }}" style="text-decoration:none;">{{ BaseInfo.email02 }}</a> までご連絡いただければ幸いです。<br/>
+                        <br/>
+                        <div class="title" style="font-size:14px;font-family:Helvetica, Arial, sans-serif;font-weight:600;color:#374550;"><a href="{{ url('homepage') }}" style="color:#aaaaaa;text-decoration:none;">{{ BaseInfo.shop_name }}</a></div>
+                        <div>copyright &copy; {{ BaseInfo.shop_name }} all rights reserved.</div>
+                    </td>
+                </tr>
+            </table>
+            <br>
+        </td>
+    </tr>
+</table>
+<!--/100% background wrapper-->
+<br>
+<br>
+</body>
+
+</html>

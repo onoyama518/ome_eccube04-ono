@@ -1,0 +1,320 @@
+@media screen and (max-width: 768px) {
+  #detailphotobloc {
+    .item_nav {
+      display: flex;
+      gap: 10px;
+      .slideThumb {
+        width: 25%;
+      }
+    }
+  }
+}
+@media screen and (min-width: 769px) {
+  #detailphotobloc {
+  }
+  .item_visual_sp {
+    display: none;
+  }
+}
+.ec-maintenanceAlert {
+  background-color: #437ec4;
+  color: #fff;
+  padding: 20px;
+  width: 100%;
+  text-align: center;
+  font-size: 20px;
+  position: fixed;
+  top: 0;
+  z-index: 300;
+  @media screen and (max-width: 768px) {
+    font-size: 14px;
+    padding: 20px 0;
+  }
+}
+
+.slick-slider {
+  -ms-touch-action: auto;
+  touch-action: auto;
+}
+.mini-slider {
+
+  .slick-current {
+    border-bottom: 2px solid #997545; /* 下線を表示 */
+
+    img {
+      border-bottom: 2px solid #997545; /* 下線を表示 */
+    }
+  }
+  @media screen and (max-width: 768px) {
+    max-width:338px;  
+    margin:0 auto;
+  }   
+}
+
+/* モーダルを非表示にする */
+.modal {
+  display: none; /* デフォルトで非表示 */
+  position: fixed;
+  z-index: 10000000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5); /* 背景を半透明に */
+  /* モーダルの内容 */
+  .modal-content {
+    background-color: #fff;
+    margin: 50px auto;
+    padding: 10px;
+    border: 1px solid #888;
+    width: 90%;
+    max-width: 800px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+    @media screen and (max-width: 768px) {
+      width:95%;
+          padding: 0;
+    }
+    .modal_expand {
+      position: relative;
+
+      margin: 40px !important;
+      
+      .slick-prev {
+        pointer-events: auto;
+        position: absolute;
+        top: 50%;
+        left: 0 !important;
+        background-color: initial !important;
+        width: 30px !important;
+        height: 30px !important;
+      }
+      .slick-next {
+        pointer-events: auto;
+        position: absolute;
+        top: 50%;
+        right: 0 !important;
+        background-color: initial !important;
+        width: 30px !important;
+        height: 30px !important;
+        
+      }
+      .slick-list {
+        .slick-track {
+          .slick-slide {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            height: 600px !important;
+            .slide-item {
+              width: 600px !important;
+              display: flex !important;
+              align-items: center;
+              display: flex;
+              justify-content: center;
+
+              img {
+                object-fit:cover;
+                aspect-ratio: 1/1;
+              }
+            }
+          }
+        }
+      }
+      @media screen and (max-width: 768px) {
+        margin: 5px !important;
+        padding:36px 0 43px;
+        .slick-prev{
+          top:initial !important;
+          bottom: -15px;
+          left: 64px !important;
+          &::before {
+            content: "←" !important;
+          }
+        }
+        .slick-next{
+          top:initial !important;
+          bottom: -15px;
+          right: 64px !important;
+          &::before {
+            content: "→" !important;
+          }
+        }
+        .slick-list {
+        .slick-track {
+          .slick-slide{
+            height: 100% !important;
+
+            .slide-item{
+              width: 100% !important;
+              max-width: 500px;
+              height: initial !important;
+            }
+          }
+        }
+      }
+        
+      }
+    }
+    .close {
+      position: absolute;
+      right:10px;
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 10;
+      
+    }
+    #closeModal {
+      -webkit-tap-highlight-color: transparent; /* iOS/Androidでの青ハイライト無効化 */
+}
+    
+  }
+}
+
+/* 閉じるボタン */
+
+
+/* スライダーのスタイル */
+.slider {
+  position: relative;
+  overflow: hidden;
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+.slider-items {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.slide {
+  min-width: 100%;
+  box-sizing: border-box;
+}
+
+.slide img {
+  width: 100%;
+  height: 97px;
+  object-fit: contain;
+}
+
+/* 前へ・次へボタン */
+button.prev,
+button.next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+button.prev {
+  left: 10px;
+}
+
+button.next {
+  right: 10px;
+}
+
+.slide-item {
+  height: 386px;
+}
+
+@media screen and (max-width: 768px) {
+  .slide-item {
+    height: 338px;
+  }
+}
+@media screen and (max-width: 768px) {
+  div#detailrightbloc {
+    padding-top: 10px;
+  }
+}
+#button_open_modal{
+    color: #3e3e3e;
+}
+/* スライダーの親要素に対するスタイル */
+.mini-slider {
+  overflow: hidden; /* コンテンツがはみ出ないようにする */
+  white-space: nowrap; /* 子要素を横並びにする */
+  @media screen and (max-width: 768px) {
+    margin-bottom: 15px;
+  }
+}
+
+/* 各スライドのスタイル */
+.mini-slider .slick-slide {
+  display: inline-block; /* 子要素を横並びにする */
+  text-align: center; /* 中央揃え */
+  box-sizing: border-box; /* パディングやボーダーを含めたボックスサイズを計算 */
+  max-width: 100%; /* 各スライドが親の幅を超えないように制限 */
+}
+
+/* 画像のスタイル */
+.mini-slider .slick-slide img {
+  max-width: 100%; /* 画像がスライドの幅を超えない */
+  height: 97px; /* アスペクト比を維持 */
+  object-fit: contain;
+  display: block; /* ブロック要素として扱う */
+  margin: 0 auto; /* 中央揃え */
+}
+
+/* スライダーの親要素に対するスタイル */
+.item_visual {
+  overflow: hidden; /* コンテンツがはみ出ないようにする */
+  white-space: nowrap; /* 子要素を横並びにする */
+  @media screen and (max-width: 768px) {
+    margin-bottom: 15px;
+  }
+}
+
+/* 各スライドのスタイル */
+.item_visual .slick-slide {
+  display: flex; /* 子要素を横並びにする */
+  text-align: center; /* 中央揃え */
+  box-sizing: border-box; /* パディングやボーダーを含めたボックスサイズを計算 */
+  max-width: 100%; /* 各スライドが親の幅を超えないように制限 */
+}
+
+/* 画像のスタイル */
+.item_visual .slick-slide img {
+  max-width: 100%; /* 親要素に収まるようにサイズを制限 */
+  max-height: 100%; /* スライダーの高さを超えないように制限 */
+  object-fit: contain; /* アスペクト比を維持して画像を調整 */
+  display: block;
+  margin: 0 auto; /* 中央揃え */
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  div#detailphotobloc {
+    width: 70%;
+  }
+}
+
+.ec-productRole__description {
+  ul {
+    br {
+      display: none;
+    }
+  }
+  .hyou {
+    br {
+      display: none;
+    }
+    tr {
+      br {
+        display: none;
+      }
+    }
+  }
+}

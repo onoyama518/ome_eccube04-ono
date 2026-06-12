@@ -14,11 +14,11 @@
 namespace Eccube\Command;
 
 use Doctrine\Common\Annotations\AnnotationRegistry;
-use Eccube\Common\EccubeConfig;
 use Eccube\Service\EntityProxyService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class GenerateProxyCommand extends Command
 {
@@ -30,15 +30,15 @@ class GenerateProxyCommand extends Command
     private $entityProxyService;
 
     /**
-     * @var EccubeConfig
+     * @var ContainerInterface
      */
-    private $eccubeConfig;
+    private $container;
 
-    public function __construct(EntityProxyService $entityProxyService, EccubeConfig $eccubeConfig)
+    public function __construct(EntityProxyService $entityProxyService, ContainerInterface $container)
     {
         parent::__construct();
         $this->entityProxyService = $entityProxyService;
-        $this->eccubeConfig = $eccubeConfig;
+        $this->container = $container;
     }
 
     protected function configure()
@@ -49,10 +49,13 @@ class GenerateProxyCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $projectDir = $this->eccubeConfig->get('kernel.project_dir');
+        // アノテーションを読み込めるように設定.
+        AnnotationRegistry::registerAutoloadNamespace('Eccube\Annotation', __DIR__.'/../../../src');
+
+        $projectDir = $this->container->getParameter('kernel.project_dir');
         $includeDirs = [$projectDir.'/app/Customize/Entity'];
 
-        $enabledPlugins = $this->eccubeConfig->get('eccube.plugins.enabled');
+        $enabledPlugins = $this->container->getParameter('eccube.plugins.enabled');
         foreach ($enabledPlugins as $code) {
             if (file_exists($projectDir.'/app/Plugin/'.$code.'/Entity')) {
                 $includeDirs[] = $projectDir.'/app/Plugin/'.$code.'/Entity';

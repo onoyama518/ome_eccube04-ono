@@ -295,7 +295,7 @@ class ProductController extends AbstractController
         }
 
         $data = [];
-        /** @var ProductRepository $Product */
+        /** @var $Product ProductRepository */
         if (!$Product) {
             throw new NotFoundHttpException();
         }
@@ -504,7 +504,7 @@ class ProductController extends AbstractController
         $categories = [];
         $ProductCategories = $Product->getProductCategories();
         foreach ($ProductCategories as $ProductCategory) {
-            /** @var \Eccube\Entity\ProductCategory $ProductCategory*/
+            /* @var $ProductCategory \Eccube\Entity\ProductCategory */
             $categories[] = $ProductCategory->getCategory();
         }
         $form['Category']->setData($categories);
@@ -557,7 +557,7 @@ class ProductController extends AbstractController
 
                 // カテゴリの登録
                 // 一度クリア
-                /** @var \Eccube\Entity\Product $Product */
+                /* @var $Product \Eccube\Entity\Product */
                 foreach ($Product->getProductCategories() as $ProductCategory) {
                     $Product->removeProductCategory($ProductCategory);
                     $this->entityManager->remove($ProductCategory);
@@ -574,7 +574,7 @@ class ProductController extends AbstractController
                             $ProductCategory = $this->createProductCategory($Product, $ParentCategory, $count);
                             $this->entityManager->persist($ProductCategory);
                             $count++;
-                            /** @var \Eccube\Entity\Product $Product */
+                            /* @var $Product \Eccube\Entity\Product */
                             $Product->addProductCategory($ProductCategory);
                             $categoriesIdList[$ParentCategory->getId()] = true;
                         }
@@ -583,7 +583,7 @@ class ProductController extends AbstractController
                         $ProductCategory = $this->createProductCategory($Product, $Category, $count);
                         $this->entityManager->persist($ProductCategory);
                         $count++;
-                        /** @var \Eccube\Entity\Product $Product */
+                        /* @var $Product \Eccube\Entity\Product */
                         $Product->addProductCategory($ProductCategory);
                         $categoriesIdList[$Category->getId()] = true;
                     }
@@ -631,7 +631,8 @@ class ProductController extends AbstractController
 
                 $this->entityManager->flush();
 
-                if ($product_image = $request->request->all()['admin_product']['product_image'] ?? []) {
+                if (array_key_exists('product_image', $request->request->get('admin_product'))) {
+                    $product_image = $request->request->get('admin_product')['product_image'];
                     foreach ($product_image as $sortNo => $filename) {
                         $ProductImage = $this->productImageRepository
                             ->findOneBy([
@@ -759,7 +760,7 @@ class ProductController extends AbstractController
         $success = false;
 
         if (!is_null($id)) {
-            /** @var \Eccube\Entity\Product $Product */
+            /* @var $Product \Eccube\Entity\Product */
             $Product = $this->productRepository->find($id);
             if (!$Product) {
                 if ($request->isXmlHttpRequest()) {
@@ -1002,10 +1003,10 @@ class ProductController extends AbstractController
             $this->csvExportService->exportData(function ($entity, CsvExportService $csvService) use ($request) {
                 $Csvs = $csvService->getCsvs();
 
-                /** @var \Eccube\Entity\Product $Product */
+                /** @var $Product \Eccube\Entity\Product */
                 $Product = $entity;
 
-                /** @var \Eccube\Entity\ProductClass[] $ProductClasses */
+                /** @var $ProductClasses \Eccube\Entity\ProductClass[] */
                 $ProductClasses = $Product->getProductClasses();
 
                 foreach ($ProductClasses as $ProductClass) {

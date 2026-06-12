@@ -1,0 +1,134 @@
+{% extends 'default_frame.twig' %}
+
+{% set body_class = 'front_page' %}
+
+{% block main %}
+	<div class="ec-sliderRole" id="slider">
+		<div class="main-slider">
+		    
+		    <!--※ Googleタグマネージャーのタグがあるためそのままコピペ禁止（id="pc-slider-1"） ※--> 
+		    
+		    <!--※キャンペーンなど一時的な先頭バナー用
+		    <div class="main-slide-contents">
+				<a href="{{ url('product_detail', {'id': 310}) }}" id="pc-slider-cam">
+					<img src="{{ asset('assets/img_2018/slider/bu-clearglue-setcampaign-slider.webp') }}" alt="BUクリアグルー発売キャンペーン"/>
+				</a>
+			</div>
+			-->
+			<!--その他-->
+			<div class="main-slide-contents">
+				<a href="{{ url('product_detail', {'id': 320}) }}" id="pc-slider-other">
+					<img src="{{ asset('assets/img/renewal_top/slider/bu-nanobuffer-slide.webp') }}" alt="BUナノバッファ 発売"/>
+				</a>
+			</div>
+		    
+		  <div class="main-slide-contents">
+			    <a href="https://www.ome-shop.jp/user_data/keratin_amino_contents" id="pc-slider-1">
+					<img src="{{ asset('assets/img/renewal_top/slider/treatment.webp') }}" alt="トリートメント"/>
+				</a>
+			</div>
+      <!--Google！タグ変更しない！-->
+			<div class="main-slide-contents">
+				<a href="https://www.ome-shop.jp/products/detail/319" id="pc-slider-2">
+					<img src="{{ asset('assets/img/renewal_top/slider/bu-lift.webp') }}" alt="BUリフトバーム"/>
+				</a>
+			</div>
+			
+			<!--Google！タグ変更しない！-->
+		    <div class="main-slide-contents">
+				<a href="https://www.ome-shop.jp/products/list?name=ツイーザーI" id="pc-slider-3">
+					<img src="{{ asset('assets/img/renewal_top/slider/tweezers.webp') }}" alt="ツイーザーI"/>
+				</a>
+			</div>
+			
+			<!--Google！タグ変更しない！-->
+			<div class="main-slide-contents">
+				<a href="https://www.ome-shop.jp/products/detail/299" id="pc-slider-4">
+					<img src="{{ asset('assets/img/renewal_top/slider/ac.webp') }}" alt="ACクレンジング"/>
+				</a>
+			</div>
+			
+			<!--Google！タグ変更しない！-->
+			<div class="main-slide-contents">
+				<a href="/user_data/bringup-lp" id="pc-slider-5">
+				    <img src="{{ asset('assets/img/renewal_top/slider/bu-set.webp') }}" alt="BUセット剤"/>
+				</a>
+			</div>
+			
+			<!--Google！タグ変更しない！-->
+			<!--<div class="main-slide-contents">
+				<a href="{{ url('product_detail', {'id': 308}) }}" id="pc-slider-5">
+					<img src="{{ asset('assets/img_2018/slider/bu-setset-slide.webp') }}" alt="ラッシュリフト剤　ブリングアップお得なセット"/>
+				</a>
+			</div>-->
+
+		</div>
+	</div>
+
+	<div class="sp-top-area">
+		<div id="slider-area">
+			<div id="slider_sp">
+				<div class="main-slider">
+				 
+				<!--※ Gooogleタグマネージャーのタグがあるためそのままコピペ禁止（id="sp-slider-1"） ※-->
+				
+		    <!--※キャンペーンなど一時的な先頭バナー用
+		    <div class="main-slide-contents">
+				<a href="{{ url('product_detail', {'id': 310}) }}" id="sp-slider-cam">
+					<img src="{{ asset('assets/img_2018/slider/bu-clearglue-setcampaign.webp') }}" alt="BUクリアグルー発売キャンペーン"/>
+				</a>
+			</div>
+            -->
+			<!--その他-->
+			<div class="main-slide-contents">
+				<a href="{{ url('product_detail', {'id': 320}) }}" id="sp-slider-other">
+					<img src="{{ asset('assets/img/renewal_top/slider/bu-nanobuffer-slide-sp.webp') }}" alt="BUナノバッファ 発売"/>
+				</a>
+			</div>
+		    
+			<div class="main-slide-contents">
+			    <a href="https://www.ome-shop.jp/user_data/keratin_amino_contents" id="sp-slider-1">
+					<img src="{{ asset('assets/img/renewal_top/slider/treatment-sp.webp') }}" alt="トリートメント"/>
+				</a>
+			</div>
+			
+			<!--Google！タグ変更しない！-->
+		    <div class="main-slide-contents">
+				<a href="https://www.ome-shop.jp/products/detail/319" id="sp-slider-2">
+					<img src="{{ asset('assets/img/renewal_top/slider/bu-lift-sp.webp') }}" alt="BUリフトバーム"/>
+				</a>
+			</div>
+			
+			<!--Google！タグ変更しない！-->
+			<div class="main-slide-contents">
+				<a href="https://www.ome-shop.jp/products/list?name=ツイーザーI" id="sp-slider-3">
+					<img src="{{ asset('assets/img/renewal_top/slider/tweezers-sp.webp') }}" alt="ツイーザーI"/>
+				</a>
+			</div>
+			
+			<!--Google！タグ変更しない！-->
+			<div class="main-slide-contents">
+				<a href="https://www.ome-shop.jp/products/detail/299" id="sp-slider-4">
+					<img src="{{ asset('assets/img/renewal_top/slider/ac-sp.webp') }}" alt="ACクレンジング"/>
+				</a>
+			</div>
+			
+			<!--Google！タグ変更しない！-->
+			<div class="main-slide-contents">
+				<a href="/user_data/bringup-lp" id="sp-slider-5">
+				    <img src="{{ asset('assets/img/renewal_top/slider/bu-set-sp.webp') }}" alt="BUセット剤"/>
+				</a>
+			</div>
+					
+			<!--Google！タグ変更しない！-->
+			<!--<div class="main-slide-contents">
+				<a href="{{ url('product_detail', {'id': 308}) }}" id="sp-slider-5">
+						<img src="{{ asset('assets/img_2018/slider/bu-setset-slide-sp.webp') }}" alt="ラッシュリフト剤　ブリングアップお得なセット"/>
+				</a>
+			</div>-->
+
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

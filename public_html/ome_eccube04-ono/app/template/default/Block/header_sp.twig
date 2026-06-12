@@ -1,0 +1,295 @@
+<div id="head">
+
+	<div class="head-centerarea">
+		<img src="{{ asset('assets/img_2018/icon/truck.png') }}" alt="配送について">
+		<ul>
+			<li>14時までのご注文で即日発送(土日祝は除く)</li>
+			<li>7,000 円（税込）以上で送料・代引手数料無料</li>
+		</ul>
+	</div>
+</div>
+
+<div class="menu-navi">
+	<div id="logo">
+		<a href="{{ url('homepage') }}"><img alt="まつげエクステ(マツエク)商材の企画・開発・卸 omeエンタープライズ" src="{{ asset('assets/img_2018/top/ome_enter_logo_led.webp') }}"></a>
+		<h1>まつげエクステ(マツエク)商材の企画・開発・卸<br/>omeエンタープライズ</h1>
+	</div>
+	<div id="go_reg_btn_2013">
+		<a href="{{ url('mypage') }}">
+			<span class="cart_ico"><img src="{{ asset('assets/img_2018/icon/user_mini_ico.png') }}" alt="ログイン"></span>
+		</a>
+	</div>
+	<div id="go_reg_btn_2013">
+		<a href="{{ url('cart') }}">
+			<span class="cart_ico"><img src="{{ asset('assets/img_2018/top/cart_ico.webp') }}" alt="カート"></span>
+		</a>
+	</div>
+	<a class="down-arrow">
+		<span></span>
+		<span></span>
+		<span></span>
+	</a>
+	<div id="slide_menu">
+		<script>
+			$(function () { // クリックされたら
+$(".slide-toggle").on('click', function () { // クリックしたslide-toggle以外の全てのopenクラスを取る
+$(".slide-toggle").not(this).removeClass("open");
+// クリックされたslide-toggle以外のcontentを閉じる
+$(".slide-toggle").not(this).next().slideUp();
+// thisにopenクラスを付与
+$(this).toggleClass("open");
+// thisのcontentを展開、開いていれば閉じる
+$(this).next().slideToggle();
+});
+});
+		</script>
+		<div class="accordion01">
+			<div>
+				<!--{* 検索 *}-->
+				<div id="searchbar">
+					{{ render(path('block_search_product')) }}
+				</div>
+			</div>
+
+
+			<div class="cat-area cat-area01">
+				<h2 class="cat-area--bigcat">まつげエクステ</h2>
+				<ul>
+					<li class="cat-area--midlecat">
+						<a href="{{ url('product_list') }}?category_id=2">
+							<h3>国産グルー<span class="dli-chevron-round-right"></span>
+							</h3>
+						</a>
+					</li>
+					<li class="cat-area--midlecat">
+						<h3 class="slide-toggle">エクステンション<span class="dli-chevron-round-bottom"></span>
+						</h3>
+						<ul class="cat-area--midlecat--inner">
+							<li>
+								<a href="" {{ url('product_list') }} ?category_id="91" "">
+									<h4>Japanラッシュ・セーブル<span class="dli-chevron-round-right"></span>
+									</h4>
+								</a>
+							</li>
+							<li>
+								<a href="{{ url('product_list') }}?category_id=78">
+									<h4>Flatラッシュ・セーブル<span class="dli-chevron-round-right"></span>
+									</h4>
+								</a>
+							</li>
+							<li>
+								<a href="{{ url('product_list') }} ?category_id=71">
+									<h4>Colorラッシュ・セーブル<span class="dli-chevron-round-right"></span>
+									</h4>
+								</a>
+							</li>
+							<li>
+								<h4></h4>
+							</li>
+						</ul>
+					</li>
+					<li class="cat-area--midlecat">
+						<a href="{{ url('product_list') }}?category_id=52">
+							<h3>前処理<span class="dli-chevron-round-right"></span>
+							</h3>
+						</a>
+					</li>
+					<li class="cat-area--midlecat">
+						<a href="{{ url('product_list') }}?category_id=6">
+							<h3>リムーバー<span class="dli-chevron-round-right"></span>
+							</h3>
+						</a>
+					</li>
+				</ul>
+			</div>
+
+			<div class="cat-area cat-area02">
+				<ul>
+					<li class="cat-area--midlecat">
+						<h3 class="slide-toggle">ツイーザー<span class="dli-chevron-round-bottom"></span>
+						</h3>
+						<ul class="cat-area--midlecat--inner">
+							<li>
+								<a href="{{ url('product_list') }}?category_id=5">すべてのツイーザー<span class="dli-chevron-round-right"></span>
+								</a>
+							</li>
+							<li>
+								<a href="{{ url('product_list') }}?category_id=38">
+									<h4>国産ツイーザー<span class="dli-chevron-round-right"></span>
+									</h4>
+								</a>
+							</li>
+							<li>
+								<a href="{{ url('product_list') }}?category_id=37">
+									<h4>スタンダードツイーザー<span class="dli-chevron-round-right"></span>
+									</h4>
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li class="cat-area--midlecat">
+						<a href="{{ url('product_list') }}?category_id=9">
+							<h3>トリートメント<span class="dli-chevron-round-right"></span>
+							</h3>
+						</a>
+					</li>
+					<li class="cat-area--midlecat">
+						<h3 class="slide-toggle">施術ツール<span class="dli-chevron-round-bottom"></span>
+						</h3>
+						<ul class="cat-area--midlecat--inner">
+							<li>
+								<a href="{{ url('product_list') }}?category_id=8">すべての施術ツール<span class="dli-chevron-round-right"></span>
+								</a>
+							</li>
+							<li>
+								<a href="{{ url('product_list') }}?category_id=45">
+									<h4>テープ類<span class="dli-chevron-round-right"></span>
+									</h4>
+								</a>
+							</li>
+							<li>
+								<a href="{{ url('product_list') }}?category_id=46">
+									<h4>ブラシ・チップ<span class="dli-chevron-round-right"></span>
+									</h4>
+								</a>
+							</li>
+							<li>
+								<a href="{{ url('product_list') }}?category_id=47">
+									<h4>その他ツール<span class="dli-chevron-round-right"></span>
+									</h4>
+								</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+
+			<div class="cat-area cat-area03">
+				<h2 class="cat-area--bigcat">
+					<a href="{{ url('product_list') }}?category_id=92">ラッシュリフト<span class="dli-chevron-round-right"></span>
+					</a>
+				</h2>
+				<ul>
+					<li class="cat-area--midlecat">
+						<a href="{{ url('product_list') }}?category_id=93">
+							<h4>セット剤<span class="dli-chevron-round-right"></span>
+							</h4>
+						</a>
+					</li>
+					<li class="cat-area--midlecat">
+						<a href="{{ url('product_list') }}?category_id=9">
+							<h4>トリートメント<span class="dli-chevron-round-right"></span>
+							</h4>
+						</a>
+					</li>
+				</ul>
+
+				<h2 class="cat-area--bigcat">
+					<a href="{{ url('product_list') }}?category_id=7">店販コスメ<span class="dli-chevron-round-right"></span>
+					</a>
+				</h2>
+				<ul>
+					<li class="cat-area--midlecat">
+						<h3 class="slide-toggle">ACシリーズ<span class="dli-chevron-round-bottom"></span>
+						</h3>
+						<ul class="cat-area--midlecat--inner">
+							<li>
+								<a href="{{ url('product_list') }}?name=ac">すべてのAC商品<span class="dli-chevron-round-right"></span>
+								</a>
+							</li>
+							<li>
+								<a href="{{ url('product_list') }}?name=ACマスカラ">
+									<h4>マスカラ<span class="dli-chevron-round-right"></span>
+									</h4>
+								</a>
+							</li>
+							<li>
+								<a href="{{ url('product_list') }}?name=ACアイライナー">
+									<h4>アイライナー<span class="dli-chevron-round-right"></span>
+									</h4>
+								</a>
+							</li>
+							<li>
+								<a href="{{ url('product_list') }}?name=ACクレンジング">
+									<h4>クレンジング<span class="dli-chevron-round-right"></span>
+									</h4>
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li class="cat-area--midlecat">
+						<a href="{{ url('product_list') }}?category_id=94">
+							<h3>まつ毛美容液<span class="dli-chevron-round-right"></span>
+							</h3>
+						</a>
+					</li>
+				</ul>
+			</div>
+
+			<div class="cat-area cat-area04">
+				<h2 class="cat-area--bigcat">お得アイテム</h2>
+				<ul>
+					<li>
+						<a href="{{ url('product_list') }}?category_id=10">
+							<h3>セット商品<span class="dli-chevron-round-right"></span>
+							</h3>
+						</a>
+					</li>
+					<li>
+						<a href="{{ url('product_list') }}?category_id=90">
+							<h3>アウトレット商品<span class="dli-chevron-round-right"></span>
+							</h3>
+						</a>
+					</li>
+				</ul>
+
+				<h2 class="cat-area--bigcat oem-thumb">
+					<a href="{{ url('product_list') }}?category_id=35">OEM可能商品<span class="dli-chevron-round-right"></span>
+					</a>
+				</h2>
+				<ul>
+					<li>
+						<ahref="{{url('product_list')}}?category_id=48">
+							<h3>グルー・処理剤<span class="dli-chevron-round-right"></span>
+							</h3>
+						</ahref=>
+					</li>
+					<li>
+						<ahref="{{url('product_list')}}?category_id=48">
+							<h3>エクステンション<span class="dli-chevron-round-right"></span>
+							</h3>
+						</ahref=>
+					</li>
+					<li>
+						<ahref="{{url('product_list')}}?category_id=50">
+							<h3>国産ツイーザー<span class="dli-chevron-round-right"></span>
+							</h3>
+						</ahref=>
+					</li>
+					<li>
+						<ahref="{{url('product_list')}}?category_id=51">
+							<h3>コスメ・施術ツール<span class="dli-chevron-round-right"></span>
+							</h3>
+						</ahref=>
+					</li>
+				</ul>
+			</div>
+			<div class="head-snsico">
+				<a href="https://www.instagram.com/ome_enterprises/" target="_blank"><img src="{{ asset('assets/img_2018/icon/instagram_icon.png') }}" alt="インスタグラム"></a>
+				<a href="https://lin.ee/b9CFnoC" target="_blank"><img src="{{ asset('assets/img_2018/icon/line_icon.png') }}" alt="LINE@"></a>
+				<a href="https://www.facebook.com/ome.shouzai/" target="_blank"><img src="{{ asset('assets/img_2018/icon/facebook_icon.png') }}" alt="facebook"></a>
+				<a href="https://www.youtube.com/channel/UCrlf7zRmPvHmW45Iqn8uvNg" target="_blank"><img src="{{ asset('assets/img_2018/icon/youtube_icon.png') }}" alt="YouTube公式チャンネル"></div>
+				<div class="head-tcontact">
+					<a href="{{ url('contact') }}">お問い合わせフォームへ</a>
+				</div>
+				<div class="head-tel">
+					<span class="tel_ico"><img src="{{ asset('assets/img_2018/top/tel_ico.webp') }}" alt="電話番号"></span>
+					<a href="tel:0120-965-583">0120-965-583</a>
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+</div>

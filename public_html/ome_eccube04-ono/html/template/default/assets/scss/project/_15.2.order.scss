@@ -14,7 +14,7 @@ include /assets/tmpl/elements/15.2.order.pug
 
 Styleguide 15.2
 */
-.ec-orderRole{
+.ec-orderRole {
   @include container;
   display: flex;
   flex-direction: column;
@@ -23,27 +23,27 @@ Styleguide 15.2
     margin-top: 20px;
     flex-direction: row;
   }
-  .ec-inlineBtn  {
+  .ec-inlineBtn {
     font-weight: normal;
     .mypage & {
       font-weight: bold;
     }
   }
-  & &__detail{
+  & &__detail {
     padding: 0;
     width: 100%;
     @include media_desktop {
       padding: 0 16px;
-      width: 66.66666%;
+      width: 60%;
     }
   }
-  & &__summary{
+  & &__summary {
     width: 100%;
     .ec-inlineBtn {
       display: inline-block;
     }
     @include media_desktop {
-      width: 33.33333%;
+      width: 40%;
       padding: 0 16px;
       .ec-inlineBtn {
         display: none;
@@ -57,7 +57,6 @@ Styleguide 15.2
       border-top: none;
     }
   }
-
 }
 
 /*
@@ -74,9 +73,9 @@ include /assets/tmpl/elements/15.2.order.pug
 
 Styleguide 15.2.1
 */
-.ec-orderOrder{
+.ec-orderOrder {
   margin-bottom: 30px;
-  & &__items{
+  & &__items {
     @include borderBottom;
     @include borderTop;
   }
@@ -95,13 +94,13 @@ include /assets/tmpl/elements/15.2.order.pug
 
 Styleguide 15.2.2
 */
-.ec-orderAccount{
+.ec-orderAccount {
   margin-bottom: 30px;
   p {
     margin-bottom: 0;
   }
   @include clearfix;
-  & &__change{
+  & &__change {
     display: inline-block;
     margin-left: 10px;
     float: right;
@@ -109,9 +108,7 @@ Styleguide 15.2.2
   & &__account {
     margin-bottom: 16px;
   }
-
 }
-
 
 /*
 注文詳細 配送情報
@@ -126,34 +123,44 @@ include /assets/tmpl/elements/15.2.order.pug
 
 Styleguide 15.2.3
 */
-.ec-orderDelivery{
-  & &__title{
-    padding: 16px 0 17px;
+.ec-orderDelivery {
+  & &__title {
+    padding: 8px 0 8px;
     font-weight: bold;
     font-size: 18px;
     position: relative;
+    @include media_desktop {
+      padding: 16px 0 17px;
+    }
   }
-  & &__change{
+  & &__change {
     display: inline-block;
     position: absolute;
     right: 0;
-    top:0;
+    top: -5px;
+    font-size: 14px;
+    @include media_desktop {
+      top: 0;
+      font-size: 16px;
+    }
   }
-  & &__items{
+  & &__items {
     @include borderBottom;
     @include borderTop;
   }
-  & &__address{
-    margin: 10px 0 18px ;
-    p{
-      margin:0;
+  & &__address {
+    margin: 10px 0 18px;
+    font-size: 14px;
+    @include media_desktop {
+      font-size: 16px;
+    }
+    p {
+      margin: 0;
     }
   }
-  & &__edit{
+  & &__edit {
   }
-
 }
-
 
 /*
 注文履歴詳細 支払情報
@@ -171,10 +178,8 @@ Markup:
 
 Styleguide 15.2.4
 */
-.ec-orderPayment{
-
+.ec-orderPayment {
 }
-
 
 /*
 注文履歴詳細 お問い合わせ
@@ -192,19 +197,17 @@ Markup:
 
 Styleguide 15.2.5
 */
-.ec-orderConfirm{
+.ec-orderConfirm {
   margin-bottom: 20px;
   @include media_desktop {
     margin-bottom: 0;
   }
   .ec-input {
     textarea {
-      height: 96px;
+      height: 200px;
     }
   }
-
 }
-
 
 /*
 お届け先の複数指定
@@ -220,7 +223,7 @@ include /assets/tmpl/elements/15.2.order.pug
 
 Styleguide 15.2.6
 */
-.ec-AddAddress  {
+.ec-AddAddress {
   padding: 0 10px;
   @include media_desktop {
     margin: 0 10%;
@@ -238,7 +241,7 @@ Styleguide 15.2.6
   }
   & &__item {
     display: table;
-    padding:16px;
+    padding: 16px;
     background: #f4f4f4;
     margin-bottom: 16px;
   }
@@ -254,7 +257,7 @@ Styleguide 15.2.6
     display: table-cell;
     vertical-align: middle;
     padding-left: 16px;
-    font-size:16px;
+    font-size: 16px;
   }
   & &__itemtTitle {
     font-weight: bold;
@@ -264,10 +267,8 @@ Styleguide 15.2.6
     margin-bottom: 10px;
   }
   & &__itemtPrice {
-
   }
   & &__itemtNumber {
-
   }
   & &__select {
     margin-bottom: 5px;
@@ -316,5 +317,174 @@ Styleguide 15.2.6
   }
   & &__new {
     margin-bottom: 20px;
+  }
+}
+
+.ec-orderDelivery {
+  .add-shipping-caption {
+    font-size: 14px;
+    span {
+      font-weight: bold;
+      color: red;
+    }
+  }
+  .add-day-time {
+    transform: translateY(-15px);
+  }
+}
+
+.ec-orderConfirm {
+  margin-bottom: 20px;
+  @include media_desktop {
+    margin-bottom: 80px;
+  }
+}
+
+.ec-orderPayment {
+  .add-shipping-caption {
+    font-size: 14px;
+    span {
+      font-weight: bold;
+      color: red;
+    }
+  }
+}
+
+.ec-orderRole__summary {
+  .add-continue-btn {
+    background-color: #525263;
+    color: #f3f3f3;
+  }
+
+  .add-checkout-btn {
+    background-color: #ff8b3b;
+    color: #f3f3f3 !important;
+  }
+}
+
+.add-attention {
+  width: 90%;
+  max-width: 1130px;
+  margin: 0 auto 40px;
+  padding-top: 20px;
+  border-top: 1px solid #ccc;
+}
+
+.ec-cartCompleteRole {
+  .ec-off3Grid__cell {
+    width: 100%;
+    margin: 0 auto;
+  }
+  .add-complete-banner {
+    text-align: center;
+    margin: 20px auto;
+    padding: 20px 0;
+    background: #f2f2f2;
+    li {
+      text-align: center;
+      margin: 20px 10px;
+      display: inline-block;
+      .top-text {
+        padding: 10px;
+        text-align: center;
+        color: #fff;
+        background: #e88b8b;
+        margin-bottom: 10px;
+      }
+      a {
+        color: #ff8b3b;
+        text-decoration: underline;
+        img {
+          width: 230px;
+        }
+      }
+      .bt-text {
+        margin-top: 10px;
+      }
+    }
+  }
+}
+
+.ec-layoutRole__contents {
+  width: 100% !important;
+  display: initial !important;
+  .ec-layoutRole__main {
+    .ec-mypageRole {
+      .add_address {
+        margin-top: 10px;
+        img {
+          width: auto;
+        }
+      }
+      .add-td-s {
+        width: 10%;
+      }
+      .add-td-m {
+        width: 30%;
+      }
+      .add-td-l {
+        width: 60%;
+      }
+    }
+  }
+}
+
+.ec-off4Grid {
+  margin-top: 10px;
+  .add-continue-btn {
+    margin-bottom: 40px;
+    background-color: #525263;
+    color: #fff;
+  }
+
+  .add-checkout-btn {
+    margin-bottom: 10px;
+    background-color: #ff8b3b;
+    color: #fff;
+  }
+}
+
+.ec-blockRadio {
+  font-size: 14px;
+  @include media_desktop {
+    font-size: 16px;
+  }
+}
+
+.ec-layoutRole__main {
+  .ec-mypageRole {
+    .h-adr {
+      table {
+        tr {
+          td {
+            .ec-input {
+            }
+            input {
+              margin-bottom: 0;
+              width: 300px;
+              margin: 0 auto;
+            }
+            .add-transform {
+              transform: translateY(-10px);
+            }
+          }
+        }
+        .hyou_name {
+          td {
+            input {
+              margin-bottom: 10px;
+            }
+          }
+        }
+        .add-address-number {
+          td {
+            input {
+              margin-bottom: 10px;
+              width: 300px !important;
+            }
+          }
+        }
+      }
+    }
   }
 }

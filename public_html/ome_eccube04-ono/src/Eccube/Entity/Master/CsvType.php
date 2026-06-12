@@ -52,15 +52,5 @@ if (!class_exists(CsvType::class, false)) {
          * @var integer
          */
         public const CSV_TYPE_CATEGORY = 5;
-
-        /**
-         * @var integer
-         */
-        public const CSV_TYPE_CLASS_NAME = 6;
-
-        /**
-         * @var integer
-         */
-        public const CSV_TYPE_CLASS_CATEGORY = 7;
     }
 }

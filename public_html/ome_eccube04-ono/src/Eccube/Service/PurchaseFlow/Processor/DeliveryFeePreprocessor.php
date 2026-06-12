@@ -88,7 +88,9 @@ class DeliveryFeePreprocessor implements ItemHolderPreprocessor
     {
         foreach ($itemHolder->getShippings() as $Shipping) {
             foreach ($Shipping->getOrderItems() as $item) {
-                if ($item->getProcessorName() == DeliveryFeePreprocessor::class) {
+                // 通常送料と特別送料の両方を削除対象にする
+                if ($item->getProcessorName() == DeliveryFeePreprocessor::class 
+                    || $item->getProcessorName() == 'SpecialDeliveryFee') {
                     $Shipping->removeOrderItem($item);
                     $itemHolder->removeOrderItem($item);
                     $this->entityManager->remove($item);
@@ -134,6 +136,7 @@ class DeliveryFeePreprocessor implements ItemHolderPreprocessor
             ]);
             $fee = is_object($DeliveryFee) ? $DeliveryFee->getFee() : 0;
 
+            // 基本送料のOrderItemを作成
             $OrderItem = new OrderItem();
             $OrderItem->setProductName($DeliveryFeeType->getName())
                 ->setPrice($fee + $deliveryFeeProduct)
@@ -147,6 +150,23 @@ class DeliveryFeePreprocessor implements ItemHolderPreprocessor
 
             $itemHolder->addItem($OrderItem);
             $Shipping->addOrderItem($OrderItem);
+
+            // クール便の場合、特別送料を追加
+            if ($Shipping->getDelivery() && $Shipping->getDelivery()->getId() === 3) {
+                $specialOrderItem = new OrderItem();
+                $specialOrderItem->setProductName('クール便特別料金')
+                    ->setPrice(220)
+                    ->setQuantity(1)
+                    ->setOrderItemType($DeliveryFeeType)
+                    ->setShipping($Shipping)
+                    ->setOrder($itemHolder)
+                    ->setTaxDisplayType($TaxInclude)
+                    ->setTaxType($Taxation)
+                    ->setProcessorName('SpecialDeliveryFee');  // 特別送料用の識別子
+
+                $itemHolder->addItem($specialOrderItem);
+                $Shipping->addOrderItem($specialOrderItem);
+            }
         }
     }
 }

@@ -1,0 +1,47 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% extends 'default_frame.twig' %}
+
+{% set body_class = 'cart_page' %}
+
+{% block main %}
+
+<div class="ec-role">
+    <div class="ec-pageHeader">
+        <h1>{{ '購入エラー'|trans }}</h1>
+    </div>
+</div>
+
+<!-- アラートメッセージ -->
+{{ include('Shopping/alert.twig', { 'error_only': true }) }}
+
+
+<div class="ec-role">
+<p class="error_text_shopping">
+            エラーが発生しました。<br/>
+
+お客様には大変ご迷惑をおかけしており、<br class="br_sp_only"/>誠に申し訳ございません。<br/>
+只今、エラーが発生しており、<br class="br_sp_only"/>購入手続きを完了できません。<br/>
+
+お手数ですが、しばらく時間をおいてから<br class="br_sp_only"/>再度お試しください。<br/>
+
+問題が解決しない場合は、<br class="br_sp_only"/><a href="/contact/" class="error_to_contact">お問い合わせフォーム </a>より<br class="br_sp_only"/>ご連絡ください。</p>
+    <div class="ec-off3Grid">
+        <div class="ec-off3Grid__cell">
+            <div class="ec-off4Grid">
+                <div class="ec-off4Grid__cell">
+                    <a class="ec-blockBtn--action add-checkout-btn" href="{{ url('cart') }}">{{ 'カートに戻る'|trans }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

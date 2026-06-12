@@ -1,0 +1,132 @@
+.oem-section {
+  width: 100%;
+  height: 640px;
+  padding: 0 100px;
+  background-image: url(../img/renewal_top/oem/bg.png);
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  @media screen and (max-width: 768px) {
+    padding: 65.5px 16px;
+    height: fit-content;
+    background-image: url(../img/renewal_top/oem/bg_sp.png);
+  }
+  .oem-inner {
+    @media screen and (max-width: 768px) {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+  }
+
+  .oem-label {
+    font-size: 18px;
+    font-family: "Josefin Sans", sans-serif;
+    letter-spacing: 3.6px;
+    font-weight: 700;
+    line-height: 18px;
+    color: #fff;
+    margin-bottom: 9px;
+    @media screen and (max-width: 768px) {
+      font-weight: 400;
+    }
+  }
+
+  .oem-title {
+    font-size: 24px;
+    letter-spacing: 4.8px;
+    line-height: 24px;
+    font-weight: 400;
+    color: #fff;
+    font-family: "source-han-sans-japanese", sans-serif;
+
+    br {
+      display: none;
+    }
+    @media screen and (max-width: 768px) {
+      font-size: 20px;
+      letter-spacing: 4px;
+      line-height: 24px;
+      font-weight: 400;
+      br {
+        display: block;
+      }
+    }
+  }
+
+  .oem-catch {
+    font-size: 20px;
+    letter-spacing: 5px;
+    line-height: 20px;
+    font-weight: 400;
+    color: #fff;
+    margin: 48px 0 24px;
+    font-family: "source-han-sans-japanese", sans-serif;
+    @media screen and (max-width: 768px) {
+      margin: 32px 0 16px;
+      font-size: 16px;
+      letter-spacing: 5px;
+      line-height: 16px;
+      font-weight: 400;
+    }
+  }
+
+  .oem-text {
+    font-size: 14px;
+    letter-spacing: 2px;
+    line-height: 24px;
+    font-weight: 100;
+    color: #fff;
+    font-family: "source-han-sans-japanese";
+    @media screen and (max-width: 768px) {
+      font-size: 12px;
+      line-height: 20px;
+      font-weight: 300;
+      br {
+        display: none;
+      }
+    }
+  }
+
+  .oem-buttons {
+    margin-top: 48px;
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    @media screen and (max-width: 1024px) {
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      justify-content: initial;
+    }
+    @media screen and (max-width: 768px) {
+      margin-top: 32px;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      justify-content: initial;
+    }
+    .btn {
+      font-family: "source-han-sans-japanese";
+      display: block;
+      max-width: 275px;
+      width: 100%;
+      padding: 24px 0;
+      border: 1px solid #fff;
+      background-color: rgba($color: #333333, $alpha: 0.4);
+      font-size: 14px;
+      letter-spacing: 2px;
+      line-height: 14px;
+      font-weight: 200;
+      color: #fff;
+      text-align: center;
+      @media screen and (max-width: 1024px) {
+        max-width: 500px;
+      }
+      @media screen and (max-width: 768px) {
+        max-width: 275px;
+        font-weight: 400;
+      }
+    }
+  }
+}

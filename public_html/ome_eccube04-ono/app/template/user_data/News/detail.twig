@@ -1,0 +1,52 @@
+{% extends 'default_frame.twig' %}
+
+{% block main %}
+<style>
+.contents-page{
+font-size: 15px;
+width:90%;
+margin: auto;
+padding: 50px 0;
+line-height:2;
+max-width: 800px;
+}
+.contents-page h2{
+    font-size: 25px;
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+.contents-page p{
+padding-bottom:15px;
+}
+
+.contents-page-underline{
+border-bottom:1px solid #000;
+}
+.cp-underline-red{
+border-bottom:1px solid red;
+}
+
+.cp-list{
+margin-left:30px;
+margin-bottom:0px;
+}
+.cp-list li{
+padding-bottom:30px;
+line-height: 30px;
+}
+.cp-list p{
+font-weight:bold;
+}
+.cp-list b{
+color:red;
+}
+
+</style>
+    <div id="lp-wrap">
+        <div class="contents-page">
+            <h2>{{ News.title }}</h2>
+            <p>{{ News.description|raw|nl2br }}</p>
+        </div>
+    </div>
+{% endblock %}

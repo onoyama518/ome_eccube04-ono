@@ -642,13 +642,22 @@ class OrderController extends AbstractController
         /** @var OrderPdf $OrderPdf */
         $OrderPdf = $this->orderPdfRepository->find($this->getUser());
 
+        $messages = [];
+        foreach ($ids as $shippingId) {
+            $Shipping = $this->entityManager->getRepository(Shipping::class)->find($shippingId);
+            if ($Shipping) {
+                $Order = $Shipping->getOrder(); // Shipping から関連する Order を取得
+                if ($Order) {
+                    $messages[] = $Order->getMessage(); // Order の message を取得
+                }
+            }
+        }
+
         if (!$OrderPdf) {
             $OrderPdf = new OrderPdf();
             $OrderPdf
                 ->setTitle(trans('admin.order.delivery_note_title__default'))
-                ->setMessage1(trans('admin.order.delivery_note_message__default1'))
-                ->setMessage2(trans('admin.order.delivery_note_message__default2'))
-                ->setMessage3(trans('admin.order.delivery_note_message__default3'));
+                ->setNote1((implode("\n", $messages)));
         }
 
         /**

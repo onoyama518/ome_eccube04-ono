@@ -1,0 +1,198 @@
+@charset "UTF-8";
+
+// base set
+// @use "../bases/reset";
+// @use "../bases/base";
+
+// common layouts set
+// @use "../layouts/header";
+// @use "../layouts/footer";
+
+// page layouts set
+@forward "./block/blocs";
+@forward "./page/page";
+@forward "./page/lp2";
+@forward "./block/resp";
+@forward "./block/agree";
+@forward "./block/button_sp";
+@forward "./block/my";
+@forward "./block/product";
+@forward "./block/login";
+@forward "./block/article";
+@forward "./block/cart";
+@forward "./block/paygent";
+@forward "./block/all";
+@forward "./phase2/product/detail";
+@forward "./phase2/other/vary";
+@forward "./phase2/other/size";
+@forward "./phase2/2025/june/revise";
+@forward "./phase2/2025/june/btn";
+@forward "./phase2/2025/june/itemlist";
+@forward "./phase2/2025/june/star";
+@forward "./phase2/2025/july/renewal-mypage";
+@forward "./phase2/2025/july/renewal-top";
+@forward "./phase2/2025/july/renewal-header_footer";
+@forward "./phase2/2025/july/cart-modal";
+@forward "./phase2/2025/august/fix";
+@forward "./phase2/2026/03/oem-section";
+@forward "./phase2/2026/05/for-visitor";
+
+table {
+  input,
+  textarea {
+    border: solid 1px #ccc;
+  }
+}
+textarea {
+  resize: none; /* テキストエリアのリサイズを禁止 */
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.f_ {
+  color: #fff;
+}
+
+.page_entry_confirm {
+  .attention {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  /* 画面サイズが768px以下の場合 */
+  .pc-only {
+    display: none !important;
+  }
+}
+@media (max-width: 768px) {
+  .sp-only {
+    display: none !important;
+  }
+}
+@media screen and (min-width: 769px) {
+  .area_flex {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+  .area_flex_hyou {
+    display: flex;
+    gap: 7px;
+  }
+}
+
+button {
+  padding: 0;
+  border: none;
+  background-color: initial;
+  img {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  // ヘッダー
+  #slide_menu {
+    .cat-area {
+      padding: 0 !important;
+      text-align: center;
+      ul {
+        padding-left: 0;
+      }
+    }
+    .cat-area--midlecat {
+      margin-bottom: 0;
+    }
+    .cat-area02 {
+      margin-top: 0;
+      ul {
+        margin-top: 0;
+      }
+    }
+  }
+  #mynavi_area {
+    display: none;
+  }
+  // フッター
+  div#foot ul {
+    width: 90%;
+    margin: 0 auto !important;
+  }
+  #foot .accordion02 {
+    width: 90% !important;
+  }
+  #foot .accordion03 {
+    width: 90% !important;
+  }
+  #foot .accordion04 {
+    width: 90% !important;
+  }
+  #foot .shomei-detail {
+    width: 75%;
+    td {
+      padding: 0;
+      text-align: left;
+    }
+  }
+
+  // お問い合わせ
+  #contact_contents {
+    width: 100%;
+  }
+
+  // 商品レビュー
+  #page_product_review_index {
+    colgroup {
+      display: none;
+    }
+    .hyou {
+      width: 90% !important;
+      margin-left: auto;
+      margin-right: auto;
+      th {
+        text-align: center;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 769px) {
+  #mynavarea {
+    display: none;
+  }
+  #whobought_area {
+    display: flex;
+  }
+
+  #b_toppage {
+    display: block;
+    width: 250px;
+    margin: 0 auto;
+  }
+  #under02column {
+    margin-bottom: 30px;
+  }
+}
+
+.shopping_shipping{
+  .shopping_shipping_btns{
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    flex-direction: column;
+    margin: 0 auto;
+    gap:16px;
+    @media screen and (min-width: 769px) {
+      flex-direction: row;
+    }
+    .btn_revise{
+      width:250px;
+    }
+  }
+  .add_address{
+    margin-top: 10px;
+  }
+}

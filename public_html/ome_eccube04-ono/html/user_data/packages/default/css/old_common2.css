@@ -1,0 +1,1367 @@
+@charset "UTF-8";
+
+/*
+================================================================================
+1.基本レイアウト設定
+================================================================================
+*/
+
+/*--基本設定---------------------------------------------------------*/
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,p,blockquote,th,td{margin:0;padding:0; font-weight:normal;}
+table{border-collapse:collapse;border-spacing:0;}
+fieldset,img{border:0;}
+address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}
+ol,ul {list-style:none;}
+caption,th {text-align:left;}
+1,h2,h3,h4,h5,h6{font-size:100%;}
+q:before,q:after{content:'';}
+
+body{
+ /*font-family:Arial, Helvetica, sans-serif;*/
+ font-family: 'メイリオ', 'Meiryo', 'Hiragino Kaku Gothic Pro', 'ヒラギノ角ゴ Pro W3', 'Osaka', 'ＭＳ Ｐゴシック', sans-serif;
+ color:#333333;
+ font-size:12px;
+ line-height:140%;
+}
+
+table,table tb,table tr{
+ text-align:center;
+ vertical-align:bottom;
+}
+
+a{
+ color:#330F00;
+ text-decoration:underline;
+}
+
+a:link,a:visited{
+ text-decoration:underline;
+}
+
+a:hover{
+ text-decoration:underline;
+ color:#7A2401;
+}
+
+
+/*
+================================================================================
+1.全ページ共通部分
+ ・ヘッダー
+ ・グローバルナビ
+ ・ページトップ
+ ・フッター
+================================================================================
+*/
+
+body{
+background:url(../img/ome/bg.gif) center top;
+}
+
+div#warp{
+ width: 900px;
+ margin: 20px auto 20px auto;
+}
+
+div#head{
+ width: 900px;
+ overflow:hidden;
+ background:#330F00;
+ padding: 0 0 18px 0;
+ margin: 0 0 0px 0;
+}
+
+div#head div#logo{
+ width:443px;
+ float:left;
+ margin: 20px 0 0 33px;
+ display:inline;
+}
+
+div#head div#headMenu{
+ /*width:380px;*/
+       /*width:400px;*/
+   width:350px;
+ float:right;
+ font-size:10px;
+ margin: 20px 20px 0 0;
+ color:#FFFFFF;
+ font-size:10px;
+}
+
+
+div#head div#headMenu p{
+ /*text-align:right;*/
+ text-align:left;
+ /*margin: 0 0 10px 0;*/
+ margin:0 0 3px 0;
+}
+
+div#head div#headMenu a{
+ color:#FFF;
+}
+
+
+
+div#head div#headMenu ul{
+ text-align:right;
+}
+
+div#head div#headMenu ul a{
+ color:#FFFFFF;
+}
+
+div#head div#headMenu ul a:hover{
+ color:#CCCCCC;
+}
+
+div#head div#headMenu ul li{
+ display: inline;
+}
+
+div#head div#headMenu p#headcatch{
+ text-align:right;
+ margin: 6px 0 0 0;
+}
+
+div#contens{
+ background:#FFFFFF;
+ width:898px;
+ border-left: solid 1px #CCCCCC;
+ border-right: solid 1px #CCCCCC;
+ padding: 15px 0 0 0;
+ overflow:hidden;
+}
+
+a#topMenu_2013{
+ position:absolute;
+ white-space: nowrap;
+ margin-top: 2px;
+ color: #f4dac1;
+ font-weight: bold;
+}
+
+li#beginner_2013{
+ margin-top: 35px;
+ margin-left: 40px;
+ float:left;
+ list-style-image: url(../img/icon/beginner_2013.jpg);
+}
+
+li#fax_order_2013{
+ margin-top: 35px;
+ margin-left: 250px;
+ float:left;
+ list-style-image: url(../img/icon/fax_order_2013.jpg);
+}
+
+span#cart_base_img_2013{
+ margin-top: 10px;
+}
+
+p.item#item_2013{
+ position: absolute;
+ white-space: nowrap;
+ margin-top: 130px;
+ margin-left:590px;
+}
+
+p.total#total_2013{
+ position: absolute;
+ white-space: nowrap;
+ margin-top:145px;
+ margin-left: 590px;
+ float: left;
+}
+
+div#go_reg_btn_2013{
+ position: absolute;
+ white-space: nowrap;
+ margin-top: 145px;
+ margin-left: 760px;
+ float: right;
+}
+
+p.postage#postage_2013{
+ position: absolute;
+ white-space: nowrap;
+ margin-top: 165px;
+ margin-left: 585px;
+ float: left;
+}
+
+div#cart{
+}
+
+ul#revCommnet_2013 {
+ overflow: auto;
+ height: 200px;
+}
+
+li#revComment_2013 {
+ list-style-image: url(../img/icon/review_2013.png);
+}
+
+/*
+================================================================================
+メニュー
+================================================================================
+*/
+
+div#contens div#menu{
+ float:left;
+ width:230px;
+ margin: 0 0 0 20px;
+ display:inline;
+}
+
+div#menu h2{
+ background:#330F00;
+ padding: 6px 0 5px 10px;
+}
+
+div#menu div#login,
+div#menu div#mypageBox,
+div#menu div#srech,
+div#menu div#cart,
+div#menu div#category,
+div#menu div#banner{
+ margin: 0 0 15px 0;
+}
+
+div#menu div.box{
+ background:#E5DEE1;
+ width:230px;
+ margin: 3px 0 0 0;
+ padding: 6px 0 12px 0;
+}
+
+div#menu div.box  p{
+ margin: 0 0 6px 10px;
+}
+
+div#menu div.box  p.title{
+ margin: 0px 0 0 10px;
+ padding: 0 0 0 12px;
+ background:url(../img/ome/circleIcon.gif) 0 3px no-repeat;
+}
+
+div#menu div.box p.button{
+ text-align:center;
+}
+
+div#menu div.box p.btn{
+ text-align:center;
+}
+
+div#menu div.box div.btn{
+ text-align:center;
+}
+
+div#menu div.box p#forget{
+ margin: 6px 0 0 10px;
+ padding: 0 0 0 12px;
+ background:url(../img/ome/pinkArrow.gif) 0px 3px no-repeat;
+}
+
+/*div#headMenu p#forget2{
+ margin: 6px 0 0 10px;
+ padding: 0 0 0 12px;
+ background:url(../img/ome/whiteArrow.gif) 0px 3px no-repeat;
+}
+*/
+div#menu div.box p#Registration{
+ margin: 6px 0 0 10px;
+ padding: 0 0 0 12px;
+ background:url(../img/ome/pinkArrow.gif) 0px 3px no-repeat;
+}
+
+/*div#menu div#category ul{
+ background:url(../img/ome/left_borderDod.gif) left top repeat-x;
+}*/
+
+div#menu div#category li{
+ /*padding: 8px 0 4px 12px;*/
+ padding:5px 0 3px 12px;
+ background:url(../img/ome/left_borderDod.gif) left bottom repeat-x;
+}
+
+div#menu div#category li a:hover,
+div#menu div#banner p a:hover{
+   filter: alpha(opacity=50); /* internet explorer */
+   -khtml-opacity: 0.5;      /* khtml, old safari */
+   -moz-opacity: 0.5;       /* mozilla, netscape */
+   opacity: 0.5;           /* fx, safari, opera */
+}
+
+div#menu div#banner p{
+ margin: 0 0 8px 0;
+}
+
+
+/*
+================================================================================
+メイン
+================================================================================
+*/
+
+div#contens div#main{
+ float:right;
+ width:615px;
+ margin: 0 20px 0 0;
+ display:inline;
+}
+
+div#main div#news{
+ margin: 20px 0 0 0;
+}
+
+div#main div#news dl{
+ padding: 0 0 0 30px;
+ height: 200px;
+ overflow: auto;
+}
+
+div#main div#news dl dt{
+ margin: 12px 0 0 0;
+       display: list-item;
+ list-style:circle;
+       font-weight:bold;
+
+}
+
+div#main div#news dl dd{
+ margin: 0;
+}
+
+div#main div#news dl dd strong{
+ font-weight: bold;
+}
+
+div#main div#pickup{
+ margin: 20px 0 0 0;
+}
+
+div#main div#itemList{
+ margin: 20px 0 20px 0;
+}
+
+div#main div#pickup div.item,
+div#main div#itemList div.item{
+ width:606px;
+ overflow:hidden;
+ margin: 20px 0 0 5px;
+}
+
+div#pickup div.item div.img,
+div#itemList div.item div.img{
+ float:left;
+ width:120px;
+}
+
+div#pickup div.item div.img img,
+div#itemList div.item div.img img{
+ padding:4px;
+ border:#CCCCCC solid 1px;
+}
+
+div#pickup div.item div.text,
+div#itemList div.item div.text{
+ width:465px;
+ float:right;
+ margin: 0 5px 0 0;
+}
+
+div.text div.nameprice{
+ margin: 6px 0 0 0;
+ width:465px;
+ overflow:hidden;
+}
+
+div.text div.nameprice h4{
+ width:340px;
+ float:left;
+ margin: 0 5px 0 0;
+ padding:0 0 0 5px;
+ font-weight:bold;
+}
+
+div.text div.nameprice p.price{
+ width:110px;
+ float:right;
+ margin: 0 5px 0 0;
+ text-align:right;
+ color:#FF0000;
+ font-weight:bold;
+}
+
+div.text div.detailtext{
+ margin: 6px 0 0 0;
+ border-top:#999999 solid 1px;
+}
+
+div.text div.detailtext p{
+ padding: 12px 0 0 4px;
+ margin:12px 0 0 0 0;
+ color:#666666;
+}
+
+div#main div#attention{
+ margin: 20px 0 0 0;
+ padding: 20px 0 20px 0;
+ border-top:#999999 1px solid;
+ border-bottom:#999999 1px solid;
+}
+
+div#main div#attention p{
+ margin: 0 0 0 0;
+}
+
+div#main div#attention p a{
+ margin: 0 0 0 10px;
+ background:url(../img/ome/arrowAttention.gif) 0 2px no-repeat;
+ padding: 0 0 0 35px;
+}
+
+div#main div#mobile{
+ width:615px;
+ overflow:hidden;
+ border-bottom:#999999 1px solid;
+ margin: 20px 0 0 0;
+ padding: 0 0 20px 0;
+}
+
+div#main div#mobile div.img{
+ float:left;
+ width:100px;
+ margin: 0 0 0 15px;
+ display:inline;
+}
+
+div#main div#mobile div.text{
+ float:left;
+ width:475px;
+ display:inline;
+ margin: 0 0 0 20px;
+}
+
+div#main div#mobile div.text p.title{
+ margin: 0 0 8px 0;
+}
+
+div#main div#mobile div.text p{
+ margin: 0 0 4px 0;
+}
+
+.inputButton{
+ vertical-align:bottom;
+}
+
+
+div#main div#twitter{
+ margin: 20px 0 60px 0;
+}
+
+div#twitter div.tweet{
+ width:605px;
+ margin: 12px 0 5px 5px;
+ padding: 0 0 8px 0;
+
+ overflow:hidden;
+ border-bottom: #CCCCCC 1px solid;
+}
+
+div#twitter div.tweet div.tweet-left{
+ width:50px;
+ float:left;
+}
+
+div#twitter div.tweet div.tweet-left img{
+ border:#CCCCCC 1px solid;
+ padding:4px;
+}
+
+div#twitter div.tweet div.tweet-right{
+ float:right;
+ width:530px;
+ margin: 0px 0 0 0;
+}
+
+
+/* 3個パック選択テーブル
+----------------------------------------------- */
+#packset2013 table {
+ border: 2px #000000 solid;
+}
+
+#packset2013 td {
+ font-size: 11px;
+ border: 1px #000000 solid;
+ vertical-align: top;
+ margin: 1px;
+}
+
+#packset2013 input{
+ text-align: left;
+ font-size: 10px;
+ font-weight: nomal;
+ color: #000000;
+ border: 1px #000000 solid;
+ margin: 2px;
+ padding: 4px;
+ width: 98%;
+}
+
+#packset2013 input.jcurl{
+ background-color: #99ff99;
+}
+
+#packset2013 input.ccurl{
+ background-color: #ffffcc;
+}
+
+#mls_table h1{
+text-align: center;
+margin-top: 20px;
+font-size: 18px;
+}
+#mls_table table {
+background-color: #222222;
+max-width: 80%;
+margin-left: auto;
+margin-right: auto;
+}
+#mls_table td {
+text-align: center;
+border: 2px #000000 solid;
+background-color: #ffffff;
+font-size: 11px;
+}
+
+/* ページ送り
+----------------------------------------------- */
+.pagenumberarea, .pagecondarea {
+   clear: both;
+   margin: 0px 0 3px 0;
+ background:#E5DEE1;
+ padding: 10px;
+}
+
+
+ul.pagenumberarea {
+   height: 2.5ex;
+}
+
+ul.pagecondarea {
+   border: 1px solid #CCCCCC;
+}
+
+ul.pagenumberarea li {
+   float: left;
+   width: 32.9%;
+   width: 41%;
+}
+
+ul.pagenumberarea li.left {
+   text-align: left;
+   white-space: nowrap;
+   float: left;
+   width: 33%;
+}
+
+ul.pagenumberarea li.center {
+   text-align: center;
+   white-space: pre;
+}
+
+ul.pagenumberarea li.right {
+   text-align: right;
+   white-space: nowrap;
+   float: right;
+   width: 20%;
+}
+
+.pagenumberarea .pagenumber{
+   color: #FF3532;
+   font-weight: bold;
+}
+
+p.pagenumberarea .number{
+   font-weight: bold;
+}
+
+div#detailarea{
+ margin: 0 0 20px 0;
+ overflow:hidden;
+}
+
+/* レイアウト
+----------------------------------------------- */
+
+/* 2カラム用 */
+div#detailphotobloc{
+   float: left;
+   width: 260px;
+}
+div#detailrightbloc{
+   float: right;
+   width: 340px;
+}
+div.subtext{
+   margin-bottom: 20px;
+   float: left;
+   width: 400px;
+}
+p.subtext{
+   margin-bottom: 20px;
+}
+div.subphotoimg {
+   float: right;
+   width: 200px;
+   text-align: right;
+}
+
+
+/* 商品情報 各種設定
+----------------------------------------------- */
+/*div#detailarea h2 {
+   margin: 10px 0 10px 0;
+   padding: 0 0 10px 0;
+   color: #330F00;
+   font-weight: bold;
+   font-size: 160%;
+ border-bottom: #CCCCCC 1px solid;
+}*/
+
+div#detailarea img.detailbanner_ex {
+   margin-right: 42px;
+}
+div#detailarea img.detailbanner_ex_end {
+   margin-bottom: 15px;
+}
+
+div#detailarea h2.detailtext_ex {
+   margin-top: 45px;
+   margin-bottom: 0px;
+}
+
+div.sub_area h3.detailtext_ex,
+div#detailarea h3.detailtext_ex {
+   width: 100%;
+   margin: 30px 0 10px 0;
+   padding: 5px 10px;
+   color: #FFFFFF;
+   font-size: 16px;
+   background-color: #4c2f1d;
+}
+
+div#detailarea h4.detailtext_ex {
+   margin: 30px 0 10px 0;
+ background: url("../../../img/bg_sha.png") #EEE repeat;
+ padding: 5px 10px;
+ font-size: 16px;
+}
+
+div#detailarea p.detailtext_ex {
+   clear: both;
+   line-height:180%;
+   margin: 10px 0 20px 0;
+}
+div#detailarea strong.detailtext_ex {
+   font-weight: bold;
+}
+div#detailarea img.detailimg_ex {
+   margin: 5px 0 5px 0;
+   clear: both;
+}
+
+div#detailarea .detailboxcolumn_ex {
+   width: 330px;
+   background: url("../../../img/detail_box_bottom.jpg") no-repeat bottom;
+   padding-bottom: 25px;
+   margin-bottom: 40px;
+}
+div#detailarea .detailboxcolumn_ex .detailboxcolumn_ex_inner {
+   background: url("../../../img/detail_box_top.jpg") no-repeat;
+   padding-top: 25px;
+}
+div#detailarea .detailboxcolumn_ex .detailboxcolumn_ex_inner div {
+   background: url("../../../img/detail_box_bg.jpg") repeat-y;
+   padding: 0 20px;
+}
+div#detailarea span.detailbox_ex {
+   position: relative;
+   top: 15px;
+   left: 14px;
+   padding: 0 5px;
+   font-weight: bold;
+   background: url("../../../img/white_dot.jpg") repeat;
+}
+div#detailarea h4.detailbox_ex {
+   font-weight: bold;
+   font-size: 100%;
+}
+div#detailarea p.detailbox_ex {
+   font-size: 80%;
+}
+
+div#detailarea li.detailtext_ex {
+   list-style: none outside;
+   float: none;
+   line-height:150%;
+}
+
+div#detailarea li.detaillist_ex {
+   text-shadow: -0.2em 0.2em 2px #aaaaaa;
+   color: #330F00;
+   font-size: 14px;
+   list-style: none outside;
+   background: url("../img/icon/detail_list_allow.gif") no-repeat top left;
+   padding: 3px 0px 0px 30px;
+   float: none;
+   line-height:150%;
+ margin-bottom: 8px;
+}
+
+div#detailarea div.normal_price {
+ margin: 0 0 4px 0;
+ font-size: 90%;
+ text-decoration:line-through
+}
+
+div#detailarea div.sale_price {
+ margin: 0 0 2px 0;
+ font-size:16px;
+ /*font-weight:bold;*/
+ color:#809538;
+}
+
+div#detailarea .point ,
+div#detailarea .relative_cat {
+   margin: 0 0 10px 0;
+   padding: 0 0 5px 0;
+ font-size:11px;
+ /*border-bottom: #CCCCCC 1px solid;*/
+}
+div#detailarea .main_comment {
+/* 詳細解説文の幅を広げる */
+/*    margin-left: -280px; */
+   margin-top: 10px;
+   margin-bottom: 20px;
+}
+
+/*div#detailarea .main_comment table th {
+   padding: 8px;
+   border-right: 1px solid #F2F2F2;
+   border-bottom: 1px solid #F2F2F2;
+   color: #333;
+   background-color:#E5DEE1;
+   font-weight: normal;
+ vertical-align:middle;
+ text-align: right;
+}*/
+
+table#morerush_table {
+   margin: 15px auto 20px auto;
+   border-top: 1px solid #F2F2F2;
+   border-left: 1px solid #F2F2F2;
+   width: 100%;
+   border-collapse: collapse;
+   text-align: center;
+}
+table#morerush_table th {
+   padding: 8px;
+   border-right: 1px solid #F2F2F2;
+   border-bottom: 1px solid #F2F2F2;
+   color: #333;
+   background-color:#D0C0DB;
+   font-weight: normal;
+ vertical-align:middle;
+ text-align: center;
+}
+table#morerush_table td {
+   padding: 8px;
+   border-right: 1px solid #F2F2F2;
+   border-bottom: 1px solid #F2F2F2;
+ background-color:#F0EDF4;
+ text-align: center;
+ vertical-align: middle;
+}
+
+table#morerush_table strong {
+ color: #855E9D;
+ font-weight: bold;
+}
+
+div#detailarea .main_comment .detail_mix img {
+ margin: 0 10px 0 0;
+}
+
+div#detailarea .main_comment .detail_mix p {
+ padding: 50px 0 0 0;
+}
+
+div#detailarea .main_comment .bannar li {
+ float: left;
+}
+
+div.cart_area {
+   padding: 10px;
+   background-color: #E5DEE1;
+   border: 1px solid #DDCED4;
+}
+
+/* 商品ステータス */
+div#detailrightbloc ul.status_icon {
+   margin-bottom: 10px;
+   width: 100%;
+}
+div#detailrightbloc ul.status_icon li {
+   margin-right: 5px;
+   margin-bottom: 3px;
+   float: left;
+}
+
+/* 規格 */
+div#detailrightbloc div.classlist {
+   margin-bottom: 10px;
+   padding-bottom: 10px;
+   width: 100%;
+   background: url("../img/ome/background/line_dot_02.gif") repeat-x bottom ;
+}
+div#detailrightbloc .classlist {
+   margin-bottom: 5px;
+}
+div#detailrightbloc ul {
+   margin-bottom: 10px;
+   width: 100%;
+}
+div#detailrightbloc ul li {
+   vertical-align: top;
+   float: left;
+}
+
+/* 買い物かご */
+div#detailrightbloc .cartin {
+   text-align: center;
+}
+div#detailrightbloc .cartin_btn {
+   text-align: center;
+}
+div#detailrightbloc .favorite_btn {
+   text-align: center;
+   margin-top: 10px;
+}
+
+
+/* お客様の声
+----------------------------------------------- */
+div#customervoice_area {
+   clear: both;
+   padding: 35px 0 0 0;
+}
+
+div#customervoice_area h2 {
+   margin-bottom: 20px;
+   padding: 6px 0 8px 10px;
+   border-top: solid 1px #f90;
+   background: url('../img/ome/background/bg_tit_sub_01.jpg') repeat-x left bottom;
+}
+
+div#customervoice_area .review_bloc {
+   margin-bottom: 20px;
+   padding: 10px;
+   background-color: #f6f6f6;
+}
+
+div#customervoice_area .review_bloc p {
+   padding-top: 3px;
+   margin-right: 10px;
+   float: left;
+}
+
+div#customervoice_area review_bloc .review_btn {
+   float: right;
+   width: 160px;
+}
+
+div#customervoice_area ul li{
+   padding-bottom: 15px;
+   margin-bottom: 15px;
+   background: url("../img/ome/background/line_dot_01.gif") repeat-x bottom ;
+}
+
+div#customervoice_area .voicetitle {
+   margin-bottom: 5px;
+   color: #333;
+   font-weight: bold;
+}
+
+div#customervoice_area .voicedate {
+   margin-bottom: 10px;
+}
+
+
+/* 関連商品（商品部分はbloc.cssのおすすめ商品と共通）
+----------------------------------------------- */
+div#whobought_area {
+   clear: both;
+   padding: 35px 0 0 0;
+}
+
+div#whobought_area h2 {
+   border-top: solid 1px #f90;
+   background: url('../img/ome/background/bg_tit_sub_01.jpg') repeat-x left bottom;
+   padding: 5px 0 8px 10px;
+   font-size: 14px;
+}
+
+
+.sub_area{
+   margin-bottom: 20px;
+   width: 615px;
+ overflow:hidden;
+}
+
+/*
+================================================================================
+フッター
+================================================================================
+*/
+
+
+div#pagetop{
+ width: 898px;
+ border-left: solid 1px #CCCCCC;
+ border-right: solid 1px #CCCCCC;
+ padding:10px 0 10px 0;
+ margin: 0 0 0 0;
+ margin: 0 0 0 0;
+ text-align:right;
+ background:#FFFFFF;
+}
+
+div#pagetop p{
+ margin: 0 20px 0 0;
+}
+
+div#foot{
+ width: 900px;
+ padding:20px 0 30px 0;
+ margin: 0 0 0px 0;
+ background:#330F00;
+}
+
+div#foot ul{
+ padding: 0 0 30px 0;
+ margin: 0 0 0px 0;
+ color:#FFFFFF;
+ text-align:center;
+}
+
+div#foot ul a{
+ color:#FFFFFF;
+}
+
+div#foot ul a:hover{
+ color:#CCCCCC;
+}
+
+div#foot ul li{
+ display: inline;
+}
+
+div#foot p#copy{
+ text-align:center;
+ font-size:10px;
+ color:#FFFFFF;
+}
+
+/*
+================================================================================
+下層コンテンツ
+================================================================================
+*/
+
+div.qBox{
+ margin: 10px 0 0 10px;
+}
+
+div.qBox h3{
+ font-size:14px;
+ font-weight:bold;
+ color:#330F00;
+}
+
+div.qBox ul{
+ margin: 10px 0 0 0px;
+}
+
+div.qBox ul li{
+ margin: 5px 0 0 0px;
+}
+
+div.aBox{
+ margin: 30px 0 0 10px;
+}
+
+div.aBox h3{
+ font-size:14px;
+ font-weight:bold;
+ color:#330F00;
+}
+
+div.aBox h4{
+  margin: 10px 0 0 0;
+  font-weight:bold;
+}
+
+div.aBox div.box{
+ margin: 10px 0 0 0;
+ border: #330F00 1px solid;
+ padding:10px;
+}
+
+div.aBox div.box p.question{
+ font-weight:bold;
+ margin: 0 0 5px 0;
+}
+
+div#main_image p{
+ margin: 0 0 20px 0;
+}
+
+
+div.shoppingBox{
+ width:595px;
+ padding:10px;
+ background:#F2EAF0;
+ margin: 10px 0 0 0;
+ overflow:hidden;
+}
+
+div.shoppingBox div.img{
+ float:left;
+ width:175px;
+ margin: 10px 0 0 0;
+}
+
+div.shoppingBox div.text{
+ float:right;
+ width:405px;
+}
+
+div.shoppingBox p.title{
+ font-size:14px;
+ color:#330F00;
+ margin: 0 0 10px 0;
+ font-weight:bold;
+}
+
+div.shoppingBox p.text{
+ line-height:140%;
+ margin: 0 0 6px 0;
+}
+
+div.shoppingBox p.text strong{
+ font-weight: bold;
+ text-decoration: underline;
+}
+
+
+/*
+================================================================================
+clearfix
+================================================================================
+*/
+
+div#head:after,
+div#contens:after,
+div#main div#pickup div.item:after,
+div.text div.nameprice:after,
+div#main div#mobile:after,
+div#twitter div.tweet:after,
+detailarea:after,
+div.shoppingBox:after{
+ height: 0;
+ visibility: hidden;
+ content: ".";
+ display: block;
+ clear: both;
+}
+
+
+
+/*
+================================================================================
+オータムキャンペーン
+================================================================================
+*/
+div#campaign20111015Box{
+ width:615px;
+ overflow:hidden;
+}
+
+div#campaign20111015Box div.mainimg{
+ padding-bottom:10px;
+}
+
+div#campaign20111015Box div.cam-title{
+ width:615px;
+ margin:10px 0;
+}
+
+div#campaign20111015Box div#cam_sammary:after{
+   content: "";
+   clear: both;
+   height: 0;
+   display: block;
+   visibility: hidden;
+}
+
+div#campaign20111015Box div#cam_sammary h2{
+ color: #330F00;
+ font-weight: bold;
+ font-size:16px;
+ padding-left:15px;
+ background:url(../img/campaign/20111015/line.jpg) bottom no-repeat;
+ height:29px;
+ margin-bottom:15px;
+}
+
+div#campaign20111015Box div#cam_sammary .inner{
+ width:585px;
+ padding-right:15px;
+ padding-left:15px;
+ clear:both;
+ padding-bottom: 20px;
+}
+
+div#campaign20111015Box div#cam_sammary .inner table{
+ width:585px;
+ overflow:hidden;
+ border-collapse:collapse;
+ text-align:left;
+ font-size:14px;
+ line-height:1.5em;
+ background:url(../img/campaign/20111015/logo-k.jpg) right bottom no-repeat;
+ border:0px;
+ margin-top:0;
+ margin-bottom:0;
+}
+
+div#campaign20111015Box div#cam_sammary .inner table th , div#campaign20111015Box div#cam_sammary .inner table td{
+ padding-bottom:15px;
+ vertical-align:top;
+ text-align:left;
+ border:0px;
+}
+
+div#campaign20111015Box div#cam_sammary .inner table th {
+ width:71px;
+ background-color:#fff;
+}
+
+div#campaign20111015Box div#cam_sammary .inner table img{
+ margin-right:10px;
+}
+
+div#campaign20111015Box form.cam-go_item{
+ float:right;
+}
+
+div#campaign20111015Box a.cam-go_item{
+ float:right;
+}
+
+div#campaign20111015Box div.recommend{
+ width:615px;
+ overflow:hidden;
+ clear:right;
+ padding-bottom:20px;
+}
+
+div#campaign20111015Box div.recommend h3{
+ width:600px;
+ height:21px;
+ background:#DFDFDF;
+ color:#330E00;
+ font-size:16px;
+ font-weight:bold;
+ padding:5px 0 5px 15px;
+ margin-bottom:15px;
+}
+
+div#campaign20111015Box div.recommend div.pre-left{
+ float:left;
+ padding-left: 15px;
+ padding-right: 10px;
+ width: 260px;
+ vertical-align:top;
+}
+
+div#campaign20111015Box div.recommend div.pre-left img{
+ vertical-align:text-bottom;
+}
+
+div#campaign20111015Box div.recommend div.pre-left img.item_img{
+ padding-bottom:10px;
+}
+
+div#campaign20111015Box div.recommend div.pre-left a{
+ padding-left:10px;
+ text-decoration:underline;
+}
+
+div#campaign20111015Box div.recommend div.pre-right{
+ overflow:hidden;
+ width: 315px;
+}
+
+div#campaign20111015Box div.recommend div.pre-right li{
+ margin-bottom:5px;
+ line-height:1.8em;
+}
+
+
+.smaho{
+   width:230px;
+overflow:hidden;
+}
+
+.smaho-b{
+ width:230px;
+ height:25px;
+ background:url(../img/banner/phone-b2.jpg) repeat-y;
+}
+
+
+.smaho-b input{
+ width:150px;
+ height:15px;
+float:left;
+ margin-left:10px;
+}
+
+.smaho-b .smaho-b1{
+ float:left;
+ width:50px;
+height:25px;
+margin:0 0 0 5px;
+
+}
+
+.smaho-b2{
+ margin-bottom:15px;
+}
+
+div.glue_contents_top a:hover{
+opacity:0.5;
+}
+
+img[data-action="zoom"] {
+ cursor: pointer;
+ cursor: -webkit-zoom-in;
+ cursor: -moz-zoom-in;
+}
+.zoom-img,
+.zoom-img-wrap {
+ position: relative;
+ z-index: 666;
+ -webkit-transition: all 300ms;
+      -o-transition: all 300ms;
+         transition: all 300ms;
+}
+img.zoom-img {
+ cursor: pointer;
+ cursor: -webkit-zoom-out;
+ cursor: -moz-zoom-out;
+}
+.zoom-overlay {
+ z-index: 420;
+ background: #fff;
+ position: fixed;
+ top: 0;
+ left: 0;
+ right: 0;
+ bottom: 0;
+ pointer-events: none;
+ filter: "alpha(opacity=0)";
+ opacity: 0;
+ -webkit-transition:      opacity 300ms;
+      -o-transition:      opacity 300ms;
+         transition:      opacity 300ms;
+}
+.zoom-overlay-open .zoom-overlay {
+ filter: "alpha(opacity=100)";
+ opacity: 1;
+}
+.zoom-overlay-open,
+.zoom-overlay-transitioning {
+ cursor: default;
+}
+
+
+/*アコーディオン開始*/
+
+.ac_menu {
+ height: 500px;
+ width: 500px;
+ background: #fff;
+}
+
+label.faq{
+ background: #E5DEE1;
+ color: #333;
+ padding: 9px;
+ display: block;
+ margin: 0;
+ border: 1px solid #fff;
+ cursor: pointer;
+}
+
+label.faq:hover {
+ background: #330F00;
+ color: #fff;
+}
+
+input[type="checkbox"].on-off{
+ display: none;
+}
+
+.ac_menu ul {
+ -webkit-transition: all 0.5s;
+ -moz-transition: all 0.5s;
+ -ms-transition: all 0.5s;
+ -o-transition: all 0.5s;
+ transition: all 0.5s;
+ margin: 0 0 20px;
+ padding: 0;
+ list-style: none;
+}
+
+.ac_menu li {
+ padding: 5px;
+}
+
+.ac_menu h3 {
+ font-size: 14px;
+ font-weight: bold;
+ color: #330F00;
+}
+
+input[type="checkbox"].on-off + ul{
+ display: none;
+}
+
+input[type="checkbox"].on-off:checked + ul{
+ display: block;
+}
+
+/*アコーディオン終了*/
+
+div#menu div.side_ttl{
+ background:#330F00;
+ padding: 6px 0 5px 10px;
+}
+

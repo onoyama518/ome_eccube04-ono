@@ -39,8 +39,9 @@ class MailMagazineTemplateType extends AbstractType
             'empty_value' => '-',
             'query_builder' => function (EntityRepository $er) {
                 return $er->createQueryBuilder('mt')
-                    ->orderBy('mt.id', 'ASC');
-            },
+                    ->orderBy('mt.id', 'DESC'); // 降順に変更
+            }
+
         ]);
     }
 

@@ -27,6 +27,7 @@ $container->loadFromExtension('framework', [
             'initial_marking' => (string) Status::NEW,
             'places' => [
                 (string) Status::NEW,
+                (string) Status::PAID_AWAITING,
                 (string) Status::CANCEL,
                 (string) Status::IN_PROGRESS,
                 (string) Status::DELIVERED,
@@ -34,26 +35,40 @@ $container->loadFromExtension('framework', [
                 (string) Status::PENDING,
                 (string) Status::PROCESSING,
                 (string) Status::RETURNED,
+                (string) Status::AWAITING,
+                (string) Status::CANCEL_PENDING,
             ],
             'transitions' => [
                 'pay' => [
-                    'from' => (string) Status::NEW,
+                    'from' => [(string) Status::NEW, Status::PAID_AWAITING],
                     'to' => (string) Status::PAID,
                 ],
+                'nyukin_machi' => [
+                    'from' => (string) Status::NEW,
+                    'to' => (string) Status::PAID_AWAITING,
+                ],
                 'packing' => [
-                    'from' => [(string) Status::NEW, (string) Status::PAID],
+                    'from' => [(string) Status::NEW, (string) Status::PAID, (string) Status::PAID_AWAITING],
                     'to' => (string) Status::IN_PROGRESS,
                 ],
+                'awaiting' => [
+                    'from' => [(string) Status::NEW, (string) Status::PAID, (string) Status::IN_PROGRESS, (string) Status::PAID_AWAITING],
+                    'to' => (string) Status::AWAITING,
+                ],
                 'cancel' => [
-                    'from' => [(string) Status::NEW, (string) Status::IN_PROGRESS, (string) Status::PAID],
+                    'from' => [(string) Status::NEW, (string) Status::PAID, (string) Status::IN_PROGRESS, (string) Status::AWAITING, (string) Status::PAID_AWAITING],
                     'to' => (string) Status::CANCEL,
+                ],
+                'cancel_pending' => [ // ★追加：決済処理中から注文キャンセル
+                    'from' => (string) Status::PENDING,
+                    'to' => (string) Status::CANCEL_PENDING,
                 ],
                 'back_to_in_progress' => [
                     'from' => (string) Status::CANCEL,
                     'to' => (string) Status::IN_PROGRESS,
                 ],
                 'ship' => [
-                    'from' => [(string) Status::NEW, (string) Status::PAID, (string) Status::IN_PROGRESS],
+                    'from' => [(string) Status::NEW, (string) Status::PAID, (string) Status::IN_PROGRESS, (string) Status::AWAITING, (string) Status::PAID_AWAITING],
                     'to' => [(string) Status::DELIVERED],
                 ],
                 'return' => [

@@ -1,0 +1,46 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% extends 'default_frame.twig' %}
+
+{% set mypageno = 'withdraw' %}
+
+{% set body_class = 'mypage' %}
+
+{% block main %}
+	<div class="ec-layoutRole__main" id="mypagecolumn">
+		<div class="ec-mypageRole">
+			<div class="ec-pageHeader">
+				<h2 class="title">{{ 'マイページ'|trans }}</h2>
+			</div>
+			{{ include('Mypage/navi.twig') }}
+
+
+		</div>
+		<div class="ec-mypageRole" id="mycontents_area">
+			<h3>退会手続き(完了ページ)</h3>
+
+			<div class="ec-withdrawCompleteRole" id="complete_area">
+
+				<div class="ec-off3Grid ec-text-ac">
+					<div class="message">退会手続きが完了いたしました。<br/>
+						会員ページをご利用いただき誠にありがとうございました。<br/>
+						またのご利用を心よりお待ち申し上げます。
+					</div>
+				</div>
+				<div class="shop_information">
+					<p class="name">株式会社kichi</p>
+					<p>TEL：0120-965-583<br/>E-mail：<a href="mailto:info@ome-shouzai.com">info@ome-shouzai.com</a>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

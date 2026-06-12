@@ -27,11 +27,11 @@ use Eccube\Service\MailService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception as HttpException;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -63,9 +63,9 @@ class EntryController extends AbstractController
     protected $customerRepository;
 
     /**
-     * @var UserPasswordHasherInterface
+     * @var EncoderFactoryInterface
      */
-    protected $passwordHasher;
+    protected $encoderFactory;
 
     /**
      * @var TokenStorageInterface
@@ -90,7 +90,7 @@ class EntryController extends AbstractController
      * @param MailService $mailService
      * @param BaseInfoRepository $baseInfoRepository
      * @param CustomerRepository $customerRepository
-     * @param PasswordHasher $passwordHasher
+     * @param EncoderFactoryInterface $encoderFactory
      * @param ValidatorInterface $validatorInterface
      * @param TokenStorageInterface $tokenStorage
      */
@@ -100,7 +100,7 @@ class EntryController extends AbstractController
         MailService $mailService,
         BaseInfoRepository $baseInfoRepository,
         CustomerRepository $customerRepository,
-        UserPasswordHasherInterface $passwordHasher,
+        EncoderFactoryInterface $encoderFactory,
         ValidatorInterface $validatorInterface,
         TokenStorageInterface $tokenStorage,
         PageRepository $pageRepository
@@ -109,7 +109,7 @@ class EntryController extends AbstractController
         $this->mailService = $mailService;
         $this->BaseInfo = $baseInfoRepository->get();
         $this->customerRepository = $customerRepository;
-        $this->passwordHasher = $passwordHasher;
+        $this->encoderFactory = $encoderFactory;
         $this->recursiveValidator = $validatorInterface;
         $this->tokenStorage = $tokenStorage;
         $this->cartService = $cartService;
@@ -131,10 +131,10 @@ class EntryController extends AbstractController
             return $this->redirectToRoute('mypage');
         }
 
-        /** @var \Eccube\Entity\Customer $Customer */
+        /** @var $Customer \Eccube\Entity\Customer */
         $Customer = $this->customerRepository->newCustomer();
 
-        /** @var \Symfony\Component\Form\FormBuilderInterface $builder */
+        /* @var $builder \Symfony\Component\Form\FormBuilderInterface */
         $builder = $this->formFactory->createBuilder(EntryType::class, $Customer);
 
         $event = new EventArgs(
@@ -146,7 +146,7 @@ class EntryController extends AbstractController
         );
         $this->eventDispatcher->dispatch($event, EccubeEvents::FRONT_ENTRY_INDEX_INITIALIZE);
 
-        /** @var \Symfony\Component\Form\FormInterface $form */
+        /* @var $form \Symfony\Component\Form\FormInterface */
         $form = $builder->getForm();
 
         $form->handleRequest($request);
@@ -168,8 +168,16 @@ class EntryController extends AbstractController
                 case 'complete':
                     log_info('会員登録開始');
 
-                    $password = $this->passwordHasher->hashPassword($Customer, $Customer->getPlainPassword());
-                    $Customer->setPassword($password);
+                    $encoder = $this->encoderFactory->getEncoder($Customer);
+                    $salt = $encoder->createSalt();
+                    $password = $encoder->encodePassword($Customer->getPlainPassword(), $salt);
+                    $secretKey = $this->customerRepository->getUniqueSecretKey();
+
+                    $Customer
+                        ->setSalt($salt)
+                        ->setPassword($password)
+                        ->setSecretKey($secretKey)
+                        ->setPoint(0);
 
                     $this->entityManager->persist($Customer);
                     $this->entityManager->flush();
